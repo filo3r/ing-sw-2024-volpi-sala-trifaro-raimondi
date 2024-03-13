@@ -15,5 +15,4 @@ public class Desk {
      * The front of the two public objective cards.
      */
     private FrontObjective[] displayedObjective;
-    
 }

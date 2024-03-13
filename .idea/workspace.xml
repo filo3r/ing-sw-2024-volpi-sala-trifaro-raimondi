@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eec60435-e29e-4f13-9f20-8755bbc931db" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Desk.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="eec60435-e29e-4f13-9f20-8755bbc931db" name="Changes" comment="Created the skeleton of Card, Player and Card">
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Desk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Desk.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +70,17 @@
       <updated>1710254538637</updated>
       <workItem from="1710273501166" duration="27000" />
       <workItem from="1710325920748" duration="10788000" />
-      <workItem from="1710351194606" duration="2516000" />
+      <workItem from="1710351194606" duration="2920000" />
     </task>
+    <task id="LOCAL-00001" summary="Created the skeleton of Card, Player and Card">
+      <option name="closed" value="true" />
+      <created>1710353780891</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710353780891</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -90,6 +96,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Created the skeleton of Card, Player and Card" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the skeleton of Card, Player and Card" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
