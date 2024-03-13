@@ -38,12 +38,12 @@ public class Player {
     /**
      * Constructs a new Player with the specified parameters.
      *
-     * @param nickname The player's nickname.
-     * @param cardStarter The player's starting card.
-     * @param hand The player's hand.
-     * @param cardObjective The player's personal objective card.
-     * @param codex The player's codex.
-     * @param score The player's score.
+     * @param nickname Player's nickname.
+     * @param cardStarter Player's starting card.
+     * @param hand Player's hand.
+     * @param cardObjective Player's personal objective card.
+     * @param codex Player's codex.
+     * @param score Player's score.
      */
     public Player(String nickname, CardStarter cardStarter, Card[] hand, CardObjective cardObjective, Codex codex, int score) {
         this.nickname = nickname;
@@ -161,4 +161,32 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
+    /**
+     * Calculates the player's score based on his codex at the end of the game.
+     *
+     * @return The player's score.
+     */
+    public int calculateScore(){
+    }
+
+    /**
+     * Place a card in a determinate position on the codex.
+     */
+    public void place(){
+    }
+
+    /**
+     * Select the personal cardObjectives.
+     */
+    public void selectObjective(){
+    }
+
+    /**
+     * Choose whether place the starting card front or back
+     */
+    public void selectCardStarter(){
+    }
+
+
 }
