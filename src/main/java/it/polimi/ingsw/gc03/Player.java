@@ -168,6 +168,8 @@ public class Player {
      * @return The player's score.
      */
     public int calculateScore(){
+        // Metodo per calcolare il punteggio del player.
+        return 0;
     }
 
     /**
@@ -183,7 +185,7 @@ public class Player {
     }
 
     /**
-     * Choose whether place the starting card front or back
+     * Choose whether place the starting card front or back.
      */
     public void selectCardStarter(){
     }

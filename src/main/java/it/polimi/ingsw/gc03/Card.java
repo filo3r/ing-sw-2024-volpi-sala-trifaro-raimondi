@@ -17,7 +17,7 @@ public class Card {
     /**
      * Constructs a new Card with the specified identifier and playability.
      *
-     * @param id       The unique identifier of the card.
+     * @param id The unique identifier of the card.
      * @param playable Indicates whether the card is playable or not.
      */
     public Card(int id, boolean playable) {
