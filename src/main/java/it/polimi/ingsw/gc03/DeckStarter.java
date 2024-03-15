@@ -60,7 +60,7 @@ public class DeckStarter extends Deck{
                 BackSide backStarter = new BackSide(backTopLeftCorner, backBottomLeftCorner, backTopRightCorner,
                         backBottomRightCorner, center1, center2, center3);
                 // Create the complete card
-                CardStarter cardStarter = new CardStarter(idCard, frontResource, backResource);
+                CardStarter cardStarter = new CardStarter(idCard, frontStarter, backStarter);
                 this.deckStarter[index] = cardStarter;
                 index++;
             }
@@ -104,7 +104,7 @@ public class DeckStarter extends Deck{
      * @param indexStarter The index of the card you want to print.
      */
     public void printCardStarterAtIndex(int indexStarter) {
-        CardStarter cardStarter = deckStarter[indexResource];
+        CardStarter cardStarter = deckStarter[indexStarter];
         cardStarter.printCardStarter(cardStarter);
     }
 
