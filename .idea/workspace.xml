@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eec60435-e29e-4f13-9f20-8755bbc931db" name="Changes" comment="Added a few methods in Player" />
+    <list default="true" id="eec60435-e29e-4f13-9f20-8755bbc931db" name="Changes" comment="Created the skeleton of Desk">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/CardGold.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/CardResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Deck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/DeckGold.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/DeckResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/DeckStarter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FileCardGold.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FileCardResource.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FileCardStarter.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Side.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/BackGold.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/BackResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/BackSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FrontGold.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FrontGold.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FrontResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gc03/FrontResource.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -22,26 +39,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;matteosalaa&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="32cc5cc0-0107-4b8c-8390-d69fdb20d535" />
-        <option name="url" value="https://github.com/matteosalaa/ing-sw-2024-volpi-sala-trifaro-raimondi.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -85,9 +85,8 @@
       <updated>1710254538637</updated>
       <workItem from="1710273501166" duration="27000" />
       <workItem from="1710325920748" duration="10788000" />
-      <workItem from="1710351194606" duration="3719000" />
-      <workItem from="1710413835375" duration="2669000" />
-      <workItem from="1710428935761" duration="26000" />
+      <workItem from="1710351194606" duration="3662000" />
+      <workItem from="1710411722332" duration="32817000" />
     </task>
     <task id="LOCAL-00001" summary="Created the skeleton of Card, Player and Card">
       <option name="closed" value="true" />
@@ -105,15 +104,7 @@
       <option name="project" value="LOCAL" />
       <updated>1710354142332</updated>
     </task>
-    <task id="LOCAL-00003" summary="Added a few methods in Player">
-      <option name="closed" value="true" />
-      <created>1710354882940</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1710354882940</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,8 +124,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created the skeleton of Card, Player and Card" />
     <MESSAGE value="Created the skeleton of Desk" />
-    <MESSAGE value="Added a few methods in Player" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a few methods in Player" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the skeleton of Desk" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

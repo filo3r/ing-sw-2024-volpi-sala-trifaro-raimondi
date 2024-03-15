@@ -1,9 +1,9 @@
 package it.polimi.ingsw.gc03;
 
 /**
- * This class represents the back of a Resource card.
+ * This class manages the information present on both the front and back of a card.
  */
-public class BackGold {
+public class Side {
 
     /**
      * Value contained in the top-left corner.
@@ -25,27 +25,19 @@ public class BackGold {
      */
     private Value bottomRightCorner;
 
-    /**
-     * Value contained in the center.
-     */
-    private Value center;
-
 
     /**
-     * Constructor of the class FrontResource.
+     * Constructor of the class Side.
      * @param topLeftCorner Value contained in the top-left corner.
      * @param bottomLeftCorner Value contained in the bottom-left corner.
      * @param topRightCorner Value contained in the top-right corner.
      * @param bottomRightCorner Value contained in the bottom-right corner.
-     * @param center Value contained in the center.
      */
-    public BackGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                        Value center) {
+    public Side(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner) {
         this.topLeftCorner = topLeftCorner;
         this.bottomLeftCorner = bottomLeftCorner;
         this.topRightCorner = topRightCorner;
         this.bottomRightCorner = bottomRightCorner;
-        this.center = center;
     }
 
 
@@ -118,24 +110,6 @@ public class BackGold {
      */
     public void setBottomRightCorner(Value bottomRightCorner) {
         this.bottomRightCorner = bottomRightCorner;
-    }
-
-
-    /**
-     * Getter method to retrieve the value contained in the center.
-     * @return The value contained in the center.
-     */
-    public Value getCenter() {
-        return center;
-    }
-
-
-    /**
-     * Setter method to set the value contained in the center.
-     * @param center The value to be set in the center.
-     */
-    public void setCenter(Value center) {
-        this.center = center;
     }
 
 

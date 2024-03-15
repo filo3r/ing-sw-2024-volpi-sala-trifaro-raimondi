@@ -7,7 +7,7 @@ public class Card {
     /**
      * The unique identifier of the card.
      */
-    private int id;
+    private String idCard;
 
     /**
      * Indicates whether the card is playable or not.
@@ -17,11 +17,11 @@ public class Card {
     /**
      * Constructs a new Card with the specified identifier and playability.
      *
-     * @param id The unique identifier of the card.
+     * @param idCard   The unique identifier of the card.
      * @param playable Indicates whether the card is playable or not.
      */
-    public Card(int id, boolean playable) {
-        this.id = id;
+    public Card(String idCard, boolean playable) {
+        this.idCard = idCard;
         this.playable = playable;
     }
 
@@ -30,17 +30,17 @@ public class Card {
      *
      * @return The unique identifier of the card.
      */
-    public int getId() {
-        return id;
+    public String getIdCard() {
+        return idCard;
     }
 
     /**
      * Sets the unique identifier of the card.
      *
-     * @param id The unique identifier of the card.
+     * @param idCard The unique identifier of the card.
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     /**
@@ -60,4 +60,6 @@ public class Card {
     public void setPlayable(boolean playable) {
         this.playable = playable;
     }
+
+
 }
