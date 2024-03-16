@@ -145,11 +145,11 @@ public class Desk {
      */
     public void addPlayer(Player player) throws PlayerAlreadyJoinedException,DeskIsFullException{
        if(this.players.contains(player)) {
-           throw new PlayerAlreadyJoinedException("Giocatore già al tavolo");
+           throw new PlayerAlreadyJoinedException("Error: This Player is already at this table");
        }
        else if (this.players.size()<4) {
            this.players.add(player);
-       }else throw new DeskIsFullException("Il tavolo da gioco è al completo");
+       }else throw new DeskIsFullException("Error: The desk is already full");
     }
 
     /**
@@ -166,7 +166,7 @@ public class Desk {
     public void drawResourceAndDisplay() throws NoMoreCardException{
         if(!deckResource.getDeckResource().isEmpty()){
             if(this.displayedResource.size()<2) this.displayedResource.add(this.deckResource.drawCardResource());
-        } else throw new NoMoreCardException("Carte Risorsa nel deck finite");
+        } else throw new NoMoreCardException("Error: ResourceCard in the deck are finished");
     }
 
     /**
@@ -176,7 +176,7 @@ public class Desk {
      * @throws CardNotFoundException Exception
      */
     public CardResource drawDisplayedResource(int i) throws CardNotFoundException{
-        if(this.displayedResource.size()<i) throw new CardNotFoundException("Carta non trovata");
+        if(this.displayedResource.size()<i) throw new CardNotFoundException("Error: ResourceCard not found");
         else {
             CardResource card = this.displayedResource.get(i);
             this.displayedResource.remove(i);
@@ -189,7 +189,7 @@ public class Desk {
     public void drawGoldAndDisplay() throws NoMoreCardException {
         if (!this.deckGold.getDeckGold().isEmpty()) {
             if (this.displayedGold.size() < 2) this.displayedGold.add(this.deckGold.drawCardGold());
-        } else throw new NoMoreCardException("Carte Gold nel deck finite");
+        } else throw new NoMoreCardException("Error: GoldCard in the deck are finished");
     }
     /**
      * Chose a GoldCard from the DisplayedGold and return it
@@ -198,7 +198,7 @@ public class Desk {
      * @throws CardNotFoundException Exception
      */
     public CardGold drawGoldResource(int i) throws CardNotFoundException{
-        if(this.displayedGold.size()<i) throw new CardNotFoundException("Carta non trovata");
+        if(this.displayedGold.size()<i) throw new CardNotFoundException("Error: GoldCard not found");
         else {
             CardGold card = this.displayedGold.get(i);
             this.displayedGold.remove(i);

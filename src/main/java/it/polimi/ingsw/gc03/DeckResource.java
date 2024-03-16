@@ -158,10 +158,9 @@ public class DeckResource extends Deck{
     }*/
     public CardResource drawCardResource() throws NoMoreCardException{
         if(!this.deckResource.isEmpty()){
-            CardResource drawCard = this.deckResource.getFirst();
-            this.deckResource.removeFirst();
+            CardResource drawCard = this.deckResource.removeFirst();
             return drawCard;
-        } else throw new NoMoreCardException("Le carte risorsa sono finite");
+        } else throw new NoMoreCardException("Error: ResourceCards are finished");
     }
 
 
@@ -180,7 +179,7 @@ public class DeckResource extends Deck{
         if(!this.deckResource.isEmpty()){
             return deckResource.getFirst().getBackResource();
         }
-        else throw new NoMoreCardException("Le carte Risorsa nel deck sono finite");
+        else throw new NoMoreCardException("Error: ResourceCards are finished");
     }
 
 }

@@ -171,10 +171,9 @@ public class DeckGold extends Deck{
     */
     public CardGold drawCardGold() throws NoMoreCardException{
         if(!this.deckGold.isEmpty()){
-            CardGold drawCard = this.deckGold.getFirst();
-            this.deckGold.removeFirst();
+            CardGold drawCard = this.deckGold.removeFirst();
             return drawCard;
-        }else throw new NoMoreCardException("Le carte Gold sono finite");
+        }else throw new NoMoreCardException("Error: GoldCards are finished");
     }
 
     /**
@@ -195,6 +194,6 @@ public class DeckGold extends Deck{
         if(!this.deckGold.isEmpty()){
             return deckGold.getFirst().getBackGold();
         }
-        else throw new NoMoreCardException("Le carte Gold nel deck sono finite");
+        else throw new NoMoreCardException("Error: GoldCards are finished");
     }
 }

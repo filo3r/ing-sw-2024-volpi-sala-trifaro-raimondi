@@ -157,10 +157,9 @@ public class DeckStarter extends Deck{
     }*/
     public CardStarter drawCardStarter() throws NoMoreCardException{
         if(!this.deckStarter.isEmpty()){
-            CardStarter drawCard = deckStarter.getFirst();
-            this.deckStarter.removeFirst();
+            CardStarter drawCard = deckStarter.removeFirst();
             return drawCard;
-        }else throw new NoMoreCardException("Le carte starter nel deck sono finite");
+        }else throw new NoMoreCardException("Error: StarterCard are finished");
     }
 
 
@@ -181,7 +180,7 @@ public class DeckStarter extends Deck{
         if(!this.deckStarter.isEmpty()){
             return deckStarter.getFirst().getBackStarter();
         }
-        else throw new NoMoreCardException("Le carte nel mazzo Starter sono Finite");
+        else throw new NoMoreCardException("Error: StarterCard are finished");
     }
 
 }
