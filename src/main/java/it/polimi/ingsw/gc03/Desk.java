@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gc03;
 
+
 import java.util.List;
+
 
 public class Desk {
     /**
@@ -34,6 +36,11 @@ public class Desk {
     private List<Player> players;
 
     /**
+     * Deck formed by the 6 Starter Card
+     */
+    private DeckStarter deckStarter;
+
+    /**
      * Constructs a new Desk
      * @param displayedResource ResourceCards shown on the table
      * @param displayedGold GoldCards shown on the table
@@ -42,13 +49,14 @@ public class Desk {
      * @param deckGold deckGold on the Table
      * @param players players at the Table
      */
-    public Desk(List<CardResource> displayedResource,List<CardGold> displayedGold,List<CardObjective> displayedObjective,DeckResource deckResource,DeckGold deckGold,List<Player> players){
+    public Desk(List<CardResource> displayedResource,List<CardGold> displayedGold,List<CardObjective> displayedObjective,DeckResource deckResource,DeckGold deckGold,List<Player> players,DeckStarter deckStarter){
         this.setDisplayedResource(displayedResource);
         this.setDisplayedGold(displayedGold);
         this.setDisplayedObjective(displayedObjective);
         this.setDeckResource(deckResource);
         this.setDeckGold(deckGold);
         this.setPlayers(players);
+        this.setDeckStarter(deckStarter);
     }
 
     /**
@@ -124,6 +132,12 @@ public class Desk {
     public List<Player> getPlayers(){return this.players;}
 
     /**
+     * Setter StarterDeck
+     * @param deckStarter Deck of Starter Card
+     */
+    public void setDeckStarter(DeckStarter deckStarter){this.deckStarter=deckStarter;}
+
+    /**
      * Add a player to the desk, throws two exceptions
      * @param player Player to be added
      * @throws PlayerAlreadyJoinedException Exception
@@ -149,8 +163,10 @@ public class Desk {
     /**
      * Draw a card from ResourceDeck and display it only if Displayed Resources are less than 2
      */
-    public void drawResourceAndDisplay(){
-        if(this.displayedResource.size()<2) this.displayedResource.add(this.deckResource.drawCardResource());
+    public void drawResourceAndDisplay() throws NoMoreCardException{
+        if(!deckResource.getDeckResource().isEmpty()){
+            if(this.displayedResource.size()<2) this.displayedResource.add(this.deckResource.drawCardResource());
+        } else throw new NoMoreCardException("Carte Risorsa nel deck finite");
     }
 
     /**
@@ -170,8 +186,10 @@ public class Desk {
     /**
      * Draw a card from GoldDeck and display it, only if Displayed Gold are less than 2
      */
-    public void drawGoldAndDisplay(){
-        if(this.displayedGold.size()<2) this.displayedGold.add(this.deckGold.drawCardGold());
+    public void drawGoldAndDisplay() throws NoMoreCardException {
+        if (!this.deckGold.getDeckGold().isEmpty()) {
+            if (this.displayedGold.size() < 2) this.displayedGold.add(this.deckGold.drawCardGold());
+        } else throw new NoMoreCardException("Carte Gold nel deck finite");
     }
     /**
      * Chose a GoldCard from the DisplayedGold and return it
@@ -188,5 +206,12 @@ public class Desk {
         }
     }
 
-
+    /**
+     * Sets a random StarterCard for every player at the desk, the shuffle has been made at the end of the construction of the deck
+     */
+    public void setRandomStarterCard() throws NoMoreCardException {
+        for (Player player : this.players) {
+            player.setCardStarter(this.deckStarter.drawCardStarter());
+        }
+    }
 }

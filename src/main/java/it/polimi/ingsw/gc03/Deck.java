@@ -1,5 +1,7 @@
 package it.polimi.ingsw.gc03;
 
+import java.util.List;
+
 /**
  * This class represents a deck of cards in the game.
  */
@@ -8,12 +10,12 @@ public class Deck {
     /**
      * Number of Resource cards in a deck.
      */
-    protected static final int NUM_RES = 40;
+  protected static final int NUM_RES = 40;
 
     /**
      * Number of Gold cards in a deck.
      */
-    protected static final int NUM_GOL = 40;
+   protected static final int NUM_GOL = 40;
 
     /**
      * Number of Starter cards in a deck.
@@ -23,71 +25,69 @@ public class Deck {
     /**
      * Number of Objective cards in a deck.
      */
-    protected static final int NUM_OBJ = 16;
+//   protected static final int NUM_OBJ = 16;
 
     /**
      * Index to keep track of the cards drawn.
      */
-    private int deckIndex;
+  /*  private int deckIndex;
 
     /**
      * Boolean indicating whether all cards in the deck have been drawn.
      */
-    private boolean emptyDeck;
+ /*   private boolean emptyDeck;
 
-
-    /**
+     /**
      * Constructor for the Deck class.
      */
     public Deck() {
-        this.deckIndex = 0;
-        this.emptyDeck = false;
+   //     this.deckIndex = 0;
+   //     this.emptyDeck = false;
     }
-
 
     /**
      * Getter method to retrieve the index.
      * @return The index that keeps track of the cards drawn.
      */
-    public int getDeckIndex() {
+ /*   public int getDeckIndex() {
         return deckIndex;
     }
-
+*/
 
     /**
      * Setter method to set the index.
      * @param deckIndex The index to be set.
      */
-    public void setDeckIndex(int deckIndex) {
+  /*  public void setDeckIndex(int deckIndex) {
         this.deckIndex = deckIndex;
     }
-
+*/
 
     /**
      * Method for incrementing the index by one.
      */
-    public void incrementDeckIndex() {
+ /*   public void incrementDeckIndex() {
         this.deckIndex++;
     }
-
+*/
 
     /**
      * Method to get if the deck is empty.
      * @return The Boolean true or false.
      */
-    public boolean getEmptyDeck() {
+ /*   public boolean getEmptyDeck() {
         return emptyDeck;
     }
+*/
 
-
-    /**
+    /*/**
      * Method to set if the deck is empty.
      * @param emptyDeck The Boolean true or false.
      */
-    public void setEmptyDeck(boolean emptyDeck) {
+ /*   public void setEmptyDeck(boolean emptyDeck) {
         this.emptyDeck = emptyDeck;
     }
-
+*/
 
     /**
      * Method for converting values read from the file (enum Value).
