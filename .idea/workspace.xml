@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eec60435-e29e-4f13-9f20-8755bbc931db" name="Changes" comment="Added Game class&#10;Added Message class">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +96,7 @@
       <workItem from="1710411722332" duration="33529000" />
       <workItem from="1710520627206" duration="239000" />
       <workItem from="1710520899456" duration="2612000" />
-      <workItem from="1710581952546" duration="2621000" />
+      <workItem from="1710581952546" duration="3430000" />
     </task>
     <task id="LOCAL-00001" summary="Created the skeleton of Card, Player and Card">
       <option name="closed" value="true" />
