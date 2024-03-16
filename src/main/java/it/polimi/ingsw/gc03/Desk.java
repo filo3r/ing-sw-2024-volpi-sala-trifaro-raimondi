@@ -174,7 +174,7 @@ public class Desk {
         if(this.displayedGold.size()<2) this.displayedGold.add(this.deckGold.drawCardGold());
     }
     /**
-     * Chose a GoldCard from the DisplayedResources and return it
+     * Chose a GoldCard from the DisplayedGold and return it
      * @param i Index of the Displayed List
      * @return the chosen GoldCard from the DisplayedGold
      * @throws CardNotFoundException Exception
