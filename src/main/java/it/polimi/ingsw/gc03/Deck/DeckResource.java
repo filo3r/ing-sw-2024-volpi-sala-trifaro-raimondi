@@ -1,11 +1,18 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Deck;
+
+import it.polimi.ingsw.gc03.Side.Back.BackSide;
+import it.polimi.ingsw.gc03.Card.CardResource;
+import it.polimi.ingsw.gc03.Exceptions.NoMoreCardException;
+import it.polimi.ingsw.gc03.Side.Front.FrontResource;
+import it.polimi.ingsw.gc03.Enumerations.Kingdom;
+import it.polimi.ingsw.gc03.Enumerations.Value;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
-import java.util.Random;
 
 /**
  * This class represents a deck of Resource cards.
@@ -15,8 +22,7 @@ public class DeckResource extends Deck{
     /**
      * Deck of Resource cards.
      */
-  //  private CardResource[] deckResource;
-    private List<CardResource> deckResource;
+    private final List<CardResource> deckResource;
 
     /**
      * File containing all information about Resource cards.
@@ -29,7 +35,7 @@ public class DeckResource extends Deck{
      */
     public DeckResource() {
         super();
-        //this.deckResource = new CardResource[NUM_RES];
+        deckResource = new ArrayList<>();
         // File path
         String filePath = System.getProperty("user.dir");
         // Full path to the file
@@ -39,8 +45,6 @@ public class DeckResource extends Deck{
         // Opening and reading the file
         try {
             Scanner inputStream = new Scanner(new File(fullFilePath));
-            // Index to build the array
-            //int index = 0;
             // Read the file until the end
             while (inputStream.hasNextLine()) {
                 // Read all values of a card
@@ -65,8 +69,6 @@ public class DeckResource extends Deck{
                                                      backBottomRightCorner, center1, center2, center3);
                 // Create the complete card
                 CardResource cardResource = new CardResource(idCard, kingdom, frontResource, backResource);
-                //this.deckResource[index] = cardResource;
-                //index++;
                 this.deckResource.add(cardResource);
             }
             // Close the file
@@ -83,16 +85,6 @@ public class DeckResource extends Deck{
     /**
      * Method for shuffling the Resource card deck.
      */
-  /*  public void shuffleDeckResource() {
-        Random random = new Random();
-        for (int i = NUM_RES - 1; i > 0; i--) {
-            int indexRandom = random.nextInt(i + 1);
-            // Swap
-            CardResource temp = deckResource[indexRandom];
-            deckResource[indexRandom] = deckResource[i];
-            deckResource[i] = temp;
-        }
-    }*/
     public void shuffleDeckResource(){
         Collections.shuffle(this.deckResource);
     }
@@ -102,9 +94,6 @@ public class DeckResource extends Deck{
      * Getter method to retrieve the cards contained in the deck.
      * @return The cards contained in the deck.
      */
-  /*  public CardResource[] getDeckResource() {
-        return deckResource;
-    }*/
     public List<CardResource> getDeckResource(){
         return this.deckResource;
     }
@@ -114,7 +103,6 @@ public class DeckResource extends Deck{
      * @param indexResource The index of the card you want to print.
      */
     public void printCardResourceAtIndex(int indexResource) {
-       // CardResource cardResource = deckResource[indexResource];
         CardResource cardResource =this.deckResource.get(indexResource);
         cardResource.printCardResource(cardResource);
     }
@@ -124,42 +112,18 @@ public class DeckResource extends Deck{
      * Method for printing the entire deck.
      */
     public void printDeckResource() {
-        for (int i = 0; i < NUM_RES; i++){
-           // CardResource cardResource = deckResource[i];
-            CardResource cardResource = this.deckResource.get(i);
+        for (CardResource cardResource : this.deckResource){
             cardResource.printCardResource(cardResource);
         }
     }
-
-
-  /*  /**
-     * Method that checks whether all cards in the deck have been drawn.
-     * @return A true or false Boolean.
-     */
-  /*  public boolean deckResourceIsEmpty() {
-        if (getDeckIndex() == NUM_RES)
-            setEmptyDeck(true);
-        return getEmptyDeck();
-    }*/
-
 
     /**
      * Method for drawing a card from the Resource deck.
      * @return The drawn Resource card.
      */
-   /* public CardResource drawCardResource() {
-        if (!getEmptyDeck()){
-            CardResource drawCard = deckResource[getDeckIndex()];
-            incrementDeckIndex();
-            return drawCard;
-        } else {
-            return null;
-        }
-    }*/
-    public CardResource drawCardResource() throws NoMoreCardException{
+    public CardResource drawCardResource() throws NoMoreCardException {
         if(!this.deckResource.isEmpty()){
-            CardResource drawCard = this.deckResource.removeFirst();
-            return drawCard;
+            return this.deckResource.removeFirst();
         } else throw new NoMoreCardException("Error: ResourceCards are finished");
     }
 
@@ -168,13 +132,6 @@ public class DeckResource extends Deck{
      * Method that returns the back of the top card of the deck.
      * @return The back of the top card of the deck.
      */
-   /* public BackSide backSideCard() {
-        if (!getEmptyDeck()){
-            return deckResource[getDeckIndex()].getBackResource();
-        } else {
-            return null;
-        }
-    }*/
     public BackSide backSideCard() throws NoMoreCardException{
         if(!this.deckResource.isEmpty()){
             return deckResource.getFirst().getBackResource();

@@ -1,4 +1,6 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Side;
+
+import it.polimi.ingsw.gc03.Enumerations.Value;
 
 /**
  * This class manages the information present on both the front and back of a card.

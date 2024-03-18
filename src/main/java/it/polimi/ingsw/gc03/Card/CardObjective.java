@@ -1,4 +1,7 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Card;
+
+import it.polimi.ingsw.gc03.Side.Back.BackObjective;
+import it.polimi.ingsw.gc03.Side.Front.FrontObjective;
 
 public class CardObjective {
     /**

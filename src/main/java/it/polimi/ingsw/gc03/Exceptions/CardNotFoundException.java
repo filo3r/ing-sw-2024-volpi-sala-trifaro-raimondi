@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Exceptions;
 
 public class CardNotFoundException extends Exception{
     public CardNotFoundException(){

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Card;
 
 /**
  * This class represents a card in the game.

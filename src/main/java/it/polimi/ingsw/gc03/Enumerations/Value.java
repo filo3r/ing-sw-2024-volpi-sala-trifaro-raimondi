@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Enumerations;
 
 /**
  * This enumeration class represents the values that can be present on the front and back of the cards.

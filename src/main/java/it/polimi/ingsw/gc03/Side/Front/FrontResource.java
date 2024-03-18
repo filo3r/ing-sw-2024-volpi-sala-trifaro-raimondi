@@ -1,9 +1,12 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Side.Front;
+
+import it.polimi.ingsw.gc03.Side.Side;
+import it.polimi.ingsw.gc03.Enumerations.Value;
 
 /**
  * This class represents the front of a Resource card.
  */
-public class FrontResource extends Side{
+public class FrontResource extends Side {
 
     /**
      * Points on the card

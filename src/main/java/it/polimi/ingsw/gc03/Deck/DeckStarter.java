@@ -1,10 +1,16 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Deck;
+
+import it.polimi.ingsw.gc03.Side.Back.BackSide;
+import it.polimi.ingsw.gc03.Card.CardStarter;
+import it.polimi.ingsw.gc03.Exceptions.NoMoreCardException;
+import it.polimi.ingsw.gc03.Side.Front.FrontStarter;
+import it.polimi.ingsw.gc03.Enumerations.Value;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.List;
 /**
  * This class represents a deck of Starter cards.
@@ -14,8 +20,7 @@ public class DeckStarter extends Deck{
     /**
      * Deck of Starter cards.
      */
-    //private CardStarter[] deckStarter;
-    private List<CardStarter> deckStarter;
+    private final List<CardStarter> deckStarter;
 
 
     /**
@@ -29,7 +34,7 @@ public class DeckStarter extends Deck{
      */
     public DeckStarter() {
         super();
-        //this.deckStarter = new CardStarter[NUM_STA];
+        deckStarter = new ArrayList<>();
         // File path
         String filePath = System.getProperty("user.dir");
         // Full path to the file
@@ -39,8 +44,6 @@ public class DeckStarter extends Deck{
         // Opening and reading the file
         try {
             Scanner inputStream = new Scanner(new File(fullFilePath));
-            // Index to build the array
-            //int index = 0;
             // Read the file until the end
             while (inputStream.hasNextLine()) {
                 // Read all values of a card
@@ -63,8 +66,6 @@ public class DeckStarter extends Deck{
                         backBottomRightCorner, center1, center2, center3);
                 // Create the complete card
                 CardStarter cardStarter = new CardStarter(idCard, frontStarter, backStarter);
-                //this.deckStarter[index] = cardStarter;
-                //index++;
                 this.deckStarter.add(cardStarter);
             }
             // Close the file
@@ -81,16 +82,6 @@ public class DeckStarter extends Deck{
     /**
      * Method for shuffling the Starter card deck.
      */
-   /* public void shuffleDeckStarter() {
-        Random random = new Random();
-        for (int i = NUM_STA - 1; i > 0; i--) {
-            int indexRandom = random.nextInt(i + 1);
-            // Swap
-            CardStarter temp = deckStarter[indexRandom];
-            deckStarter[indexRandom] = deckStarter[i];
-            deckStarter[i] = temp;
-        }
-    }*/
     public void shuffleDeckStarter(){
         Collections.shuffle(this.deckStarter);
     }
@@ -100,9 +91,6 @@ public class DeckStarter extends Deck{
      * Getter method to retrieve the cards contained in the deck.
      * @return The cards contained in the deck.
      */
-   //public CardStarter[] getDeckStarter() {
-   //     return deckStarter;
-   // }
     public List<CardStarter> getDeckStarter(){
         return this.deckStarter;
     }
@@ -113,7 +101,6 @@ public class DeckStarter extends Deck{
      * @param indexStarter The index of the card you want to print.
      */
     public void printCardStarterAtIndex(int indexStarter) {
-        //CardStarter cardStarter = deckStarter[indexStarter];
         CardStarter cardStarter = deckStarter.get(indexStarter);
         cardStarter.printCardStarter(cardStarter);
     }
@@ -123,42 +110,19 @@ public class DeckStarter extends Deck{
      * Method for printing the entire deck.
      */
     public void printDeckStarter() {
-        for (int i = 0; i < NUM_STA; i++){
-            CardStarter cardStarter = //deckStarter[i];
-                    deckStarter.get(i);
+        for (CardStarter cardStarter : this.deckStarter){
             cardStarter.printCardStarter(cardStarter);
         }
     }
 
 
-    /*/**
-     * Method that checks whether all cards in the deck have been drawn.
-     * @return A true or false Boolean.
-     */
-   /* public boolean deckStarterIsEmpty() {
-        if (getDeckIndex() == NUM_STA)
-            setEmptyDeck(true);
-        return getEmptyDeck();
-    }
-*/
-
-   /* /**
+    /**
      * Method for drawing a card from the Starter deck.
      * @return The drawn Starter card.
      */
-   /* public CardStarter drawCardStarter() {
-        if (!getEmptyDeck()){
-            CardStarter drawCard = deckStarter[getDeckIndex()];
-            incrementDeckIndex();
-            return drawCard;
-        } else {
-            return null;
-        }
-    }*/
-    public CardStarter drawCardStarter() throws NoMoreCardException{
+    public CardStarter drawCardStarter() throws NoMoreCardException {
         if(!this.deckStarter.isEmpty()){
-            CardStarter drawCard = deckStarter.removeFirst();
-            return drawCard;
+            return this.deckStarter.removeFirst();
         }else throw new NoMoreCardException("Error: StarterCard are finished");
     }
 
@@ -166,15 +130,6 @@ public class DeckStarter extends Deck{
     /**
      * Method that returns the back of the top card of the deck.
      * @return The back of the top card of the deck.
-     */
-    /*public BackSide backSideCard() {
-        if (!getEmptyDeck()){
-           return deckStarter[getDeckIndex()].getBackStarter();
-        } else {
-            return null;
-        }
-    }
-
      */
     public BackSide backSideCard() throws NoMoreCardException{
         if(!this.deckStarter.isEmpty()){

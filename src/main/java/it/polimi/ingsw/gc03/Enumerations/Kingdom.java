@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Enumerations;
 
 /**
  * This enumeration class represents the available kingdoms in the game.

@@ -1,4 +1,8 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Card;
+
+import it.polimi.ingsw.gc03.Side.Back.BackSide;
+import it.polimi.ingsw.gc03.Side.Front.FrontStarter;
+import it.polimi.ingsw.gc03.Enumerations.Value;
 
 /**
  * This class represents a Starter card.
@@ -46,7 +50,7 @@ public class CardStarter extends Card {
      * @param bottomRightCorner Value contained in the bottom-right corner to be set.
      */
     public void setFrontStarter(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                 Value bottomRightCorner) {
+                                Value bottomRightCorner) {
         this.frontStarter.setTopLeftCorner(topLeftCorner);
         this.frontStarter.setBottomLeftCorner(bottomLeftCorner);
         this.frontStarter.setTopRightCorner(topRightCorner);

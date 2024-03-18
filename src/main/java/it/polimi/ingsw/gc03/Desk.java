@@ -1,6 +1,17 @@
 package it.polimi.ingsw.gc03;
 
 
+import it.polimi.ingsw.gc03.Card.CardGold;
+import it.polimi.ingsw.gc03.Card.CardObjective;
+import it.polimi.ingsw.gc03.Card.CardResource;
+import it.polimi.ingsw.gc03.Deck.DeckGold;
+import it.polimi.ingsw.gc03.Deck.DeckResource;
+import it.polimi.ingsw.gc03.Deck.DeckStarter;
+import it.polimi.ingsw.gc03.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.gc03.Exceptions.DeskIsFullException;
+import it.polimi.ingsw.gc03.Exceptions.NoMoreCardException;
+import it.polimi.ingsw.gc03.Exceptions.PlayerAlreadyJoinedException;
+
 import java.util.List;
 
 
@@ -163,7 +174,7 @@ public class Desk {
     /**
      * Draw a card from ResourceDeck and display it only if Displayed Resources are less than 2
      */
-    public void drawResourceAndDisplay() throws NoMoreCardException{
+    public void drawResourceAndDisplay() throws NoMoreCardException {
         if(!deckResource.getDeckResource().isEmpty()){
             if(this.displayedResource.size()<2) this.displayedResource.add(this.deckResource.drawCardResource());
         } else throw new NoMoreCardException("Error: ResourceCard in the deck are finished");
@@ -178,9 +189,7 @@ public class Desk {
     public CardResource drawDisplayedResource(int i) throws CardNotFoundException{
         if(this.displayedResource.size()<i) throw new CardNotFoundException("Error: ResourceCard not found");
         else {
-            CardResource card = this.displayedResource.get(i);
-            this.displayedResource.remove(i);
-            return card;
+            return this.displayedResource.remove(i);
         }
     }
     /**
@@ -200,9 +209,7 @@ public class Desk {
     public CardGold drawGoldResource(int i) throws CardNotFoundException{
         if(this.displayedGold.size()<i) throw new CardNotFoundException("Error: GoldCard not found");
         else {
-            CardGold card = this.displayedGold.get(i);
-            this.displayedGold.remove(i);
-            return card;
+            return this.displayedGold.remove(i);
         }
     }
 

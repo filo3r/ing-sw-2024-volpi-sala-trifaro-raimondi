@@ -1,4 +1,9 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Card;
+
+import it.polimi.ingsw.gc03.Side.Back.BackSide;
+import it.polimi.ingsw.gc03.Side.Front.FrontGold;
+import it.polimi.ingsw.gc03.Enumerations.Kingdom;
+import it.polimi.ingsw.gc03.Enumerations.Value;
 
 /**
  * This class represents a Gold card.

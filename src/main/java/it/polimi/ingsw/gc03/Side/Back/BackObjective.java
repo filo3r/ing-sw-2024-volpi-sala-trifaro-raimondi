@@ -1,4 +1,6 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Side.Back;
+
+import it.polimi.ingsw.gc03.Enumerations.Objective;
 
 // Questa classe è pressochè inutile in quanto copia di FrontObjective.
 public class BackObjective {

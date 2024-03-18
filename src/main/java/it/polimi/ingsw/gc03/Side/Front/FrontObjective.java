@@ -1,4 +1,6 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Side.Front;
+
+import it.polimi.ingsw.gc03.Enumerations.Objective;
 
 public class FrontObjective {
     /**

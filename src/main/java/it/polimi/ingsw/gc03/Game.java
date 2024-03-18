@@ -15,11 +15,6 @@ public class Game {
     private int idGame;
 
     /**
-     * List of players.
-     */
-    private Player[] players;
-
-    /**
      * Chat of the game.
      */
     private Message[] chat;
@@ -41,15 +36,13 @@ public class Game {
      * Constructor for the Game class.
      * @param desk The game's desk.
      * @param idGame The unique game's id.
-     * @param players The list of players currently in the game.
      * @param chat The game's chat.
      * @param status The game's status
      * @param size The game's size: how many players will play in this game.
      */
-    public Game(Desk desk, int idGame, Player[] players, Message[] chat, int status, int size) {
+    public Game(Desk desk, int idGame, Message[] chat, int status, int size) {
         this.desk = desk;
         this.idGame = idGame;
-        this.players = players;
         this.chat = chat;
         this.status = status;
         this.size = size;
@@ -85,22 +78,6 @@ public class Game {
      */
     public void setIdGame(int idGame) {
         this.idGame = idGame;
-    }
-
-    /**
-     * Getter method for retrieving the list of players currently in the game.
-     * @return The list of players currently in the game.
-     */
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    /**
-     * Setter method for setting the list of players currently in the game.
-     * @param players The list of players to set.
-     */
-    public void setPlayers(Player[] players) {
-        this.players = players;
     }
 
     /**

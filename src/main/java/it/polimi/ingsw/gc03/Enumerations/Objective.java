@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03;
+package it.polimi.ingsw.gc03.Enumerations;
 
 public enum Objective{
     OBJ5,
