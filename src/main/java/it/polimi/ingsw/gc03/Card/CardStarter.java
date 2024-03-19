@@ -107,20 +107,20 @@ public class CardStarter extends Card {
         System.out.println("Bottom Left Corner: " + backStarter.getBottomLeftCorner());
         System.out.println("Top Right Corner: " + backStarter.getTopRightCorner());
         System.out.println("Bottom Right Corner: " + backStarter.getBottomRightCorner());
-        System.out.println("Center: ");
+        System.out.print("Center: ");
         Value[] center = backStarter.getCenter();
         boolean firstCenter = true;
         for (int i = 0; i < 3; i++) {
             if (center[i] != Value.NULL){
                 if (firstCenter) {
-                    System.out.println(center[i]);
+                    System.out.print(center[i]);
                     firstCenter = false;
                 } else {
-                    System.out.println(", " + center[i]);
+                    System.out.print(", " + center[i]);
                 }
             }
         }
-
+        System.out.println();
     }
 
 

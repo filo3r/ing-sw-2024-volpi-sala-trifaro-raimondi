@@ -149,13 +149,14 @@ public class CardGold extends Card {
         for (int i = 0; i < 5; i++) {
             if (requirementPlacement[i] != Value.NULL){
                 if (firstRequirementPlacement) {
-                    System.out.println(requirementPlacement[i]);
+                    System.out.print(requirementPlacement[i]);
                     firstRequirementPlacement = false;
                 } else {
-                    System.out.println(", " + requirementPlacement[i]);
+                    System.out.print(", " + requirementPlacement[i]);
                 }
             }
         }
+        System.out.println();
         // Information on the back
         System.out.println("BACK SIDE:");
         System.out.println("Top Left Corner: " + backGold.getTopLeftCorner());
