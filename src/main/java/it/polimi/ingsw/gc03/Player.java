@@ -30,6 +30,12 @@ public class Player {
     private CardObjective cardObjective;
 
     /**
+     * Player's color.
+     */
+    private char color;
+
+
+    /**
      * Player's codex.
      */
     private Codex codex;
@@ -49,13 +55,14 @@ public class Player {
      * @param codex Player's codex.
      * @param score Player's score.
      */
-    public Player(String nickname, CardStarter cardStarter, Card[] hand, CardObjective cardObjective, Codex codex, int score) {
+    public Player(String nickname, CardStarter cardStarter, Card[] hand, CardObjective cardObjective, Codex codex, int score, char color) {
         this.nickname = nickname;
         this.cardStarter = cardStarter;
         this.hand = hand;
         this.cardObjective = cardObjective;
         this.codex = codex;
         this.score = score;
+        this.color = color;
     }
 
     /**
@@ -194,5 +201,18 @@ public class Player {
     public void selectCardStarter(){
     }
 
-
+    /**
+     * Returns the player's color.
+     * @return the player's color.
+     */
+    public char getColor() {
+        return color;
+    }
+    /**
+     * Sets the player's color.
+     * @param color the player's color.
+     */
+    public void setColor(char color) {
+        this.color = color;
+    }
 }

@@ -15,6 +15,11 @@ public class Game {
     private int idGame;
 
     /**
+     * Current player's turn
+     */
+    private Player currPlayer;
+
+    /**
      * Chat of the game.
      */
     private Message[] chat;
@@ -40,12 +45,13 @@ public class Game {
      * @param status The game's status
      * @param size The game's size: how many players will play in this game.
      */
-    public Game(Desk desk, int idGame, Message[] chat, int status, int size) {
+    public Game(Desk desk, int idGame, Message[] chat, int status, int size, Player currPlayer) {
         this.desk = desk;
         this.idGame = idGame;
         this.chat = chat;
         this.status = status;
         this.size = size;
+        this.currPlayer = currPlayer;
     }
 
     /**
@@ -128,4 +134,19 @@ public class Game {
         this.size = size;
     }
 
+    /**
+     * Getter method for the current plauer.
+     * @return The current player.
+     */
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    /**
+     * Setter method for the current player.
+     * @param currPlayer The current player.
+     */
+    public void setCurrPlayer(Player currPlayer) {
+        this.currPlayer = currPlayer;
+    }
 }
