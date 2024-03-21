@@ -5,6 +5,8 @@ import it.polimi.ingsw.gc03.Side.Front.FrontResource;
 import it.polimi.ingsw.gc03.Enumerations.Kingdom;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 
+import java.util.ArrayList;
+
 /**
  * This class represents a Resource card.
  */
@@ -101,17 +103,15 @@ public class CardResource extends Card {
      * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
      * @param topRightCorner Value contained in the top-right corner to be set.
      * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param center1 First value contained in the center to be set.
-     * @param center2 Second value contained in the center to be set.
-     * @param center3 Third value contained in the center to be set.
+     * @param center Value contained in the center to be set.
      */
     public void setBackResource(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                 Value bottomRightCorner, Value center1, Value center2, Value center3) {
+                                Value bottomRightCorner, ArrayList<Value> center) {
         this.backResource.setTopLeftCorner(topLeftCorner);
         this.backResource.setBottomLeftCorner(bottomLeftCorner);
         this.backResource.setTopRightCorner(topRightCorner);
         this.backResource.setBottomRightCorner(bottomRightCorner);
-        this.backResource.setCenter(center1, center2, center3);
+        this.backResource.setCenter(center);
     }
 
 
@@ -137,8 +137,8 @@ public class CardResource extends Card {
         System.out.println("Bottom Left Corner: " + backResource.getBottomLeftCorner());
         System.out.println("Top Right Corner: " + backResource.getTopRightCorner());
         System.out.println("Bottom Right Corner: " + backResource.getBottomRightCorner());
-        System.out.println("Center: " + backResource.getCenter()[0]);
-
+        ArrayList<Value> center = backResource.getCenter();
+        System.out.println("Center: " + center.get(0));
     }
 
 

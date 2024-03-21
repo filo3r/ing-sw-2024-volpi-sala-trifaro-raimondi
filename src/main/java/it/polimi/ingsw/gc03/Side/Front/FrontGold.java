@@ -2,6 +2,8 @@ package it.polimi.ingsw.gc03.Side.Front;
 
 import it.polimi.ingsw.gc03.Side.Side;
 import it.polimi.ingsw.gc03.Enumerations.Value;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class represents the front of a Gold card.
@@ -21,7 +23,7 @@ public class FrontGold extends Side {
     /**
      * Requirements for card placement.
      */
-    private Value[] requirementPlacement;
+    private ArrayList<Value> requirementPlacement;
 
 
     /**
@@ -32,24 +34,15 @@ public class FrontGold extends Side {
      * @param bottomRightCorner Value contained in the bottom-right corner.
      * @param point Points on the card.
      * @param requirementPoint Requirement for the points.
-     * @param requirementPlacement1 The first placement requirement.
-     * @param requirementPlacement2 The second placement requirement.
-     * @param requirementPlacement3 The third placement requirement.
-     * @param requirementPlacement4 The fourth placement requirement.
-     * @param requirementPlacement5 The fifth placement requirement.
+     * @param requirementPlacement Requirements for placing the card.
      */
     public FrontGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                     int point, Value requirementPoint, Value requirementPlacement1, Value requirementPlacement2,
-                     Value requirementPlacement3, Value requirementPlacement4, Value requirementPlacement5) {
+                     int point, Value requirementPoint, Value[] requirementPlacement) {
         super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
         this.point = point;
         this.requirementPoint = requirementPoint;
-        this.requirementPlacement = new Value[5];
-        this.requirementPlacement[0] = requirementPlacement1;
-        this.requirementPlacement[1] = requirementPlacement2;
-        this.requirementPlacement[2] = requirementPlacement3;
-        this.requirementPlacement[3] = requirementPlacement4;
-        this.requirementPlacement[4] = requirementPlacement5;
+        this.requirementPlacement = new ArrayList<>();
+        this.requirementPlacement.addAll(Arrays.asList(requirementPlacement));
     }
 
 
@@ -93,28 +86,17 @@ public class FrontGold extends Side {
      * Getter method to retrieve the requirements for card placement.
      * @return The requirements for card placement.
      */
-    public Value[] getRequirementPlacement() {
+    public ArrayList<Value> getRequirementPlacement() {
         return requirementPlacement;
     }
 
 
     /**
      * Setter method to set the requirements for the points.
-     * @param requirementPlacement1 The first placement requirement.
-     * @param requirementPlacement2 The second placement requirement.
-     * @param requirementPlacement3 The third placement requirement.
-     * @param requirementPlacement4 The fourth placement requirement.
-     * @param requirementPlacement5 The fifth placement requirement.
+     * @param requirementPlacement The requirements for card placement.
      */
-    public void setRequirementPlacement(Value requirementPlacement1, Value requirementPlacement2,
-                                        Value requirementPlacement3, Value requirementPlacement4,
-                                        Value requirementPlacement5) {
-        this.requirementPlacement = new Value[5];
-        this.requirementPlacement[0] = requirementPlacement1;
-        this.requirementPlacement[1] = requirementPlacement2;
-        this.requirementPlacement[2] = requirementPlacement3;
-        this.requirementPlacement[3] = requirementPlacement4;
-        this.requirementPlacement[4] = requirementPlacement5;
+    public void setRequirementPlacement(ArrayList<Value> requirementPlacement) {
+        this.requirementPlacement = requirementPlacement;
     }
 
 

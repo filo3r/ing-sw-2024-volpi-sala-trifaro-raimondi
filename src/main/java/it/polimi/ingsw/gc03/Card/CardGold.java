@@ -5,6 +5,8 @@ import it.polimi.ingsw.gc03.Side.Front.FrontGold;
 import it.polimi.ingsw.gc03.Enumerations.Kingdom;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 
+import java.util.ArrayList;
+
 /**
  * This class represents a Gold card.
  */
@@ -76,24 +78,17 @@ public class CardGold extends Card {
      * @param bottomRightCorner Value contained in the bottom-right corner to be set.
      * @param point Points on the card to be set.
      * @param requirementPoint Requirement for the points.
-     * @param requirementPlacement1 The first placement requirement.
-     * @param requirementPlacement2 The second placement requirement.
-     * @param requirementPlacement3 The third placement requirement.
-     * @param requirementPlacement4 The fourth placement requirement.
-     * @param requirementPlacement5 The fifth placement requirement.
+     * @param requirementPlacement Requirements for placing the card.
      */
     public void setFrontGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                             Value bottomRightCorner, int point, Value requirementPoint, Value requirementPlacement1,
-                             Value requirementPlacement2, Value requirementPlacement3, Value requirementPlacement4,
-                             Value requirementPlacement5) {
+                             Value bottomRightCorner, int point, Value requirementPoint, ArrayList<Value> requirementPlacement) {
         this.frontGold.setTopLeftCorner(topLeftCorner);
         this.frontGold.setBottomLeftCorner(bottomLeftCorner);
         this.frontGold.setTopRightCorner(topRightCorner);
         this.frontGold.setBottomRightCorner(bottomRightCorner);
         this.frontGold.setPoint(point);
         this.frontGold.setRequirementPoint(requirementPoint);
-        this.frontGold.setRequirementPlacement(requirementPlacement1, requirementPlacement2, requirementPlacement3,
-                                               requirementPlacement4, requirementPlacement5);
+        this.frontGold.setRequirementPlacement(requirementPlacement);
     }
 
 
@@ -112,17 +107,15 @@ public class CardGold extends Card {
      * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
      * @param topRightCorner Value contained in the top-right corner to be set.
      * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param center1 First value contained in the center to be set.
-     * @param center2 Second value contained in the center to be set.
-     * @param center3 Third value contained in the center to be set.
+     * @param center Value contained in the center to be set.
      */
     public void setBackGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                Value bottomRightCorner, Value center1, Value center2, Value center3) {
+                                Value bottomRightCorner, ArrayList<Value> center) {
         this.backGold.setTopLeftCorner(topLeftCorner);
         this.backGold.setBottomLeftCorner(bottomLeftCorner);
         this.backGold.setTopRightCorner(topRightCorner);
         this.backGold.setBottomRightCorner(bottomRightCorner);
-        this.backGold.setCenter(center1, center2, center3);
+        this.backGold.setCenter(center);
     }
 
 
@@ -144,17 +137,12 @@ public class CardGold extends Card {
         System.out.println("Points: " + frontGold.getPoint());
         System.out.println("Points requirement: " + frontGold.getRequirementPoint());
         System.out.print("Placement requirement: ");
-        Value[] requirementPlacement = frontGold.getRequirementPlacement();
-        boolean firstRequirementPlacement = true;
-        for (int i = 0; i < 5; i++) {
-            if (requirementPlacement[i] != Value.NULL){
-                if (firstRequirementPlacement) {
-                    System.out.print(requirementPlacement[i]);
-                    firstRequirementPlacement = false;
-                } else {
-                    System.out.print(", " + requirementPlacement[i]);
-                }
+        ArrayList<Value> requirementPlacement = frontGold.getRequirementPlacement();
+        for (int i = 0; i < requirementPlacement.size(); i++) {
+            if (i != 0) {
+                System.out.print(", ");
             }
+            System.out.print(requirementPlacement.get(i));
         }
         System.out.println();
         // Information on the back
@@ -163,8 +151,8 @@ public class CardGold extends Card {
         System.out.println("Bottom Left Corner: " + backGold.getBottomLeftCorner());
         System.out.println("Top Right Corner: " + backGold.getTopRightCorner());
         System.out.println("Bottom Right Corner: " + backGold.getBottomRightCorner());
-        System.out.println("Center: " + backGold.getCenter()[0]);
-
+        ArrayList<Value> center = backGold.getCenter();
+        System.out.println("Center: " + center.get(0));
     }
 
 

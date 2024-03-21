@@ -4,6 +4,8 @@ import it.polimi.ingsw.gc03.Side.Back.BackSide;
 import it.polimi.ingsw.gc03.Side.Front.FrontStarter;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 
+import java.util.ArrayList;
+
 /**
  * This class represents a Starter card.
  */
@@ -73,17 +75,15 @@ public class CardStarter extends Card {
      * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
      * @param topRightCorner Value contained in the top-right corner to be set.
      * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param center1 First value contained in the center to be set.
-     * @param center2 Second value contained in the center to be set.
-     * @param center3 Third value contained in the center to be set.
+     * @param center Values contained in the center to be set.
      */
     public void setBackStarter(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                Value bottomRightCorner, Value center1, Value center2, Value center3) {
+                               Value bottomRightCorner, ArrayList<Value> center) {
         this.backStarter.setTopLeftCorner(topLeftCorner);
         this.backStarter.setBottomLeftCorner(bottomLeftCorner);
         this.backStarter.setTopRightCorner(topRightCorner);
         this.backStarter.setBottomRightCorner(bottomRightCorner);
-        this.backStarter.setCenter(center1, center2, center3);
+        this.backStarter.setCenter(center);
     }
 
 
@@ -108,17 +108,12 @@ public class CardStarter extends Card {
         System.out.println("Top Right Corner: " + backStarter.getTopRightCorner());
         System.out.println("Bottom Right Corner: " + backStarter.getBottomRightCorner());
         System.out.print("Center: ");
-        Value[] center = backStarter.getCenter();
-        boolean firstCenter = true;
-        for (int i = 0; i < 3; i++) {
-            if (center[i] != Value.NULL){
-                if (firstCenter) {
-                    System.out.print(center[i]);
-                    firstCenter = false;
-                } else {
-                    System.out.print(", " + center[i]);
-                }
+        ArrayList<Value> center = backStarter.getCenter();
+        for (int i = 0; i < center.size(); i++) {
+            if (i != 0) {
+                System.out.print(", ");
             }
+            System.out.print(center.get(i));
         }
         System.out.println();
     }

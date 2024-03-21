@@ -2,6 +2,8 @@ package it.polimi.ingsw.gc03.Side.Back;
 
 import it.polimi.ingsw.gc03.Side.Side;
 import it.polimi.ingsw.gc03.Enumerations.Value;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class represents the back of a card.
@@ -11,7 +13,7 @@ public class BackSide extends Side {
     /**
      * Values contained in the center.
      */
-    private Value[] center;
+    private ArrayList<Value> center;
 
 
     /**
@@ -20,17 +22,13 @@ public class BackSide extends Side {
      * @param bottomLeftCorner Value contained in the bottom-left corner.
      * @param topRightCorner Value contained in the top-right corner.
      * @param bottomRightCorner Value contained in the bottom-right corner.
-     * @param center1 First value contained in the center.
-     * @param center2 Second value contained in the center.
-     * @param center3 Third value contained in the center.
+     * @param center Value contained in the center.
      */
     public BackSide(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                         Value center1, Value center2, Value center3) {
+                         Value[] center) {
         super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
-        this.center = new Value[3];
-        this.center[0] = center1;
-        this.center[1] = center2;
-        this.center[2] = center3;
+        this.center = new ArrayList<>();
+        this.center.addAll(Arrays.asList(center));
     }
 
 
@@ -38,22 +36,17 @@ public class BackSide extends Side {
      * Getter method to retrieve the values contained in the center.
      * @return The values contained in the center.
      */
-    public Value[] getCenter() {
+    public ArrayList<Value> getCenter() {
         return center;
     }
 
 
     /**
      * Setter method to set the values contained in the center.
-     * @param center1 The first value to be set in the center.
-     * @param center2 The second value to be set in the center.
-     * @param center3 The third value to be set in the center.
+     * @param center The values to be set in the center.
      */
-    public void setCenter(Value center1, Value center2, Value center3) {
-        this.center = new Value[3];
-        this.center[0] = center1;
-        this.center[1] = center2;
-        this.center[2] = center3;
+    public void setCenter(ArrayList<Value> center) {
+        this.center = center;
     }
 
 
