@@ -25,10 +25,9 @@ public class BackSide extends Side {
      * @param center Value contained in the center.
      */
     public BackSide(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                         Value[] center) {
+                         ArrayList<Value> center) {
         super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
-        this.center = new ArrayList<>();
-        this.center.addAll(Arrays.asList(center));
+        this.center = new ArrayList<>(center);
     }
 
 

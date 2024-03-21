@@ -6,6 +6,8 @@ import it.polimi.ingsw.gc03.Side.Front.FrontResource;
 import it.polimi.ingsw.gc03.Side.Front.FrontGold;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 
+import java.util.ArrayList;
+
 
 /**
  * This class represents a Codex.
@@ -118,11 +120,11 @@ public class Codex {
     private boolean checkRequirementPlacement(Side side) {
         // If the card side is FrontGold
         if (side instanceof FrontGold) {
-            Value[] requirementPlacement = ((FrontGold) side).getRequirementPlacement();
+            ArrayList<Value> requirementPlacement = new ArrayList<>(((FrontGold) side).getRequirementPlacement());
             int[] counterRequirementPlacement = new int[8];
             int comparison = 0;
-            for (int i = 0; i < requirementPlacement.length; i++) {
-                switch (requirementPlacement[i]) {
+            for (int i = 0; i < requirementPlacement.size(); i++) {
+                switch (requirementPlacement.get(i)) {
                     case Value.FUNGI:
                         counterRequirementPlacement[0]++;
                         break;
@@ -305,9 +307,8 @@ public class Codex {
         upgradeCounterCodex(side.getTopRightCorner());
         upgradeCounterCodex(side.getBottomRightCorner());
         if (side instanceof BackSide) {
-            Value[] center = ((BackSide) side).getCenter();
             for (int i = 0; i < 3; i++) {
-                upgradeCounterCodex(center[i]);
+                upgradeCounterCodex( ((BackSide) side).getCenter().get(i));
             }
         }
     }
@@ -615,15 +616,14 @@ public class Codex {
                     System.out.println("Bottom Right Corner: " + cardCodex.getBottomRightCorner());
                     if (cardCodex instanceof BackSide) {
                         System.out.print("Center: ");
-                        Value[] center = ((BackSide) cardCodex).getCenter();
                         boolean firstCenter = true;
                         for (int k = 0; k < 3; k++) {
-                            if (center[k] != Value.NULL){
+                            if (((BackSide) cardCodex).getCenter().get(k) != Value.NULL){
                                 if (firstCenter) {
-                                    System.out.print(center[k]);
+                                    System.out.print(((BackSide) cardCodex).getCenter().get(k));
                                     firstCenter = false;
                                 } else {
-                                    System.out.print(", " + center[k]);
+                                    System.out.print(", " + ((BackSide) cardCodex).getCenter().get(k));
                                 }
                             }
                         }

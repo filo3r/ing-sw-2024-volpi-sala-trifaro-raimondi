@@ -37,12 +37,11 @@ public class FrontGold extends Side {
      * @param requirementPlacement Requirements for placing the card.
      */
     public FrontGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                     int point, Value requirementPoint, Value[] requirementPlacement) {
+                     int point, Value requirementPoint, ArrayList<Value> requirementPlacement) {
         super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
         this.point = point;
         this.requirementPoint = requirementPoint;
-        this.requirementPlacement = new ArrayList<>();
-        this.requirementPlacement.addAll(Arrays.asList(requirementPlacement));
+        this.requirementPlacement = new ArrayList<>(requirementPlacement);
     }
 
 
