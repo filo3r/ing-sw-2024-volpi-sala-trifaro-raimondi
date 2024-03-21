@@ -120,11 +120,11 @@ public class Codex {
     private boolean checkRequirementPlacement(Side side) {
         // If the card side is FrontGold
         if (side instanceof FrontGold) {
-            ArrayList<Value> requirementPlacement = new ArrayList<>(((FrontGold) side).getRequirementPlacement());
+            ArrayList<Value> requirementPlacement = ((FrontGold) side).getRequirementPlacement();
             int[] counterRequirementPlacement = new int[8];
             int comparison = 0;
-            for (int i = 0; i < requirementPlacement.size(); i++) {
-                switch (requirementPlacement.get(i)) {
+            for (Value value : requirementPlacement) {
+                switch (value) {
                     case Value.FUNGI:
                         counterRequirementPlacement[0]++;
                         break;
@@ -307,8 +307,9 @@ public class Codex {
         upgradeCounterCodex(side.getTopRightCorner());
         upgradeCounterCodex(side.getBottomRightCorner());
         if (side instanceof BackSide) {
-            for (int i = 0; i < 3; i++) {
-                upgradeCounterCodex( ((BackSide) side).getCenter().get(i));
+            ArrayList<Value> center = ((BackSide) side).getCenter();
+            for (Value value : center) {
+                upgradeCounterCodex(value);
             }
         }
     }
@@ -616,16 +617,12 @@ public class Codex {
                     System.out.println("Bottom Right Corner: " + cardCodex.getBottomRightCorner());
                     if (cardCodex instanceof BackSide) {
                         System.out.print("Center: ");
-                        boolean firstCenter = true;
-                        for (int k = 0; k < 3; k++) {
-                            if (((BackSide) cardCodex).getCenter().get(k) != Value.NULL){
-                                if (firstCenter) {
-                                    System.out.print(((BackSide) cardCodex).getCenter().get(k));
-                                    firstCenter = false;
-                                } else {
-                                    System.out.print(", " + ((BackSide) cardCodex).getCenter().get(k));
-                                }
+                        ArrayList<Value> center = ((BackSide) cardCodex).getCenter();
+                        for (int k = 0; k < center.size(); k++) {
+                            if (k != 0) {
+                                System.out.print(", ");
                             }
+                            System.out.print(center.get(k));
                         }
                         System.out.println();
                     }
