@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03;
 
 import it.polimi.ingsw.gc03.Card.*;
 
+import it.polimi.ingsw.gc03.Card.CardObjective.CardObjective;
 import it.polimi.ingsw.gc03.Enumerations.Kingdom;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 import it.polimi.ingsw.gc03.Exceptions.CardNotFoundException;

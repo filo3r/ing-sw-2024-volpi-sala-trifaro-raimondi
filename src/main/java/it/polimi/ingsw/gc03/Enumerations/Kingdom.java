@@ -24,5 +24,33 @@ public enum Kingdom {
     /**
      * Insect kingdom.
      */
-    INSECT
+    INSECT,
+
+    /**
+     * No kingdom.
+     */
+    NULL;
+
+
+    /**
+     * Method for converting a Value value to a Kingdom value.
+     * @param value The value to convert.
+     * @return The corresponding value Kingdom.
+     */
+    public static Kingdom fromValue(Value value) {
+        switch (value) {
+            case FUNGI:
+                return FUNGI;
+            case PLANT:
+                return PLANT;
+            case ANIMAL:
+                return ANIMAL;
+            case INSECT:
+                return INSECT;
+            default:
+                return NULL;
+        }
+    }
+
+
 }

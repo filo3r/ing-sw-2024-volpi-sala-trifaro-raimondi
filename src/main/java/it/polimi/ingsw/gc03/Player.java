@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03;
 
 import it.polimi.ingsw.gc03.Card.Card;
-import it.polimi.ingsw.gc03.Card.CardObjective;
+import it.polimi.ingsw.gc03.Card.CardObjective.CardObjective;
 import it.polimi.ingsw.gc03.Card.CardStarter;
 
 /**

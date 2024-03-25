@@ -19,4 +19,6 @@ module it.polimi.ingsw.gc03 {
     opens it.polimi.ingsw.gc03.Side.Back to javafx.fxml;
     exports it.polimi.ingsw.gc03.Enumerations;
     opens it.polimi.ingsw.gc03.Enumerations to javafx.fxml;
+    exports it.polimi.ingsw.gc03.Card.CardObjective;
+    opens it.polimi.ingsw.gc03.Card.CardObjective to javafx.fxml;
 }

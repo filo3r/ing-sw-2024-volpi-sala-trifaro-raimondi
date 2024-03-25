@@ -2,6 +2,8 @@ package it.polimi.ingsw.gc03.Side.Front;
 
 import it.polimi.ingsw.gc03.Side.Side;
 import it.polimi.ingsw.gc03.Enumerations.Value;
+import static it.polimi.ingsw.gc03.Enumerations.Kingdom.NULL;
+
 
 /**
  * This class represents the front of a Starter card.
@@ -16,7 +18,7 @@ public class FrontStarter extends Side {
      * @param bottomRightCorner Value contained in the bottom-right corner.
      */
     public FrontStarter(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner) {
-        super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
+        super(NULL, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
     }
 
 }

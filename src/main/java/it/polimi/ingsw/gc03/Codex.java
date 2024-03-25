@@ -611,6 +611,7 @@ public class Codex {
                 if (this.codex[i][j] != null) {
                     Side cardCodex = this.codex[i][j];
                     System.out.println("CARD IN COORDINATES: (" + i + " , " + j + ")");
+                    System.out.println("Kingdom: " + cardCodex.getKingdom());
                     System.out.println("Top Left Corner: " + cardCodex.getTopLeftCorner());
                     System.out.println("Bottom Left Corner: " + cardCodex.getBottomLeftCorner());
                     System.out.println("Top Right Corner: " + cardCodex.getTopRightCorner());

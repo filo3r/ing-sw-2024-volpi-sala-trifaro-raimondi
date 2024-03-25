@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.Side.Back;
 
+import it.polimi.ingsw.gc03.Enumerations.Kingdom;
 import it.polimi.ingsw.gc03.Side.Side;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 import java.util.ArrayList;
@@ -18,15 +19,16 @@ public class BackSide extends Side {
 
     /**
      * Constructor of the class BackSide.
+     * @param kingdom The kingdom of the card.
      * @param topLeftCorner Value contained in the top-left corner.
      * @param bottomLeftCorner Value contained in the bottom-left corner.
      * @param topRightCorner Value contained in the top-right corner.
      * @param bottomRightCorner Value contained in the bottom-right corner.
      * @param center Value contained in the center.
      */
-    public BackSide(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                         ArrayList<Value> center) {
-        super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
+    public BackSide(Kingdom kingdom, Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
+                    Value bottomRightCorner, ArrayList<Value> center) {
+        super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
         this.center = new ArrayList<>(center);
     }
 

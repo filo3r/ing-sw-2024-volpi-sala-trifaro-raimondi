@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.Side.Front;
 
+import it.polimi.ingsw.gc03.Enumerations.Kingdom;
 import it.polimi.ingsw.gc03.Side.Side;
 import it.polimi.ingsw.gc03.Enumerations.Value;
 
@@ -16,15 +17,16 @@ public class FrontResource extends Side {
 
     /**
      * Constructor of the class FrontResource.
+     * @param kingdom The kingdom of the card.
      * @param topLeftCorner Value contained in the top-left corner.
      * @param bottomLeftCorner Value contained in the bottom-left corner.
      * @param topRightCorner Value contained in the top-right corner.
      * @param bottomRightCorner Value contained in the bottom-right corner.
      * @param point Points on the card.
      */
-    public FrontResource(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner,
-                         int point) {
-        super(topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
+    public FrontResource(Kingdom kingdom, Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
+                         Value bottomRightCorner, int point) {
+        super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
         this.point = point;
     }
 
