@@ -1,6 +1,7 @@
 module it.polimi.ingsw.gc03 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.google.gson;
 
 
     opens it.polimi.ingsw.gc03 to javafx.fxml;
@@ -9,8 +10,6 @@ module it.polimi.ingsw.gc03 {
     opens it.polimi.ingsw.gc03.Exceptions to javafx.fxml;
     exports it.polimi.ingsw.gc03.Card;
     opens it.polimi.ingsw.gc03.Card to javafx.fxml;
-    exports it.polimi.ingsw.gc03.Deck;
-    opens it.polimi.ingsw.gc03.Deck to javafx.fxml;
     exports it.polimi.ingsw.gc03.Side;
     opens it.polimi.ingsw.gc03.Side to javafx.fxml;
     exports it.polimi.ingsw.gc03.Side.Front;

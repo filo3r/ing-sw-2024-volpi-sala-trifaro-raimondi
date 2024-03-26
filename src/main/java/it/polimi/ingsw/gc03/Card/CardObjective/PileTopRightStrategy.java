@@ -23,33 +23,33 @@ public class PileTopRightStrategy implements CalculateScoreStrategy {
     @Override
     public int calculateScore(Codex codex, int point, ArrayList<Value> parameters) {
         // Convert Value to Kingdom
-        ArrayList<Kingdom> diagonalCard = new ArrayList<>();
+        ArrayList<Kingdom> pileCard = new ArrayList<>();
         for (Value parameter : parameters) {
             Kingdom card = Kingdom.fromValue(parameter);
-            diagonalCard.add(card);
+            pileCard.add(card);
         }
         // Calculation on the codex
         int pointCalculated = 0;
         int counterKingdom = 0;
         int[][] counterCard = new int[81][81];
-        for (int i = codex.getMaxRow(); i >= codex.getMinRow() + (((diagonalCard.size() - 1) * 2) - 1); i--) {
+        for (int i = codex.getMaxRow(); i >= codex.getMinRow() + (((pileCard.size() - 1) * 2) - 1); i--) {
             for (int j = codex.getMinColumn(); j < codex.getMaxColumn(); j++) {
                 if (codex.getCodex()[i][j] != null) {
                     Side side = codex.getCodex()[i][j];
-                    if (side.getKingdom() == diagonalCard.getFirst() && counterCard[i][j] == 0) {
+                    if (side.getKingdom() == pileCard.getFirst() && counterCard[i][j] == 0) {
                         counterKingdom++;
-                        for (int k = 0; k < diagonalCard.size() - 1; k++) {
+                        for (int k = 0; k < pileCard.size() - 1; k++) {
                             if (codex.getCodex()[(i - 1) - (k * 2)][j + 1] != null) {
                                 side = codex.getCodex()[(i - 1) - (k * 2)][j + 1];
-                                if (side.getKingdom() == diagonalCard.get(k + 1) && counterCard[(i - 1) - (k * 2)][j + 1] == 0) {
+                                if (side.getKingdom() == pileCard.get(k + 1) && counterCard[(i - 1) - (k * 2)][j + 1] == 0) {
                                     counterKingdom++;
                                 }
                             }
                         }
-                        if (counterKingdom == diagonalCard.size()) {
+                        if (counterKingdom == pileCard.size()) {
                             pointCalculated = pointCalculated + point;
                             counterCard[i][j]++;
-                            for (int k = 0; k < diagonalCard.size() - 1; k++) {
+                            for (int k = 0; k < pileCard.size() - 1; k++) {
                                 counterCard[(i - 1) - (k * 2)][j + 1]++;
                             }
                         }
