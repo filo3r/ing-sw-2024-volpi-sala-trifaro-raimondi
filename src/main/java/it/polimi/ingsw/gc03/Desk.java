@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gc03;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.gc03.Card.*;
 
 import it.polimi.ingsw.gc03.Card.CardObjective.CardObjective;
@@ -17,6 +19,8 @@ import it.polimi.ingsw.gc03.Side.Front.FrontStarter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -287,57 +291,12 @@ public class Desk {
         String fullFilePath = filePath + File.separator + "src" + File.separator + "main" + File.separator + "java" +
                 File.separator + "it" + File.separator + "polimi" + File.separator + "ingsw" +
                 File.separator + "gc03" + File.separator + FILE_CARD_GOLD;
-        // Opening and reading the file
+        Gson gson = new Gson();
+        Type listType = new TypeToken<ArrayList<CardGold>>(){}.getType();
         try {
-            Scanner inputStream = new Scanner(new File(fullFilePath));
-            // Read the file until the end
-            while (inputStream.hasNextLine()) {
-                // Read all values of a card
-                String idCard = inputStream.nextLine();
-                Kingdom kingdom = convertToKingdom(inputStream.nextLine());
-                Value frontTopLeftCorner = convertToValue(inputStream.nextLine());
-                Value frontBottomLeftCorner = convertToValue(inputStream.nextLine());
-                Value frontTopRightCorner = convertToValue(inputStream.nextLine());
-                Value frontBottomRightCorner = convertToValue(inputStream.nextLine());
-                int point = Integer.parseInt(inputStream.nextLine());
-                Value requirementPoint = convertToValue(inputStream.nextLine());
-                Value requirementPlacement1 = convertToValue(inputStream.nextLine());
-                Value requirementPlacement2 = convertToValue(inputStream.nextLine());
-                Value requirementPlacement3 = convertToValue(inputStream.nextLine());
-                Value requirementPlacement4 = convertToValue(inputStream.nextLine());
-                Value requirementPlacement5 = convertToValue(inputStream.nextLine());
-                ArrayList<Value> requirementPlacement = new ArrayList<>();
-                if(requirementPlacement1!=Value.NULL) requirementPlacement.add(requirementPlacement1);
-                if(requirementPlacement2!=Value.NULL) requirementPlacement.add(requirementPlacement2);
-                if(requirementPlacement3!=Value.NULL) requirementPlacement.add(requirementPlacement3);
-                if(requirementPlacement4!=Value.NULL) requirementPlacement.add(requirementPlacement4);
-                if(requirementPlacement5!=Value.NULL) requirementPlacement.add(requirementPlacement5);
-                Value backTopLeftCorner = convertToValue(inputStream.nextLine());
-                Value backBottomLeftCorner = convertToValue(inputStream.nextLine());
-                Value backTopRightCorner = convertToValue(inputStream.nextLine());
-                Value backBottomRightCorner = convertToValue(inputStream.nextLine());
-                Value center1 = convertToValue(inputStream.nextLine());
-                Value center2 = convertToValue(inputStream.nextLine());
-                Value center3 = convertToValue(inputStream.nextLine());
-                ArrayList<Value> center = new ArrayList<>();
-                if(center1!=Value.NULL) center.add(center1);
-                if(center2!=Value.NULL) center.add(center2);
-                if(center3!=Value.NULL) center.add(center3);
-                // Create the front and back of the card
-                FrontGold frontGold = new FrontGold(frontTopLeftCorner, frontBottomLeftCorner,
-                        frontTopRightCorner, frontBottomRightCorner, point,
-                        requirementPoint, requirementPlacement);
-                BackSide backGold = new BackSide(backTopLeftCorner, backBottomLeftCorner, backTopRightCorner,
-                        backBottomRightCorner, center);
-                // Create the complete card
-                CardGold cardGold = new CardGold(idCard, kingdom, frontGold, backGold);
-                this.deckGold.add(cardGold);
-            }
-            // Close the file
-            inputStream.close();
-            // Error opening the file
+            ArrayList<CardStarter> deckGold = gson.fromJson(new FileReader(filePath),listType);
         } catch (FileNotFoundException e) {
-            System.err.println("Error opening the file: " + FILE_CARD_GOLD + " " + e.getMessage());
+            throw new RuntimeException(e);
         }
         // Shuffle the deck
         Collections.shuffle(deckGold);
@@ -402,45 +361,13 @@ public class Desk {
          String fullFilePath = filePath + File.separator + "src" + File.separator + "main" + File.separator + "java" +
                  File.separator + "it" + File.separator + "polimi" + File.separator + "ingsw" +
                  File.separator + "gc03" + File.separator + FILE_CARD_RESOURCE;
-         // Opening and reading the file
-         try {
-                 Scanner inputStream = new Scanner(new File(fullFilePath));
-                 // Read the file until the end
-                while (inputStream.hasNextLine()) {
-                 // Read all values of a card
-                 String idCard = inputStream.nextLine();
-                Kingdom kingdom = convertToKingdom(inputStream.nextLine());
-                Value frontTopLeftCorner = convertToValue(inputStream.nextLine());
-                Value frontBottomLeftCorner = convertToValue(inputStream.nextLine());
-                Value frontTopRightCorner = convertToValue(inputStream.nextLine());
-                Value frontBottomRightCorner = convertToValue(inputStream.nextLine());
-                int point = Integer.parseInt(inputStream.nextLine());
-                Value backTopLeftCorner = convertToValue(inputStream.nextLine());
-                Value backBottomLeftCorner = convertToValue(inputStream.nextLine());
-                Value backTopRightCorner = convertToValue(inputStream.nextLine());
-                Value backBottomRightCorner = convertToValue(inputStream.nextLine());
-                Value center1 = convertToValue(inputStream.nextLine());
-                Value center2 = convertToValue(inputStream.nextLine());
-                Value center3 = convertToValue(inputStream.nextLine());
-                ArrayList<Value> center = new ArrayList<>();
-                if(center1!=Value.NULL) center.add(center1);
-                if(center2!=Value.NULL) center.add(center2);
-                if(center3!=Value.NULL) center.add(center3);
-                // Create the front and back of the card
-                FrontResource frontResource = new FrontResource(frontTopLeftCorner, frontBottomLeftCorner,
-                        frontTopRightCorner, frontBottomRightCorner, point);
-                BackSide backResource = new BackSide(backTopLeftCorner, backBottomLeftCorner, backTopRightCorner,
-                        backBottomRightCorner, center);
-                // Create the complete card
-                CardResource cardResource = new CardResource(idCard, kingdom, frontResource, backResource);
-                this.deckResource.add(cardResource);
-            }
-            // Close the file
-            inputStream.close();
-            // Error opening the file
-         } catch (FileNotFoundException e) {
-             System.err.println("Error opening the file: " + FILE_CARD_RESOURCE + " " + e.getMessage());
-         }
+        Gson gson = new Gson();
+        Type listType = new TypeToken<ArrayList<CardResource>>(){}.getType();
+        try {
+            ArrayList<CardStarter> deckResource = gson.fromJson(new FileReader(filePath),listType);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         // Shuffle the deck
         Collections.shuffle(deckResource);
 
@@ -506,42 +433,12 @@ public class Desk {
         String fullFilePath = filePath + File.separator + "src" + File.separator + "main" + File.separator + "java" +
                 File.separator + "it" + File.separator + "polimi" + File.separator + "ingsw" +
                 File.separator + "gc03" + File.separator + FILE_CARD_STARTER;
-        // Opening and reading the file
+        Gson gson = new Gson();
+        Type listType = new TypeToken<ArrayList<CardStarter>>(){}.getType();
         try {
-            Scanner inputStream = new Scanner(new File(fullFilePath));
-            // Read the file until the end
-            while (inputStream.hasNextLine()) {
-                // Read all values of a card
-                String idCard = inputStream.nextLine();
-                Value frontTopLeftCorner = convertToValue(inputStream.nextLine());
-                Value frontBottomLeftCorner = convertToValue(inputStream.nextLine());
-                Value frontTopRightCorner = convertToValue(inputStream.nextLine());
-                Value frontBottomRightCorner = convertToValue(inputStream.nextLine());
-                Value backTopLeftCorner = convertToValue(inputStream.nextLine());
-                Value backBottomLeftCorner = convertToValue(inputStream.nextLine());
-                Value backTopRightCorner = convertToValue(inputStream.nextLine());
-                Value backBottomRightCorner = convertToValue(inputStream.nextLine());
-                Value center1 = convertToValue(inputStream.nextLine());
-                Value center2 = convertToValue(inputStream.nextLine());
-                Value center3 = convertToValue(inputStream.nextLine());
-                ArrayList<Value> center = new ArrayList<>();
-                if(center1!=Value.NULL) center.add(center1);
-                if(center2!=Value.NULL) center.add(center2);
-                if(center3!=Value.NULL) center.add(center3);
-                // Create the front and back of the card
-                FrontStarter frontStarter = new FrontStarter(frontTopLeftCorner, frontBottomLeftCorner,
-                        frontTopRightCorner, frontBottomRightCorner);
-                BackSide backStarter = new BackSide(backTopLeftCorner, backBottomLeftCorner, backTopRightCorner,
-                        backBottomRightCorner, center);
-                // Create the complete card
-                CardStarter cardStarter = new CardStarter(idCard, frontStarter, backStarter);
-                this.deckStarter.add(cardStarter);
-            }
-            // Close the file
-            inputStream.close();
-            // Error opening the file
+            ArrayList<CardStarter> deckStarter = gson.fromJson(new FileReader(filePath),listType);
         } catch (FileNotFoundException e) {
-            System.err.println("Error opening the file: " + FILE_CARD_STARTER + " " + e.getMessage());
+            throw new RuntimeException(e);
         }
         // Shuffle the deck
         Collections.shuffle(deckStarter);
