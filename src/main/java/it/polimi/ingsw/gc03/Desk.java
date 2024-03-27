@@ -294,7 +294,7 @@ public class Desk {
         Gson gson = new Gson();
         Type listType = new TypeToken<ArrayList<CardGold>>(){}.getType();
         try {
-            ArrayList<CardStarter> deckGold = gson.fromJson(new FileReader(filePath),listType);
+            ArrayList<CardGold> deckGold = gson.fromJson(new FileReader(filePath),listType);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -364,7 +364,7 @@ public class Desk {
         Gson gson = new Gson();
         Type listType = new TypeToken<ArrayList<CardResource>>(){}.getType();
         try {
-            ArrayList<CardStarter> deckResource = gson.fromJson(new FileReader(filePath),listType);
+            ArrayList<CardResource> deckResource = gson.fromJson(new FileReader(filePath),listType);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
