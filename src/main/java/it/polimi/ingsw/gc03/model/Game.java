@@ -1,5 +1,11 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.model.Enumerations.GameStatus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * This class represents a game.
  */
@@ -17,12 +23,12 @@ public class Game {
     /**
      * Current player's turn
      */
-    private Player currPlayer;
+    private int currPlayer;
 
     /**
      * Chat of the game.
      */
-    private Message[] chat;
+    private List<Message> chat;
 
     /**
      * Game's status.
@@ -30,7 +36,7 @@ public class Game {
      *  idle (1): game's waiting for players;
      *  end (2): game's ended)
      */
-    private int status;
+    private GameStatus status;
 
     /**
      * Number of players this game will handle
@@ -39,19 +45,15 @@ public class Game {
 
     /**
      * Constructor for the Game class.
-     * @param desk The game's desk.
-     * @param idGame The unique game's id.
-     * @param chat The game's chat.
-     * @param status The game's status
-     * @param size The game's size: how many players will play in this game.
      */
-    public Game(Desk desk, int idGame, Message[] chat, int status, int size, Player currPlayer) {
-        this.desk = desk;
-        this.idGame = idGame;
-        this.chat = chat;
-        this.status = status;
-        this.size = size;
-        this.currPlayer = currPlayer;
+    public Game() {
+        ArrayList<Player> players = new ArrayList<>();
+        desk = new Desk(players);
+        idGame = new Random().nextInt(999999999);
+        chat = new ArrayList<>();
+        currPlayer = -1;
+        status = GameStatus.WAITING;
+        size = 1; // Default game size is 1, the first player will have to change it
     }
 
     /**
@@ -90,7 +92,7 @@ public class Game {
      * Getter method for retrieving the game's chat.
      * @return The game's chat.
      */
-    public Message[] getChat() {
+    public List<Message> getChat() {
         return chat;
     }
 
@@ -98,7 +100,7 @@ public class Game {
      * Setter method for setting the game's chat.
      * @param chat The game's chat to set.
      */
-    public void setChat(Message[] chat) {
+    public void setChat(List<Message> chat) {
         this.chat = chat;
     }
 
@@ -106,7 +108,7 @@ public class Game {
      * Getter method for retrieving the game's status.
      * @return The game's status.
      */
-    public int getStatus() {
+    public GameStatus getStatus() {
         return status;
     }
 
@@ -114,7 +116,7 @@ public class Game {
      * Setter method for setting the game's status.
      * @param status The game's status to set.
      */
-    public void setStatus(int status) {
+    public void setStatus(GameStatus status) {
         this.status = status;
     }
 
@@ -138,7 +140,7 @@ public class Game {
      * Getter method for the current plauer.
      * @return The current player.
      */
-    public Player getCurrPlayer() {
+    public int getCurrPlayer() {
         return currPlayer;
     }
 
@@ -146,7 +148,7 @@ public class Game {
      * Setter method for the current player.
      * @param currPlayer The current player.
      */
-    public void setCurrPlayer(Player currPlayer) {
+    public void setCurrPlayer(int currPlayer) {
         this.currPlayer = currPlayer;
     }
 }

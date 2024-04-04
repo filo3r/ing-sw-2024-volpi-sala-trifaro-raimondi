@@ -121,6 +121,23 @@ public class Player {
         this.hand = hand;
     }
 
+
+    /**
+     * Add a card to the player's hand.
+     * @param card the card to add to the player's hand.
+     */
+    public void addCardToHand(Card card){
+        this.hand.add(card);
+    }
+
+    /**
+     * Remove a card to the player's hand.
+     * @param CardPositionInHand The position of the card in the player's hand.
+     */
+    public void removeCardFromHand(int CardPositionInHand){
+        this.hand.remove(CardPositionInHand);
+    }
+
     /**
      * Returns the player's personal objective card.
      *
