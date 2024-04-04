@@ -1,0 +1,146 @@
+[
+  {
+    "idCard": "OBJ087",
+    "objective": "2 points for each secondary diagonal of cards belonging to the fungi kingdom.",
+    "point": "2",
+    "parameters": ["FUNGI", "FUNGI", "FUNGI"],
+    "scoreStrategy": {
+      "className": "SecondaryDiagonalStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ088",
+    "objective": "2 points for each main diagonal of cards belonging to the plant kingdom.",
+    "point": "2",
+    "parameters": ["PLANT", "PLANT", "PLANT"],
+    "scoreStrategy":{
+      "className": "MainDiagonalStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ089",
+    "objective": "2 points for each secondary diagonal of cards belonging to the animal kingdom.",
+    "point": "2",
+    "parameters": ["ANIMAL", "ANIMAL", "ANIMAL"],
+    "scoreStrategy": {
+      "className": "SecondaryDiagonalStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ090",
+    "objective": "2 points for each main diagonal of cards belonging to the insect kingdom.",
+    "point": "2",
+    "parameters": ["INSECT", "INSECT", "INSECT"],
+    "scoreStrategy": {
+      "className": "MainDiagonalStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ091",
+    "objective": "3 points for each pile of cards belonging to the fungi kingdom that starts from the top-left corner of a card belonging to the plant kingdom.",
+    "point": "3",
+    "parameters": ["PLANT", "FUNGI", "FUNGI"],
+    "scoreStrategy": {
+      "className": "PileTopLeftStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ092",
+    "objective": "3 points for each pile of cards belonging to the plant kingdom that starts from the top-right corner of a card belonging to the insect kingdom.",
+    "point": "3",
+    "parameters": ["INSECT", "PLANT", "PLANT"],
+    "scoreStrategy": {
+      "className": "PileTopRightStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ093",
+    "objective": "3 points for each pile of cards belonging to the animal kingdom that starts from the bottom-left corner of a card belonging to the fungi kingdom.",
+    "point": "3",
+    "parameters": ["FUNGI", "ANIMAL", "ANIMAL"],
+    "scoreStrategy": {
+      "className": "PileBottomLeftStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ094",
+    "objective": "3 points for each pile of cards belonging to the insect kingdom that starts from the bottom-right corner of a card belonging to the animal kingdom.",
+    "point": "3",
+    "parameters": ["ANIMAL", "INSECT", "INSECT"],
+    "scoreStrategy": {
+      "className": "PileBottomRightStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ095",
+    "objective": "2 points for each set consisting of 3 fungi resources visible in the playing area.",
+    "point": "2",
+    "parameters": ["FUNGI", "FUNGI", "FUNGI"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ096",
+    "objective": "2 points for each set consisting of 3 plant resources visible in the playing area.",
+    "point": "2",
+    "parameters": ["PLANT", "PLANT", "PLANT"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ097",
+    "objective": "2 points for each set consisting of 3 animal resources visible in the playing area.",
+    "point": "2",
+    "parameters": ["ANIMAL", "ANIMAL", "ANIMAL"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ098",
+    "objective": "2 points for each set consisting of 3 insect resources visible in the playing area.",
+    "point": "2",
+    "parameters": ["INSECT", "INSECT", "INSECT"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ099",
+    "objective": "3 points for each set consisting of quill, inkwell and manuscript visible in the playing area.",
+    "point": "3",
+    "parameters": ["QUILL", "INKWELL", "MANUSCRIPT"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ100",
+    "objective": "2 points for each pair of manuscripts visible in the playing area.",
+    "point": "2",
+    "parameters": ["MANUSCRIPT", "MANUSCRIPT"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ101",
+    "objective": "2 points for each pair of inkwells visible in the playing area.",
+    "point": "2",
+    "parameters": ["INKWELL", "INKWELL"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  },
+  {
+    "idCard": "OBJ102",
+    "objective": "2 points for each pair of quills visible in the playing area.",
+    "point": "2",
+    "parameters": ["QUILL", "QUILL"],
+    "scoreStrategy": {
+      "className": "RequirementStrategy"
+    }
+  }
+]

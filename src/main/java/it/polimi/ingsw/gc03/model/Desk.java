@@ -1,546 +1,502 @@
 package it.polimi.ingsw.gc03.model;
 
-
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
-import it.polimi.ingsw.gc03.model.Card.CardGold;
-import it.polimi.ingsw.gc03.model.Card.CardObjective.*;
-import it.polimi.ingsw.gc03.model.Enumerations.Kingdom;
-import it.polimi.ingsw.gc03.model.Enumerations.Value;
-import it.polimi.ingsw.gc03.model.Card.CardResource;
-import it.polimi.ingsw.gc03.model.Card.CardStarter;
-import it.polimi.ingsw.gc03.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.gc03.model.Exceptions.DeskIsFullException;
-import it.polimi.ingsw.gc03.model.Exceptions.NoMoreCardException;
-import it.polimi.ingsw.gc03.model.Exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.model.Side.Back.BackSide;
-
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.CardGold;
+import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.card.CardStarter;
+import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategy;
+import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategyAdapter;
+import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+
+/**
+ * This class represents the game board.
+ */
 public class Desk {
-    /**
-     * The two resource cards that are visible on the table.
-     */
-    private List<CardResource> displayedResource;
 
     /**
-     * The two gold cards that are visible on the table.
+     * Deck of Starter cards.
      */
-    private List<CardGold> displayedGold;
+    private ArrayList<CardStarter> deckStarter;
 
     /**
-     * The two public objective cards.
+     * Deck of Resource cards.
      */
-    private List<CardObjective> displayedObjective;
+    private ArrayList<CardResource> deckResource;
 
     /**
-     * The Resource Deck on the table
+     * Deck of Gold cards.
      */
-    private List<CardResource> deckResource;
+    private ArrayList<CardGold> deckGold;
 
     /**
-     * The Gold Deck on the table
+     * Deck of Objective cards.
      */
-    private List<CardGold> deckGold;
+    private ArrayList<CardObjective> deckObjective;
 
     /**
-     * The Objective Deck on the table
+     * Visible Resource cards.
      */
-    private List<CardObjective> deckObjective;
+    private ArrayList<CardResource> displayedResource;
 
     /**
-     * The players whose codex are on the table
+     * Visible Gold cards.
      */
-    private List<Player> players;
+    private ArrayList<CardGold> displayedGold;
 
     /**
-     * Deck formed by the 6 Starter Card
+     * Visible Objective cards.
      */
-    private List<CardStarter> deckStarter;
+    private ArrayList<CardObjective> displayedObjective;
 
     /**
-     * File containing all information about Gold cards.
+     * File with information about Starter cards.
      */
-    private static final String FILE_CARD_GOLD = "FileCardGold.txt";
+    private static final String FILE_CARD_STARTER = File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
+            "fileCardStarter.json";
 
     /**
-     * File containing all information about Resource cards.
+     * File with information about Resource cards.
      */
-    private static final String FILE_CARD_RESOURCE = "FileCardResource.txt";
+    private static final String FILE_CARD_RESOURCE = File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
+            "fileCardResource.json";
 
     /**
-     * File containing all information about Starter cards.
+     * File with information about Gold cards.
      */
-    private static final String FILE_CARD_STARTER = "FileCardStarter.txt";
+    private static final String FILE_CARD_GOLD = File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
+            "fileCardGold.json";
+
+    /**
+     * File with information about Objective cards.
+     */
+    private static final String FILE_CARD_OBJECTIVE = File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
+            "fileCardObjective.json";
+
+    /**
+     * Number of Starter cards.
+     */
+    private static final int NUM_CARD_STARTER = 6;
+
+    /**
+     * Number of Resource cards.
+     */
+    private static final int NUM_CARD_RESOURCE = 40;
+
+    /**
+     * Number of Gold cards.
+     */
+    private static final int NUM_CARD_GOLD = 40;
+
+    /**
+     * Number of Objective cards.
+     */
+    private static final int NUM_CARD_OBJECTIVE = 16;
+
+    /**
+     * Number of cards displayed.
+     */
+    private static final int NUM_CARD_DISPLAYED = 2;
+
+    /**
+     * Define a logger for the class.
+     */
+    private static final Logger logger = Logger.getLogger(Desk.class.getName());
 
 
     /**
-     * Constructs a new Desk
-     * @param players players at the Table
+     * Constructor of the Desk class.
      */
-    public Desk(List<Player> players){
-        deckGold = DeckGold();
-        deckResource = DeckResource();
-        deckStarter = DeckStarter();
-        this.displayedGold = new ArrayList<>(displayedGold);
+    public Desk() {
+        createDeckStarter();
+        createDeckResource();
+        createDeckGold();
+        createDeckObjective();
+        initializeDisplayedCard();
+    }
+
+
+    /**
+     * Method for creating the Starter card deck.
+     */
+    private void createDeckStarter() {
+        this.deckStarter = new ArrayList<>(NUM_CARD_STARTER);
         try {
-            displayedGold.add(drawCardGold());
-            displayedGold.add(drawCardGold());
-        } catch (NoMoreCardException e) {
-            throw new RuntimeException(e);
+            // Load the JSON file containing the Starter cards
+            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_STARTER);
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                // Use Gson to parse the JSON data
+                Gson gson = new Gson();
+                Type starterCardType = new TypeToken<ArrayList<CardStarter>>(){}.getType();
+                ArrayList<CardStarter> starterCards = gson.fromJson(inputStreamReader, starterCardType);
+                this.deckStarter.addAll(starterCards);
+                inputStream.close();
+            } else {
+                // Log a warning if the resource is not found
+                logger.warning("Could not find the file: " + FILE_CARD_STARTER);
+            }
+        } catch (Exception e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error creating Starter deck", e);
         }
-        this.displayedResource = new ArrayList<>(displayedResource);
+        // shuffle the deck
+        Collections.shuffle(this.deckStarter);
+    }
+
+
+    /**
+     * Method for creating the Resource card deck.
+     */
+    private void createDeckResource() {
+        this.deckResource = new ArrayList<>(NUM_CARD_RESOURCE);
         try {
-            displayedResource.add(drawCardResource());
-            displayedResource.add(drawCardResource());
-        } catch (NoMoreCardException e) {
-            throw new RuntimeException(e);
+            // Load the JSON file containing the Starter cards
+            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_RESOURCE);
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                // Use Gson to parse the JSON data
+                Gson gson = new Gson();
+                Type resourceCardType = new TypeToken<ArrayList<CardResource>>(){}.getType();
+                ArrayList<CardResource> resourceCards = gson.fromJson(inputStreamReader, resourceCardType);
+                this.deckResource.addAll(resourceCards);
+                inputStream.close();
+            } else {
+                // Log a warning if the resource is not found
+                logger.warning("Could not find the file: " + FILE_CARD_RESOURCE);
+            }
+        } catch (Exception e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error creating Resource deck", e);
         }
-        this.displayedObjective = new ArrayList<>(displayedObjective);
+        // shuffle the deck
+        Collections.shuffle(this.deckResource);
+    }
+
+
+    /**
+     * Method for creating the Gold card deck.
+     */
+    private void createDeckGold() {
+        this.deckGold = new ArrayList<>(NUM_CARD_GOLD);
         try {
-            displayedObjective.add((drawCardObjective()));
-            displayedObjective.add((drawCardObjective()));
-        } catch (NoMoreCardException e) {
-            throw new RuntimeException(e);
+            // Load the JSON file containing the Starter cards
+            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_GOLD);
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                // Use Gson to parse the JSON data
+                Gson gson = new Gson();
+                Type goldCardType = new TypeToken<ArrayList<CardGold>>(){}.getType();
+                ArrayList<CardGold> goldCards = gson.fromJson(inputStreamReader, goldCardType);
+                this.deckGold.addAll(goldCards);
+                inputStream.close();
+            } else {
+                // Log a warning if the resource is not found
+                logger.warning("Could not find the file: " + FILE_CARD_GOLD);
+            }
+        } catch (Exception e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error creating Gold deck", e);
         }
-        this.players = new ArrayList<>(players);
-    }
-
-    /**
-     * Setter DisplayedResources Card
-     * @param displayedResource ResourceCards shown on the table
-     */
-    public void setDisplayedResource(List<CardResource> displayedResource){this.displayedResource = displayedResource;}
-
-    /**
-     * Getter DisplayedResources Card
-     * @return the displayed Resources
-     */
-    public List<CardResource> getDisplayResource(){return this.displayedResource;}
-
-    /**
-     * Setter DisplayedGold Card
-     * @param displayedGold GoldCards shown on the table
-     */
-    public void setDisplayedGold(List<CardGold> displayedGold){this.displayedGold = displayedGold;}
-
-    /**
-     * Getter DisplayedGold Card
-     * @return the displayed GoldResources
-     */
-    public List<CardGold> getDisplayedGold(){return this.displayedGold;}
-
-    /**
-     * Setter Objective
-     * @param displayedObjective ObjectiveCards shown on the table
-     */
-    public void setDisplayedObjective(List<CardObjective> displayedObjective){this.displayedObjective = displayedObjective;}
-
-    /**
-     * Getter DisplayedObjective Card
-     * @return the displayed Common Objectives
-     */
-    public List<CardObjective> getDisplayedObjective(){return this.displayedObjective;}
-
-    /**
-     * Setter DeckResource
-     * @param deckResource deckResource on the table
-     */
-    public void setDeckResource(List<CardResource> deckResource){this.deckResource = deckResource;}
-
-
-    /**
-     * Setter DeckGold
-     * @param deckGold deckGold on the Table
-     */
-    public void setDeckGold(List<CardGold> deckGold){this.deckGold = deckGold;}
-
-
-    /**
-     * Setter Players
-     * @param players players at the Table
-     */
-    public void setPlayers(List<Player> players) {this.players = players;}
-
-    /**
-     * Getter Players
-     * @return a List of players at the table
-     */
-    public List<Player> getPlayers(){return this.players;}
-
-    /**
-     * Setter StarterDeck
-     * @param deckStarter Deck of Starter Card
-     */
-    public void setDeckStarter(List<CardStarter> deckStarter){this.deckStarter=deckStarter;}
-
-    /**
-     * Add a player to the desk, throws two exceptions
-     * @param player Player to be added
-     * @throws PlayerAlreadyJoinedException Exception
-     * @throws DeskIsFullException Exception
-     */
-    public void addPlayer(Player player) throws PlayerAlreadyJoinedException,DeskIsFullException{
-        if(this.players.contains(player)) {
-            throw new PlayerAlreadyJoinedException("Error: This Player is already at this table");
-        }
-        else if (this.players.size()<4) {
-            this.players.add(player);
-        }else throw new DeskIsFullException("Error: The desk is already full");
-    }
-
-    /**
-     * Remove a player from the desk
-     * @param player Player to be removed
-     */
-    public void removePlayer(Player player){
-        this.players.remove(player);
-    }
-
-    /**
-     * Draw a card from ResourceDeck and display it only if Displayed Resources are less than 2
-     */
-    public void drawResourceAndDisplay() throws NoMoreCardException {
-        if(!deckResource.isEmpty()){
-            if(this.displayedResource.size()<2) this.displayedResource.add(drawCardResource());
-        } else throw new NoMoreCardException("Error: ResourceCard in the deck are finished");
-    }
-
-    /**
-     * Chose a ResourceCard from the DisplayedResources and return it
-     * @param i Index of the Displayed List
-     * @return the chosen ResourceCard from the DisplayedResources
-     * @throws CardNotFoundException Exception
-     */
-    public CardResource drawDisplayedResource(int i) throws CardNotFoundException{
-        if(this.displayedResource.size()<i) throw new CardNotFoundException("Error: ResourceCard not found");
-        else {
-            return this.displayedResource.remove(i);
-        }
-    }
-    /**
-     * Draw a card from GoldDeck and display it, only if Displayed Gold are less than 2
-     */
-    public void drawGoldAndDisplay() throws NoMoreCardException {
-        if (!this.deckGold.isEmpty()) {
-            if (this.displayedGold.size() < 2) this.displayedGold.add(drawCardGold());
-        } else throw new NoMoreCardException("Error: GoldCard in the deck are finished");
-    }
-    /**
-     * Chose a GoldCard from the DisplayedGold and return it
-     * @param i Index of the Displayed List
-     * @return the chosen GoldCard from the DisplayedGold
-     * @throws CardNotFoundException Exception
-     */
-    public CardGold drawDisplayedGold(int i) throws CardNotFoundException{
-        if(this.displayedGold.size()<i) throw new CardNotFoundException("Error: GoldCard not found");
-        else {
-            return this.displayedGold.remove(i);
-        }
-    }
-
-    /**
-     * Sets a random StarterCard for every player at the desk, the shuffle has been made at the end of the construction of the deck
-     */
-    public void setRandomStarterCard() throws NoMoreCardException {
-        for (Player player : this.players) {
-            player.setCardStarter(drawCardStarter());
-        }
+        // shuffle the deck
+        Collections.shuffle(this.deckGold);
     }
 
 
     /**
-     * Method for converting values read from the file (enum Value).
-     * @param valueString Value read from the file.
-     * @return Converted value.
+     * Method for creating the Objective card deck.
      */
-    private Value convertToValue(String valueString) {
-        switch (valueString) {
-            case "PLANT": return Value.PLANT;
-            case "ANIMAL": return Value.ANIMAL;
-            case "FUNGI": return Value.FUNGI;
-            case "INSECT": return Value.INSECT;
-            case "QUILL": return Value.QUILL;
-            case "INKWELL": return Value.INKWELL;
-            case "MANUSCRIPT": return Value.MANUSCRIPT;
-            case "EMPTY": return Value.EMPTY;
-            case "NULL": return Value.NULL;
-            case "COVERED": return Value.COVERED;
-            default: return null;
-        }
-    }
-
-
-    /**
-     * Method for converting values read from the file (enum Kingdom).
-     * @param kingdomString Value read from the file.
-     * @return Converted value.
-     */
-    private Kingdom convertToKingdom(String kingdomString) {
-        switch (kingdomString) {
-            case "PLANT":
-                return Kingdom.PLANT;
-            case "ANIMAL":
-                return Kingdom.ANIMAL;
-            case "FUNGI":
-                return Kingdom.FUNGI;
-            case "INSECT":
-                return Kingdom.INSECT;
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * Constructor of the DeckGold class.
-     */
-    private List<CardGold> DeckGold() {
-        deckGold = new ArrayList<>();
-        // File path
-        String filePath = System.getProperty("user.dir");
-        // Full path to the file
-        String fullFilePath = filePath + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "it" + File.separator + "polimi" + File.separator + "ingsw" +
-                File.separator + "gc03" + File.separator + FILE_CARD_GOLD;
-        Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<CardGold>>(){}.getType();
+    private void createDeckObjective() {
+        this.deckObjective = new ArrayList<>(NUM_CARD_OBJECTIVE);
         try {
-            ArrayList<CardStarter> deckGold = gson.fromJson(new FileReader(filePath),listType);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            // Load the JSON file containing the Starter cards
+            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_OBJECTIVE);
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                // Create GsonBuilder and register the adapter
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(CalculateScoreStrategy.class, new CalculateScoreStrategyAdapter());
+                Gson gson = gsonBuilder.create();
+                // Use Gson to parse the JSON data
+                Type objectiveCardType = new TypeToken<ArrayList<CardObjective>>(){}.getType();
+                ArrayList<CardObjective> objectiveCards = gson.fromJson(inputStreamReader, objectiveCardType);
+                this.deckObjective.addAll(objectiveCards);
+                inputStream.close();
+            } else {
+                // Log a warning if the resource is not found
+                logger.warning("Could not find the file: " + FILE_CARD_OBJECTIVE);
+            }
+        } catch (Exception e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error creating Objective deck", e);
         }
-        // Shuffle the deck
-        Collections.shuffle(deckGold);
-
-        return deckGold;
-    }
-
-    public List<CardGold> getDeckGold(){
-        return deckGold;
-    }
-
-    /**
-     * Method for printing a deck card.
-     * @param indexGold The index of the card you want to print.
-     */
-    public void printCardGoldAtIndex(int indexGold) {
-        CardGold cardGold = deckGold.get(indexGold);
-        cardGold.printCardGold(cardGold);
+        // shuffle the deck
+        Collections.shuffle(this.deckObjective);
     }
 
 
     /**
-     * Method for printing the entire deck.
+     * Method for initializing visible cards.
      */
-    public void printDeckGold() {
-        for (CardGold cardGold : this.deckGold) {
-            cardGold.printCardGold(cardGold);
+    private void initializeDisplayedCard() {
+        // Resource cards
+        this.displayedResource = new ArrayList<>(NUM_CARD_DISPLAYED);
+        for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
+            CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
+            this.displayedResource.add(cardResource);
         }
-    }
-
-    /**
-     * Method for drawing a card from the Gold deck.
-     * @return The drawn Gold card.
-     */
-    public CardGold drawCardGold() throws NoMoreCardException {
-        if(!this.deckGold.isEmpty()){
-            return this.deckGold.removeFirst();
-        }else throw new NoMoreCardException("Error: GoldCards are finished");
-    }
-
-    /**
-     * Method that returns the back of the top card of the deck.
-     * @return The back of the top card of the deck.
-     */
-    public BackSide backSideCardGold()throws NoMoreCardException{
-        if(!this.deckGold.isEmpty()){
-            return this.deckGold.getFirst().getBackGold();
+        // Gold cards
+        this.displayedGold = new ArrayList<>(NUM_CARD_DISPLAYED);
+        for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
+            CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
+            this.displayedGold.add(cardGold);
         }
-        else throw new NoMoreCardException("Error: GoldCards are finished");
-    }
-
-
-
-    /**
-     * Constructor of the DeckResource class.
-     */
-    private List<CardResource> DeckResource() {
-        deckResource = new ArrayList<>();
-        // File path
-        String filePath = System.getProperty("user.dir");
-        // Full path to the file
-        String fullFilePath = filePath + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "it" + File.separator + "polimi" + File.separator + "ingsw" +
-                File.separator + "gc03" + File.separator + FILE_CARD_RESOURCE;
-        Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<CardResource>>(){}.getType();
-        try {
-            ArrayList<CardStarter> deckResource = gson.fromJson(new FileReader(filePath),listType);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        // Shuffle the deck
-        Collections.shuffle(deckResource);
-
-        return deckResource;
-    }
-
-    /**
-     * Getter method to retrieve the cards contained in the deck.
-     * @return The cards contained in the deck.
-     */
-    public List<CardResource> getDeckResource(){
-        return this.deckResource;
-    }
-
-    /**
-     * Method for printing a deck card.
-     * @param indexResource The index of the card you want to print.
-     */
-    public void printCardResourceAtIndex(int indexResource) {
-        CardResource cardResource =this.deckResource.get(indexResource);
-        cardResource.printCardResource(cardResource);
-    }
-
-
-    /**
-     * Method for printing the entire deck.
-     */
-    public void printDeckResource() {
-        for (CardResource cardResource : this.deckResource){
-            cardResource.printCardResource(cardResource);
+        // Objective cards
+        this.displayedObjective = new ArrayList<>(NUM_CARD_DISPLAYED);
+        for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
+            CardObjective cardObjective = (CardObjective) drawCardDeck(this.deckObjective);
+            this.displayedObjective.add(cardObjective);
         }
     }
 
+
     /**
-     * Method for drawing a card from the Resource deck.
-     * @return The drawn Resource card.
+     * Method for drawing a card.
+     * @param deck The deck from which you want to draw a card.
+     * @return The drawn card.
      */
-    public CardResource drawCardResource() throws NoMoreCardException {
-        if(!this.deckResource.isEmpty()){
-            return this.deckResource.removeFirst();
-        } else throw new NoMoreCardException("Error: ResourceCards are finished");
+    public Card drawCardDeck(ArrayList<? extends Card> deck) {
+        boolean emptyDeck = deck.isEmpty();
+        // Empty deck
+        if (emptyDeck)
+            return null;
+        else
+            return deck.removeFirst();
     }
 
+
     /**
-     * Method that returns the back of the top card of the deck.
-     * @return The back of the top card of the deck.
+     * Method for drawing a card from those visible.
+     * @param displayed The visible cards from which you want to draw.
+     * @param index The index of the card you want to take.
+     * @return The card taken.
      */
-    public BackSide backSideCardResource() throws NoMoreCardException{
-        if(!this.deckResource.isEmpty()){
-            return deckResource.getFirst().getBackResource();
-        }
-        else throw new NoMoreCardException("Error: ResourceCards are finished");
+    public Card drawCardDisplayed(ArrayList<? extends Card> displayed, int index) {
+        // Invalid index
+        if (index < 0 || index >= displayed.size())
+            return null;
+            // Valid index
+        else
+            return displayed.get(index);
     }
 
-    /**
-     * Constructor of the DeckStarter class.
-     */
-    private List<CardStarter> DeckStarter() {
-        deckStarter = new ArrayList<>();
-        // File path
-        String filePath = System.getProperty("user.dir");
-        // Full path to the file
-        String fullFilePath = filePath + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "it" + File.separator + "polimi" + File.separator + "ingsw" +
-                File.separator + "gc03" + File.separator + FILE_CARD_STARTER;
-        Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<CardStarter>>(){}.getType();
-        try {
-            ArrayList<CardStarter> deckStarter = gson.fromJson(new FileReader(filePath),listType);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        // Shuffle the deck
-        Collections.shuffle(deckStarter);
 
+    /**
+     * Method for checking that the visible cards are always in the correct number.
+     */
+    public void checkDisplayed() {
+        // Resource cards
+        while (this.displayedResource.size() < NUM_CARD_DISPLAYED && !this.deckResource.isEmpty()) {
+            CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
+            this.displayedResource.add(cardResource);
+        }
+        // Gold cards
+        while (this.displayedGold.size() < NUM_CARD_DISPLAYED && !this.deckGold.isEmpty()) {
+            CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
+            this.displayedGold.add(cardGold);
+        }
+    }
+
+
+    /**
+     * Method for obtaining the Starter card deck.
+     * @return The Starter card deck.
+     */
+    public ArrayList<CardStarter> getDeckStarter() {
         return deckStarter;
     }
 
+
     /**
-     * Getter method to retrieve the cards contained in the deck.
-     * @return The cards contained in the deck.
+     * Method for setting the Starter card deck.
+     * @param deckStarter The Starter card deck.
      */
-    public List<CardStarter> getDeckStarter(){
-        return this.deckStarter;
+    public void setDeckStarter(ArrayList<CardStarter> deckStarter) {
+        this.deckStarter = deckStarter;
     }
 
 
     /**
-     * Method for printing a deck card.
-     * @param indexStarter The index of the card you want to print.
+     * Method for obtaining the Resource card deck.
+     * @return The Resource card deck.
      */
-    public void printCardStarterAtIndex(int indexStarter) {
-        CardStarter cardStarter = deckStarter.get(indexStarter);
-        cardStarter.printCardStarter(cardStarter);
+    public ArrayList<CardResource> getDeckResource() {
+        return deckResource;
     }
 
 
     /**
-     * Method for printing the entire deck.
+     * Method for setting the Resource card deck.
+     * @param deckResource The Resource card deck.
      */
-    public void printDeckStarter() {
-        for (CardStarter cardStarter : this.deckStarter){
-            cardStarter.printCardStarter(cardStarter);
-        }
+    public void setDeckResource(ArrayList<CardResource> deckResource) {
+        this.deckResource = deckResource;
     }
 
 
     /**
-     * Method for drawing a card from the Starter deck.
-     * @return The drawn Starter card.
+     * Method for obtaining the Gold card deck.
+     * @return The Gold card deck.
      */
-    public CardStarter drawCardStarter() throws NoMoreCardException {
-        if(!this.deckStarter.isEmpty()){
-            return this.deckStarter.removeFirst();
-        }else throw new NoMoreCardException("Error: StarterCard are finished");
+    public ArrayList<CardGold> getDeckGold() {
+        return deckGold;
     }
 
 
     /**
-     * Method that returns the back of the top card of the deck.
-     * @return The back of the top card of the deck.
+     * Method for setting the Gold card deck.
+     * @param deckGold The Gold card deck.
      */
-    public BackSide backSideCardStarter() throws NoMoreCardException{
-        if(!this.deckStarter.isEmpty()){
-            return deckStarter.getFirst().getBackStarter();
-        }
-        else throw new NoMoreCardException("Error: StarterCard are finished");
+    public void setDeckGold(ArrayList<CardGold> deckGold) {
+        this.deckGold = deckGold;
     }
 
-    private List<CardObjective> deckObjective(){
-        List<CardObjective> deckObjective = new ArrayList<>();
-        deckObjective.add(new CardObjective("OBJ87", "MainDiagonal", 2, new ArrayList<>(Arrays.asList(Value.FUNGI)), new MainDiagonalStrategy()));
-        deckObjective.add(new CardObjective("OBJ88", "SecondaryDiagonal", 2, new ArrayList<>(Arrays.asList(Value.PLANT)), new SecondaryDiagonalStrategy()));
-        deckObjective.add(new CardObjective("OBJ89", "MainDiagonal", 2, new ArrayList<>(Arrays.asList(Value.ANIMAL)), new MainDiagonalStrategy()));
-        deckObjective.add(new CardObjective("OBJ90", "SecondaryDiagonal", 2, new ArrayList<>(Arrays.asList(Value.INSECT)), new SecondaryDiagonalStrategy()));
-        deckObjective.add(new CardObjective("OBJ91", "PileBottomRight", 3, new ArrayList<>(Arrays.asList(Value.FUNGI, Value.PLANT)), new PileBottomLeftStrategy()));
-        deckObjective.add(new CardObjective("OBJ93", "PileTopRight", 3, new ArrayList<>(Arrays.asList(Value.FUNGI, Value.ANIMAL)), new PileTopRightStrategy()));
-        deckObjective.add(new CardObjective("OBJ94", "PileTopLeft", 3, new ArrayList<>(Arrays.asList(Value.ANIMAL, Value.INSECT)), new PileTopLeftStrategy()));
-        deckObjective.add(new CardObjective("OBJ95", "Requirement", 2, new ArrayList<>(Arrays.asList(Value.FUNGI)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ96", "Requirement", 2, new ArrayList<>(Arrays.asList(Value.PLANT)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ97", "Requirement", 2, new ArrayList<>(Arrays.asList(Value.ANIMAL)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ98", "Requirement", 2, new ArrayList<>(Arrays.asList(Value.INSECT)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ99", "Requirement", 3, new ArrayList<>(Arrays.asList(Value.QUILL, Value.INKWELL, Value.MANUSCRIPT)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ99", "Requirement", 3, new ArrayList<>(Arrays.asList(Value.MANUSCRIPT, Value.MANUSCRIPT)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ100", "Requirement", 2, new ArrayList<>(Arrays.asList(Value.MANUSCRIPT, Value.MANUSCRIPT)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ101", "Requirement", 3, new ArrayList<>(Arrays.asList(Value.INKWELL, Value.INKWELL)), new RequirementStrategy()));
-        deckObjective.add(new CardObjective("OBJ102", "Requirement", 3, new ArrayList<>(Arrays.asList(Value.QUILL, Value.QUILL)), new RequirementStrategy()));
-        Collections.shuffle(deckObjective);
+
+    /**
+     * Method for obtaining the Objective card deck.
+     * @return The Objective card deck.
+     */
+    public ArrayList<CardObjective> getDeckObjective() {
         return deckObjective;
     }
-    public CardObjective drawCardObjective() throws NoMoreCardException {
-        if(!this.deckObjective.isEmpty()){
-            return this.deckObjective.removeFirst();
-        }else throw new NoMoreCardException("Error: GoldCards are finished");
-    }
-}
 
+
+    /**
+     * Method for setting the Objective card deck.
+     * @param deckObjective The Objective card deck.
+     */
+    public void setDeckObjective(ArrayList<CardObjective> deckObjective) {
+        this.deckObjective = deckObjective;
+    }
+
+
+    /**
+     * Method for obtaining the displayed Resource cards.
+     * @return The displayed Resource cards.
+     */
+    public ArrayList<CardResource> getDisplayedResource() {
+        return displayedResource;
+    }
+
+
+    /**
+     * Method for setting the displayed Resource cards.
+     * @param displayedResource The displayed Resource cards.
+     */
+    public void setDisplayedResource(ArrayList<CardResource> displayedResource) {
+        this.displayedResource = displayedResource;
+    }
+
+
+    /**
+     * Method for obtaining the displayed Gold cards.
+     * @return The Gold cards.
+     */
+    public ArrayList<CardGold> getDisplayedGold() {
+        return displayedGold;
+    }
+
+
+    /**
+     * Method for setting the displayed Gold cards.
+     * @param displayedGold The displayed Gold cards.
+     */
+    public void setDisplayedGold(ArrayList<CardGold> displayedGold) {
+        this.displayedGold = displayedGold;
+    }
+
+
+    /**
+     * Method for obtaining the Objective cards.
+     * @return The Objective cards.
+     */
+    public ArrayList<CardObjective> getDisplayedObjective() {
+        return displayedObjective;
+    }
+
+
+    /**
+     * Method for setting the displayed Objective cards.
+     * @param displayedObjective The displayed Objective cards.
+     */
+    public void setDisplayedObjective(ArrayList<CardObjective> displayedObjective) {
+        this.displayedObjective = displayedObjective;
+    }
+
+
+    public void printDeckStarter() {
+        System.out.println("STARTER DECK:");
+        for (CardStarter card : deckStarter) {
+            card.printCardStarter(card);
+        }
+    }
+
+    public void printDeckResource() {
+        System.out.println("RESOURCE DECK:");
+        for (CardResource card : deckResource) {
+            card.printCardResource(card);
+        }
+    }
+
+    public void printDeckGold() {
+        System.out.println("GOLD DECK:");
+        for (CardGold card : deckGold) {
+            card.printCardGold(card);
+        }
+    }
+
+    public void printDeckObjective() {
+        System.out.println("OBJECTIVE DECK:");
+        for (CardObjective card : deckObjective) {
+            card.printCardObjective(card);
+        }
+    }
+
+    public void printDisplayedResourceCards() {
+        System.out.println("DISPLAYED RESOURCE CARDS:");
+        for (CardResource card : displayedResource) {
+            card.printCardResource(card);
+        }
+    }
+
+    public void printDisplayedGoldCards() {
+        System.out.println("DISPLAYED GOLD CARDS:");
+        for (CardGold card : displayedGold) {
+            card.printCardGold(card);
+        }
+    }
+
+    public void printDisplayedObjectiveCards() {
+        System.out.println("DISPLAYED OBJECTIVE CARDS:");
+        for (CardObjective card : displayedObjective) {
+            card.printCardObjective(card);
+        }
+    }
+
+
+}

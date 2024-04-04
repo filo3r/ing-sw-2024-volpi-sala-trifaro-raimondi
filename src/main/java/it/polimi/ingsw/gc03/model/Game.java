@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.model.Enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 
 import java.util.ArrayList;
 import java.util.List;

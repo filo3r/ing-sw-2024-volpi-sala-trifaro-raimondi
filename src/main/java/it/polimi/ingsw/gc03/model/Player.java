@@ -1,8 +1,8 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.model.Card.Card;
-import it.polimi.ingsw.gc03.model.Card.CardObjective.CardObjective;
-import it.polimi.ingsw.gc03.model.Card.CardStarter;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.card.CardStarter;
 
 import java.util.List;
 

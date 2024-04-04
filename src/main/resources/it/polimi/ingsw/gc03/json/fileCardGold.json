@@ -1,0 +1,882 @@
+[
+  {
+    "idCard": "GOL041",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "QUILL",
+      "point": "1",
+      "requirementPoint": "QUILL",
+      "requirementPlacement": ["FUNGI", "FUNGI", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL042",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "INKWELL",
+      "bottomRightCorner": "EMPTY",
+      "point": "1",
+      "requirementPoint": "INKWELL",
+      "requirementPlacement": ["FUNGI", "FUNGI", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL043",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "MANUSCRIPT",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "1",
+      "requirementPoint": "MANUSCRIPT",
+      "requirementPlacement": ["FUNGI", "FUNGI", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL044",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL045",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL046",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL047",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "INKWELL",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL048",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "QUILL",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL049",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "MANUSCRIPT",
+      "bottomRightCorner": "EMPTY",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL050",
+    "kingdom": "FUNGI",
+    "frontGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "NULL",
+      "point": "5",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["FUNGI", "FUNGI", "FUNGI", "FUNGI", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "FUNGI",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["FUNGI"]
+    }
+  },
+  {
+    "idCard": "GOL051",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "QUILL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "1",
+      "requirementPoint": "QUILL",
+      "requirementPlacement": ["PLANT", "PLANT", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL052",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "MANUSCRIPT",
+      "bottomRightCorner": "EMPTY",
+      "point": "1",
+      "requirementPoint": "MANUSCRIPT",
+      "requirementPlacement": ["PLANT", "PLANT", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL053",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "INKWELL",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "1",
+      "requirementPoint": "INKWELL",
+      "requirementPlacement": ["PLANT", "PLANT", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL054",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL055",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL056",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL057",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "QUILL",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL058",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "MANUSCRIPT",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL059",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "INKWELL",
+      "bottomRightCorner": "EMPTY",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL060",
+    "kingdom": "PLANT",
+    "frontGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "5",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["PLANT", "PLANT", "PLANT", "PLANT", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "PLANT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["PLANT"]
+    }
+  },
+  {
+    "idCard": "GOL061",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "INKWELL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "1",
+      "requirementPoint": "INKWELL",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL062",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "MANUSCRIPT",
+      "point": "1",
+      "requirementPoint": "MANUSCRIPT",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL063",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "QUILL",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "1",
+      "requirementPoint": "QUILL",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL064",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL065",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL066",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL067",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "MANUSCRIPT",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL068",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "INKWELL",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL069",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "QUILL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL070",
+    "kingdom": "ANIMAL",
+    "frontGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "point": "5",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["ANIMAL", "ANIMAL", "ANIMAL", "ANIMAL", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "ANIMAL",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["ANIMAL"]
+    }
+  },
+  {
+    "idCard": "GOL071",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "QUILL",
+      "bottomRightCorner": "EMPTY",
+      "point": "1",
+      "requirementPoint": "QUILL",
+      "requirementPlacement": ["INSECT", "INSECT", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL072",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "MANUSCRIPT",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "1",
+      "requirementPoint": "MANUSCRIPT",
+      "requirementPlacement": ["INSECT", "INSECT", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL073",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "INKWELL",
+      "point": "1",
+      "requirementPoint": "INKWELL",
+      "requirementPlacement": ["INSECT", "INSECT", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL074",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT", "ANIMAL"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL075",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT", "PLANT"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL076",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "2",
+      "requirementPoint": "COVERED",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT", "FUNGI"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL077",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "INKWELL",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL078",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "MANUSCRIPT",
+      "bottomRightCorner": "NULL",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL079",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "NULL",
+      "bottomLeftCorner": "QUILL",
+      "topRightCorner": "NULL",
+      "bottomRightCorner": "EMPTY",
+      "point": "3",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  },
+  {
+    "idCard": "GOL080",
+    "kingdom": "INSECT",
+    "frontGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "NULL",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "NULL",
+      "point": "5",
+      "requirementPoint": "NULL",
+      "requirementPlacement": ["INSECT", "INSECT", "INSECT", "INSECT", "INSECT"]
+    },
+    "backGold": {
+      "kingdom": "INSECT",
+      "topLeftCorner": "EMPTY",
+      "bottomLeftCorner": "EMPTY",
+      "topRightCorner": "EMPTY",
+      "bottomRightCorner": "EMPTY",
+      "center": ["INSECT"]
+    }
+  }
+]

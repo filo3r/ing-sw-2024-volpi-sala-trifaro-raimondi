@@ -1,15 +1,10 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.model.*;
-import it.polimi.ingsw.gc03.model.Card.Card;
-import it.polimi.ingsw.gc03.model.Enumerations.GameStatus;
-import it.polimi.ingsw.gc03.model.Exceptions.DeskIsFullException;
-import it.polimi.ingsw.gc03.model.Exceptions.NoMoreCardException;
-import it.polimi.ingsw.gc03.model.Exceptions.PlayerAlreadyJoinedException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
+import it.polimi.ingsw.gc03.model.exceptions.NoMoreCardException;
+import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 public class GameController {
     private Game game;

@@ -1,11 +1,10 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.model.Side.Side;
-import it.polimi.ingsw.gc03.model.Side.Back.BackSide;
-import it.polimi.ingsw.gc03.model.Side.Front.FrontResource;
-import it.polimi.ingsw.gc03.model.Side.Front.FrontGold;
-import it.polimi.ingsw.gc03.model.Enumerations.Value;
-
+import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.front.FrontGold;
+import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import java.util.ArrayList;
 
 
@@ -78,6 +77,22 @@ public class Codex {
         this.minColumn = 0;
         this.maxColumn = 81;
         this.cardStarterInserted = false;
+    }
+
+
+    /**
+     * Method for checking that the card you want to insert is connected to some corner of some previously inserted
+     * card.
+     * @param row The insertion row.
+     * @param column The insertion column.
+     * @return A boolean indicating whether the card can be inserted.
+     */
+    private boolean checkPreviousCardConnection(int row, int column) {
+        if (this.codex[row - 1][column - 1] != null || this.codex[row + 1][column - 1] != null ||
+                this.codex[row - 1][column + 1] != null || this.codex[row + 1][column + 1] != null)
+            return true;
+        else
+            return false;
     }
 
 
@@ -245,7 +260,6 @@ public class Codex {
                 this.counterCodex[6]--;
                 break;
             case Value.COVERED:
-                this.counterCodex[7]--;
                 break;
             case Value.EMPTY:
                 break;
@@ -285,7 +299,6 @@ public class Codex {
                 this.counterCodex[6]++;
                 break;
             case Value.COVERED:
-                this.counterCodex[7]++;
                 break;
             case Value.EMPTY:
                 break;
@@ -398,6 +411,10 @@ public class Codex {
         } else if (this.codex[row][column] != null) {
             return false;
         } else {
+            // Check the connection with some previous card
+            boolean checkPreviousCardConnection = checkPreviousCardConnection(row, column);
+            if (!checkPreviousCardConnection)
+                return false;
             // Check for NULL values in previous cards
             boolean checkPreviousCardNULL = checkPreviousCardNULL(row, column);
             if (!checkPreviousCardNULL)
@@ -410,6 +427,7 @@ public class Codex {
             insertSide(side, row, column);
             updateCounterCodex(side);
             calculatePointCodex(side);
+            this.counterCodex[7] = 0;
             return true;
         }
     }
