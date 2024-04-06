@@ -38,7 +38,7 @@ public class MainController {
 
     public synchronized GameController createGame(String firstPlayerNickname){
         Player firstPlayer = new Player(firstPlayerNickname);
-        GameController controller = new GameController(firstPlayer);
+        GameController controller = new GameController();
         gameControllers.add(controller);
         try {
             controller.addPlayerToGame(firstPlayer);

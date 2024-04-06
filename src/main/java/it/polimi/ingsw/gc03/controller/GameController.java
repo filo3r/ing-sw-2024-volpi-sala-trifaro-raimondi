@@ -14,7 +14,7 @@ import java.util.List;
 public class GameController implements Runnable {
     private Game game;
 
-    public GameController(Player player) {
+    public GameController() {
         game = new Game();
         new Thread(this).start();
     }
