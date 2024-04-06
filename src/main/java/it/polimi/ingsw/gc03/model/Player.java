@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,23 +49,24 @@ public class Player {
     private int score;
 
     /**
-     * Constructs a new Player with the specified parameters.
+     * Player's online status
+     */
+    private boolean online;
+
+    /**
+     * Constructs a new Player with the specified nickname.
      *
      * @param nickname Player's nickname.
-     * @param cardStarter Player's starting card.
-     * @param hand Player's hand.
-     * @param cardObjective Player's personal objective card.
-     * @param codex Player's codex.
-     * @param score Player's score.
      */
-    public Player(String nickname, CardStarter cardStarter, List<Card> hand, CardObjective cardObjective, Codex codex, int score, char color) {
+    public Player(String nickname) {
         this.nickname = nickname;
-        this.cardStarter = cardStarter;
-        this.hand = hand;
-        this.cardObjective = cardObjective;
-        this.codex = codex;
-        this.score = score;
-        this.color = color;
+        this.cardStarter = null;
+        this.hand = new ArrayList<Card>();
+        this.cardObjective = null;
+        this.codex = new Codex();
+        this.score = 0;
+        this.color = 'w'; //Default color is white
+        this.online = true;
     }
 
     /**
@@ -233,5 +235,19 @@ public class Player {
      */
     public void setColor(char color) {
         this.color = color;
+    }
+    /**
+     * Returns true if players is online, false otherwise.
+     * @return true if players is online, false otherwise.
+     */
+    public boolean isOnline() {
+        return online;
+    }
+    /**
+     * Sets the player's online status.
+     * @param online the player's online status.
+     */
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }

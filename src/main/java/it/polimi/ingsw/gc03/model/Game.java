@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gc03.model;
 
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
+import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +46,18 @@ public class Game {
     private int size;
 
     /**
+     * List of players sitting at the desk
+     */
+    private ArrayList<Player> players;
+
+    /**
      * Constructor for the Game class.
      */
     public Game() {
-        ArrayList<Player> players = new ArrayList<>();
-        desk = new Desk(players);
+        desk = new Desk();
         idGame = new Random().nextInt(999999999);
         chat = new ArrayList<>();
+        players = new ArrayList<Player>();
         currPlayer = -1;
         status = GameStatus.WAITING;
         size = 1; // Default game size is 1, the first player will have to change it
@@ -150,5 +157,30 @@ public class Game {
      */
     public void setCurrPlayer(int currPlayer) {
         this.currPlayer = currPlayer;
+    }
+
+    public void addPlayer(Player player)throws PlayerAlreadyJoinedException, DeskIsFullException {
+        if(!this.players.contains(player)){
+            if(this.players.size()<4){
+                this.players.add(player);
+            } else throw new PlayerAlreadyJoinedException("Error:Player already joined the desk");
+        } else throw new DeskIsFullException("Error:The Desk is already full");
+    }
+
+    /**
+     Method for getting th List of players at the desk.
+     @return List of players
+     */
+    public ArrayList<Player> getPlayers(){return this.players;}
+
+    /**
+     * Method for setting the list of players at the desk.
+     * @param players List of players
+     */
+    public void setPlayers(ArrayList<Player> players){this.players=players;}
+
+
+    public List<Player> getOnlinePlayers(){
+        return players.stream().filter(Player::isOnline).toList();
     }
 }
