@@ -25,7 +25,7 @@ public class CardResource extends Card {
     /**
      * The back side of the card.
      */
-    private BackSide backResource;
+    private  BackSide backResource;
 
 
     /**
@@ -72,19 +72,10 @@ public class CardResource extends Card {
 
     /**
      * Setter method to set the front side of the card.
-     * @param topLeftCorner Value contained in the top-left corner to be set.
-     * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
-     * @param topRightCorner Value contained in the top-right corner to be set.
-     * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param point Points on the card to be set.
+     * @param frontResource front of ResourceCard.
      */
-    public void setFrontResource(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                 Value bottomRightCorner, int point) {
-        this.frontResource.setTopLeftCorner(topLeftCorner);
-        this.frontResource.setBottomLeftCorner(bottomLeftCorner);
-        this.frontResource.setTopRightCorner(topRightCorner);
-        this.frontResource.setBottomRightCorner(bottomRightCorner);
-        this.frontResource.setPoint(point);
+    public void setFrontResource(FrontResource frontResource) {
+        this.frontResource = frontResource;
     }
 
 
@@ -99,19 +90,10 @@ public class CardResource extends Card {
 
     /**
      * Setter method to set the back side of the card.
-     * @param topLeftCorner Value contained in the top-left corner to be set.
-     * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
-     * @param topRightCorner Value contained in the top-right corner to be set.
-     * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param center Value contained in the center to be set.
+     * @param backResource back of ResourceCard.
      */
-    public void setBackResource(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                Value bottomRightCorner, ArrayList<Value> center) {
-        this.backResource.setTopLeftCorner(topLeftCorner);
-        this.backResource.setBottomLeftCorner(bottomLeftCorner);
-        this.backResource.setTopRightCorner(topRightCorner);
-        this.backResource.setBottomRightCorner(bottomRightCorner);
-        this.backResource.setCenter(center);
+    public void setBackResource(BackSide backResource){
+        this.backResource=backResource;
     }
 
 

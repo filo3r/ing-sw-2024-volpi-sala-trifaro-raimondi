@@ -72,23 +72,10 @@ public class CardGold extends Card {
 
     /**
      * Setter method to set the front side of the card.
-     * @param topLeftCorner Value contained in the top-left corner to be set.
-     * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
-     * @param topRightCorner Value contained in the top-right corner to be set.
-     * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param point Points on the card to be set.
-     * @param requirementPoint Requirement for the points.
-     * @param requirementPlacement Requirements for placing the card.
+     * @param frontGold new front of the GoldCard.
      */
-    public void setFrontGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                             Value bottomRightCorner, int point, Value requirementPoint, ArrayList<Value> requirementPlacement) {
-        this.frontGold.setTopLeftCorner(topLeftCorner);
-        this.frontGold.setBottomLeftCorner(bottomLeftCorner);
-        this.frontGold.setTopRightCorner(topRightCorner);
-        this.frontGold.setBottomRightCorner(bottomRightCorner);
-        this.frontGold.setPoint(point);
-        this.frontGold.setRequirementPoint(requirementPoint);
-        this.frontGold.setRequirementPlacement(requirementPlacement);
+    public void setFrontGold(FrontGold frontGold) {
+        this.frontGold =frontGold;
     }
 
 
@@ -103,19 +90,10 @@ public class CardGold extends Card {
 
     /**
      * Setter method to set the back side of the card.
-     * @param topLeftCorner Value contained in the top-left corner to be set.
-     * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
-     * @param topRightCorner Value contained in the top-right corner to be set.
-     * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param center Value contained in the center to be set.
+     * @param backGold new back of the GoldCard.
      */
-    public void setBackGold(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                Value bottomRightCorner, ArrayList<Value> center) {
-        this.backGold.setTopLeftCorner(topLeftCorner);
-        this.backGold.setBottomLeftCorner(bottomLeftCorner);
-        this.backGold.setTopRightCorner(topRightCorner);
-        this.backGold.setBottomRightCorner(bottomRightCorner);
-        this.backGold.setCenter(center);
+    public void setBackGold(BackSide backGold){
+        this.backGold=backGold;
     }
 
 

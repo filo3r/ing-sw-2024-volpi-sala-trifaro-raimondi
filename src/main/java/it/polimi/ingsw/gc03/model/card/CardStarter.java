@@ -46,17 +46,10 @@ public class CardStarter extends Card {
 
     /**
      * Setter method to set the front side of the card.
-     * @param topLeftCorner Value contained in the top-left corner to be set.
-     * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
-     * @param topRightCorner Value contained in the top-right corner to be set.
-     * @param bottomRightCorner Value contained in the bottom-right corner to be set.
+     * @param frontStarter front of the StarterCard.
      */
-    public void setFrontStarter(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                                Value bottomRightCorner) {
-        this.frontStarter.setTopLeftCorner(topLeftCorner);
-        this.frontStarter.setBottomLeftCorner(bottomLeftCorner);
-        this.frontStarter.setTopRightCorner(topRightCorner);
-        this.frontStarter.setBottomRightCorner(bottomRightCorner);
+    public void setFrontStarter(FrontStarter frontStarter) {
+        this.frontStarter = frontStarter;
     }
 
 
@@ -71,19 +64,10 @@ public class CardStarter extends Card {
 
     /**
      * Setter method to set the back side of the card.
-     * @param topLeftCorner Value contained in the top-left corner to be set.
-     * @param bottomLeftCorner Value contained in the bottom-left corner to be set.
-     * @param topRightCorner Value contained in the top-right corner to be set.
-     * @param bottomRightCorner Value contained in the bottom-right corner to be set.
-     * @param center Values contained in the center to be set.
+     * @param backStarter back of the StarterCard.
      */
-    public void setBackStarter(Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner,
-                               Value bottomRightCorner, ArrayList<Value> center) {
-        this.backStarter.setTopLeftCorner(topLeftCorner);
-        this.backStarter.setBottomLeftCorner(bottomLeftCorner);
-        this.backStarter.setTopRightCorner(topRightCorner);
-        this.backStarter.setBottomRightCorner(bottomRightCorner);
-        this.backStarter.setCenter(center);
+    public void setBackStarter(BackSide backStarter) {
+        this.backStarter=backStarter;
     }
 
 
