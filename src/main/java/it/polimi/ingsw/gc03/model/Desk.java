@@ -10,6 +10,9 @@ import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategy;
 import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategyAdapter;
 import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
+import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -59,6 +62,11 @@ public class Desk {
      * Visible Objective cards.
      */
     private ArrayList<CardObjective> displayedObjective;
+
+    /**
+     * List of players sitting at the desk
+     */
+    private ArrayList<Player> players;
 
     /**
      * File with information about Starter cards.
@@ -322,6 +330,13 @@ public class Desk {
         }
     }
 
+    public void addPlayer(Player player)throws PlayerAlreadyJoinedException, DeskIsFullException {
+        if(!this.players.contains(player)){
+            if(this.players.size()<4){
+                this.players.add(player);
+            }else throw new PlayerAlreadyJoinedException("Error:Player already joined the desk");
+        }else throw new DeskIsFullException("Error:The Desk is already full");
+    }
 
     /**
      * Method for obtaining the Starter card deck.
@@ -448,6 +463,17 @@ public class Desk {
         this.displayedObjective = displayedObjective;
     }
 
+    /**
+     Method for getting th List of players at the desk.
+     @return List of players
+     */
+    public ArrayList<Player> getPlayers(){return this.players;}
+
+    /**
+     * Method for setting the list of players at the desk.
+     * @param players List of players
+     */
+    public void setPlayers(ArrayList<Player> players){this.players=players;}
 
     public void printDeckStarter() {
         System.out.println("STARTER DECK:");
