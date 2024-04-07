@@ -1,11 +1,8 @@
 package it.polimi.ingsw.gc03.controller;
 
-import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
-import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +35,10 @@ public class MainController {
     }
 
     public synchronized void createGame(String firstPlayerNickname){
-        Player firstPlayer = new Player(firstPlayerNickname);
         GameController controller = new GameController();
         gameControllers.add(controller);
         try {
-            controller.addPlayerToGame(firstPlayer);
+            controller.addPlayerToGame(firstPlayerNickname);
         } catch (CannotJoinGameException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +51,7 @@ public class MainController {
         if(!GCs.isEmpty()){
             //If there are some (at least 1) available games to join, join the last.
             try {
-                gameControllers.getLast().addPlayerToGame(new Player(playerNickname));
+                gameControllers.getLast().addPlayerToGame(playerNickname);
             } catch (CannotJoinGameException e) {
                 throw new RuntimeException(e);
             }

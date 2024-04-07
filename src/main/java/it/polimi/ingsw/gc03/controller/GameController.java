@@ -1,18 +1,13 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.model.*;
-import it.polimi.ingsw.gc03.model.card.Card;
-import it.polimi.ingsw.gc03.model.card.CardResource;
-import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 
-import java.util.List;
-import java.util.TimerTask;
-import java.util.Timer;
+import java.util.*;
 
 
 public class GameController implements Runnable {
@@ -20,40 +15,25 @@ public class GameController implements Runnable {
 
     private Timer timer;
 
+    private final Random random = new Random();
     private TimerTask timerTask;
 
 
     public GameController() {
-        game = new Game();
+        game = new Game(random.nextInt(1000000000));
         new Thread(this).start();
     }
 
-    private void initGame(){
-        // Check if enough players are ready to play
-        if(game.getPlayers().size() == game.getSize() && game.getStatus().equals(GameStatus.STARTING)){
-            game.setStatus(GameStatus.RUNNING);
-        }
-        // Give every player a starting card, a personal objective, and 3 cards (2 CardResource and 1 CardGold)
-        game.getPlayers().forEach(player -> {
-            player.setCardStarter((CardStarter) game.getDesk().drawCardDeck(game.getDesk().getDeckStarter()));
-            player.setCardObjective((CardObjective) game.getDesk().drawCardDeck(game.getDesk().getDeckObjective()));
-            player.addCardToHand(game.getDesk().drawCardDeck(game.getDesk().getDeckResource()));
-            player.addCardToHand(game.getDesk().drawCardDeck(game.getDesk().getDeckResource()));
-            player.addCardToHand(game.getDesk().drawCardDeck(game.getDesk().getDeckGold()));
-        });
-    }
-
-    public void addPlayerToGame(Player player) throws CannotJoinGameException {
+    public void addPlayerToGame(String playerNickname) throws CannotJoinGameException {
         // It's possible to add new players only if the game's status is WAITING
         // When the game is in WAITING status, the players.size < game.size, so
         // new players can join.
         if(game.getStatus().equals(GameStatus.WAITING)){
             try {
-                game.addPlayer(player);
+                game.addPlayer(playerNickname);
                 // If enough players joined the game, initialize the game
                 if(game.getPlayers().size() == game.getSize()){
                     game.setStatus(GameStatus.STARTING);
-                    initGame();
                 }
             } catch (PlayerAlreadyJoinedException e) {
                 throw new RuntimeException(e);
@@ -90,9 +70,9 @@ public class GameController implements Runnable {
     }
 
     public synchronized void reconnectPlayer(Player player){
-        stopTimer();
-        game.getPlayers().stream().filter(x -> (x.equals(player))).toList().getFirst().setOnline(true);
+        player.setOnline(true);
         if(game.getStatus().equals(GameStatus.ALTED)){
+            stopTimer();
             game.setStatus(GameStatus.RUNNING);
         }
     }
@@ -109,19 +89,13 @@ public class GameController implements Runnable {
         // - if the player who is trying to place a card on the codex is the current player
         // - if this game's status is RUNNING
         int currPlayerIndex = game.getPlayers().indexOf(player);
-        if(game.getCurrPlayer() == currPlayerIndex && game.getStatus().equals(GameStatus.RUNNING) && (player.getAction().equals(PlayerAction.PLACESTARTER) || player.getAction().equals(PlayerAction.PLACE))){
-            // Check whether the player has or hasn't placed the starter card
-            // and if the card that is trying to place is the starter.
-            if(player.getAction().equals(PlayerAction.PLACESTARTER)){
-                throw new Exception("Player must place the starter card first.");
+        if(game.getCurrPlayer() == currPlayerIndex && game.getStatus().equals(GameStatus.RUNNING) && player.getAction().equals(PlayerAction.PLACE)){
+            if(player.getCodex().insertIntoCodex(side, row, col)){
+                // If everything was ok when placing the card, update the currPlayer index and update player action.
+                updateCurrPlayer();
+                player.setAction(PlayerAction.WAIT);
             } else {
-                if(player.getCodex().insertIntoCodex(side, row, col)){
-                    // If everything was ok when placing the card, update the currPlayer index and update player action.
-                    updateCurrPlayer();
-                    player.setAction(PlayerAction.WAIT);
-                } else {
-                    throw new Exception("Error in placing a card.");
-                }
+                throw new Exception("Error in placing a card.");
             }
         }
     }
@@ -137,11 +111,20 @@ public class GameController implements Runnable {
     }
 
     public synchronized void placeStarterOnCodex(Player player, Side side){
-        int currPlayerIndex = game.getPlayers().indexOf(player);
-        if(game.getCurrPlayer() == currPlayerIndex && game.getStatus().equals(GameStatus.RUNNING) && player.getAction().equals(PlayerAction.PLACESTARTER)){
+        if(game.getStatus().equals(GameStatus.WAITING) && player.getAction().equals(PlayerAction.FIRSTMOVES)){
             player.getCodex().insertStarterIntoCodex(side);
-            player.setAction(PlayerAction.WAIT);
-            updateCurrPlayer();
+            if(player.getCardObjective().size()==1){
+                player.setAction(PlayerAction.WAIT);
+            }
+        }
+    }
+
+    public synchronized void selectCardObjective(Player player, ArrayList<CardObjective> cardObjective){
+        if(game.getStatus().equals(GameStatus.WAITING) && player.getAction().equals(PlayerAction.FIRSTMOVES)){
+            player.setCardObjective(cardObjective);
+            if(player.getCodex().getCardStarterInserted()){
+                player.setAction((PlayerAction.WAIT));
+            }
         }
     }
 
@@ -151,7 +134,7 @@ public class GameController implements Runnable {
     @Override
     public void run() {
         while (!Thread.interrupted()){
-            if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING ) || game.getStatus().equals(GameStatus.ALTED)){
+            if(game.getStatus().equals(GameStatus.STARTING) || game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING ) || game.getStatus().equals(GameStatus.ALTED)){
                 List<Player> onlinePlayers = game.getOnlinePlayers();
                 // If there are no players online, delete the game
                 if(onlinePlayers.isEmpty()){

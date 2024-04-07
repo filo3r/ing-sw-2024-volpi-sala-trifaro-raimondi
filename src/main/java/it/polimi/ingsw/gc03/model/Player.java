@@ -132,7 +132,7 @@ public class Player {
         this.score = 0;
         this.online = true;
         this.skipTurn = false;
-        this.action = PlayerAction.PLACESTARTER;
+        this.action = PlayerAction.FIRSTMOVES;
     }
 
 
