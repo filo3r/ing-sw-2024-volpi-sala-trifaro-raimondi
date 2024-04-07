@@ -1,12 +1,18 @@
 package it.polimi.ingsw.gc03.model;
 
 import it.polimi.ingsw.gc03.model.card.Card;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.card.CardGold;
+import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
+import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.Color;
+import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
-
+import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import java.util.ArrayList;
-import java.util.List;
+import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
+
 
 /**
  * This class represents a player in the game.
@@ -19,30 +25,40 @@ public class Player {
     private String nickname;
 
     /**
+     * Player's number.
+     */
+    private int number;
+
+    /**
+     * Player's color.
+     */
+    private Color color;
+
+    /**
      * Player's starting card.
      */
     private CardStarter cardStarter;
 
     /**
+     * Player's personal objective cards.
+     * Before the game begins, the player must choose one.
+     */
+    private ArrayList<CardObjective> cardObjective;
+
+    /**
      * Player's hand.
      */
-    private List<Card> hand;
-
-    /**
-     * Player's personal objective card.
-     */
-    private CardObjective cardObjective;
-
-    /**
-     * Player's color.
-     */
-    private char color;
-
+    private ArrayList<Card> hand;
 
     /**
      * Player's codex.
      */
     private Codex codex;
+
+    /**
+     * Points obtained from Objective cards.
+     */
+    private int pointObjective;
 
     /**
      * Player's score.
@@ -55,78 +71,360 @@ public class Player {
     private boolean online;
 
     /**
+     * The player can no longer play because he cannot place any cards.
+     */
+    private boolean skipTurn;
+
+    /**
      * Player's action: what can the player currently do.
      */
     private PlayerAction action;
+
     /**
-     * Constructs a new Player with the specified nickname.
-     *
-     * @param nickname Player's nickname.
+     * Number of Resource cards initially in hand.
      */
-    public Player(String nickname) {
+    private static final int INITIAL_CARD_RESOURCE = 2;
+
+    /**
+     * Number of Gold cards initially in hand.
+     */
+    private static final int INITIAL_CARD_GOLD = 1;
+
+    /**
+     * Number of Objective cards initially in hand.
+     */
+    private static final int INITIAL_CARD_OBJECTIVE = 2;
+
+    /**
+     * Number of Objective cards the player must choose to keep.
+     */
+    private static final int FINAL_CARD_OBJECTIVE = 1;
+
+
+    /**
+     * Constructor of the Player class.
+     * @param nickname Player's nickname.
+     * @param number Player's number.
+     * @param desk The game desk.
+     */
+    public Player(String nickname, int number, Desk desk) {
         this.nickname = nickname;
-        this.cardStarter = null;
-        this.hand = new ArrayList<Card>();
-        this.cardObjective = null;
+        this.number = number;
+        this.color = createColorArrayList().get(number - 1);
+        // Assignment of the Starter card
+        this.cardStarter = (CardStarter) desk.drawCardDeck(desk.getDeckStarter());
+        // Assignment of Objective cards
+        this.cardObjective = new ArrayList<>(INITIAL_CARD_OBJECTIVE);
+        for (int i = 0; i < INITIAL_CARD_OBJECTIVE; i++) {
+            CardObjective cardObjective = (CardObjective) desk.drawCardDeck(desk.getDeckObjective());
+            this.cardObjective.add(cardObjective);
+        }
+        // Assignment of Resource cards and Gold cards in the hand
+        this.hand = new ArrayList<>(INITIAL_CARD_RESOURCE + INITIAL_CARD_GOLD);
+        for (int i = 0; i < INITIAL_CARD_RESOURCE; i++) {
+            CardResource cardResource = (CardResource) desk.drawCardDeck(desk.getDeckResource());
+        }
+        for (int i = 0; i < INITIAL_CARD_GOLD; i++) {
+            CardGold cardGold = (CardGold) desk.drawCardDeck(desk.getDeckGold());
+        }
         this.codex = new Codex();
+        this.pointObjective = 0;
         this.score = 0;
-        this.color = 'w'; //Default color is white
         this.online = true;
+        this.skipTurn = false;
         this.action = PlayerAction.PLACESTARTER;
     }
 
+
     /**
-     * Returns the player's nickname.
-     *
-     * @return the player's nickname.
+     * Method for making the player choose his Objective card.
+     * @param index The index of the card the player wants to keep.
+     * @return A boolean indicating whether the operation was successful or not.
+     */
+    public boolean selectObjectiveCard(int index) {
+        if (index < 0 || index >= this.cardObjective.size()) {
+            return false;
+        } else {
+            ArrayList<CardObjective> newCardObjective = new ArrayList<>(FINAL_CARD_OBJECTIVE);
+            for (int i = 0; i < this.cardObjective.size(); i++) {
+                if (i == index) {
+                    newCardObjective.add(this.cardObjective.get(i));
+                }
+            }
+            this.cardObjective.clear();
+            this.cardObjective.addAll(newCardObjective);
+            return true;
+        }
+    }
+
+
+    /**
+     * Method to check if the player can no longer place cards in his Codex. If the player can no longer place cards,
+     * he skips his turns until the end of the game.
+     */
+    public void checkSkipTurn() {
+        int skip = 0;
+        // The sides of the cards that have fewer requirements to be placed are the BackSide
+        ArrayList<Value> center = new ArrayList<>(1);
+        center.add(Value.EMPTY);
+        BackSide backSide = new BackSide(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, center);
+        // Check all cells of the Codex
+        for (int i = this.codex.getMinRow() - 1; i <= this.codex.getMaxRow() + 1; i++) {
+            for (int j = this.codex.getMinColumn() - 1; j <= this.codex.getMaxColumn() + 1; j++) {
+                boolean insertionPossible = this.codex.simulateInsertIntoCodex(backSide, i, j);
+                if (insertionPossible)
+                    skip++;
+                if (skip != 0)
+                    return;
+            }
+        }
+        // If you can't insert the card into any cell
+        if (skip == 0)
+            this.skipTurn = true;
+        return;
+    }
+
+
+    /**
+     * Method for calculating the points scored by the player with the Objective cards.
+     * @param desk The game desk.
+     */
+    public void calculatePointObjective(Desk desk) {
+        // Points earned with the personal Objective card
+        for (int i = 0; i < FINAL_CARD_OBJECTIVE; i++) {
+            this.pointObjective = this.pointObjective + this.cardObjective.get(i).calculateScore(this.codex,
+                    this.cardObjective.get(i).getPoint(), this.cardObjective.get(i).getParameters());
+        }
+        // Points earned with common Objective cards
+        ArrayList<CardObjective> displayedObjective = desk.getDisplayedObjective();
+        for (CardObjective objective : displayedObjective) {
+            this.pointObjective = this.pointObjective + objective.calculateScore(this.codex, objective.getPoint(),
+                    objective.getParameters());
+        }
+    }
+
+
+    /**
+     * Method for calculating the total score made by the player.
+     */
+    public void calculatePlayerScore() {
+        this.score = this.score + this.codex.getPointCodex() + this.pointObjective;
+    }
+
+
+    /**
+     * Method to get the player's nickname.
+     * @return The player's nickname.
      */
     public String getNickname() {
         return nickname;
     }
 
+
     /**
-     * Sets the player's nickname.
-     *
-     * @param nickname the player's nickname.
+     * Method to set the player's nickname.
+     * @param nickname The nickname to set
      */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
+
     /**
-     * Returns the player's starting card.
-     *
-     * @return the player's starting card.
+     * Method to get the player's number.
+     * @return The player's number.
+     */
+    public int getNumber() {
+        return number;
+    }
+
+
+    /**
+     * Method to set the player's number.
+     * @param number The player's number.
+     */
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+
+    /**
+     * Method to get the player's color.
+     * @return The player's color.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+
+    /**
+     * Method to set the player's color.
+     * @param color The player's color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+
+    /**
+     * Method to get the player's Starter card.
+     * @return The player's Starter card.
      */
     public CardStarter getCardStarter() {
         return cardStarter;
     }
 
+
     /**
-     * Sets the player's starting card.
-     *
-     * @param cardStarter the player's starting card.
+     * Method to set the player's Starter card.
+     * @param cardStarter The player's Starter card.
      */
     public void setCardStarter(CardStarter cardStarter) {
         this.cardStarter = cardStarter;
     }
 
+
     /**
-     * Returns the player's hand.
-     *
-     * @return the player's hand.
+     * Method to get the player's Objective cards.
+     * @return The player's Objective cards.
      */
-    public List<Card> getHand() {
+    public ArrayList<CardObjective> getCardObjective() {
+        return cardObjective;
+    }
+
+
+    /**
+     * Method to set the player's Objective cards.
+     * @param cardObjective The player's Objective cards.
+     */
+    public void setCardObjective(ArrayList<CardObjective> cardObjective) {
+        this.cardObjective = cardObjective;
+    }
+
+
+    /**
+     * Method to get the player's hand.
+     * @return The player's hand.
+     */
+    public ArrayList<Card> getHand() {
         return hand;
     }
 
+
     /**
-     * Sets the player's hand.
-     *
-     * @param hand the player's hand.
+     * Method to set the player's hand.
+     * @param hand The player's hand.
      */
-    public void setHand(List<Card> hand) {
+    public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
+    }
+
+
+    /**
+     * Method to get the player's codex.
+     * @return The player's codex.
+     */
+    public Codex getCodex() {
+        return codex;
+    }
+
+
+    /**
+     * Method to set the player's codex.
+     * @param codex The player's codex.
+     */
+    public void setCodex(Codex codex) {
+        this.codex = codex;
+    }
+
+
+    /**
+     * Method to get player's points obtained with Objective cards.
+     * @return The player's points.
+     */
+    public int getPointObjective() {
+        return pointObjective;
+    }
+
+
+    /**
+     * Method to set player's points obtained with Objective cards.
+     * @param pointObjective The player's points.
+     */
+    public void setPointObjective(int pointObjective) {
+        this.pointObjective = pointObjective;
+    }
+
+
+    /**
+     * Method to get the player's score.
+     * @return The player's score.
+     */
+    public int getScore() {
+        return score;
+    }
+
+
+    /**
+     * Method to set the player's score.
+     * @param score The player's score.
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+
+    /**
+     * Method to get the player's online status.
+     * @return The player's online status.
+     */
+    public boolean getOnline() {
+        return online;
+    }
+
+
+    /**
+     * Method to set the player's online status.
+     * @param online The player's online status.
+     */
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+
+    /**
+     * Method to get if the player skips his turns until the end of the game.
+     * @return The player's skipTurn.
+     */
+    public boolean getSkipTurn() {
+        return skipTurn;
+    }
+
+
+    /**
+     * Method to set if the player skips his turns until the end of the game.
+     * @param skipTurn The player's skipTurn.
+     */
+    public void setSkipTurn(boolean skipTurn) {
+        this.skipTurn = skipTurn;
+    }
+
+
+    /**
+     * Method to get the player's action.
+     * @return The player's action.
+     */
+    public PlayerAction getAction() {
+        return action;
+    }
+
+
+    /**
+     * Method to set the player's action.
+     * @param action The player's action.
+     */
+    public void setAction(PlayerAction action) {
+        this.action = action;
     }
 
 
@@ -138,6 +436,7 @@ public class Player {
         this.hand.add(card);
     }
 
+
     /**
      * Remove a card to the player's hand.
      * @param CardPositionInHand The position of the card in the player's hand.
@@ -146,121 +445,5 @@ public class Player {
         this.hand.remove(CardPositionInHand);
     }
 
-    /**
-     * Returns the player's personal objective card.
-     *
-     * @return the player's personal objective card.
-     */
-    public CardObjective getCardObjective() {
-        return cardObjective;
-    }
 
-    /**
-     * Sets the player's personal objective card.
-     *
-     * @param cardObjective the player's personal objective card.
-     */
-    public void setCardObjective(CardObjective cardObjective) {
-        this.cardObjective = cardObjective;
-    }
-
-    /**
-     * Returns the player's codex.
-     *
-     * @return the player's codex.
-     */
-    public Codex getCodex() {
-        return codex;
-    }
-
-    /**
-     * Sets the player's codex.
-     *
-     * @param codex the player's codex.
-     */
-    public void setCodex(Codex codex) {
-        this.codex = codex;
-    }
-
-    /**
-     * Returns the player's score.
-     *
-     * @return the player's score.
-     */
-    public int getScore() {
-        return score;
-    }
-
-    /**
-     * Sets the player's score.
-     *
-     * @param score the player's score.
-     */
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    /**
-     * Calculates the player's score based on his codex at the end of the game.
-     *
-     * @return The player's score.
-     */
-    public int calculateScore(){
-        return 0;
-    }
-
-    /**
-     * Place a card in a determinate position on the codex.
-     */
-    public void place(){
-    }
-
-    /**
-     * Select the personal cardObjectives.
-     */
-    public void selectObjective(){
-    }
-
-    /**
-     * Choose whether place the starting card front or back.
-     */
-    public void selectCardStarter(){
-    }
-
-    /**
-     * Returns the player's color.
-     * @return the player's color.
-     */
-    public char getColor() {
-        return color;
-    }
-    /**
-     * Sets the player's color.
-     * @param color the player's color.
-     */
-    public void setColor(char color) {
-        this.color = color;
-    }
-    /**
-     * Returns true if players is online, false otherwise.
-     * @return true if players is online, false otherwise.
-     */
-    public boolean isOnline() {
-        return online;
-    }
-    /**
-     * Sets the player's online status.
-     * @param online the player's online status.
-     */
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
-    public PlayerAction getAction() {
-        return action;
-    }
-
-    public void setAction(PlayerAction action) {
-        this.action = action;
-    }
 }

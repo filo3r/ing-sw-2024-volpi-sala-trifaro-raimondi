@@ -434,6 +434,36 @@ public class Codex {
 
 
     /**
+     * Method to simulate the insertion of a card into the Codex.
+     * @param side The side of the card to simulate insertion of.
+     * @param row The row in which to simulate the insertion of the side of the card.
+     * @param column The column in which to simulate the insertion of the side of the card.
+     * @return A boolean indicating whether the card could be inserted in that position.
+     */
+    public boolean simulateInsertIntoCodex(Side side, int row, int column) {
+        // Check if the coordinates are valid and if they are free
+        if (((row % 2) == 0 && (column % 2) != 0) || ((row % 2) != 0 && (column % 2) == 0) || this.codex[row][column] != null) {
+            return false;
+        } else {
+            // Check the connection with some previous card
+            boolean checkPreviousCardConnection = checkPreviousCardConnection(row, column);
+            if (!checkPreviousCardConnection)
+                return false;
+            // Check for NULL values in previous cards
+            boolean checkPreviousCardNULL = checkPreviousCardNULL(row, column);
+            if (!checkPreviousCardNULL)
+                return false;
+            // Check that the placement requirements for Gold cards are verified
+            boolean checkRequirementPlacement = checkRequirementPlacement(side);
+            if (!checkRequirementPlacement)
+                return false;
+            // If you can insert the card side
+            return true;
+        }
+    }
+
+
+    /**
      * Method to retrieve the codex.
      * @return The codex.
      */

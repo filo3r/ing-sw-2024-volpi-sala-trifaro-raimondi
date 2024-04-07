@@ -1,13 +1,20 @@
 package it.polimi.ingsw.gc03.model;
 
+import java.time.LocalTime;
+
 /**
  * This class represents a message in the chat.
  */
 public class Message {
-    /**
+    /*
      * The unique message's id.
      */
-    private int idMessage;
+    //private int idMessage; // Probabilmente è meglio toglierlo per semplificare, non è implementato nel metodo addMessage di Game
+
+    /**
+     * The message's sender.
+     */
+    private Player sender;
 
     /**
      * The message's text.
@@ -17,42 +24,38 @@ public class Message {
     /**
      * The message's timestamp.
      */
-    private int timestamp;
+    private LocalTime timestamp;
 
-    /**
-     * The message's sender.
-     */
-    private Player sender;
 
     /**
      * Constructor for the Message class.
-     * @param idMessage The message's unique id.
+     * @param sender The message's sender.
      * @param text The message's text.
      * @param timestamp The message's timestamp.
-     * @param sender The message's sender.
      */
-    public Message(int idMessage, String text, int timestamp, Player sender) {
-        this.idMessage = idMessage;
+    public Message(Player sender, String text, LocalTime timestamp) {
         this.text = text;
         this.timestamp = timestamp;
         this.sender = sender;
     }
 
-    /**
+    /*
      * Getter method for retrieving the unique id of the message.
      * @return The unique id of the message.
      */
-    public int getIdMessage() {
+    /*public int getIdMessage() {
         return idMessage;
     }
 
-    /**
+    /*
      * Setter method for setting the unique id of the message.
      * @param idMessage The unique id of the message to set.
      */
-    public void setIdMessage(int idMessage) {
+    /*public void setIdMessage(int idMessage) {
         this.idMessage = idMessage;
     }
+     */
+
 
     /**
      * Getter method for retrieving the text of the message.
@@ -74,7 +77,7 @@ public class Message {
      * Getter method for retrieving the timestamp of the message.
      * @return The timestamp of the message.
      */
-    public int getTimestamp() {
+    public LocalTime getTimestamp() {
         return timestamp;
     }
 
@@ -82,7 +85,7 @@ public class Message {
      * Setter method for setting the timestamp of the message.
      * @param timestamp The timestamp of the message to set.
      */
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(LocalTime timestamp) {
         this.timestamp = timestamp;
     }
 
