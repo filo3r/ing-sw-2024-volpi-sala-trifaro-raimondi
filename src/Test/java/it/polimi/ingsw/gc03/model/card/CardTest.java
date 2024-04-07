@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tester for Card Class (Getter and Setter).
+ * Tester for Card Methods (Getter and Setter).
  */
 class CardTest {
 

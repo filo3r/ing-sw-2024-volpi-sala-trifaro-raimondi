@@ -13,6 +13,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for CardGold Methods (Setter and Getter)
+ */
+
 class CardGoldTest {
 
     private CardGold cardGold;
@@ -21,18 +25,18 @@ class CardGoldTest {
 
     private BackSide back;
 
-    private ArrayList<Value> list,list1;
+    private ArrayList<Value> center,center1;
 
     @BeforeEach
     void setUp() {
-        list = new ArrayList<>();
-        list1 = new ArrayList<>();
-        list1.add(Value.FUNGI);
-        list.add(Value.FUNGI);
-        list.add(Value.FUNGI);
-        list.add(Value.FUNGI);
-        front = new FrontGold(Kingdom.FUNGI, Value.FUNGI,Value.FUNGI,Value.FUNGI,Value.FUNGI,2,Value.INKWELL,list);
-        back = new BackSide(Kingdom.FUNGI,Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,list1);
+        center = new ArrayList<>();
+        center1 = new ArrayList<>();
+        center1.add(Value.FUNGI);
+        center.add(Value.FUNGI);
+        center.add(Value.FUNGI);
+        center.add(Value.FUNGI);
+        front = new FrontGold(Kingdom.FUNGI, Value.FUNGI,Value.FUNGI,Value.FUNGI,Value.FUNGI,2,Value.INKWELL,center);
+        back = new BackSide(Kingdom.FUNGI,Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,center1);
         cardGold = new CardGold("idCard", Kingdom.FUNGI,front,back);
     }
 
@@ -41,8 +45,8 @@ class CardGoldTest {
         cardGold = null;
         front = null;
         back = null;
-        list1 = null;
-        list = null;
+        center1 = null;
+        center = null;
     }
 
     @Test
@@ -64,11 +68,11 @@ class CardGoldTest {
 
     @Test
     void setFrontGold() {
-        FrontGold frontGold =cardGold.getFrontGold();
-        FrontGold newFront = new FrontGold(Kingdom.FUNGI,Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,0,Value.NULL,list);
+        FrontGold oldFront =cardGold.getFrontGold();
+        FrontGold newFront = new FrontGold(Kingdom.FUNGI,Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,0,Value.NULL,center1);
         cardGold.setFrontGold(newFront);
         assertEquals(newFront,cardGold.getFrontGold());
-        assertNotEquals(newFront,frontGold);
+        assertNotEquals(newFront,oldFront);
     }
 
     @Test
@@ -78,11 +82,11 @@ class CardGoldTest {
 
     @Test
     void setBackGold() {
-        BackSide backSide = cardGold.getBackGold();
-        BackSide newBack =  new BackSide(Kingdom.FUNGI,Value.PLANT,Value.EMPTY,Value.EMPTY,Value.EMPTY,list);
+        BackSide oldBack = cardGold.getBackGold();
+        BackSide newBack =  new BackSide(Kingdom.FUNGI,Value.PLANT,Value.EMPTY,Value.EMPTY,Value.EMPTY,center);
         cardGold.setBackGold(newBack);
         assertEquals(newBack,cardGold.getBackGold());
-        assertNotEquals(backSide,newBack);
+        assertNotEquals(oldBack,newBack);
     }
 
 }
