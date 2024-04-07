@@ -34,9 +34,6 @@ public class Game {
 
     /**
      * Game's status.
-     * (active (0): game's running;
-     *  idle (1): game's waiting for players;
-     *  end (2): game's ended)
      */
     private GameStatus status;
 
@@ -160,7 +157,7 @@ public class Game {
     }
 
     public void addPlayer(Player player)throws PlayerAlreadyJoinedException, DeskIsFullException {
-        if(!this.players.contains(player)){
+        if(this.players.stream().filter(x->(x.getNickname().equals(player.getNickname()))).toList().isEmpty()){
             if(this.players.size()<4){
                 this.players.add(player);
             } else throw new PlayerAlreadyJoinedException("Error:Player already joined the desk");

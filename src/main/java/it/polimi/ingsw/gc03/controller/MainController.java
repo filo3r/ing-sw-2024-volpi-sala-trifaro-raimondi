@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
+import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MainController {
         return instance;
     }
 
-    public synchronized GameController createGame(String firstPlayerNickname){
+    public synchronized void createGame(String firstPlayerNickname){
         Player firstPlayer = new Player(firstPlayerNickname);
         GameController controller = new GameController();
         gameControllers.add(controller);
@@ -45,25 +46,31 @@ public class MainController {
         } catch (CannotJoinGameException e) {
             throw new RuntimeException(e);
         }
-    return controller;
     }
 
-    // Join an available game i
+    // Join an available game
     public synchronized void joinGame(String playerNickname){
         //First of all check if there is any game where is possible to join (GCs stands for gameControllers
         List<GameController> GCs =  gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
         if(!GCs.isEmpty()){
             //If there are some (at least 1) available games to join, join the last.
             try {
-                gameControllers.removeLast().getGame().addPlayer(new Player(playerNickname));
-            } catch (PlayerAlreadyJoinedException e) {
-                throw new RuntimeException(e);
-            } catch (DeskIsFullException e) {
+                gameControllers.getLast().addPlayerToGame(new Player(playerNickname));
+            } catch (CannotJoinGameException e) {
                 throw new RuntimeException(e);
             }
         } else {
             // If there are no available games to join, create a new game.
             createGame(playerNickname);
+        }
+    }
+
+    public synchronized void deleteGame(int idGame) throws NoSuchGameException {
+        List<GameController> gameToRemove = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == idGame)).toList();
+        if(gameToRemove.size()==1){
+            gameControllers.remove(gameToRemove.getFirst());
+        } else {
+            throw new NoSuchGameException();
         }
     }
 }

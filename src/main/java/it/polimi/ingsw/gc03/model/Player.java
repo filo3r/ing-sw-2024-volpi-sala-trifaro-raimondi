@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.model;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
+import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,10 @@ public class Player {
     private boolean online;
 
     /**
+     * Player's action: what can the player currently do.
+     */
+    private PlayerAction action;
+    /**
      * Constructs a new Player with the specified nickname.
      *
      * @param nickname Player's nickname.
@@ -67,6 +72,7 @@ public class Player {
         this.score = 0;
         this.color = 'w'; //Default color is white
         this.online = true;
+        this.action = PlayerAction.PLACESTARTER;
     }
 
     /**
@@ -200,7 +206,6 @@ public class Player {
      * @return The player's score.
      */
     public int calculateScore(){
-        // Metodo per calcolare il punteggio del player.
         return 0;
     }
 
@@ -249,5 +254,13 @@ public class Player {
      */
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public PlayerAction getAction() {
+        return action;
+    }
+
+    public void setAction(PlayerAction action) {
+        this.action = action;
     }
 }
