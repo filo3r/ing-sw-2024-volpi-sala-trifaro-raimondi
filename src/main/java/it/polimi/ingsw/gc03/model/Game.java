@@ -17,6 +17,11 @@ public class Game {
     private int idGame;
 
     /**
+     * Game's size: number of players participating in the game.
+     */
+    private int size;
+
+    /**
      * Game's status.
      */
     private GameStatus status;
@@ -68,6 +73,7 @@ public class Game {
      */
     public Game(int idGame) {
         this.idGame = idGame;
+        this.size = 1;
         this.status = GameStatus.WAITING;
         this.desk = new Desk();
         this.numPlayer = 0;
@@ -86,7 +92,7 @@ public class Game {
      */
     public boolean addPlayer(String nickname) {
         // The game is full
-        if (this.numPlayer >= MAX_NUM_PLAYERS) {
+        if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
             return false;
         } else {
             // Check that the nickname is different from other players who have already entered
@@ -239,6 +245,24 @@ public class Game {
      */
     public void setIdGame(int idGame) {
         this.idGame = idGame;
+    }
+
+
+    /**
+     * Method to set the size of the game.
+     * @param size The size of the game.
+     */
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+
+    /**
+     * Method to get the size of the game.
+     * @return The size of the game.
+     */
+    public int getSize() {
+        return size;
     }
 
 
