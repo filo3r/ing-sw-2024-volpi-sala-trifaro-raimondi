@@ -50,12 +50,12 @@ public class Desk {
     /**
      * Visible Resource cards.
      */
-    private ArrayList<CardResource> displayedResource;
+    private ArrayList<Card> displayedResource;
 
     /**
      * Visible Gold cards.
      */
-    private ArrayList<CardGold> displayedGold;
+    private ArrayList<Card> displayedGold;
 
     /**
      * Visible Objective cards.
@@ -314,17 +314,28 @@ public class Desk {
      * Method for checking that the visible cards are always in the correct number.
      */
     public void checkDisplayed() {
-        // Resource cards
+        // Resource cards: Resource deck not empty
         while (this.displayedResource.size() < NUM_CARD_DISPLAYED && !this.deckResource.isEmpty()) {
             CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
             this.displayedResource.add(cardResource);
         }
-        // Gold cards
+        // Resource cards: Resource deck empty
+        while (this.displayedResource.size() < NUM_CARD_DISPLAYED && this.deckResource.isEmpty() && !this.deckGold.isEmpty()) {
+            CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
+            this.displayedResource.add(cardGold);
+        }
+        // Gold cards: Gold deck not empty
         while (this.displayedGold.size() < NUM_CARD_DISPLAYED && !this.deckGold.isEmpty()) {
             CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
             this.displayedGold.add(cardGold);
         }
+        // Gold cards: Gold deck empty
+        while (this.displayedGold.size() < NUM_CARD_DISPLAYED && this.deckGold.isEmpty() && !this.deckResource.isEmpty()) {
+            CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
+            this.displayedGold.add(cardResource);
+        }
     }
+
 
     /**
      * Method for obtaining the Starter card deck.
@@ -402,7 +413,7 @@ public class Desk {
      * Method for obtaining the displayed Resource cards.
      * @return The displayed Resource cards.
      */
-    public ArrayList<CardResource> getDisplayedResource() {
+    public ArrayList<Card> getDisplayedResource() {
         return displayedResource;
     }
 
@@ -411,7 +422,7 @@ public class Desk {
      * Method for setting the displayed Resource cards.
      * @param displayedResource The displayed Resource cards.
      */
-    public void setDisplayedResource(ArrayList<CardResource> displayedResource) {
+    public void setDisplayedResource(ArrayList<Card> displayedResource) {
         this.displayedResource = displayedResource;
     }
 
@@ -420,7 +431,7 @@ public class Desk {
      * Method for obtaining the displayed Gold cards.
      * @return The Gold cards.
      */
-    public ArrayList<CardGold> getDisplayedGold() {
+    public ArrayList<Card> getDisplayedGold() {
         return displayedGold;
     }
 
@@ -429,7 +440,7 @@ public class Desk {
      * Method for setting the displayed Gold cards.
      * @param displayedGold The displayed Gold cards.
      */
-    public void setDisplayedGold(ArrayList<CardGold> displayedGold) {
+    public void setDisplayedGold(ArrayList<Card> displayedGold) {
         this.displayedGold = displayedGold;
     }
 
@@ -451,6 +462,8 @@ public class Desk {
         this.displayedObjective = displayedObjective;
     }
 
+
+    // Questi metodi vanno spostati nella view
     public void printDeckStarter() {
         System.out.println("STARTER DECK:");
         for (CardStarter card : deckStarter) {
@@ -481,22 +494,22 @@ public class Desk {
 
     public void printDisplayedResourceCards() {
         System.out.println("DISPLAYED RESOURCE CARDS:");
-        for (CardResource card : displayedResource) {
-            card.printCardResource(card);
+        for (Card card : displayedResource) {
+            //card.printCardResource(card);
         }
     }
 
     public void printDisplayedGoldCards() {
         System.out.println("DISPLAYED GOLD CARDS:");
-        for (CardGold card : displayedGold) {
-            card.printCardGold(card);
+        for (Card card : displayedGold) {
+            //card.printCardGold(card);
         }
     }
 
     public void printDisplayedObjectiveCards() {
         System.out.println("DISPLAYED OBJECTIVE CARDS:");
         for (CardObjective card : displayedObjective) {
-            card.printCardObjective(card);
+            //card.printCardObjective(card);
         }
     }
 
