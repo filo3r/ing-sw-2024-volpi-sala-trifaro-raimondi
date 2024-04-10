@@ -57,6 +57,11 @@ public class Game {
     private ArrayList<Message> chat;
 
     /**
+     * Winner or winners of the game.
+     */
+    private ArrayList<Player> winner;
+
+    /**
      * Maximum number of players that can participate in a game.
      */
     private static final int MAX_NUM_PLAYERS = 4;
@@ -82,6 +87,7 @@ public class Game {
         // currPlayer is the index of the turnOrder array
         this.currPlayer = 0;
         this.chat = new ArrayList<>();
+        this.winner = new ArrayList<>(MAX_NUM_PLAYERS);
     }
 
 
@@ -177,9 +183,8 @@ public class Game {
 
     /**
      * Method for determining who won the game.
-     * @return The player who won.
      */
-    public ArrayList<Player> decideWinner() {
+    private void decideWinner() {
         int maxScore = 0;
         // Determine which score is the highest
         for (Player player : this.players) {
@@ -206,9 +211,9 @@ public class Game {
                 if (tempWinner.getPointObjective() == maxPointObjective)
                     winners.add(tempWinner);
             }
-            return winners;
+            this.winner.addAll(winners);
         } else {
-            return tempWinners;
+            this.winner.addAll(tempWinners);
         }
     }
 
@@ -389,6 +394,30 @@ public class Game {
      */
     public void setChat(ArrayList<Message> chat) {
         this.chat = chat;
+    }
+
+
+    /**
+     * Method to get the winner of the game.
+     * @return The winner or the winners of the game.
+     */
+    public ArrayList<Player> getWinner() {
+        // If the winner has not yet been determined
+        if (this.winner.isEmpty()) {
+            decideWinner();
+            return this.winner;
+        } else {
+            return this.winner;
+        }
+    }
+
+
+    /**
+     * Method to set the winner of the game.
+     * @param winner The winner or the winners of the game.
+     */
+    public void setWinner(ArrayList<Player> winner) {
+        this.winner = winner;
     }
 
 
