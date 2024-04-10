@@ -24,21 +24,24 @@ public class GameController implements Runnable {
         new Thread(this).start();
     }
 
-    public void addPlayerToGame(String playerNickname) throws CannotJoinGameException {
+    public void addPlayerToGame(String playerNickname) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException {
         // It's possible to add new players only if the game's status is WAITING
         // When the game is in WAITING status, the players.size < game.size, so
         // new players can join.
         if(game.getStatus().equals(GameStatus.WAITING)){
             try {
-                game.addPlayer(playerNickname);
-                // If enough players joined the game, initialize the game
-                if(game.getPlayers().size() == game.getSize()){
-                    game.setStatus(GameStatus.STARTING);
+                if(!game.addPlayer(playerNickname)){
+                    throw new CannotJoinGameException();
                 }
-            } catch (PlayerAlreadyJoinedException e) {
-                throw new RuntimeException(e);
             } catch (DeskIsFullException e) {
-                throw new RuntimeException(e);
+                throw new DeskIsFullException();
+            } catch (PlayerAlreadyJoinedException e) {
+                throw new PlayerAlreadyJoinedException();
+            }
+            ;
+            // If enough players joined the game, initialize the game
+            if(game.getPlayers().size() == game.getSize() && game.getNumPlayer()!=1){
+                game.setStatus(GameStatus.STARTING);
             }
         } else {
          throw new CannotJoinGameException();
@@ -51,8 +54,7 @@ public class GameController implements Runnable {
             timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    Player winner = game.getOnlinePlayers().getFirst();
-                    stopTimer();
+
                 }
             };
             timer.schedule(timerTask, 60*1000);
@@ -69,11 +71,15 @@ public class GameController implements Runnable {
         }
     }
 
-    public synchronized void reconnectPlayer(Player player){
-        player.setOnline(true);
-        if(game.getStatus().equals(GameStatus.ALTED)){
-            stopTimer();
-            game.setStatus(GameStatus.RUNNING);
+    public synchronized void reconnectPlayer(String playerNickname){
+        // Check if there is any game with a player with "playerNickname" as nickname.
+        List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
+        if(!result.isEmpty()){
+            result.getFirst().setOnline(true);
+            if(game.getStatus().equals(GameStatus.ALTED)){
+                stopTimer();
+                game.setStatus(GameStatus.RUNNING);
+            }
         }
     }
 
@@ -88,6 +94,7 @@ public class GameController implements Runnable {
         // Check:
         // - if the player who is trying to place a card on the codex is the current player
         // - if this game's status is RUNNING
+        // - if the player's action is PLACE
         int currPlayerIndex = game.getPlayers().indexOf(player);
         if(game.getCurrPlayer() == currPlayerIndex && game.getStatus().equals(GameStatus.RUNNING) && player.getAction().equals(PlayerAction.PLACE)){
             if(player.getCodex().insertIntoCodex(side, row, col)){
@@ -99,7 +106,6 @@ public class GameController implements Runnable {
             }
         }
     }
-
 
     public synchronized void updateCurrPlayer(){
         int curr = game.getCurrPlayer();
@@ -144,7 +150,7 @@ public class GameController implements Runnable {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    if(onlinePlayers.size() == 1){
+                    if(onlinePlayers.size() == 1 && onlinePlayers.size()!= getGame().getNumPlayer()){
                         // If there is only one player and the status isn't WAITING
                         // then a timer start and if nobody reconnect before the timer's end
                         // the only player left is the winner

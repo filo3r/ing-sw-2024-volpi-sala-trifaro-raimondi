@@ -116,16 +116,15 @@ public class Player {
         // Assignment of Objective cards
         this.cardObjective = new ArrayList<>(INITIAL_CARD_OBJECTIVE);
         for (int i = 0; i < INITIAL_CARD_OBJECTIVE; i++) {
-            CardObjective cardObjective = (CardObjective) desk.drawCardDeck(desk.getDeckObjective());
-            this.cardObjective.add(cardObjective);
+            this.cardObjective.add((CardObjective) desk.drawCardDeck(desk.getDeckObjective()));
         }
         // Assignment of Resource cards and Gold cards in the hand
         this.hand = new ArrayList<>(INITIAL_CARD_RESOURCE + INITIAL_CARD_GOLD);
         for (int i = 0; i < INITIAL_CARD_RESOURCE; i++) {
-            CardResource cardResource = (CardResource) desk.drawCardDeck(desk.getDeckResource());
+            addCardToHand((CardResource) desk.drawCardDeck(desk.getDeckResource()));
         }
         for (int i = 0; i < INITIAL_CARD_GOLD; i++) {
-            CardGold cardGold = (CardGold) desk.drawCardDeck(desk.getDeckGold());
+            addCardToHand((CardGold) desk.drawCardDeck(desk.getDeckGold()));
         }
         this.codex = new Codex();
         this.pointObjective = 0;

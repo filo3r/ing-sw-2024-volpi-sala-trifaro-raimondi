@@ -1,15 +1,19 @@
 package it.polimi.ingsw.gc03.controller;
 
+import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
+import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
+import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainController {
     /**
-     * instance of the MainControlle, needed for the singleton design pattern
+     * instance of the MainController, needed for the singleton design pattern
      */
     private static MainController instance = null;
 
@@ -39,7 +43,7 @@ public class MainController {
         gameControllers.add(controller);
         try {
             controller.addPlayerToGame(firstPlayerNickname);
-        } catch (CannotJoinGameException e) {
+        } catch (CannotJoinGameException | DeskIsFullException | PlayerAlreadyJoinedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -54,11 +58,19 @@ public class MainController {
                 gameControllers.getLast().addPlayerToGame(playerNickname);
             } catch (CannotJoinGameException e) {
                 throw new RuntimeException(e);
+            } catch (PlayerAlreadyJoinedException e) {
+                throw new RuntimeException(e);
+            } catch (DeskIsFullException e) {
+                throw new RuntimeException(e);
             }
         } else {
             // If there are no available games to join, create a new game.
             createGame(playerNickname);
         }
+    }
+
+    public synchronized void reconnect(String playerNickname){
+
     }
 
     public synchronized void deleteGame(int idGame) throws NoSuchGameException {

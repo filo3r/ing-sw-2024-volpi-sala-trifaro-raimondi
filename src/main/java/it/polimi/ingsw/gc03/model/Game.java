@@ -1,6 +1,9 @@
 package it.polimi.ingsw.gc03.model;
 
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
+import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,15 +99,15 @@ public class Game {
      * @param nickname The player's nickname.
      * @return A boolean indicating whether a player has been added to the game or not.
      */
-    public boolean addPlayer(String nickname) {
+    public boolean addPlayer(String nickname) throws DeskIsFullException, PlayerAlreadyJoinedException {
         // The game is full
         if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
-            return false;
+            throw new DeskIsFullException();
         } else {
             // Check that the nickname is different from other players who have already entered
             for (Player player : this.players) {
                 if (nickname.equals(player.getNickname()))
-                    return false;
+                    throw new PlayerAlreadyJoinedException();
             }
             // The player can be added
             this.numPlayer++;
