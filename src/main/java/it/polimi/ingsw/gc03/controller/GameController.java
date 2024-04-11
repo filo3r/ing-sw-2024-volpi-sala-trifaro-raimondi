@@ -1,7 +1,9 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.model.*;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.CardGold;
+import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
@@ -86,29 +88,49 @@ public class GameController implements Runnable {
     /**
      *
      * @param player  is the player that will place the card
-     * @param side is the side of the card that will be placed.
+     * @param index is the position of the card that will be placed in the hand.
      * @param col is the column in the codex where it will be placed.
      * @param row is the row in the codex where it will be placed.
      */
-    public synchronized void placeCardOnCodex(Player player, Side side, int col, int row) throws Exception {
+    public synchronized void placeCardOnCodex(Player player, int index, boolean frontOrBack, int row, int col) throws Exception {
         // Check:
-        // - if the player who is trying to place a card on the codex is the current player
         // - if this game's status is RUNNING
         // - if the player's action is PLACE
-        int currPlayerIndex = game.getPlayers().indexOf(player);
-        if(game.getCurrPlayer() == currPlayerIndex && game.getStatus().equals(GameStatus.RUNNING) && player.getAction().equals(PlayerAction.PLACE)){
+        if(game.getStatus().equals(GameStatus.RUNNING) && player.getAction().equals(PlayerAction.PLACE)){
+            Side side = getSide(player, index, frontOrBack);
             if(player.getCodex().insertIntoCodex(side, row, col)){
-                // If everything was ok when placing the card, update the currPlayer index and update player action.
                 updateCurrPlayer();
-                player.setAction(PlayerAction.WAIT);
+                player.removeCardFromHand(index);
             } else {
                 throw new Exception("Error in placing a card.");
             }
+        } else {
+            throw new Exception("The player is not the current player or the game is not running or he's current action is not place");
         }
+    }
+
+    private static Side getSide(Player player, int index, boolean frontOrBack) {
+        Card card = player.getHand().get(index);
+        Side side = null;
+        if (card instanceof CardResource) {
+            if(frontOrBack){
+                side = ((CardResource) card).getFrontResource();
+            } else {
+                side = ((CardResource) card).getBackResource();
+            }
+        } else if (card instanceof CardGold) {
+            if(frontOrBack){
+                side = ((CardGold) card).getFrontGold();
+            } else {
+                side = ((CardGold) card).getBackGold();
+            }
+        }
+        return side;
     }
 
     public synchronized void updateCurrPlayer(){
         int curr = game.getCurrPlayer();
+        game.getPlayers().get(curr).setAction(PlayerAction.DRAW);
         if(curr==game.getPlayers().size()-1){
             game.setCurrPlayer(0);
         } else {
@@ -116,20 +138,67 @@ public class GameController implements Runnable {
         }
     }
 
-    public synchronized void placeStarterOnCodex(Player player, Side side){
-        if(game.getStatus().equals(GameStatus.WAITING) && player.getAction().equals(PlayerAction.FIRSTMOVES)){
-            player.getCodex().insertStarterIntoCodex(side);
-            if(player.getCardObjective().size()==1){
-                player.setAction(PlayerAction.WAIT);
+    public synchronized void placeStarterOnCodex(Player player, Side side) throws Exception {
+        if (!game.getStatus().equals(GameStatus.STARTING)) {
+            throw new Exception("The current game is not in the starting phase.");
+        }
+
+        if (!player.getAction().equals(PlayerAction.FIRSTMOVES)) {
+            throw new Exception("The player has already placed his starter card");
+        }
+
+        player.getCodex().insertStarterIntoCodex(side);
+        if (player.getCardObjective().size() == 1) {
+            player.setAction(PlayerAction.WAIT);
+            List<Player> firstMovers = game.getPlayers().stream()
+                    .filter(x -> x.getAction().equals(PlayerAction.FIRSTMOVES))
+                    .toList();
+
+            if (firstMovers.isEmpty()) {
+                game.setStatus(GameStatus.RUNNING);
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
             }
         }
     }
 
-    public synchronized void selectCardObjective(Player player, ArrayList<CardObjective> cardObjective){
-        if(game.getStatus().equals(GameStatus.WAITING) && player.getAction().equals(PlayerAction.FIRSTMOVES)){
-            player.setCardObjective(cardObjective);
-            if(player.getCodex().getCardStarterInserted()){
-                player.setAction((PlayerAction.WAIT));
+    public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
+        if(player.getAction().equals(PlayerAction.DRAW)){
+            player.addCardToHand(game.getDesk().drawCardDeck(deck));
+            player.setAction(PlayerAction.WAIT);
+            game.getPlayers().stream().toList().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+        } else {
+            throw new Exception("Player's action is not draw.");
+        }
+    }
+
+    public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
+        if(player.getAction().equals(PlayerAction.DRAW)){
+            player.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
+            player.setAction(PlayerAction.WAIT);
+            game.getPlayers().stream().toList().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+        } else {
+            throw new Exception("Player's action is not draw.");
+        }
+    }
+
+    public synchronized void selectCardObjective(Player player, int cardObjective) throws Exception {
+        if(!game.getStatus().equals(GameStatus.STARTING)){
+            throw new Exception("The current game is not in the starting phase.");
+        }
+        if(!player.getAction().equals(PlayerAction.FIRSTMOVES)){
+            throw new Exception("The player has already chosen his personal objective");
+        }
+
+        player.selectObjectiveCard(cardObjective);
+        if(player.getCodex().getCardStarterInserted()){
+            player.setAction((PlayerAction.WAIT));
+            List<Player> firstMovers = game.getPlayers().stream().
+                    filter(x->(x.getAction().equals(PlayerAction.FIRSTMOVES)))
+                    .toList();
+
+            if(firstMovers.isEmpty()){
+                game.setStatus(GameStatus.RUNNING);
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
             }
         }
     }
