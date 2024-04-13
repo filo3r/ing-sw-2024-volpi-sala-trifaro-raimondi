@@ -302,18 +302,22 @@ public class Desk {
      */
     public Card drawCardDisplayed(ArrayList<? extends Card> displayed, int index) {
         // Invalid index
-        if (index < 0 || index >= displayed.size())
+        if (index < 0 || index >= displayed.size() || displayed.isEmpty()){
+            checkDisplayed();
             return null;
-            // Valid index
-        else
-            return displayed.get(index);
+        }    // Valid index
+        else {
+            Card card = displayed.remove(index);
+            checkDisplayed();
+            return card;
+        }
     }
 
 
     /**
      * Method for checking that the visible cards are always in the correct number.
      */
-    public void checkDisplayed() {
+    private void checkDisplayed() {
         // Resource cards: Resource deck not empty
         while (this.displayedResource.size() < NUM_CARD_DISPLAYED && !this.deckResource.isEmpty()) {
             CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
