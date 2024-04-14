@@ -11,10 +11,7 @@ import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategy;
 import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategyAdapter;
 import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 
-
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,28 +64,32 @@ public class Desk {
     /**
      * File with information about Starter cards.
      */
-    private static final String FILE_CARD_STARTER = File.separator + "it" + File.separator + "polimi"
+    private static final String FILE_CARD_STARTER = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
             + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
             "fileCardStarter.json";
 
     /**
      * File with information about Resource cards.
      */
-    private static final String FILE_CARD_RESOURCE = File.separator + "it" + File.separator + "polimi"
+    private static final String FILE_CARD_RESOURCE = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
             + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
             "fileCardResource.json";
 
     /**
      * File with information about Gold cards.
      */
-    private static final String FILE_CARD_GOLD = File.separator + "it" + File.separator + "polimi"
+    private static final String FILE_CARD_GOLD = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
             + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
             "fileCardGold.json";
 
     /**
      * File with information about Objective cards.
      */
-    private static final String FILE_CARD_OBJECTIVE = File.separator + "it" + File.separator + "polimi"
+    private static final String FILE_CARD_OBJECTIVE = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
             + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
             "fileCardObjective.json";
 
@@ -127,130 +128,134 @@ public class Desk {
      * Constructor of the Desk class.
      */
     public Desk() {
-        createDeckStarter();
-        createDeckResource();
-        createDeckGold();
-        createDeckObjective();
+        // Create decks of cards
+        if (!createDeckStarter() || !createDeckResource() || !createDeckGold() || !createDeckObjective())
+            System.exit(1);
+        // Initialize visible cards
         initializeDisplayedCard();
     }
 
 
     /**
      * Method for creating the Starter card deck.
+     * @return A boolean indicating whether the operation was successful or not.
      */
-    private void createDeckStarter() {
+    private boolean createDeckStarter() {
         this.deckStarter = new ArrayList<>(NUM_CARD_STARTER);
         try {
             // Load the JSON file containing the Starter cards
-            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_STARTER);
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                // Use Gson to parse the JSON data
-                Gson gson = new Gson();
-                Type starterCardType = new TypeToken<ArrayList<CardStarter>>(){}.getType();
-                ArrayList<CardStarter> starterCards = gson.fromJson(inputStreamReader, starterCardType);
-                this.deckStarter.addAll(starterCards);
-                inputStream.close();
-            } else {
-                // Log a warning if the resource is not found
-                logger.warning("Could not find the file: " + FILE_CARD_STARTER);
-            }
-        } catch (Exception e) {
+            InputStream inputStream = new FileInputStream(FILE_CARD_STARTER);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            // Use Gson to parse the JSON data
+            Gson gson = new Gson();
+            Type starterCardType = new TypeToken<ArrayList<CardStarter>>(){}.getType();
+            ArrayList<CardStarter> starterCards = gson.fromJson(inputStreamReader, starterCardType);
+            this.deckStarter.addAll(starterCards);
+            inputStream.close();
+            // shuffle the deck
+            Collections.shuffle(this.deckStarter);
+            return true;
+        } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error creating Starter deck", e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_STARTER, e);
+        } catch (IOException e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_STARTER, e);
         }
-        // shuffle the deck
-        Collections.shuffle(this.deckStarter);
+        return false;
     }
 
 
     /**
      * Method for creating the Resource card deck.
+     * @return A boolean indicating whether the operation was successful or not.
      */
-    private void createDeckResource() {
+    private boolean createDeckResource() {
         this.deckResource = new ArrayList<>(NUM_CARD_RESOURCE);
         try {
-            // Load the JSON file containing the Starter cards
-            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_RESOURCE);
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                // Use Gson to parse the JSON data
-                Gson gson = new Gson();
-                Type resourceCardType = new TypeToken<ArrayList<CardResource>>(){}.getType();
-                ArrayList<CardResource> resourceCards = gson.fromJson(inputStreamReader, resourceCardType);
-                this.deckResource.addAll(resourceCards);
-                inputStream.close();
-            } else {
-                // Log a warning if the resource is not found
-                logger.warning("Could not find the file: " + FILE_CARD_RESOURCE);
-            }
-        } catch (Exception e) {
+            // Load the JSON file containing the Resource cards
+            InputStream inputStream = new FileInputStream(FILE_CARD_RESOURCE);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            // Use Gson to parse the JSON data
+            Gson gson = new Gson();
+            Type resourceCardType = new TypeToken<ArrayList<CardResource>>(){}.getType();
+            ArrayList<CardResource> resourceCards = gson.fromJson(inputStreamReader, resourceCardType);
+            this.deckResource.addAll(resourceCards);
+            inputStream.close();
+            // shuffle the deck
+            Collections.shuffle(this.deckResource);
+            return true;
+        } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error creating Resource deck", e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_RESOURCE, e);
+        } catch (IOException e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_RESOURCE, e);
         }
-        // shuffle the deck
-        Collections.shuffle(this.deckResource);
+        return false;
     }
 
 
     /**
      * Method for creating the Gold card deck.
+     * @return A boolean indicating whether the operation was successful or not.
      */
-    private void createDeckGold() {
+    private boolean createDeckGold() {
         this.deckGold = new ArrayList<>(NUM_CARD_GOLD);
         try {
-            // Load the JSON file containing the Starter cards
-            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_GOLD);
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                // Use Gson to parse the JSON data
-                Gson gson = new Gson();
-                Type goldCardType = new TypeToken<ArrayList<CardGold>>(){}.getType();
-                ArrayList<CardGold> goldCards = gson.fromJson(inputStreamReader, goldCardType);
-                this.deckGold.addAll(goldCards);
-                inputStream.close();
-            } else {
-                // Log a warning if the resource is not found
-                logger.warning("Could not find the file: " + FILE_CARD_GOLD);
-            }
-        } catch (Exception e) {
+            // Load the JSON file containing the Gold cards
+            InputStream inputStream = new FileInputStream(FILE_CARD_GOLD);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            // Use Gson to parse the JSON data
+            Gson gson = new Gson();
+            Type goldCardType = new TypeToken<ArrayList<CardGold>>(){}.getType();
+            ArrayList<CardGold> goldCards = gson.fromJson(inputStreamReader, goldCardType);
+            this.deckGold.addAll(goldCards);
+            inputStream.close();
+            // shuffle the deck
+            Collections.shuffle(this.deckGold);
+            return true;
+        } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error creating Gold deck", e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_GOLD, e);
+        } catch (IOException e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_GOLD, e);
         }
-        // shuffle the deck
-        Collections.shuffle(this.deckGold);
+        return false;
     }
 
 
     /**
      * Method for creating the Objective card deck.
+     * @return A boolean indicating whether the operation was successful or not.
      */
-    private void createDeckObjective() {
+    private boolean createDeckObjective() {
         this.deckObjective = new ArrayList<>(NUM_CARD_OBJECTIVE);
         try {
-            // Load the JSON file containing the Starter cards
-            InputStream inputStream = getClass().getResourceAsStream(FILE_CARD_OBJECTIVE);
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                // Create GsonBuilder and register the adapter
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.registerTypeAdapter(CalculateScoreStrategy.class, new CalculateScoreStrategyAdapter());
-                Gson gson = gsonBuilder.create();
-                // Use Gson to parse the JSON data
-                Type objectiveCardType = new TypeToken<ArrayList<CardObjective>>(){}.getType();
-                ArrayList<CardObjective> objectiveCards = gson.fromJson(inputStreamReader, objectiveCardType);
-                this.deckObjective.addAll(objectiveCards);
-                inputStream.close();
-            } else {
-                // Log a warning if the resource is not found
-                logger.warning("Could not find the file: " + FILE_CARD_OBJECTIVE);
-            }
-        } catch (Exception e) {
+            // Load the JSON file containing the Objective cards
+            InputStream inputStream = new FileInputStream(FILE_CARD_OBJECTIVE);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            // Create GsonBuilder and register the adapter
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(CalculateScoreStrategy.class, new CalculateScoreStrategyAdapter());
+            Gson gson = gsonBuilder.create();
+            // Use Gson to parse the JSON data
+            Type objectiveCardType = new TypeToken<ArrayList<CardObjective>>(){}.getType();
+            ArrayList<CardObjective> objectiveCards = gson.fromJson(inputStreamReader, objectiveCardType);
+            this.deckObjective.addAll(objectiveCards);
+            inputStream.close();
+            // shuffle the deck
+            Collections.shuffle(this.deckObjective);
+            return true;
+        } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error creating Objective deck", e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_OBJECTIVE, e);
+        } catch (IOException e) {
+            // Log the exception using the logger
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_OBJECTIVE, e);
         }
-        // shuffle the deck
-        Collections.shuffle(this.deckObjective);
+        return false;
     }
 
 
