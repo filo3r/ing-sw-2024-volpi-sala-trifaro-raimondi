@@ -21,16 +21,9 @@ class GameControllerTest {
 
     private GameController gameController;
 
-    List<Player> players = new ArrayList<>();
-
     @BeforeEach
     void setUp() {
         gameController = new GameController();
-
-        players.add(new Player("1", 1, new Desk()));
-        players.add(new Player("2", 2, new Desk()));
-        players.add(new Player("3", 3, new Desk()));
-        players.add(new Player("4", 4, new Desk()));
     }
 
     @Test

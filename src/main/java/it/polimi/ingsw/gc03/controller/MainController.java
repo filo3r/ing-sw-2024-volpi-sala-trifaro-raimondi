@@ -81,4 +81,8 @@ public class MainController {
             throw new NoSuchGameException();
         }
     }
+
+    public List<GameController> getGameControllers() {
+        return gameControllers;
+    }
 }
