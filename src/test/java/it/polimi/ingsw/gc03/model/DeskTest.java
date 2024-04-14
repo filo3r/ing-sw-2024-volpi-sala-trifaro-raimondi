@@ -116,9 +116,9 @@ class DeskTest {
     @Test
     void drawCardDisplayedGoldEmpty(){
         Card card;
-        int i=1;
+        int i=0;
         while(!desk.getDisplayedGold().isEmpty()){
-            card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
+           desk.drawCardDisplayed(desk.getDisplayedGold(),i);
         }
         card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
         assertEquals(null,card);
@@ -130,9 +130,9 @@ class DeskTest {
     @Test
     void drawCardDisplayedResourceEmpty(){
         Card card;
-        int i=1;
+        int i=0;
         while(!desk.getDisplayedResource().isEmpty()){
-            card = desk.drawCardDisplayed(desk.getDisplayedResource(),i);
+           desk.drawCardDisplayed(desk.getDisplayedResource(),i);
         }
         card = desk.drawCardDisplayed(desk.getDisplayedResource(),i);
         assertEquals(null,card);
@@ -143,7 +143,7 @@ class DeskTest {
      */
     @Test
     void drawCardDisplayedWrongIndexOver(){
-        int i=3;
+        int i=2;
         Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
         assertEquals(card,null);
     }
