@@ -1,23 +1,51 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
+    private Player player;
+
+    private Desk desk;
+
+
+
     @BeforeEach
     void setUp() {
+        desk = new Desk();
+        player= new Player("Testname",1,desk);
     }
 
     @AfterEach
     void tearDown() {
+        desk = null;
+        player = null;
     }
 
     @Test
-    void selectObjectiveCard() {
+    void selectObjectiveCardFalseOver() {
+        int index = 3;
+        assertFalse(player.selectObjectiveCard(index));
+    }
+
+    @Test
+    void selectObjectiveCardFalseUnder() {
+        int index = -1;
+        assertFalse(player.selectObjectiveCard(index));
+    }
+
+    @Test
+    void selectObjectiveCardTrue() {
+        int index = 1;
+        assertTrue(player.selectObjectiveCard(index));
     }
 
     @Test
@@ -30,6 +58,11 @@ class PlayerTest {
 
     @Test
     void calculatePlayerScore() {
+        player.setScore(5);
+        player.getCodex().setPointCodex(8);
+        player.setPointObjective(7);
+        player.calculatePlayerScore();
+        assertEquals(player.getScore(),20);
     }
 
     @Test
