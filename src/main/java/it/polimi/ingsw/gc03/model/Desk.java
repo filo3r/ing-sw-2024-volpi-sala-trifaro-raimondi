@@ -503,15 +503,29 @@ public class Desk {
 
     public void printDisplayedResourceCards() {
         System.out.println("DISPLAYED RESOURCE CARDS:");
-        for (Card card : displayedResource) {
+        ArrayList<CardResource> convertedResource = new ArrayList<>();
+        for(Card card :displayedResource){
+            if(card instanceof CardResource){
+                CardResource cardResource = (CardResource) card;
+                convertedResource.add(cardResource);
+            }
+        }
+        for (Card card : convertedResource) {
             //card.printCardResource(card);
         }
     }
 
     public void printDisplayedGoldCards() {
         System.out.println("DISPLAYED GOLD CARDS:");
-        for (Card card : displayedGold) {
-            //card.printCardGold(card);
+        ArrayList<CardGold> convertedGold = new ArrayList<>();
+        for(Card card :displayedGold){
+            if(card instanceof CardGold){
+                CardGold cardGold = (CardGold) card;
+                convertedGold.add(cardGold);
+            }
+        }
+        for (CardGold cardGold : convertedGold) {
+            //cardGold.printCardGold(cardGold);
         }
     }
 

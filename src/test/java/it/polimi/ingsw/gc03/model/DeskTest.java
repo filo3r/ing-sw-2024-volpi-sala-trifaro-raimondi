@@ -158,6 +158,7 @@ class DeskTest {
         assertEquals(card,null);
     }
 
+    //Metodi Privati non si sa se vanno testati
     @Test
     void checkDisplayedGoldIfDeckGoldIsEmpty() {
     }
@@ -170,7 +171,7 @@ class DeskTest {
     @Test
     void checkDisplayedResourceIfDeckResourceIsNotEmpty() {
     }
-
+    //
     @Test
     void getDeckStarter() {
     }
@@ -221,6 +222,7 @@ class DeskTest {
         desk.setDeckObjective(desk1.getDeckObjective());
         assertEquals(desk.getDeckObjective(),desk1.getDeckObjective());
         assertNotEquals(deckObjective,desk.getDeckObjective());
+
     }
 
     @Test

@@ -29,25 +29,32 @@ class PlayerTest {
         desk = null;
         player = null;
     }
-
+    /**
+     * Check if selectObjectiveCard returns false when the index is over CardObjective size
+     */
     @Test
     void selectObjectiveCardFalseOver() {
         int index = 3;
         assertFalse(player.selectObjectiveCard(index));
     }
 
+    /**
+     * Check if selectObjectiveCard returns false when the index is under CardObjective size
+     */
     @Test
     void selectObjectiveCardFalseUnder() {
         int index = -1;
         assertFalse(player.selectObjectiveCard(index));
     }
-
+    /**
+     * Check if selectObjectiveCard returns true when the index is correct
+     */
     @Test
     void selectObjectiveCardTrue() {
         int index = 1;
         assertTrue(player.selectObjectiveCard(index));
     }
-
+    //Bisogna trovare combinazione di carte per bloccare il gioco
     @Test
     void checkSkipTurn() {
     }
@@ -56,13 +63,16 @@ class PlayerTest {
     void calculatePointObjective() {
     }
 
+    /**
+     * Check if the score is calculated correctly
+     */
     @Test
     void calculatePlayerScore() {
         player.setScore(5);
         player.getCodex().setPointCodex(8);
         player.setPointObjective(7);
         player.calculatePlayerScore();
-        assertEquals(player.getScore(),20);
+        assertEquals(player.getScore(),5+8+7);
     }
 
     @Test
