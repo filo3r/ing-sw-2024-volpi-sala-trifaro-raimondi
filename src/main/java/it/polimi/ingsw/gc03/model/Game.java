@@ -6,7 +6,6 @@ import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 /**
@@ -45,11 +44,6 @@ public class Game {
     private ArrayList<Player> players;
 
     /**
-     * Order in which players play.
-     */
-    private ArrayList<Integer> turnOrder;
-
-    /**
      * Current player.
      */
     private int currPlayer;
@@ -86,8 +80,6 @@ public class Game {
         this.desk = new Desk();
         this.numPlayer = 0;
         this.players = new ArrayList<>(MAX_NUM_PLAYERS);
-        this.turnOrder = new ArrayList<>(MAX_NUM_PLAYERS);
-        // currPlayer is the index of the turnOrder array
         this.currPlayer = 0;
         this.chat = new ArrayList<>();
         this.winner = new ArrayList<>(MAX_NUM_PLAYERS);
@@ -118,19 +110,6 @@ public class Game {
     }
 
 
-
-    /*
-    public void addPlayer(Player player)throws PlayerAlreadyJoinedException, DeskIsFullException {
-        if(this.players.stream().filter(x->(x.getNickname().equals(player.getNickname()))).toList().isEmpty()){
-            if(this.players.size()<4){
-                this.players.add(player);
-            } else throw new PlayerAlreadyJoinedException("Error:Player already joined the desk");
-        } else throw new DeskIsFullException("Error:The Desk is already full");
-    }
-     */
-
-
-
     /**
      * Method to add a message to the game chat.
      * @param sender The nickname of the player who wrote the message.
@@ -151,21 +130,6 @@ public class Game {
             this.currPlayer++;
         else
             this.currPlayer = 0;
-    }
-
-
-    /**
-     * Method for randomizing player turns.
-     */
-    public void createTurnOrder() {
-        // Add the number of players to the array
-        for (int i = 1; i <= this.numPlayer; i++) {
-            this.turnOrder.add(i);
-        }
-        // Randomly sort the array
-        Collections.shuffle(this.turnOrder);
-        // We use currPlayer as an index to access the array, the array contains the number of the player whose turn it
-        // is
     }
 
 
@@ -343,24 +307,6 @@ public class Game {
      */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-    }
-
-
-    /**
-     * Method to get the turn order of players in the game.
-     * @return The turn order of players in the game.
-     */
-    public ArrayList<Integer> getTurnOrder() {
-        return turnOrder;
-    }
-
-
-    /**
-     * Method to set the turn order of players in the game.
-     * @param turnOrder The turn order of players in the game.
-     */
-    public void setTurnOrder(ArrayList<Integer> turnOrder) {
-        this.turnOrder = turnOrder;
     }
 
 
