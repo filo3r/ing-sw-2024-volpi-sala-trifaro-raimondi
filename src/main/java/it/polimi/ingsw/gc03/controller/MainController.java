@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.controller;
 
-import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
@@ -9,7 +8,6 @@ import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class MainController {
     /**
@@ -75,7 +73,7 @@ public class MainController {
 
     public synchronized void deleteGame(int idGame) throws NoSuchGameException {
         List<GameController> gameToRemove = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == idGame)).toList();
-        if(gameToRemove.size()==1){
+        if(!gameToRemove.isEmpty()){
             gameControllers.remove(gameToRemove.getFirst());
         } else {
             throw new NoSuchGameException();
@@ -84,5 +82,10 @@ public class MainController {
 
     public List<GameController> getGameControllers() {
         return gameControllers;
+    }
+
+    // Mainly for testing purposes
+    public static void resetInstance() {
+        instance = null;
     }
 }

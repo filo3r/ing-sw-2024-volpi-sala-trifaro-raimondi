@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.controller;
 
 import com.sun.javafx.scene.shape.ArcHelper;
+import com.sun.tools.javac.Main;
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -47,11 +48,14 @@ class GameControllerTest {
 
 
     @Test
-    @DisplayName("Placing cards on Codex")
+    @DisplayName("Placing cards on Codex and simple game")
     void placingCards() throws Exception {
         gameController.addPlayerToGame("Player1");
         gameController.getGame().setSize(2);
         gameController.addPlayerToGame("Player2");
+
+        // For testing purposes the first player is in position 0
+        gameController.getGame().setCurrPlayer(0);
 
         assertEquals(GameStatus.STARTING, gameController.getGame().getStatus());
 

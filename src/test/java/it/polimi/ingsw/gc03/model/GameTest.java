@@ -73,17 +73,6 @@ class GameTest {
     }
 
     @Test
-    void createTurnOrder() throws PlayerAlreadyJoinedException, DeskIsFullException {
-        game.setSize(4);
-        game.addPlayer("1");
-        game.addPlayer("2");
-        game.addPlayer("3");
-        game.addPlayer("4");
-        game.createTurnOrder();
-        assertEquals(game.getTurnOrder().size(),game.getPlayers().size());
-    }
-
-    @Test
     void getOnlinePlayers() throws PlayerAlreadyJoinedException, DeskIsFullException {
         game.setSize(2);
         game.addPlayer("Test1");

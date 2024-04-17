@@ -20,6 +20,7 @@ public class GameController implements Runnable {
     private final Random random = new Random();
     private TimerTask timerTask;
 
+    private final int ENDING_SCORE = 20;
 
     public GameController() {
         game = new Game(random.nextInt(1000000000));
@@ -44,6 +45,7 @@ public class GameController implements Runnable {
             // If enough players joined the game, initialize the game
             if(game.getPlayers().size() == game.getSize() && game.getNumPlayer()!=1){
                 game.setStatus(GameStatus.STARTING);
+                game.setCurrPlayer(random.nextInt(game.getSize()));
             }
         } else {
          throw new CannotJoinGameException();
@@ -85,30 +87,6 @@ public class GameController implements Runnable {
         }
     }
 
-    /**
-     *
-     * @param player  is the player that will place the card
-     * @param index is the position of the card that will be placed in the hand.
-     * @param col is the column in the codex where it will be placed.
-     * @param row is the row in the codex where it will be placed.
-     */
-    public synchronized void placeCardOnCodex(Player player, int index, boolean frontOrBack, int row, int col) throws Exception {
-        // Check:
-        // - if this game's status is RUNNING
-        // - if the player's action is PLACE
-        if(game.getStatus().equals(GameStatus.RUNNING) && player.getAction().equals(PlayerAction.PLACE)){
-            Side side = getSide(player, index, frontOrBack);
-            if(player.getCodex().insertIntoCodex(side, row, col)){
-                updateCurrPlayer();
-                player.removeCardFromHand(index);
-            } else {
-                throw new Exception("Error in placing a card.");
-            }
-        } else {
-            throw new Exception("The player is not the current player or the game is not running or he's current action is not place");
-        }
-    }
-
     private static Side getSide(Player player, int index, boolean frontOrBack) {
         Card card = player.getHand().get(index);
         Side side = null;
@@ -129,12 +107,10 @@ public class GameController implements Runnable {
     }
 
     public synchronized void updateCurrPlayer(){
-        int curr = game.getCurrPlayer();
-        game.getPlayers().get(curr).setAction(PlayerAction.DRAW);
-        if(curr==game.getPlayers().size()-1){
-            game.setCurrPlayer(0);
-        } else {
-            game.setCurrPlayer(curr+1);
+        game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
+        game.updateCurrPlayer();
+        if(!game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.ENDED)){
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
         }
     }
 
@@ -161,10 +137,26 @@ public class GameController implements Runnable {
         }
     }
 
-    public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
-        if(player.getAction().equals(PlayerAction.DRAW)){
-            player.addCardToHand(game.getDesk().drawCardDeck(deck));
+    private synchronized void checkFinalAction(Player player){
+        if(game.getStatus().equals(GameStatus.ENDING)){
+            player.setAction(PlayerAction.ENDED);
+            boolean allPlayersEnded = game.getPlayers().stream()
+                    .filter(x->(!x.getAction().equals(PlayerAction.ENDED)))
+                    .toList()
+                    .isEmpty();
+            if(allPlayersEnded){
+                game.getWinner();
+                game.setStatus(GameStatus.ENDED);
+            }
+        } else {
             player.setAction(PlayerAction.WAIT);
+        }
+    }
+
+    public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
+        if(player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))){
+            player.addCardToHand(game.getDesk().drawCardDeck(deck));
+            checkFinalAction(player);
             game.getPlayers().stream().toList().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
         } else {
             throw new Exception("Player's action is not draw.");
@@ -172,9 +164,9 @@ public class GameController implements Runnable {
     }
 
     public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
-        if(player.getAction().equals(PlayerAction.DRAW)){
+        if(player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))){
             player.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
-            player.setAction(PlayerAction.WAIT);
+            checkFinalAction(player);
             game.getPlayers().stream().toList().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
         } else {
             throw new Exception("Player's action is not draw.");
@@ -206,6 +198,40 @@ public class GameController implements Runnable {
     public Game getGame(){
         return game;
     }
+
+
+/**
+ *
+ * @param player  is the player that will place the card
+ * @param index is the position of the card that will be placed in the hand.
+ * @param col is the column in the codex where it will be placed.
+ * @param row is the row in the codex where it will be placed.
+ */
+public synchronized void placeCardOnCodex(Player player, int index, boolean frontOrBack, int row, int col) throws Exception {
+    // Check:
+    // - if this game's status is RUNNING
+    // - if the player's action is PLACE
+    if (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING) ) {
+        if (player.getAction().equals(PlayerAction.PLACE)) {
+            Side side = getSide(player, index, frontOrBack);
+            if (player.getCodex().insertIntoCodex(side, row, col)) {
+                updateCurrPlayer();
+                player.removeCardFromHand(index);
+                if (player.getScore() >= ENDING_SCORE) {
+                    game.setStatus(GameStatus.ENDING);
+                }
+            } else {
+                throw new Exception("Error in placing a card.");
+            }
+        } else {
+            throw new Exception("The player is not the current player or the game is not running or he's current action is not place");
+        }
+    } else {
+        throw new Exception("The current GameStatus is not either RUNNING or ENDING");
+    }
+}
+
+
     @Override
     public void run() {
         while (!Thread.interrupted()){
@@ -225,6 +251,16 @@ public class GameController implements Runnable {
                         // the only player left is the winner
                         game.setStatus(GameStatus.ALTED);
                     }
+                }
+            }
+            if(game.getStatus().equals(GameStatus.ENDED)){
+                try {
+                    // The game has ended, I should update the view and announce the winner.
+                    // then I'll delete the game and close this thread.
+                    MainController.getInstance().deleteGame(game.getIdGame());
+                    return;
+                } catch (NoSuchGameException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
