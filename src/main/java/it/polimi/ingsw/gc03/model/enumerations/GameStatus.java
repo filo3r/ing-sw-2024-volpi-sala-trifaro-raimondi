@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.model.enumerations;
 
 /**
  * This enumeration class represents the available statuses of the game.
- * The cycle of a game is: WAITING -> STARTING -> RUNNING (? ALTED) -> ENDING -> ENDED
+ * The cycle of a game is: WAITING -> STARTING -> RUNNING (? HALTED) -> ENDING -> ENDED
  */
 public enum GameStatus {
     /**
@@ -24,6 +24,7 @@ public enum GameStatus {
     /**
      * Game's in pause, because only one player is currently online.
      */
-    ALTED,
+    HALTED,
+
     ENDED
 }

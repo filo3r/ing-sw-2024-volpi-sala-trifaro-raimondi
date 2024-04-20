@@ -98,7 +98,7 @@ public class Player {
     /**
      * Number of Objective cards the player must choose to keep.
      */
-    private static final int FINAL_CARD_OBJECTIVE = 1;
+    public static final int FINAL_CARD_OBJECTIVE = 1;
 
 
     /**

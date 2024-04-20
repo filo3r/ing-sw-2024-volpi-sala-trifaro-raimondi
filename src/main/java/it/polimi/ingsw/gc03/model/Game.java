@@ -111,6 +111,23 @@ public class Game {
 
 
     /**
+     * Method for removing a player from the game.
+     * @param nickname The player's nickname.
+     * @return A Boolean value indicating whether or not a player has been removed from the game.
+     */
+    public boolean removePlayer(String nickname) {
+        for (int i = 0; i < this.players.size(); i++) {
+            if (nickname.equals(this.players.get(i).getNickname())) {
+                this.players.remove(i);
+                this.numPlayer--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
      * Method to add a message to the game chat.
      * @param sender The nickname of the player who wrote the message.
      * @param text The text of the message.
