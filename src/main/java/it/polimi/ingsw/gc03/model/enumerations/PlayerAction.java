@@ -2,12 +2,14 @@ package it.polimi.ingsw.gc03.model.enumerations;
 
 
 /**
- * Player's action: FIRSTMOVES (place the starter and the select the objective) -> WAIT (wait your turn) || PLACE || DRAW -> ENDED
+ *
  */
 public enum PlayerAction {
     WAIT,
     PLACE,
     FIRSTMOVES, // first moves stands for "placing the starter and selecting the objective"
     DRAW,
-    ENDED
+    ENDED, // This status can refer to both a player who has ended the game or who can not place any more card in the codex
+    DISCONNECTED
+
 }

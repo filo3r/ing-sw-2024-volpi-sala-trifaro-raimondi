@@ -171,12 +171,21 @@ public class GameController implements Runnable {
      * The method handles the transition and updating of player actions in the game.
      */
     public synchronized void updateCurrPlayer() {
-        // Set the current player action to DRAW
-        game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
-        // Move on to the next player
+        // The player just ended his turn, he can draw.
+        game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);;
         game.updateCurrPlayer();
-        // If the current new player's action is not ENDED, the player's action is set to PLACE.
-        if (!game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.ENDED)) {
+
+        Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
+        currPlayer.checkSkipTurn();
+        if(currPlayer.getSkipTurn()){
+            currPlayer.setAction(PlayerAction.ENDED);
+            updateCurrPlayer();
+        }
+        if(!currPlayer.getOnline()){
+            currPlayer.setAction(PlayerAction.DISCONNECTED);
+            updateCurrPlayer();
+        }
+        if (currPlayer.getAction().equals(PlayerAction.WAIT)) {
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
         }
     }
@@ -205,7 +214,7 @@ public class GameController implements Runnable {
         if (player.getCardObjective().size() == Player.FINAL_CARD_OBJECTIVE) {
             // The player's action is updated to WAIT
             player.setAction(PlayerAction.WAIT);
-            // Check whether all players have completed their initial movement
+            // Check whether all players have completed their initial moves
             List<Player> firstMovers = game.getPlayers().stream()
                     .filter(x -> x.getAction().equals(PlayerAction.FIRSTMOVES))
                     .toList();
