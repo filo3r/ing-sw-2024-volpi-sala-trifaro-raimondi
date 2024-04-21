@@ -103,5 +103,29 @@ class GameControllerTest {
         assertEquals(3, currPlayer.getHand().size());
         assertEquals(PlayerAction.PLACE, secondPlayer.getAction());
         assertEquals(PlayerAction.WAIT, currPlayer.getAction());
+        try {
+            gameController.placeCardOnCodex(secondPlayer, 1, false, 41, 39);
+        } catch (IllegalStateException e){
+            return;
+        }
+
+        try {
+            gameController.drawCardDisplayed(secondPlayer, gameDesk.getDisplayedGold(), 0);
+        } catch (IllegalStateException e){
+            return;
+        }
+
+        try {
+            gameController.placeCardOnCodex(currPlayer, 1, false, 41, 39);
+        } catch (IllegalStateException e){
+            return;
+        }
+
+        try {
+            gameController.drawCardDisplayed(currPlayer, gameDesk.getDisplayedGold(), 0);
+        } catch (IllegalStateException e){
+            return;
+        }
+
     }
 }

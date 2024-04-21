@@ -102,29 +102,35 @@ public class Codex {
      * @param column The insertion column.
      * @return A boolean indicating whether the card can be inserted.
      */
-    private boolean checkPreviousCardNULL(int row, int column) {
-        if (this.codex[row - 1][column - 1] != null) {
-            Side topLeft = this.codex[row - 1][column - 1];
-            if (topLeft.getBottomRightCorner() == Value.NULL)
-                return false;
+    private boolean checkPreviousCardNULL(int row, int column) throws IllegalStateException {
+        try {
+            if (this.codex[row - 1][column - 1] != null) {
+                Side topLeft = this.codex[row - 1][column - 1];
+                if (topLeft.getBottomRightCorner() == Value.NULL)
+                    throw new IllegalStateException("Top left corner contains NULL value.");
+            }
+            if (this.codex[row + 1][column - 1] != null) {
+                Side bottomLeft = this.codex[row + 1][column - 1];
+                if (bottomLeft.getTopRightCorner() == Value.NULL)
+                    throw new IllegalStateException("Bottom left corner contains NULL value.");
+            }
+            if (this.codex[row - 1][column + 1] != null) {
+                Side topRight = this.codex[row - 1][column + 1];
+                if (topRight.getBottomLeftCorner() == Value.NULL)
+                    throw new IllegalStateException("Top right corner contains NULL value.");
+            }
+            if (this.codex[row + 1][column + 1] != null) {
+                Side bottomRight = this.codex[row + 1][column + 1];
+                if (bottomRight.getTopLeftCorner() == Value.NULL)
+                    throw new IllegalStateException("Bottom right corner contains NULL value.");
+            }
+            return true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Catch ArrayIndexOutOfBoundsException and rethrow it as IllegalStateException
+            throw new IllegalStateException("Invalid row or column.");
         }
-        if (this.codex[row + 1][column - 1] != null) {
-            Side bottomLeft = this.codex[row + 1][column - 1];
-            if (bottomLeft.getTopRightCorner() == Value.NULL)
-                return false;
-        }
-        if (this.codex[row - 1][column + 1] != null) {
-            Side topRight = this.codex[row - 1][column + 1];
-            if (topRight.getBottomLeftCorner() == Value.NULL)
-                return false;
-        }
-        if (this.codex[row + 1][column + 1] != null) {
-            Side bottomRight = this.codex[row + 1][column + 1];
-            if (bottomRight.getTopLeftCorner() == Value.NULL)
-                return false;
-        }
-        return true;
     }
+
 
 
     /**
@@ -401,36 +407,45 @@ public class Codex {
      * @return true if the insertion was successful, otherwise false.
      */
     public boolean insertIntoCodex(Side side, int row, int column) {
-        // Check the row and column and whether the Starter card has already been inserted
-        if (row < 0 || row >= 81 || column < 0 || column >= 81 || !this.cardStarterInserted){
-            return false;
+        try {
+            // Check the row and column and whether the Starter card has already been inserted
+            if (row < 0 || row >= 81 || column < 0 || column >= 81 || !this.cardStarterInserted) {
+                throw new IllegalArgumentException("Invalid row or column or Starter card not inserted.");
+            }
             // Check if the coordinates are valid
-        } else if (((row % 2) == 0 && (column % 2) != 0) || ((row % 2) != 0 && (column % 2) == 0)) {
-            return false;
+            else if (((row % 2) == 0 && (column % 2) != 0) || ((row % 2) != 0 && (column % 2) == 0)) {
+                throw new IllegalArgumentException("Invalid coordinates.");
+            }
             // Check if the coordinates are free
-        } else if (this.codex[row][column] != null) {
-            return false;
-        } else {
+            else if (this.codex[row][column] != null) {
+                throw new IllegalArgumentException("Coordinates already occupied.");
+            }
             // Check the connection with some previous card
-            boolean checkPreviousCardConnection = checkPreviousCardConnection(row, column);
-            if (!checkPreviousCardConnection)
-                return false;
+            else if (!checkPreviousCardConnection(row, column)) {
+                throw new IllegalStateException("Previous card connection failed.");
+            }
             // Check for NULL values in previous cards
-            boolean checkPreviousCardNULL = checkPreviousCardNULL(row, column);
-            if (!checkPreviousCardNULL)
-                return false;
+            else if (!checkPreviousCardNULL(row, column)) {
+                throw new IllegalStateException("Previous card contains NULL values.");
+            }
             // Check that the placement requirements for Gold cards are verified
-            boolean checkRequirementPlacement = checkRequirementPlacement(side);
-            if (!checkRequirementPlacement)
-                return false;
-            // Proceed with the insertion
-            insertSide(side, row, column);
-            updateCounterCodex(side);
-            calculatePointCodex(side);
-            this.counterCodex[7] = 0;
-            return true;
+            else if (!checkRequirementPlacement(side)) {
+                throw new IllegalStateException("Placement requirements for Gold cards not met.");
+            } else {
+                // Proceed with the insertion
+                insertSide(side, row, column);
+                updateCounterCodex(side);
+                calculatePointCodex(side);
+                this.counterCodex[7] = 0;
+                return true;
+            }
+        } catch (Exception e) {
+            // Handle the exception here, you can log it or take other actions as required
+            e.printStackTrace(); // or any other way you want to handle it
+            return false;
         }
     }
+
 
 
     /**

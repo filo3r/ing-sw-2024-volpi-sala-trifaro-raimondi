@@ -135,56 +135,16 @@ public class GameController implements Runnable {
         }
     }
 
-
-    /**
-     * Method that retrieves a specific side of a card from a player's hand based on the index provided.
-     * @param player The player whose hand is to be queried.
-     * @param index The index of the card in the player's hand.
-     * @param frontCard If true, retrieves the front side of the card; if false, retrieves the back side.
-     * @return The required side of the card or null if the index in the hand is not available.
-     */
-    private static Side getSide(Player player, int index, boolean frontCard) {
-        // Check the index
-        if (index < 0 || index >= player.getHand().size())
-            return null;
-        // Index available
-        Card card = player.getHand().get(index);
-        Side side = null;
-        // Resource card
-        if (card instanceof CardResource) {
-            if (frontCard)
-                side = ((CardResource) card).getFrontResource();
-            else
-                side = ((CardResource) card).getBackResource();
-        // Gold card
-        } else if (card instanceof CardGold) {
-            if (frontCard)
-                side = ((CardGold) card).getFrontGold();
-            else
-                side = ((CardGold) card).getBackGold();
-        }
-        return side;
-    }
-
-
     /**
      * The method handles the transition and updating of player actions in the game.
      */
     public synchronized void updateCurrPlayer() {
-
-        if(game.getDesk().getDeckResource().isEmpty()) {
-            if (game.getDesk().getDeckGold().isEmpty()){
-                if(!game.getStatus().equals(GameStatus.ENDING)){
-                    game.setStatus(GameStatus.ENDING);
-                }
-            } else {
-                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
-            }
+        if(!game.getStatus().equals(GameStatus.LASTROUND)){
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
         } else {
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);;
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT);
         }
         game.updateCurrPlayer();
-
         Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
         currPlayer.checkSkipTurn();
         if(currPlayer.getSkipTurn()){
@@ -195,9 +155,7 @@ public class GameController implements Runnable {
             currPlayer.setAction(PlayerAction.DISCONNECTED);
             updateCurrPlayer();
         }
-        if (currPlayer.getAction().equals(PlayerAction.WAIT)) {
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
-        }
+        currPlayer.setAction(PlayerAction.PLACE);
     }
 
 
@@ -238,81 +196,6 @@ public class GameController implements Runnable {
         }
     }
 
-
-    /**
-     * Checks and updates the action of the given player based on the current game status.
-     * If the game is in the ENDING state, it sets the player's action to ENDED and checks if all players have ended
-     * their actions.
-     * If all players have finished their actions, it declares the game ended and determines the winner.
-     * If the game is not in the ENDING state, it sets the player's action to WAIT.
-     * @param player The player whose action is to be updated based on the game's state.
-     */
-    private synchronized void checkFinalAction(Player player) {
-        // Check if the game status is ENDING
-        if (game.getStatus().equals(GameStatus.ENDING)) {
-            // Set the player action to ENDED
-            player.setAction(PlayerAction.ENDED);
-            // Check whether all other players have finished their actions
-            boolean allPlayersEnded = game.getPlayers().stream()
-                    .filter(x->(!x.getAction().equals(PlayerAction.ENDED)))
-                    .toList()
-                    .isEmpty();
-            // The game can end
-            if (allPlayersEnded) {
-                game.getWinner();
-                game.setStatus(GameStatus.ENDED);
-            }
-        } else {
-            player.setAction(PlayerAction.WAIT);
-        }
-    }
-
-
-    /**
-     * Allows a player to draw a card from a specified deck if the player's action is set to DRAW and the game is in the
-     * RUNNING or ENDING state.
-     * After drawing a card, the method updates the game and player states accordingly, setting the next action for the
-     * current player to PLACE.
-     * @param player The player who is drawing the card. This player must have their action set to DRAW.
-     * @param deck The deck from which the card is drawn.
-     * @throws Exception If the player's current action is not DRAW or if the game state is not suitable for drawing a card.
-     */
-    public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
-        // Check that the player is authorized to draw
-        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) ||
-                game.getStatus().equals(GameStatus.ENDING))) {
-            player.addCardToHand(game.getDesk().drawCardDeck(deck));
-            checkFinalAction(player);
-            game.getPlayers().stream().toList().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
-        } else {
-            throw new Exception("Player's action is not draw.");
-        }
-    }
-
-
-    /**
-     * Allows a player to draw a specific card from a displayed deck, given the player's action is set to DRAW and the
-     * game is either in the RUNNING or ENDING state.
-     * This method ensures that the player draws the specified card and updates the game and player states accordingly.
-     * The action of the current player is then set to PLACE, preparing for the next phase of the game.
-     * @param player The player who is drawing the card.
-     * @param deck The displayed deck from which the card is drawn.
-     * @param index The index of the card in the displayed deck that the player wishes to draw.
-     * @throws Exception If the player's current action is not DRAW or if the game state does not allow drawing a card.
-     */
-    public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
-        // Check that the player is authorized to draw
-        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) ||
-                game.getStatus().equals(GameStatus.ENDING))) {
-            player.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
-            checkFinalAction(player);
-            game.getPlayers().stream().toList().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
-        } else {
-            throw new Exception("Player's action is not draw.");
-        }
-    }
-
-
     /**
      * Selects a personal objective card for a player at the start of the game.
      * This method is called during the game's starting phase where players choose their personal objective cards.
@@ -346,15 +229,104 @@ public class GameController implements Runnable {
         }
     }
 
-
     /**
-     * Retrieves the current game instance associated with this object.
-     * @return The current instance of Game associated with this class.
+     * Checks and updates the action of the given player based on the current game status.
+     * If the game is in the ENDING state, it sets the player's action to ENDED and checks if all players have ended
+     * their actions.
+     * If all players have finished their actions, it declares the game ended and determines the winner.
+     * If the game is not in the ENDING state, it sets the player's action to WAIT.
+     * @param player The player whose action is to be updated based on the game's state.
      */
-    public Game getGame(){
-        return game;
+    private synchronized void checkFinalAction(Player player) {
+        if(game.getDesk().getDeckResource().isEmpty()) {
+            if (game.getDesk().getDeckGold().isEmpty()){
+                if(!game.getStatus().equals(GameStatus.ENDING)){
+                    game.setStatus(GameStatus.ENDING);
+                }
+            }
+        }
+        if(game.getStatus().equals(GameStatus.ENDING)){
+            if(game.getPlayers().indexOf(player)==game.getSize()-1){
+                game.setStatus(GameStatus.LASTROUND);
+            }
+        }
+        player.setAction(PlayerAction.WAIT);
     }
 
+
+    /**
+     * Allows a player to draw a card from a specified deck if the player's action is set to DRAW and the game is in the
+     * RUNNING or ENDING state.
+     * After drawing a card, the method updates the game and player states accordingly, setting the next action for the
+     * current player to PLACE.
+     * @param player The player who is drawing the card. This player must have their action set to DRAW.
+     * @param deck The deck from which the card is drawn.
+     * @throws Exception If the player's current action is not DRAW or if the game state is not suitable for drawing a card.
+     */
+    public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
+        // Check that the player is authorized to draw
+        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) ||
+                game.getStatus().equals(GameStatus.ENDING))) {
+            player.addCardToHand(game.getDesk().drawCardDeck(deck));
+            checkFinalAction(player);
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+        } else {
+            throw new Exception("Player's action is not draw.");
+        }
+    }
+
+
+    /**
+     * Allows a player to draw a specific card from a displayed deck, given the player's action is set to DRAW and the
+     * game is either in the RUNNING or ENDING state.
+     * This method ensures that the player draws the specified card and updates the game and player states accordingly.
+     * The action of the current player is then set to PLACE, preparing for the next phase of the game.
+     * @param player The player who is drawing the card.
+     * @param deck The displayed deck from which the card is drawn.
+     * @param index The index of the card in the displayed deck that the player wishes to draw.
+     * @throws Exception If the player's current action is not DRAW or if the game state does not allow drawing a card.
+     */
+    public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
+        // Check that the player is authorized to draw
+        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) ||
+                game.getStatus().equals(GameStatus.ENDING))) {
+            player.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
+            checkFinalAction(player);
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+        } else {
+            throw new Exception("Player's action is not draw.");
+        }
+    }
+
+    /**
+     * Method that retrieves a specific side of a card from a player's hand based on the index provided.
+     * @param player The player whose hand is to be queried.
+     * @param index The index of the card in the player's hand.
+     * @param frontCard If true, retrieves the front side of the card; if false, retrieves the back side.
+     * @return The required side of the card or null if the index in the hand is not available.
+     */
+    private static Side getSide(Player player, int index, boolean frontCard) {
+        // Check the index
+        if (index < 0 || index >= player.getHand().size())
+            return null;
+        // Index available
+        Card card = player.getHand().get(index);
+        Side side = null;
+        // Resource card
+        if (card instanceof CardResource) {
+            if (frontCard)
+                side = ((CardResource) card).getFrontResource();
+            else
+                side = ((CardResource) card).getBackResource();
+            // Gold card
+        } else if (card instanceof CardGold) {
+            if (frontCard)
+                side = ((CardGold) card).getFrontGold();
+            else
+                side = ((CardGold) card).getBackGold();
+        }
+        return side;
+    }
 
     /**
      * Places a card from the player's hand onto a specified position in their Codex.
@@ -374,17 +346,25 @@ public class GameController implements Runnable {
      *                   is an error in placing the card in the Codex.
      */
     public synchronized void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws Exception {
-        // Check:
-        // - if this game's status is RUNNING
-        // - if the player's action is PLACE
-        if (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING) ) {
+        if (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING) || game.getStatus().equals(GameStatus.LASTROUND)) {
             if (player.getAction().equals(PlayerAction.PLACE)) {
                 Side side = getSide(player, index, frontCard);
                 if (player.getCodex().insertIntoCodex(side, row, col)) {
-                    updateCurrPlayer();
                     player.removeCardFromHand(index);
+                    updateCurrPlayer();
                     if (player.getScore() >= ENDING_SCORE) {
                         game.setStatus(GameStatus.ENDING);
+                    }
+                    if (game.getStatus().equals(GameStatus.LASTROUND)) {
+                        player.setAction(PlayerAction.ENDED);
+                        boolean allPlayersEnded = game.getPlayers().stream()
+                                .filter(x->(!x.getAction().equals(PlayerAction.ENDED)))
+                                .toList()
+                                .isEmpty();
+                        if (allPlayersEnded) {
+                            game.getWinner();
+                            game.setStatus(GameStatus.ENDED);
+                        }
                     }
                 } else {
                     throw new Exception("Error in placing a card.");
@@ -397,6 +377,13 @@ public class GameController implements Runnable {
         }
     }
 
+    /**
+     * Retrieves the current game instance associated with this object.
+     * @return The current instance of Game associated with this class.
+     */
+    public Game getGame(){
+        return game;
+    }
 
     /**
      * The main game loop that handles different game statuses and manages online player interactions.
@@ -419,7 +406,7 @@ public class GameController implements Runnable {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    if (onlinePlayers.size() == 1 && onlinePlayers.size()!= getGame().getNumPlayer()) {
+                    if (onlinePlayers.size() == 1) {
                         // If there is only one player and the status isn't WAITING
                         // then a timer start and if nobody reconnect before the timer's end
                         // the only player left is the winner
