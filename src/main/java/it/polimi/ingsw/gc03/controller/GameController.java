@@ -171,8 +171,18 @@ public class GameController implements Runnable {
      * The method handles the transition and updating of player actions in the game.
      */
     public synchronized void updateCurrPlayer() {
-        // The player just ended his turn, he can draw.
-        game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);;
+
+        if(game.getDesk().getDeckResource().isEmpty()) {
+            if (game.getDesk().getDeckGold().isEmpty()){
+                if(!game.getStatus().equals(GameStatus.ENDING)){
+                    game.setStatus(GameStatus.ENDING);
+                }
+            } else {
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
+            }
+        } else {
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);;
+        }
         game.updateCurrPlayer();
 
         Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
