@@ -3,6 +3,7 @@ module it.polimi.ingsw.gc03 {
     requires javafx.fxml;
     requires com.google.gson;
     requires java.logging;
+    requires java.rmi;
 
 
     opens it.polimi.ingsw.gc03 to javafx.fxml;
