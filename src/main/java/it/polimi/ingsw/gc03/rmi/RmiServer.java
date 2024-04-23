@@ -46,7 +46,7 @@ public class RmiServer implements VirtualServer {
 
     public RmiServer(GameController gameController, MainController mainController){
         this.gameController = gameController;
-        this.mainController = mainController;
+        this.mainController = MainController.getInstance();
     }
 
 
@@ -54,7 +54,7 @@ public class RmiServer implements VirtualServer {
     public static void main(String[] args) throws RemoteException {
         final String serverName = "Server";
 
-        VirtualServer server = new RmiServer(new GameController(),MainController.getInstance());
+        VirtualServer server = new RmiServer(new GameController(), MainController.getInstance());
         VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server,0);
         Registry registry = LocateRegistry.createRegistry(1234);
         registry.rebind(serverName,stub);
@@ -77,28 +77,12 @@ public class RmiServer implements VirtualServer {
     }
 
     @Override
-    public boolean startTimer() throws RemoteException {
-        return false;
-    }
-
-    @Override
-    public void stopTimer() throws RemoteException {
-
-    }
-
-    @Override
     public void reconnectPlayer(String playerNickname) throws RemoteException {
         System.err.println("reconnect request received");
         this.gameController.reconnectPlayer(playerNickname);
 
     }
 
-    @Override
-    public void updateCurrPlayer() throws RemoteException {
-        System.err.println("updateCurrPlayer request received");
-        this.gameController.updateCurrPlayer();
-
-    }
 
     @Override
     public void placeStarterOnCodex(Player player, Side side) throws RemoteException,Exception {
@@ -111,6 +95,7 @@ public class RmiServer implements VirtualServer {
     public void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws RemoteException,Exception {
         System.err.println("drawCard request received");
         this.gameController.drawCardFromDeck(player,deck);
+
 
     }
 

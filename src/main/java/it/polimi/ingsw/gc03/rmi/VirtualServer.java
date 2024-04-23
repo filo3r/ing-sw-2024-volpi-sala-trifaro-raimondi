@@ -15,6 +15,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Virtual Interface for GameController and MainController methods.
+ */
 //Dovrebbe essere completo
 public interface VirtualServer extends Remote{
 
@@ -22,13 +26,7 @@ public interface VirtualServer extends Remote{
 
     void addPlayerToGame(String playerNickName) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException;
 
-    boolean startTimer() throws RemoteException;//Valutare se può essere private
-
-    void stopTimer() throws RemoteException;//Valutare se può essere private
-
-    void reconnectPlayer(String playerNickaname) throws RemoteException;
-
-    void updateCurrPlayer() throws RemoteException;//Valutare se può essere private
+    void reconnectPlayer(String playerNickname) throws RemoteException;
 
     void placeStarterOnCodex(Player player, Side side) throws RemoteException,Exception;
 
@@ -44,7 +42,7 @@ public interface VirtualServer extends Remote{
 
     void run() throws RemoteException;
 
-    //Metodi MainController
+    //MainController Methods;
 
     MainController getInstance() throws RemoteException;
 

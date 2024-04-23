@@ -158,20 +158,6 @@ class DeskTest {
         assertEquals(card,null);
     }
 
-    //Metodi Privati non si sa se vanno testati
-    @Test
-    void checkDisplayedGoldIfDeckGoldIsEmpty() {
-    }
-    @Test
-    void checkDisplayedResourceIfDeckResourceIsEmpty() {
-    }
-    @Test
-    void checkDisplayedGoldIfDeckGoldIsNotEmpty() {
-    }
-    @Test
-    void checkDisplayedResourceIfDeckResourceIsNotEmpty() {
-    }
-    //
     @Test
     void getDeckStarter() {
     }

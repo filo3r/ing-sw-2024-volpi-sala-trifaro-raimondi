@@ -23,13 +23,17 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private void runCli() throws RemoteException{
         Scanner scan = new Scanner(System.in);
         while(true){
-            //Input Client
+            if(scan.nextLine().equals("joinGame")){
+                System.out.println("Choose your Nickname\n");
+                String nickname = scan.nextLine();
+                System.out.println("Joining a Server...");
+                server.joinGame(nickname);
+            }
         }
-
     }
     public static void main(String[] args) throws RemoteException, NotBoundException {
         final String serverName = "Server";
-        Registry registry = LocateRegistry.getRegistry(args[0],1234);
+        Registry registry = LocateRegistry.getRegistry("localhost",1234);
         VirtualServer server = (VirtualServer) registry.lookup(serverName);
 
         new RmiClient(server).run();
