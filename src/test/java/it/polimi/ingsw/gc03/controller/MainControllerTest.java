@@ -65,30 +65,29 @@ class MainControllerTest {
         } else {
             p2 = game.getPlayers().getFirst();
         }
-        gameController.placeStarterOnCodex(p1, p1.getCardStarter().getBackStarter());
-        gameController.placeStarterOnCodex(p2, p2.getCardStarter().getBackStarter());
+        gameController.placeStarterOnCodex(p1, p1.getCardStarter().getFrontStarter());
+        gameController.placeStarterOnCodex(p2, p2.getCardStarter().getFrontStarter());
         gameController.selectCardObjective(p1, 1);
         gameController.selectCardObjective(p2, 1);
 
         assertEquals(GameStatus.RUNNING, game.getStatus());
+        gameController.placeCardOnCodex(p1, 0, false, 39, 41);
         p1.setScore(21);
-        gameController.placeCardOnCodex(p1, 1, false, 39, 41);
         gameController.drawCardDisplayed(p1, game.getDesk().getDisplayedResource(), 1);
         if(game.getPlayers().indexOf(p1)==0){
             assertEquals(GameStatus.ENDING, game.getStatus());
-            gameController.placeCardOnCodex(p2, 1, false, 39, 41);
+            gameController.placeCardOnCodex(p2, 0, false, 39, 41);
             gameController.drawCardDisplayed(p2, game.getDesk().getDisplayedResource(), 1);
+            gameController.placeCardOnCodex(p1, 1, false, 41, 39);
+            gameController.placeCardOnCodex(p2, 1, false, 41, 39);
             return;
         } else {
             assertEquals(GameStatus.LASTROUND, game.getStatus());
-            return;
-            // Have to find a better way for testing multiple rounds: choosing random
-            // cards from the hand leads to unplaceable cards being placed and Exception been
-            // thrown.
-            /*
-            gameController.placeCardOnCodex(p2, 2, false, 41, 39);
-            gameController.placeCardOnCodex(p1, 2, false, 41, 39);
-             */
+            gameController.placeCardOnCodex(p2, 0, false, 39, 41);
+            gameController.placeCardOnCodex(p1, 1, false, 41, 39);
+
+
         }
+        assertEquals(GameStatus.ENDED, game.getStatus());
     }
 }

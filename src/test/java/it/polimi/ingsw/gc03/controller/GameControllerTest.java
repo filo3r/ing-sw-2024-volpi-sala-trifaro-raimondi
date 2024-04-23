@@ -59,73 +59,60 @@ class GameControllerTest {
 
         assertEquals(GameStatus.STARTING, gameController.getGame().getStatus());
 
-        int currPos = gameController.getGame().getCurrPlayer();
-        Player currPlayer = gameController.getGame().getPlayers().get(currPos);
         Desk gameDesk = gameController.getGame().getDesk();
-        CardResource firstPlayerCard = (CardResource) currPlayer.getHand().get(1);
-        Player secondPlayer = gameController.getGame().getPlayers().get(currPos+1);
-        CardResource secondPlayerCard = (CardResource) currPlayer.getHand().get(1);
+
+        int firstPos = gameController.getGame().getCurrPlayer();
+        Player firstPlayer = gameController.getGame().getPlayers().get(firstPos);
+
+
+        CardResource firstPlayerCard = (CardResource) firstPlayer.getHand().get(1);
+        Player secondPlayer = gameController.getGame().getPlayers().get(firstPos+1);
+
 
         // Check player current action
-        assertEquals(PlayerAction.FIRSTMOVES, currPlayer.getAction());
+        assertEquals(PlayerAction.FIRSTMOVES, firstPlayer.getAction());
         assertEquals(GameStatus.STARTING, gameController.getGame().getStatus());
 
         // The player set up his desk
-        gameController.placeStarterOnCodex(currPlayer, currPlayer.getCardStarter().getBackStarter());
-        gameController.selectCardObjective(currPlayer, 1);
+        gameController.placeStarterOnCodex(firstPlayer, firstPlayer.getCardStarter().getFrontStarter());
+        gameController.selectCardObjective(firstPlayer, 1);
 
-        assertEquals(PlayerAction.WAIT, currPlayer.getAction());
+        assertEquals(PlayerAction.WAIT, firstPlayer.getAction());
 
         // The currPlayer tries to place again the starter card on the codex
-        assertThrows(Exception.class,() ->  gameController.placeStarterOnCodex(currPlayer, currPlayer.getCardStarter().getFrontStarter()));
+        assertThrows(Exception.class,() ->  gameController.placeStarterOnCodex(firstPlayer, firstPlayer.getCardStarter().getFrontStarter()));
         // The currPlayer tries to place a card on the codex
-        assertThrows(Exception.class, () -> gameController.placeCardOnCodex(currPlayer, 1, true, 39, 41));
+        assertThrows(Exception.class, () -> gameController.placeCardOnCodex(firstPlayer, 1, false, 39, 41));
 
         // The second player sets up his desk
-        gameController.placeStarterOnCodex(secondPlayer, currPlayer.getCardStarter().getBackStarter());
+        gameController.placeStarterOnCodex(secondPlayer, firstPlayer.getCardStarter().getFrontStarter());
         gameController.selectCardObjective(secondPlayer, 1);
         assertEquals(PlayerAction.WAIT, secondPlayer.getAction());
 
         // The second player tries to place a card
-        assertThrows(Exception.class, () -> gameController.placeCardOnCodex(secondPlayer, 1, true, 39, 41));
+        assertThrows(Exception.class, () -> gameController.placeCardOnCodex(secondPlayer, 1, false, 39, 41));
 
         assertEquals(GameStatus.RUNNING, gameController.getGame().getStatus());
-        assertEquals(PlayerAction.PLACE, currPlayer.getAction());
+        assertEquals(PlayerAction.PLACE, firstPlayer.getAction());
         // The first player place a card on the codex
-        gameController.placeCardOnCodex(currPlayer, 1, true, 39, 41);
-        Side placedCard = currPlayer.getCodex().getCodex()[39][41];
-        assertEquals(firstPlayerCard.getFrontResource(), placedCard);
+        gameController.placeCardOnCodex(firstPlayer, 1, false, 39, 41);
+        Side placedCard = firstPlayer.getCodex().getCodex()[39][41];
+        assertEquals(firstPlayerCard.getBackResource(), placedCard);
 
         // Player1 draw from Displayed Gold
-        gameController.drawCardDisplayed(currPlayer, gameDesk.getDisplayedGold(), 0);
+        gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0);
 
         assertEquals(2, gameDesk.getDisplayedGold().size());
-        assertEquals(3, currPlayer.getHand().size());
+        assertEquals(3, firstPlayer.getHand().size());
         assertEquals(PlayerAction.PLACE, secondPlayer.getAction());
-        assertEquals(PlayerAction.WAIT, currPlayer.getAction());
-        try {
-            gameController.placeCardOnCodex(secondPlayer, 1, false, 41, 39);
-        } catch (IllegalStateException e){
-            return;
-        }
+        assertEquals(PlayerAction.WAIT, firstPlayer.getAction());
+        gameController.placeCardOnCodex(secondPlayer, 1, false, 41, 39);
 
-        try {
-            gameController.drawCardDisplayed(secondPlayer, gameDesk.getDisplayedGold(), 0);
-        } catch (IllegalStateException e){
-            return;
-        }
+        gameController.drawCardDisplayed(secondPlayer, gameDesk.getDisplayedGold(), 0);
 
-        try {
-            gameController.placeCardOnCodex(currPlayer, 1, false, 41, 39);
-        } catch (IllegalStateException e){
-            return;
-        }
+        gameController.placeCardOnCodex(firstPlayer, 1, false, 41, 39);
 
-        try {
-            gameController.drawCardDisplayed(currPlayer, gameDesk.getDisplayedGold(), 0);
-        } catch (IllegalStateException e){
-            return;
-        }
+        gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0);
 
     }
 }

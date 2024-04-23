@@ -155,7 +155,9 @@ public class GameController implements Runnable {
             currPlayer.setAction(PlayerAction.DISCONNECTED);
             updateCurrPlayer();
         }
-        currPlayer.setAction(PlayerAction.PLACE);
+        if(currPlayer.getAction().equals(PlayerAction.WAIT)){
+            currPlayer.setAction(PlayerAction.PLACE);
+        }
     }
 
 
@@ -238,9 +240,14 @@ public class GameController implements Runnable {
      * @param player The player whose action is to be updated based on the game's state.
      */
     private synchronized void checkFinalAction(Player player) {
+        if (player.getScore() >= ENDING_SCORE) {
+            if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
+                game.setStatus(GameStatus.ENDING);
+            }
+        }
         if(game.getDesk().getDeckResource().isEmpty()) {
             if (game.getDesk().getDeckGold().isEmpty()){
-                if(!game.getStatus().equals(GameStatus.ENDING)){
+                if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                     game.setStatus(GameStatus.ENDING);
                 }
             }
@@ -250,7 +257,9 @@ public class GameController implements Runnable {
                 game.setStatus(GameStatus.LASTROUND);
             }
         }
-        player.setAction(PlayerAction.WAIT);
+        if(!player.getAction().equals(PlayerAction.ENDED)){
+            player.setAction(PlayerAction.WAIT);
+        }
     }
 
 
@@ -352,9 +361,6 @@ public class GameController implements Runnable {
                 if (player.getCodex().insertIntoCodex(side, row, col)) {
                     player.removeCardFromHand(index);
                     updateCurrPlayer();
-                    if (player.getScore() >= ENDING_SCORE) {
-                        game.setStatus(GameStatus.ENDING);
-                    }
                     if (game.getStatus().equals(GameStatus.LASTROUND)) {
                         player.setAction(PlayerAction.ENDED);
                         boolean allPlayersEnded = game.getPlayers().stream()

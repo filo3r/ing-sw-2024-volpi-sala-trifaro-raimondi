@@ -22,4 +22,5 @@ module it.polimi.ingsw.gc03 {
     opens it.polimi.ingsw.gc03.model.enumerations to javafx.fxml, com.google.gson;
     exports it.polimi.ingsw.gc03.model.card.card.objective;
     opens it.polimi.ingsw.gc03.model.card.card.objective to javafx.fxml, com.google.gson;
+    exports it.polimi.ingsw.gc03.rmi;
 }
