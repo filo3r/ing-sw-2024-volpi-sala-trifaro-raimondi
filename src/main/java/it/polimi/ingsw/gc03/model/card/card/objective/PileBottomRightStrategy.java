@@ -12,6 +12,10 @@ import java.util.ArrayList;
  * This class calculates the points of Objective cards that use the pile starting from the bottom right corner of a
  * card.
  */
+
+
+
+
 @JsonAdapter(CalculateScoreStrategyAdapter.class)
 public class PileBottomRightStrategy implements CalculateScoreStrategy {
 
