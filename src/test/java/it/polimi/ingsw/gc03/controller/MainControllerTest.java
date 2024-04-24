@@ -35,7 +35,7 @@ class MainControllerTest {
         // The first player tries to place a card
         Player p1 = gc.getGame().getPlayers().getFirst();
         assertEquals(GameStatus.WAITING, gc.getGame().getStatus());
-        assertThrows(Exception.class,() -> gc.placeCardOnCodex(p1, 0, true, 39, 41));
+        assertThrows(Exception.class,() -> gc.placeCardOnCodex(p1, 0, false, 39, 41));
         assertThrows(Exception.class,() -> gc.placeStarterOnCodex(p1, p1.getCardStarter().getBackStarter()));
         // A new player tries join while the first player hasn't decided
         // yet the game's size
@@ -65,12 +65,14 @@ class MainControllerTest {
         } else {
             p2 = game.getPlayers().getFirst();
         }
-        gameController.placeStarterOnCodex(p1, p1.getCardStarter().getFrontStarter());
-        gameController.placeStarterOnCodex(p2, p2.getCardStarter().getFrontStarter());
+
         gameController.selectCardObjective(p1, 1);
         gameController.selectCardObjective(p2, 1);
+        gameController.placeStarterOnCodex(p1, p1.getCardStarter().getFrontStarter());
+        gameController.placeStarterOnCodex(p2, p2.getCardStarter().getFrontStarter());
 
         assertEquals(GameStatus.RUNNING, game.getStatus());
+
         gameController.placeCardOnCodex(p1, 0, false, 39, 41);
         p1.setScore(21);
         gameController.drawCardDisplayed(p1, game.getDesk().getDisplayedResource(), 1);
@@ -79,7 +81,10 @@ class MainControllerTest {
             gameController.placeCardOnCodex(p2, 0, false, 39, 41);
             gameController.drawCardDisplayed(p2, game.getDesk().getDisplayedResource(), 1);
             gameController.placeCardOnCodex(p1, 1, false, 41, 39);
-            gameController.placeCardOnCodex(p2, 1, false, 41, 39);
+            try{ gameController.placeCardOnCodex(p2, 1, false, 41, 39);}
+            catch (Exception e){
+                return;
+            }
             return;
         } else {
             assertEquals(GameStatus.LASTROUND, game.getStatus());

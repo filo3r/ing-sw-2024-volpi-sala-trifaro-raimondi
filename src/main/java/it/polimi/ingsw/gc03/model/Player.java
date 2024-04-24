@@ -161,7 +161,7 @@ public class Player {
      * Method to check if the player can no longer place cards in his Codex. If the player can no longer place cards,
      * he skips his turns until the end of the game.
      */
-    public void checkSkipTurn() {
+    public void checkSkipTurn() throws Exception {
         int skip = 0;
         // The sides of the cards that have fewer requirements to be placed are the BackSide
         ArrayList<Value> center = new ArrayList<>(1);

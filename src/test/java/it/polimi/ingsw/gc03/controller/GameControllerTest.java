@@ -36,6 +36,8 @@ class GameControllerTest {
         assertThrows(DeskIsFullException.class, () -> gameController.addPlayerToGame("Player4"));
         // The player sets the game's size as 2
         gameController.getGame().setSize(2);
+        // The same player tryes to join again
+        assertThrows(PlayerAlreadyJoinedException.class, () -> gameController.addPlayerToGame("Player1"));
         // A second player tries to join
         gameController.addPlayerToGame("Player2");
         // A third player tries to join
@@ -76,6 +78,8 @@ class GameControllerTest {
         // The player set up his desk
         gameController.placeStarterOnCodex(firstPlayer, firstPlayer.getCardStarter().getFrontStarter());
         gameController.selectCardObjective(firstPlayer, 1);
+        // A player tries again to select the card objective
+        assertThrows(Exception.class, () -> gameController.selectCardObjective(firstPlayer, 1));
 
         assertEquals(PlayerAction.WAIT, firstPlayer.getAction());
 
@@ -89,19 +93,25 @@ class GameControllerTest {
         gameController.selectCardObjective(secondPlayer, 1);
         assertEquals(PlayerAction.WAIT, secondPlayer.getAction());
 
+        // A player tries again to select a card objective
+        assertThrows(Exception.class, () -> gameController.selectCardObjective(secondPlayer, 1));
         // The second player tries to place a card
         assertThrows(Exception.class, () -> gameController.placeCardOnCodex(secondPlayer, 1, false, 39, 41));
-
         assertEquals(GameStatus.RUNNING, gameController.getGame().getStatus());
         assertEquals(PlayerAction.PLACE, firstPlayer.getAction());
+
         // The first player place a card on the codex
         gameController.placeCardOnCodex(firstPlayer, 1, false, 39, 41);
+        assertEquals(PlayerAction.DRAW, firstPlayer.getAction());
         Side placedCard = firstPlayer.getCodex().getCodex()[39][41];
         assertEquals(firstPlayerCard.getBackResource(), placedCard);
 
         // Player1 draw from Displayed Gold
-        gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0);
-
+        gameController.drawCardFromDeck(firstPlayer, gameDesk.getDeckResource());
+        // Player1 tries to draw again from deck
+        assertThrows(Exception.class, () -> gameController.drawCardFromDeck(firstPlayer, gameDesk.getDeckResource()));
+        // Player1 tries to draw from displayed
+        assertThrows(Exception.class, () -> gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0));
         assertEquals(2, gameDesk.getDisplayedGold().size());
         assertEquals(3, firstPlayer.getHand().size());
         assertEquals(PlayerAction.PLACE, secondPlayer.getAction());
@@ -113,6 +123,25 @@ class GameControllerTest {
         gameController.placeCardOnCodex(firstPlayer, 1, false, 41, 39);
 
         gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0);
-
     }
+
+    @Test
+    public void testReconnectPlayer() throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException {
+        Game game = gameController.getGame();
+
+        gameController.addPlayerToGame("Player1");
+        game.setSize(2);
+        gameController.addPlayerToGame("Player2");
+        Player player1 = game.getPlayers().get(0);
+        Player player2 = game.getPlayers().get(1);
+
+        player1.setOnline(false);
+        game.setStatus(GameStatus.HALTED);
+        gameController.reconnectPlayer("Player1");
+
+
+        assertTrue(player1.getOnline());
+        assertEquals(GameStatus.RUNNING, game.getStatus());
+    }
+
 }

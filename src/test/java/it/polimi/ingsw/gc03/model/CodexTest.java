@@ -70,11 +70,11 @@ class CodexTest {
 /**
  * Check if it simulates the insertion of a card into the Codex.*/
     @Test
-    void simulateInsertIntoCodex() {
-        assertFalse(codex.simulateInsertIntoCodex(side, 0, 0));
-        assertFalse(codex.simulateInsertIntoCodex(side, 1, 1));
-        assertFalse(codex.simulateInsertIntoCodex(side, 40, 40));
-        assertTrue(codex.simulateInsertIntoCodex(side, 40, 41));
+    void simulateInsertIntoCodex(){
+        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 0, 0));
+        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 1, 1));
+        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 40, 40));
+        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 40, 41));
     }
 
     @Test

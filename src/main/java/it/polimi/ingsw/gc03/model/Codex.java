@@ -87,12 +87,12 @@ public class Codex {
      * @param column The insertion column.
      * @return A boolean indicating whether the card can be inserted.
      */
-    private boolean checkPreviousCardConnection(int row, int column) {
+    private boolean checkPreviousCardConnection(int row, int column) throws Exception {
         if (this.codex[row - 1][column - 1] != null || this.codex[row + 1][column - 1] != null ||
                 this.codex[row - 1][column + 1] != null || this.codex[row + 1][column + 1] != null)
             return true;
         else
-            return false;
+            throw new Exception("Card cannot be connected with the previous card");
     }
 
 
@@ -126,7 +126,6 @@ public class Codex {
             }
             return true;
         } catch (ArrayIndexOutOfBoundsException e) {
-            // Catch ArrayIndexOutOfBoundsException and rethrow it as IllegalStateException
             throw new IllegalStateException("Invalid row or column.");
         }
     }
@@ -455,7 +454,7 @@ public class Codex {
      * @param column The column in which to simulate the insertion of the side of the card.
      * @return A boolean indicating whether the card could be inserted in that position.
      */
-    public boolean simulateInsertIntoCodex(Side side, int row, int column) {
+    public boolean simulateInsertIntoCodex(Side side, int row, int column) throws Exception {
         // Check if the coordinates are valid and if they are free
         if (((row % 2) == 0 && (column % 2) != 0) || ((row % 2) != 0 && (column % 2) == 0) || this.codex[row][column] != null) {
             return false;

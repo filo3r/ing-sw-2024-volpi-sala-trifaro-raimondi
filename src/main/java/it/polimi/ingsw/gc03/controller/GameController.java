@@ -65,9 +65,7 @@ public class GameController implements Runnable {
         // new players can join.
         if (game.getStatus().equals(GameStatus.WAITING)) {
             try {
-                if (!game.addPlayer(playerNickname)) {
-                    throw new CannotJoinGameException();
-                }
+                game.addPlayer(playerNickname);
             } catch (DeskIsFullException e) {
                 throw new DeskIsFullException();
             } catch (PlayerAlreadyJoinedException e) {
@@ -89,7 +87,8 @@ public class GameController implements Runnable {
      * The method handles a specific scenario where the game is stopped and only one player remains online.
      * @return True if the game cannot continue or False if the game can resume.
      */
-    private boolean startTimer() {
+
+    public boolean startTimer() {
         if (game.getStatus() == GameStatus.HALTED && game.getOnlinePlayers().size() == 1) {
             timer = new Timer();
             timerTask = new TimerTask() {
@@ -108,19 +107,19 @@ public class GameController implements Runnable {
     /**
      * Method for stopping the previously started timer and canceling any associated tasks.
      */
-    private void stopTimer() {
+
+    public void stopTimer() {
         if (timer != null) {
             timer.cancel();
             timer = null;
             timerTask = null;
         }
     }
-
-
     /**
      * Method for managing a player's reconnection to the game.
      * @param playerNickname Nickname of the player you want to reconnect.
      */
+
     public synchronized void reconnectPlayer(String playerNickname) {
         // Check if there is any game with a player with "playerNickname" as nickname.
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
@@ -135,10 +134,11 @@ public class GameController implements Runnable {
         }
     }
 
+
     /**
      * The method handles the transition and updating of player actions in the game.
      */
-    private synchronized void updateCurrPlayer() {
+    public synchronized void updateCurrPlayer() throws Exception {
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
         } else {
@@ -146,7 +146,11 @@ public class GameController implements Runnable {
         }
         game.updateCurrPlayer();
         Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
-        currPlayer.checkSkipTurn();
+        try{
+            currPlayer.checkSkipTurn();
+        } catch (Exception e){
+            throw new Exception(e);
+        }
         if(currPlayer.getSkipTurn()){
             currPlayer.setAction(PlayerAction.ENDED);
             updateCurrPlayer();
@@ -274,8 +278,7 @@ public class GameController implements Runnable {
      */
     public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
         // Check that the player is authorized to draw
-        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) ||
-                game.getStatus().equals(GameStatus.ENDING))) {
+        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             player.addCardToHand(game.getDesk().drawCardDeck(deck));
             checkFinalAction(player);
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
@@ -297,8 +300,7 @@ public class GameController implements Runnable {
      */
     public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
         // Check that the player is authorized to draw
-        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) ||
-                game.getStatus().equals(GameStatus.ENDING))) {
+        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             player.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
             checkFinalAction(player);
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
@@ -372,8 +374,6 @@ public class GameController implements Runnable {
                             game.setStatus(GameStatus.ENDED);
                         }
                     }
-                } else {
-                    throw new Exception("Error in placing a card.");
                 }
             } else {
                 throw new Exception("The player is not the current player or the game is not running or he's current action is not place");
