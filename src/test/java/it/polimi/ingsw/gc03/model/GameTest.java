@@ -48,13 +48,23 @@ class GameTest {
     }
 
     @Test
-    void addMessage() {
-        LocalTime time = LocalTime.of(12,0,0);
-        ArrayList<Message> chat = game.getChat();
-        Message newMessage = new Message(new Player("Example",1,desk),"Hello",time);
-        chat.add(newMessage);
-        assertEquals(game.getChat().getLast(),newMessage);
+    void removePlayer() throws PlayerAlreadyJoinedException, DeskIsFullException {
+        game.addPlayer("newNick");
+        int newPlayerNum = game.getNumPlayer();
+        assertTrue(game.removePlayer("newNick"));
+        assertEquals(newPlayerNum-1,game.getNumPlayer());
+        assertFalse(game.removePlayer("newNick"));
 
+    }
+
+    @Test
+    void addMessage() {
+        Player player = new Player("Example",1,desk);
+        String text = "Hello";
+        game.addMessage(player,text);
+        assertEquals(game.getChat().getLast().getSender(),player);
+        assertEquals(game.getChat().getLast().getText(),text);
+        assertNotEquals(game.getChat().getLast().getTimestamp(),LocalTime.now());
     }
 
     @Test
@@ -111,6 +121,9 @@ class GameTest {
 
     @Test
     void setIdGame() {
+        int idGame = 1234;
+        game.setIdGame(1234);
+        assertEquals(idGame,game.getIdGame());
     }
 
     @Test
