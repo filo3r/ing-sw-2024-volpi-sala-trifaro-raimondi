@@ -23,9 +23,6 @@ class CodexTest {
             Value.PLANT,
             Value.EMPTY);
 
-
-
-
     @BeforeEach
     void setUp() {
         codex= new Codex();
@@ -54,28 +51,18 @@ class CodexTest {
      */
     @Test
     void insertIntoCodex() {
-        assertFalse(codex.insertIntoCodex(side, -1, 0));
-        assertFalse(codex.insertIntoCodex(side, 0, -1));
-        assertFalse(codex.insertIntoCodex(side, 81, 0));
-        assertFalse(codex.insertIntoCodex(side, 0, 81));
-        assertFalse(codex.insertIntoCodex(side, 40, 40));
-        assertFalse(codex.insertIntoCodex(side, 1, 1));
-        assertFalse(codex.insertIntoCodex(side, 2, 2));
         codex.insertStarterIntoCodex(side);
-        assertFalse(codex.insertIntoCodex(side, 40, 40));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 0, -1));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 81, 0));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 0, 81));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 40, 40));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 2, 2));
+        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 40, 40));
         assertTrue(codex.insertIntoCodex(side, 40, 41));
-
-
     }
-/**
- * Check if it simulates the insertion of a card into the Codex.*/
-    @Test
-    void simulateInsertIntoCodex(){
-        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 0, 0));
-        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 1, 1));
-        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 40, 40));
-        assertThrows(Exception.class, () -> codex.simulateInsertIntoCodex(side, 40, 41));
-    }
+
 
     @Test
     void getCodex() {

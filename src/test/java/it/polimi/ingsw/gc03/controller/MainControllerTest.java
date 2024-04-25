@@ -2,21 +2,48 @@ package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
+import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
+import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.front.FrontGold;
+import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import javafx.scene.layout.BackgroundRepeat;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainControllerTest {
 
     private MainController mainController;
+
+
+    private Card makeCard(){
+        FrontResource front = new FrontResource(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY,Value.EMPTY, 0);
+        BackSide back = new BackSide(Kingdom.ANIMAL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY, new ArrayList<>() {{add(Value.ANIMAL);}});
+        return new CardResource("TEST", Kingdom.ANIMAL, front, back);
+    }
+
+    private ArrayList<Card> makeHand(){
+        ArrayList<Card> hand = new ArrayList<Card>();
+        for(int i = 0; i<3; i++){
+            hand.add(makeCard());
+        }
+        return hand;
+    }
+
     @BeforeEach
     void setUp() {
         mainController = MainController.getInstance();
@@ -66,6 +93,8 @@ class MainControllerTest {
             p2 = game.getPlayers().getFirst();
         }
 
+        p1.setHand(makeHand());
+        p2.setHand(makeHand());
         gameController.selectCardObjective(p1, 1);
         gameController.selectCardObjective(p2, 1);
         gameController.placeStarterOnCodex(p1, p1.getCardStarter().getFrontStarter());
@@ -76,10 +105,12 @@ class MainControllerTest {
         gameController.placeCardOnCodex(p1, 0, false, 39, 41);
         p1.setScore(21);
         gameController.drawCardDisplayed(p1, game.getDesk().getDisplayedResource(), 1);
+        p1.setHand(makeHand());
         if(game.getPlayers().indexOf(p1)==0){
             assertEquals(GameStatus.ENDING, game.getStatus());
             gameController.placeCardOnCodex(p2, 0, false, 39, 41);
             gameController.drawCardDisplayed(p2, game.getDesk().getDisplayedResource(), 1);
+            p2.setHand(makeHand());
             gameController.placeCardOnCodex(p1, 1, false, 41, 39);
             try{ gameController.placeCardOnCodex(p2, 1, false, 41, 39);}
             catch (Exception e){

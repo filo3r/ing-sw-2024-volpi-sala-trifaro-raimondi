@@ -88,13 +88,53 @@ public class Codex {
      * @return A boolean indicating whether the card can be inserted.
      */
     private boolean checkPreviousCardConnection(int row, int column) throws Exception {
-        if (this.codex[row - 1][column - 1] != null || this.codex[row + 1][column - 1] != null ||
-                this.codex[row - 1][column + 1] != null || this.codex[row + 1][column + 1] != null)
+        if (checkTopLeftConnection(row, column) || checkTopRightConnection(row, column) ||
+                checkBottomLeftConnection(row, column) || checkBottomRightConnection(row, column)){
             return true;
-        else
+        } else {
             throw new Exception("Card cannot be connected with the previous card");
+        }
     }
 
+    private boolean checkTopLeftConnection(int row, int column){
+        if(row == 0 || column == 0){
+            return false;
+        }
+        if(this.codex[row-1][column-1]!= null){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkTopRightConnection(int row, int column){
+        if(row == 0 || column == 81-1){
+            return false;
+        }
+        if(this.codex[row-1][column+1]!= null){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkBottomLeftConnection(int row, int column){
+        if(row == 81-1 || column == 0){
+            return false;
+        }
+        if(this.codex[row+1][column-1]!= null){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkBottomRightConnection(int row, int column){
+        if(row == 81-1 || column == 81-1){
+            return false;
+        }
+        if(this.codex[row+1][column+1] != null){
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Method to check if the card can be inserted or if there are NULL values in the previously inserted cards.
@@ -104,22 +144,22 @@ public class Codex {
      */
     private boolean checkPreviousCardNULL(int row, int column) throws IllegalStateException {
         try {
-            if (this.codex[row - 1][column - 1] != null) {
+            if (checkTopLeftConnection(row, column)) {
                 Side topLeft = this.codex[row - 1][column - 1];
                 if (topLeft.getBottomRightCorner() == Value.NULL)
                     throw new IllegalStateException("Top left corner contains NULL value.");
             }
-            if (this.codex[row + 1][column - 1] != null) {
+            if (checkBottomLeftConnection(row, column)) {
                 Side bottomLeft = this.codex[row + 1][column - 1];
                 if (bottomLeft.getTopRightCorner() == Value.NULL)
                     throw new IllegalStateException("Bottom left corner contains NULL value.");
             }
-            if (this.codex[row - 1][column + 1] != null) {
+            if (checkTopRightConnection(row, column)) {
                 Side topRight = this.codex[row - 1][column + 1];
                 if (topRight.getBottomLeftCorner() == Value.NULL)
                     throw new IllegalStateException("Top right corner contains NULL value.");
             }
-            if (this.codex[row + 1][column + 1] != null) {
+            if (checkBottomRightConnection(row, column)) {
                 Side bottomRight = this.codex[row + 1][column + 1];
                 if (bottomRight.getTopLeftCorner() == Value.NULL)
                     throw new IllegalStateException("Bottom right corner contains NULL value.");
@@ -201,25 +241,25 @@ public class Codex {
     private void insertSide(Side side, int row, int column) {
         this.codex[row][column] = side;
         // Set the corners that are covered by the inserted card.
-        if (this.codex[row - 1][column - 1] != null) {
+        if (checkTopLeftConnection(row, column)) {
             Side topLeft = this.codex[row - 1][column - 1];
             downgradeCounterCodex(topLeft.getBottomRightCorner());
             topLeft.setBottomRightCorner(Value.COVERED);
             this.counterCodex[7]++;
         }
-        if (this.codex[row + 1][column - 1] != null) {
+        if (checkBottomLeftConnection(row, column)) {
             Side bottomLeft = this.codex[row + 1][column - 1];
             downgradeCounterCodex(bottomLeft.getTopRightCorner());
             bottomLeft.setTopRightCorner(Value.COVERED);
             this.counterCodex[7]++;
         }
-        if (this.codex[row - 1][column + 1] != null) {
+        if (checkTopRightConnection(row, column)) {
             Side topRight = this.codex[row - 1][column + 1];
             downgradeCounterCodex(topRight.getBottomLeftCorner());
             topRight.setBottomLeftCorner(Value.COVERED);
             this.counterCodex[7]++;
         }
-        if (this.codex[row + 1][column + 1] != null) {
+        if (checkBottomRightConnection(row, column)) {
             Side bottomRight = this.codex[row + 1][column + 1];
             downgradeCounterCodex(bottomRight.getTopLeftCorner());
             bottomRight.setTopLeftCorner(Value.COVERED);

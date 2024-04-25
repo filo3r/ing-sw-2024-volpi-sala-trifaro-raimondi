@@ -88,7 +88,7 @@ public class GameController implements Runnable {
      * @return True if the game cannot continue or False if the game can resume.
      */
 
-    public boolean startTimer() {
+    private boolean startTimer() {
         if (game.getStatus() == GameStatus.HALTED && game.getOnlinePlayers().size() == 1) {
             timer = new Timer();
             timerTask = new TimerTask() {
@@ -108,7 +108,7 @@ public class GameController implements Runnable {
      * Method for stopping the previously started timer and canceling any associated tasks.
      */
 
-    public void stopTimer() {
+    private void stopTimer() {
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -138,7 +138,7 @@ public class GameController implements Runnable {
     /**
      * The method handles the transition and updating of player actions in the game.
      */
-    public synchronized void updateCurrPlayer() throws Exception {
+    private synchronized void updateCurrPlayer() throws Exception {
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
         } else {

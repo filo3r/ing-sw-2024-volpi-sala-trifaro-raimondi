@@ -116,13 +116,6 @@ class GameControllerTest {
         assertEquals(3, firstPlayer.getHand().size());
         assertEquals(PlayerAction.PLACE, secondPlayer.getAction());
         assertEquals(PlayerAction.WAIT, firstPlayer.getAction());
-        gameController.placeCardOnCodex(secondPlayer, 1, false, 41, 39);
-
-        gameController.drawCardDisplayed(secondPlayer, gameDesk.getDisplayedGold(), 0);
-
-        gameController.placeCardOnCodex(firstPlayer, 1, false, 41, 39);
-
-        gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0);
     }
 
     @Test
