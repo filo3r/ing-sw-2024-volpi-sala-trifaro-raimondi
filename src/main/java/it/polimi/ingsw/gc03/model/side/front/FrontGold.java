@@ -3,12 +3,14 @@ package it.polimi.ingsw.gc03.model.side.front;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents the front of a Gold card.
  */
-public class FrontGold extends Side {
+public class FrontGold extends Side implements Serializable {
 
     /**
      * Points on the card

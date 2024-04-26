@@ -1,9 +1,11 @@
 package it.polimi.ingsw.gc03.model.enumerations;
 
+import java.io.Serializable;
+
 /**
  * This enumeration class represents the values that can be present on the front and back of the cards.
  */
-public enum Value {
+public enum Value implements Serializable {
 
     /**
      * Fungi kingdom.

@@ -10,6 +10,8 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
@@ -17,7 +19,7 @@ import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList
 /**
  * This class represents a player in the game.
  */
-public class Player {
+public class Player implements Serializable {
 
     /**
      * Player's nickname.

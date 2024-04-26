@@ -5,6 +5,8 @@ import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * This class calculates the points of Objective cards that use the secondary diagonal.
  */
 @JsonAdapter(CalculateScoreStrategyAdapter.class)
-public class SecondaryDiagonalStrategy implements CalculateScoreStrategy {
+public class SecondaryDiagonalStrategy implements CalculateScoreStrategy, Serializable {
 
     /**
      * Method for calculating points.

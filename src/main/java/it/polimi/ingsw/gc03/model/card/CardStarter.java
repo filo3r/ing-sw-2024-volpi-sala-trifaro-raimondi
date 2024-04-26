@@ -4,12 +4,13 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents a Starter card.
  */
-public class CardStarter extends Card {
+public class CardStarter extends Card implements Serializable {
 
     /**
      * The front side of the card.

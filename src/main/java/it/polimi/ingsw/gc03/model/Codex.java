@@ -5,13 +5,15 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
  * This class represents a Codex.
  */
-public class Codex {
+public class Codex implements Serializable {
 
     /**
      * Data structure of the codex.

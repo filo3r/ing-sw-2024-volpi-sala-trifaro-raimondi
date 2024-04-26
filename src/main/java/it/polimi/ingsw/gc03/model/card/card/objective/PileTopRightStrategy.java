@@ -5,6 +5,8 @@ import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -13,7 +15,7 @@ import java.util.ArrayList;
  * card.
  */
 @JsonAdapter(CalculateScoreStrategyAdapter.class)
-public class PileTopRightStrategy implements CalculateScoreStrategy {
+public class PileTopRightStrategy implements CalculateScoreStrategy, Serializable {
 
     /**
      * Method for calculating points.

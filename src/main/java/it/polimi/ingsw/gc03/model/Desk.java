@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 /**
  * This class represents the game board.
  */
-public class Desk {
+public class Desk implements Serializable{
 
     /**
      * Deck of Starter cards.

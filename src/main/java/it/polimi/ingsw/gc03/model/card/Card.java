@@ -1,9 +1,11 @@
 package it.polimi.ingsw.gc03.model.card;
 
+import java.io.Serializable;
+
 /**
  * This class represents a card in the game.
  */
-public class Card {
+public class Card implements Serializable {
     /**
      * The unique identifier of the card.
      */

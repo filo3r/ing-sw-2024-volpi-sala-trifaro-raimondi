@@ -1,11 +1,12 @@
 package it.polimi.ingsw.gc03.model;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
 /**
  * This class represents a message in the chat.
  */
-public class Message {
+public class Message implements Serializable {
     /*
      * The unique message's id.
      */

@@ -1,10 +1,12 @@
 package it.polimi.ingsw.gc03.model.enumerations;
 
+import java.io.Serializable;
+
 /**
  * This enumeration class represents the available kingdoms in the game.
  * Resource cards and Gold cards can belong to one of the kingdoms defined here.
  */
-public enum Kingdom {
+public enum Kingdom implements Serializable {
 
     /**
      * Fungi kingdom.

@@ -9,13 +9,14 @@ import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 
+import java.io.Serializable;
 import java.util.*;
 
 
 /**
  * This class controls the gameplay flow of a match, from start to finish.
  */
-public class GameController implements Runnable {
+public class GameController implements Runnable, Serializable {
 
     /**
      * Instance of the game on which the control takes place.
@@ -337,6 +338,14 @@ public class GameController implements Runnable {
                 side = ((CardGold) card).getBackGold();
         }
         return side;
+    }
+
+    public void updateSize(int size) throws Exception {
+        if(game.getSize() != 1 || size<=1 || size>4){
+            throw new Exception("Game size is not valid");
+        } else {
+            game.setSize(size);
+        }
     }
 
     /**

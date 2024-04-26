@@ -24,38 +24,16 @@ public interface VirtualServer extends Remote{
 
     void connect(VirtualView client) throws RemoteException;
 
-    void addPlayerToGame(String playerNickName) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException;
-
-    void reconnectPlayer(String playerNickname) throws RemoteException;
-
-    void placeStarterOnCodex(Player player, Side side) throws RemoteException,Exception;
-
-    void drawCardFromDeck(Player player, ArrayList<?extends Card> deck) throws RemoteException,Exception;
-
-    void drawCardDisplayed(Player player,ArrayList<?extends Card> deck, int index) throws RemoteException,Exception;
-
-    void selectCardObjective(Player player, int cardObjective) throws RemoteException,Exception;
-
     Game getGame() throws RemoteException;
 
-    void placeCardOnCodex(Player player, int index, boolean frontCard, int row,int col) throws RemoteException,Exception;
-
-    void run() throws RemoteException;
-
-    //MainController Methods;
-
-    MainController getInstance() throws RemoteException;
-
-    void createGame(String firstPlayerNickname) throws RemoteException;
-
-    void joinGame(String playerNickname) throws RemoteException;
-
-    void reconnect(String playerNickname) throws RemoteException;
-
-    void deleteGame(int idGame) throws RemoteException, NoSuchGameException;
 
     List<GameController> getGameControllers() throws RemoteException;
 
     void resetInstance() throws RemoteException;
 
+    GameController addPlayerToGame(String playerNickName) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException;
+
+    void updateSize(int size) throws Exception;
+
+    boolean checkNicknameValidity(String nickname) throws RemoteException;
 }

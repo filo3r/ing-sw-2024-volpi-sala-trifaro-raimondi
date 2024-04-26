@@ -3,13 +3,15 @@ package it.polimi.ingsw.gc03.model.card.card.objective;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
  * This class represents a Objective card.
  */
-public class CardObjective extends Card {
+public class CardObjective extends Card implements Serializable {
 
     /**
      * Textual description of the card's objective.

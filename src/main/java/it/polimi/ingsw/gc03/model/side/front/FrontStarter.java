@@ -4,11 +4,13 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
+import java.io.Serializable;
+
 
 /**
  * This class represents the front of a Starter card.
  */
-public class FrontStarter extends Side {
+public class FrontStarter extends Side implements Serializable {
 
     /**
      * Constructor of the class FrontStarter.

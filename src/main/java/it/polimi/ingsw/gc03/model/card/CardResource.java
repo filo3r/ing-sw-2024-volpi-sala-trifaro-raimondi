@@ -5,12 +5,13 @@ import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents a Resource card.
  */
-public class CardResource extends Card {
+public class CardResource extends Card implements Serializable {
 
     /**
      * Kingdom to which the card belongs.

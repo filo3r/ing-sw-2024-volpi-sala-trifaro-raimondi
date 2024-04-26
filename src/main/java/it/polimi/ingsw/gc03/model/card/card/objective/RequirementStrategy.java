@@ -3,6 +3,8 @@ package it.polimi.ingsw.gc03.model.card.card.objective;
 import com.google.gson.annotations.JsonAdapter;
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
  * This class calculates the points of Objective cards that use the number of values.
  */
 @JsonAdapter(CalculateScoreStrategyAdapter.class)
-public class RequirementStrategy implements CalculateScoreStrategy {
+public class RequirementStrategy implements CalculateScoreStrategy, Serializable {
 
     /**
      * Method for calculating points.

@@ -6,6 +6,7 @@ import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * Manages the lifecycle and interactions of multiple game sessions within the application.
  * This class follows the Singleton design pattern to ensure only one instance manages the game controllers globally.
  */
-public class MainController {
+public class MainController implements Serializable {
 
     /**
      * Instance of the MainController, needed for the singleton design pattern.
@@ -53,11 +54,6 @@ public class MainController {
     public synchronized void createGame(String firstPlayerNickname) {
         GameController controller = new GameController();
         gameControllers.add(controller);
-        try {
-            controller.addPlayerToGame(firstPlayerNickname);
-        } catch (CannotJoinGameException | DeskIsFullException | PlayerAlreadyJoinedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
@@ -66,13 +62,14 @@ public class MainController {
      * new game.
      * @param playerNickname The nickname of the player attempting to join a game.
      */
-    public synchronized void joinGame(String playerNickname) {
+    public synchronized GameController joinGame(String playerNickname) {
         //First of all check if there is any game where is possible to join (GCs stands for gameControllers
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
         if (!GCs.isEmpty()) {
             //If there are some (at least 1) available games to join, join the last.
             try {
                 gameControllers.getLast().addPlayerToGame(playerNickname);
+                return gameControllers.getLast();
             } catch (CannotJoinGameException e) {
                 throw new RuntimeException(e);
             } catch (PlayerAlreadyJoinedException e) {
@@ -83,6 +80,8 @@ public class MainController {
         } else {
             // If there are no available games to join, create a new game.
             createGame(playerNickname);
+            joinGame(playerNickname);
+            return gameControllers.getLast();
         }
     }
 

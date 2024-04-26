@@ -5,12 +5,13 @@ import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents a Gold card.
  */
-public class CardGold extends Card {
+public class CardGold extends Card implements Serializable {
 
     /**
      * Kingdom to which the card belongs.

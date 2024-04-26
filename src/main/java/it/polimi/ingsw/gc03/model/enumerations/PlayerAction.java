@@ -1,9 +1,11 @@
 package it.polimi.ingsw.gc03.model.enumerations;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public enum PlayerAction {
+public enum PlayerAction implements Serializable {
     FIRSTMOVES, // first moves stands for "placing the starter and selecting the objective"
     WAIT,
     PLACE,

@@ -3,10 +3,12 @@ package it.polimi.ingsw.gc03.model.side;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
+import java.io.Serializable;
+
 /**
  * This class manages the information present on both the front and back of a card.
  */
-public class Side {
+public class Side implements Serializable {
 
     /**
      * Kingdom of the card.

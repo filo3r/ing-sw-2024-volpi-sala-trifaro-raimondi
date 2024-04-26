@@ -3,12 +3,14 @@ package it.polimi.ingsw.gc03.model.side.back;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class represents the back of a card.
  */
-public class BackSide extends Side {
+public class BackSide extends Side implements Serializable {
 
     /**
      * Values contained in the center.
