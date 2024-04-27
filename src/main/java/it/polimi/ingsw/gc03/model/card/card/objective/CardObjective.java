@@ -144,12 +144,14 @@ public class CardObjective extends Card implements Serializable {
      * Method for printing all the information on a Objective card.
      * @param cardObjective The Objective card you want to print.
      */
-    public void printCardObjective(CardObjective cardObjective) {
+   /* public void printCardObjective(CardObjective cardObjective) {
         System.out.println("OBJECTIVE CARD:");
         System.out.println("Card ID: " + getIdCard());
         System.out.println("Points: " + getPoint());
         System.out.println("Objective: " + getObjective());
     }
+
+    */
 
 
 }

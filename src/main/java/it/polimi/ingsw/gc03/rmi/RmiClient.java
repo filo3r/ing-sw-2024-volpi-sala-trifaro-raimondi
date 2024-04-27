@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gc03.rmi;
 
 import it.polimi.ingsw.gc03.controller.GameController;
+import it.polimi.ingsw.gc03.model.Codex;
+import it.polimi.ingsw.gc03.model.Desk;
 import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
@@ -27,7 +29,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     }
 
     private void run() throws Exception{
-        this.server.connect(this);
+        this.server.connectClient(this);
         this.runCli();
     }
 
@@ -44,7 +46,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
                 nicknameChosen = true;
                 gameController = server.addPlayerToGame(nickname);
                 game = gameController.getGame();
-                System.out.println("You have joined the game "+game.getIdGame()+"\n");
+                System.out.println("HI "+nickname+" :You have joined the game "+game.getIdGame()+"\n");
             }
             if(game.getSize()==1){
                 boolean validSize = false;
@@ -89,8 +91,24 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
         System.err.println("[EVENT] "+newPlayer+" joined the game");
     }
 
+    @Override
     public void updateSizeChanged(int size) throws RemoteException {
         System.err.println("[EVENT] game size changed to "+size);
+    }
+
+    @Override
+    public void updateGame(Game game){
+        System.err.println("[EVENT] GameModel has changed");
+    }
+
+    @Override
+    public void updateDesk(Desk desk) throws RemoteException {
+        System.err.println("[EVENT] DeskModel has changed");
+    }
+
+    @Override
+    public void updateCodex(Codex codex) throws RemoteException {
+        System.err.println("[EVENT] CodexModel has changed");
     }
 
     @Override

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,7 +56,7 @@ class MainControllerTest {
     }
     @Test
     @DisplayName("Simulate a player trying to join when there are no active games")
-    void joinAndCreateGame(){
+    void joinAndCreateGame() throws NoSuchGameException, RemoteException {
         mainController.joinGame("Player1");
         assertEquals(1, mainController.getGameControllers().size());
         GameController gc = mainController.getGameControllers().get(0);
@@ -69,6 +70,8 @@ class MainControllerTest {
         assertThrows(Exception.class, () -> mainController.joinGame("Player2"));
         // The first player sets the game's size
         gc.getGame().setSize(2);
+        //Player already joined
+        assertThrows(RuntimeException.class,()->mainController.joinGame("Player1"));
         mainController.joinGame("Player2");
         Player p2 = gc.getGame().getPlayers().getLast();
         assertEquals(GameStatus.STARTING, gc.getGame().getStatus());
@@ -125,5 +128,13 @@ class MainControllerTest {
 
         }
         assertEquals(GameStatus.ENDED, game.getStatus());
+    }
+
+    @Test
+    void deleteNotExistentGame() throws NoSuchGameException, RemoteException {
+        mainController.joinGame("Player");
+        int idGame = mainController.getGameControllers().getFirst().getGame().getIdGame();
+        mainController.deleteGame(idGame);
+        assertThrows(NoSuchGameException.class,()->mainController.deleteGame(idGame));
     }
 }

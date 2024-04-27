@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ class GameTest {
     }
 
     @Test
-    void addPlayer() throws PlayerAlreadyJoinedException, DeskIsFullException {
+    void addPlayer() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         int playerNum = game.getNumPlayer();
         game.addPlayer("newNick");
         assertEquals(game.getNumPlayer(),playerNum+1);
@@ -48,7 +49,7 @@ class GameTest {
     }
 
     @Test
-    void removePlayer() throws PlayerAlreadyJoinedException, DeskIsFullException {
+    void removePlayer() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         game.addPlayer("newNick");
         int newPlayerNum = game.getNumPlayer();
         assertTrue(game.removePlayer("newNick"));
@@ -58,7 +59,7 @@ class GameTest {
     }
 
     @Test
-    void addMessage() {
+    void addMessage() throws RemoteException {
         Player player = new Player("Example",1,desk);
         String text = "Hello";
         game.addMessage(player,text);
@@ -68,14 +69,14 @@ class GameTest {
     }
 
     @Test
-    void updateCurrPlayer() {
+    void updateCurrPlayer() throws RemoteException {
         game.setCurrPlayer(1);
         game.setNumPlayer(3);
         game.updateCurrPlayer();
         assertEquals(game.getCurrPlayer(), 2);
     }
     @Test
-    void updateCurrPlayerRestart() {
+    void updateCurrPlayerRestart() throws RemoteException {
         game.setCurrPlayer(2);
         game.setNumPlayer(2);
         game.updateCurrPlayer();
@@ -83,7 +84,7 @@ class GameTest {
     }
 
     @Test
-    void getOnlinePlayers() throws PlayerAlreadyJoinedException, DeskIsFullException {
+    void getOnlinePlayers() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         game.setSize(2);
         game.addPlayer("Test1");
         game.addPlayer("Test2");
@@ -99,14 +100,14 @@ class GameTest {
     }
 
     @Test
-    void stopGamePoints() throws PlayerAlreadyJoinedException, DeskIsFullException {
+    void stopGamePoints() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         game.addPlayer("Test");
         game.getPlayers().get(0).getCodex().setPointCodex(25);
         assertTrue(game.stopGame());
     }
 
     @Test
-    void stopGameCards() throws PlayerAlreadyJoinedException, DeskIsFullException {
+    void stopGameCards() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         game.addPlayer("Test");
         ArrayList<CardResource> deckResource= new ArrayList<>();
         ArrayList<CardGold> deckGold= new ArrayList<>();

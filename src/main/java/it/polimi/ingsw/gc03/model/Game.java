@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 /**
  * This class represents a game.
  */
-public class Game implements Serializable {
+public class Game extends Observable implements Serializable {
 
     /**
      * Game's ID.
@@ -92,7 +93,7 @@ public class Game implements Serializable {
      * @param nickname The player's nickname.
      * @return A boolean indicating whether a player has been added to the game or not.
      */
-    public boolean addPlayer(String nickname) throws DeskIsFullException, PlayerAlreadyJoinedException {
+    public boolean addPlayer(String nickname) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // The game is full
         if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
             throw new DeskIsFullException();
@@ -106,6 +107,7 @@ public class Game implements Serializable {
             this.numPlayer++;
             Player player = new Player(nickname, this.numPlayer, this.desk);
             this.players.add(player);
+            notifyObservers(this);
             return true;
         }
     }
@@ -116,14 +118,16 @@ public class Game implements Serializable {
      * @param nickname The player's nickname.
      * @return A Boolean value indicating whether or not a player has been removed from the game.
      */
-    public boolean removePlayer(String nickname) {
+    public boolean removePlayer(String nickname) throws RemoteException {
         for (int i = 0; i < this.players.size(); i++) {
             if (nickname.equals(this.players.get(i).getNickname())) {
                 this.players.remove(i);
                 this.numPlayer--;
+                notifyObservers(this);
                 return true;
             }
         }
+        notifyObservers(this);
         return false;
     }
 
@@ -133,21 +137,23 @@ public class Game implements Serializable {
      * @param sender The nickname of the player who wrote the message.
      * @param text The text of the message.
      */
-    public void addMessage(Player sender, String text) {
+    public void addMessage(Player sender, String text) throws RemoteException {
         LocalTime time = LocalTime.now();
         Message message = new Message(sender, text, time);
         this.chat.add(message);
+        notifyObservers(this);
     }
 
 
     /**
      * Method to update the current player.
      */
-    public void updateCurrPlayer() {
+    public void updateCurrPlayer() throws RemoteException {
         if (this.currPlayer < this.numPlayer - 1)
             this.currPlayer++;
         else
             this.currPlayer = 0;
+        notifyObservers(this);
     }
 
 

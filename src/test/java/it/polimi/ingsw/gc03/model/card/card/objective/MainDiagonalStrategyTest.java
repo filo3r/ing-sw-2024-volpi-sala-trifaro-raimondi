@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +33,7 @@ class MainDiagonalStrategyTest {
 
     @Test
     @DisplayName("A single correct diagonal")
-    void singleDiagonal() {
+    void singleDiagonal() throws RemoteException {
         Side topSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side middleSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side bottomSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
@@ -52,7 +53,7 @@ class MainDiagonalStrategyTest {
 
     @Test
     @DisplayName("4 cards in a diagonal")
-    void singleDiagonalPlusOne() {
+    void singleDiagonalPlusOne() throws RemoteException {
         Side topSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side middleSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side bottomSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
@@ -75,7 +76,7 @@ class MainDiagonalStrategyTest {
 
     @Test
     @DisplayName("Two correct diagonals")
-    void twoDiagonals() {
+    void twoDiagonals() throws RemoteException {
         Side topSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side middleSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side bottomSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);

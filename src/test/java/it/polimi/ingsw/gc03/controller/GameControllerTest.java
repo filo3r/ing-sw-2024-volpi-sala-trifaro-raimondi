@@ -13,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.gc03.model.exceptions.*;
+
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ class GameControllerTest {
 
     @Test
     @DisplayName("Players added to the game")
-    void addPlayerToGame() throws CannotJoinGameException, PlayerAlreadyJoinedException, DeskIsFullException {
+    void addPlayerToGame() throws CannotJoinGameException, PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         // A player is added to the game
         gameController.addPlayerToGame("Player1");
         // A player tries to join before the game's size is changed.
@@ -119,7 +121,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void testReconnectPlayer() throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException {
+    public void testReconnectPlayer() throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         Game game = gameController.getGame();
 
         gameController.addPlayerToGame("Player1");
@@ -137,4 +139,30 @@ class GameControllerTest {
         assertEquals(GameStatus.RUNNING, game.getStatus());
     }
 
+    @Test
+    void checkFinalActionTestCall() throws Exception {
+        gameController.addPlayerToGame("Player1");
+        gameController.updateSize(2);
+        gameController.addPlayerToGame("Player2");
+        Game game = gameController.getGame();
+        game.setStatus(GameStatus.RUNNING);
+        Card card;
+        //Empty the decks
+        while(!game.getDesk().getDisplayedGold().isEmpty()){
+            card =game.getDesk().drawCardDisplayed(game.getDesk().getDisplayedGold(),0);
+        }
+        while(!game.getDesk().getDisplayedResource().isEmpty()){
+            card =game.getDesk().drawCardDisplayed(game.getDesk().getDisplayedResource(),0);
+        }
+        while(!game.getDesk().getDeckResource().isEmpty()){
+            card =game.getDesk().drawCardDeck(game.getDesk().getDeckResource());
+        }
+        while(!game.getDesk().getDeckGold().isEmpty()){
+            card =game.getDesk().drawCardDeck(game.getDesk().getDeckGold());
+        }
+        game.getPlayers().getFirst().setAction(PlayerAction.DRAW);
+
+        gameController.drawCardFromDeck(game.getPlayers().getFirst(),game.getDesk().getDeckGold());
+        assertEquals(game.getStatus(),GameStatus.ENDING);
+    }
 }

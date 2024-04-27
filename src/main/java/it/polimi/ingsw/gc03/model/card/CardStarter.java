@@ -76,7 +76,7 @@ public class CardStarter extends Card implements Serializable {
      * Method for printing all the information on a Starter card.
      * @param cardStarter The Starter card you want to print.
      */
-    public void printCardStarter(CardStarter cardStarter) {
+  /*  public void printCardStarter(CardStarter cardStarter) {
         // General information
         System.out.println("STARTER CARD:");
         System.out.println("Card ID: " + getIdCard());
@@ -103,5 +103,7 @@ public class CardStarter extends Card implements Serializable {
         System.out.println();
     }
 
+
+   */
 
 }

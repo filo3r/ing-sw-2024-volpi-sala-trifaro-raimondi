@@ -102,7 +102,7 @@ public class CardGold extends Card implements Serializable {
      * Method for printing all the information on a Gold card.
      * @param cardGold The Gold card you want to print.
      */
-    public void printCardGold(CardGold cardGold) {
+   /* public void printCardGold(CardGold cardGold) {
         // General information
         System.out.println("GOLD CARD:");
         System.out.println("Card ID: " + getIdCard());
@@ -133,6 +133,8 @@ public class CardGold extends Card implements Serializable {
         ArrayList<Value> center = backGold.getCenter();
         System.out.println("Center: " + center.get(0));
     }
+
+    */
 
 
 }

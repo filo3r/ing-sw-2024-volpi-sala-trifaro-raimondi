@@ -102,7 +102,7 @@ public class CardResource extends Card implements Serializable {
      * Method for printing all the information on a Resource card.
      * @param cardResource The Resource card you want to print.
      */
-    public void printCardResource(CardResource cardResource) {
+   /* public void printCardResource(CardResource cardResource) {
         // General information
         System.out.println("RESOURCE CARD:");
         System.out.println("Card ID: " + getIdCard());
@@ -124,5 +124,7 @@ public class CardResource extends Card implements Serializable {
         System.out.println("Center: " + center.get(0));
     }
 
+
+    */
 
 }

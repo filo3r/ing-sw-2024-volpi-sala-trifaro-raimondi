@@ -22,7 +22,7 @@ import java.util.List;
 //Dovrebbe essere completo
 public interface VirtualServer extends Remote{
 
-    void connect(VirtualView client) throws RemoteException;
+    void connectClient(VirtualView client) throws RemoteException;
 
     Game getGame() throws RemoteException;
 

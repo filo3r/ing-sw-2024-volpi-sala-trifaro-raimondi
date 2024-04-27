@@ -7,6 +7,7 @@ import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class MainController implements Serializable {
      * new game.
      * @param playerNickname The nickname of the player attempting to join a game.
      */
-    public synchronized GameController joinGame(String playerNickname) {
+    public synchronized GameController joinGame(String playerNickname) throws RemoteException {
         //First of all check if there is any game where is possible to join (GCs stands for gameControllers
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
         if (!GCs.isEmpty()) {

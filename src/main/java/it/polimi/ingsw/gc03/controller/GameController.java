@@ -10,6 +10,7 @@ import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.*;
 
 
@@ -60,7 +61,7 @@ public class GameController implements Runnable, Serializable {
      * @throws PlayerAlreadyJoinedException This exception is thrown to prevent duplicate addition of a player in the
      *                                      same game.
      */
-    public void addPlayerToGame(String playerNickname) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException {
+    public void addPlayerToGame(String playerNickname) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // It's possible to add new players only if the game's status is WAITING
         // When the game is in WAITING status, the players.size < game.size, so
         // new players can join.
@@ -81,6 +82,7 @@ public class GameController implements Runnable, Serializable {
         } else {
          throw new CannotJoinGameException();
         }
+        this.getGame().notifyObservers(this.getGame());
     }
 
 
@@ -121,7 +123,7 @@ public class GameController implements Runnable, Serializable {
      * @param playerNickname Nickname of the player you want to reconnect.
      */
 
-    public synchronized void reconnectPlayer(String playerNickname) {
+    public synchronized void reconnectPlayer(String playerNickname) throws RemoteException {
         // Check if there is any game with a player with "playerNickname" as nickname.
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
         if (!result.isEmpty()) {
@@ -133,6 +135,7 @@ public class GameController implements Runnable, Serializable {
                 game.setStatus(GameStatus.RUNNING);
             }
         }
+        this.getGame().notifyObservers(this.getGame());
     }
 
 
@@ -201,6 +204,7 @@ public class GameController implements Runnable, Serializable {
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
             }
         }
+        this.getGame().notifyObservers(this.getGame());
     }
 
     /**
@@ -234,6 +238,7 @@ public class GameController implements Runnable, Serializable {
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
             }
         }
+        this.getGame().notifyObservers(this.getGame().getDesk());
     }
 
     /**
@@ -286,6 +291,7 @@ public class GameController implements Runnable, Serializable {
         } else {
             throw new Exception("Player's action is not draw.");
         }
+        this.getGame().notifyObservers(this.getGame().getDesk());
     }
 
 
@@ -308,6 +314,7 @@ public class GameController implements Runnable, Serializable {
         } else {
             throw new Exception("Player's action is not draw.");
         }
+        this.getGame().notifyObservers(this.getGame().getDesk());
     }
 
     /**
@@ -390,6 +397,7 @@ public class GameController implements Runnable, Serializable {
         } else {
             throw new Exception("The current GameStatus is not either RUNNING or ENDING");
         }
+        this.getGame().notifyObservers(this.getGame());
     }
 
     /**

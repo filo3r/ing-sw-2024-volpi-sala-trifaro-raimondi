@@ -7,13 +7,14 @@ import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
 /**
  * This class represents a Codex.
  */
-public class Codex implements Serializable {
+public class Codex extends Observable implements Serializable {
 
     /**
      * Data structure of the codex.
@@ -427,7 +428,7 @@ public class Codex implements Serializable {
      * Method for inserting the Starter card into the codex.
      * @param side The side of the card to insert.
      */
-    public void insertStarterIntoCodex(Side side) {
+    public void insertStarterIntoCodex(Side side) throws RemoteException {
         this.codex[40][40] = side;
         this.cardStarterInserted = true;
         // Update minimums and maximums of rows and columns
@@ -666,7 +667,7 @@ public class Codex implements Serializable {
     /**
      * Method to print the codex table.
      */
-    public void printCodexTable() {
+  /*  public void printCodexTable() {
         System.out.println("CODEX:");
         // Maximum length of column coordinates
         int columnWidth = String.valueOf(this.codex[0].length - 1).length();
@@ -705,11 +706,13 @@ public class Codex implements Serializable {
         }
     }
 
+   */
+
 
     /**
      * Method for printing card information contained in the codex.
      */
-    public void printCodexCard() {
+   /* public void printCodexCard() {
         for (int i = minRow - 3; i < maxRow + 3; i++) {
             for (int j = minColumn - 3; j < maxColumn + 3; j++) {
                 if (this.codex[i][j] != null) {
@@ -736,6 +739,8 @@ public class Codex implements Serializable {
             }
         }
     }
+
+    */
 
 
 }

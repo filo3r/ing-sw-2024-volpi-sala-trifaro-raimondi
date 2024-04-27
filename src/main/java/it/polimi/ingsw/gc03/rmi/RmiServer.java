@@ -35,7 +35,7 @@ public class RmiServer implements VirtualServer {
     }
 
     @Override
-    public void connect(VirtualView client) throws RemoteException {
+    public void connectClient(VirtualView client) throws RemoteException {
         synchronized(this.clients){
             this.clients.add(client);
         }

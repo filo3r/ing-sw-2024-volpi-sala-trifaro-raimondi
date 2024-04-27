@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 /**
  * This class represents the game board.
  */
-public class Desk implements Serializable{
+public class Desk extends Observable implements Serializable{
 
     /**
      * Deck of Starter cards.
@@ -473,7 +473,7 @@ public class Desk implements Serializable{
 
 
     // Questi metodi vanno spostati nella view
-    public void printDeckStarter() {
+/*    public void printDeckStarter() {
         System.out.println("STARTER DECK:");
         for (CardStarter card : deckStarter) {
             card.printCardStarter(card);
@@ -535,6 +535,6 @@ public class Desk implements Serializable{
             //card.printCardObjective(card);
         }
     }
-
+*/
 
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ class RequirementStrategyTest {
 
     @Test
     @DisplayName("A single triplet with the requirements")
-    void singleTriplet(){
+    void singleTriplet() throws RemoteException {
         Side side1 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side side2 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side side3 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY, Value.EMPTY);
@@ -58,7 +59,7 @@ class RequirementStrategyTest {
 
     @Test
     @DisplayName("Two triplets with the requirements")
-    void twoTriplets(){
+    void twoTriplets() throws RemoteException {
         Side side1 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side side2 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY);
         Side side3 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.FUNGI, Value.FUNGI, Value.EMPTY);
