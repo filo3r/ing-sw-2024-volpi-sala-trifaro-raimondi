@@ -21,6 +21,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
     final VirtualServer server;
     private Game game;
+    private GameController gameController;
     public RmiClient(VirtualServer server) throws RemoteException{
         this.server = server;
     }
@@ -38,40 +39,29 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
                 System.out.println("Choose your Nickname\n");
                 nickname = scan.nextLine();
             } while(!server.checkNicknameValidity(nickname));
-            List<GameController> gameControllers = server.getGameControllers();
-            if(gameControllers==null){
-                GameController gc = server.addPlayerToGame(nickname);
-                game = gc.getGame();
-                System.out.println("No available games to join, the server made a new game, the game id is "+game.getIdGame());
-            } else {
-                if(!gameControllers.stream().filter(x->x.getGame().getPlayers().size()<x.getGame().getSize()).toList().isEmpty()){
-                    GameController gc = server.addPlayerToGame(nickname);
-                    game = gc.getGame();
-                    System.out.println("A game is available, you joined it, the game id is "+game.getIdGame());
-                } else {
-                    // There is already a player with this nickname, choose whether he could reconnect.
-                }
-            }
+            gameController = server.addPlayerToGame(nickname);
+            game = gameController.getGame();
+            System.out.println("You have joined the game "+game.getIdGame()+"\n");
             boolean validSize = false;
-            int gameSize;
-            do {
-                System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
-                gameSize = scan.nextInt();
-
-                try {
-                    server.updateSize(gameSize);
-                    validSize = true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            } while (!validSize);
-
-
+            if(game.getSize()==1){
+                int gameSize;
+                do {
+                    System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
+                    gameSize = scan.nextInt();
+                    try {
+                        server.updateSize(gameSize, game.getIdGame());
+                        validSize = true;
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                } while (!validSize);
+            }
+            System.out.println("\n---END OF CURRENT GAME DEV---\n");
         }while (!game.getStatus().equals(GameStatus.ENDED));
     }
     public static void main(String[] args) throws Exception {
         final String serverName = "Server";
-        Registry registry = LocateRegistry.getRegistry("localhost",1234);
+        Registry registry = LocateRegistry.getRegistry("localhost",2222);
         VirtualServer server = (VirtualServer) registry.lookup(serverName);
 
         new RmiClient(server).run();
@@ -79,11 +69,11 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
     @Override
     public void updatePlayerJoined(String newPlayer) throws RemoteException {
-        System.out.println("[EVENT] "+newPlayer+" joined the game");
+        System.err.println("[EVENT] "+newPlayer+" joined the game");
     }
 
     public void updateSizeChanged(int size) throws RemoteException {
-        System.out.println("[EVENT] game size changed to "+size);
+        System.err.println("[EVENT] game size changed to "+size);
     }
 
     @Override

@@ -33,7 +33,7 @@ public interface VirtualServer extends Remote{
 
     GameController addPlayerToGame(String playerNickName) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException;
 
-    void updateSize(int size) throws Exception;
+    void updateSize(int size, int gameID) throws Exception;
 
     boolean checkNicknameValidity(String nickname) throws RemoteException;
 }

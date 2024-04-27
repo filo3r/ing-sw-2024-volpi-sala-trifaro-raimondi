@@ -31,7 +31,7 @@ public class RmiServer implements VirtualServer {
         final String serverName = "Server";
         VirtualServer server = new RmiServer(MainController.getInstance());
         VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server,0);
-        Registry registry = LocateRegistry.createRegistry(1234);
+        Registry registry = LocateRegistry.createRegistry(2222);
         registry.rebind(serverName,stub);
         System.out.println("server bound");
 
@@ -59,6 +59,15 @@ public class RmiServer implements VirtualServer {
 
     }
 
+    /**
+     *
+     * @param playerNickName
+     * @return The gameController of the game where the player joined
+     * @throws RemoteException
+     * @throws PlayerAlreadyJoinedException
+     * @throws DeskIsFullException
+     * @throws CannotJoinGameException
+     */
     @Override
     public GameController addPlayerToGame(String playerNickName) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException{
         System.err.println("add request received");
@@ -70,9 +79,15 @@ public class RmiServer implements VirtualServer {
     }
 
     @Override
-    public void updateSize(int size) throws Exception{
+    public void updateSize(int size, int gameID) throws Exception{
         System.err.println("updateSize request received");
-        this.mainController.getGameControllers().get(0).updateSize(size);
+        // Get the gameController of the game with such gameID
+        List<GameController> gc = this.mainController.getGameControllers().stream()
+                .filter(x->(x.getGame().getIdGame()==gameID)).toList();
+        // If some exists, update its size
+        if(!gc.isEmpty()){
+            gc.getFirst().updateSize(size);
+        }
         for(VirtualView client: clients){
             client.updateSizeChanged(size);
         }
@@ -84,7 +99,7 @@ public class RmiServer implements VirtualServer {
             return false;
         }
         for(GameController g: mainController.getGameControllers()){
-            if(g.getGame().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().isEmpty()){
+            if(!g.getGame().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().isEmpty()){
                 return false;
             }
         }
