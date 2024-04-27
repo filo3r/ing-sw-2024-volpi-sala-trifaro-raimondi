@@ -16,7 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-//Manca parte di Scanner input e gestione observer
+
 public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
     final VirtualServer server;
@@ -33,17 +33,21 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
     private void runCli() throws Exception {
         Scanner scan = new Scanner(System.in);
+        boolean nicknameChosen = false;
         do{
-            String nickname;
-            do{
-                System.out.println("Choose your Nickname\n");
-                nickname = scan.nextLine();
-            } while(!server.checkNicknameValidity(nickname));
-            gameController = server.addPlayerToGame(nickname);
-            game = gameController.getGame();
-            System.out.println("You have joined the game "+game.getIdGame()+"\n");
-            boolean validSize = false;
+            if(!nicknameChosen){
+                String nickname;
+                do{
+                    System.out.println("Choose your Nickname\n");
+                    nickname = scan.nextLine();
+                } while(!server.checkNicknameValidity(nickname));
+                nicknameChosen = true;
+                gameController = server.addPlayerToGame(nickname);
+                game = gameController.getGame();
+                System.out.println("You have joined the game "+game.getIdGame()+"\n");
+            }
             if(game.getSize()==1){
+                boolean validSize = false;
                 int gameSize;
                 do {
                     System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
@@ -55,6 +59,19 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
                         System.out.println(e.getMessage());
                     }
                 } while (!validSize);
+            }
+            String nextAction = "done";
+            while(!game.getStatus().equals(GameStatus.ENDED) && nextAction.equals("done")){
+                nextAction = scan.nextLine();
+                switch(nextAction){
+                    // All the choice could be done using text input, for example:
+                    // >> selectObjective
+                    // "obj1, obj2"
+                    // >> 1
+                    // "You chose obj1"
+                    // ...
+                }
+                nextAction = "done";
             }
             System.out.println("\n---END OF CURRENT GAME DEV---\n");
         }while (!game.getStatus().equals(GameStatus.ENDED));

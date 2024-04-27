@@ -15,9 +15,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-// Mancano observer e notifica dei metodi a tutti i client,riguardare bene la gestione di MainController che non sono sicuro
-// di aver usato nel modo giusto
-
 public class RmiServer implements VirtualServer {
     final MainController mainController;
 
