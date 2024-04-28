@@ -39,44 +39,42 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private void runCli() throws Exception {
         Scanner scan = new Scanner(System.in);
         boolean nicknameChosen = false;
-        do{
-            if(!nicknameChosen){
-                do{
-                    System.out.println("Choose your Nickname\n");
-                    nickname = scan.nextLine();
-                } while(!server.checkNicknameValidity(nickname));
-                nicknameChosen = true;
-                gameController = server.addPlayerToGame(nickname, this);
-                game = gameController.getGame();
-                System.out.println("HI "+nickname+" :You have joined the game "+game.getIdGame()+"\n");
-            }
-            if(game.getSize()==1){
-                boolean validSize = false;
-                int gameSize;
-                do {
-                    System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
-                    gameSize = scan.nextInt();
-                    try {
-                        server.updateSize(gameSize, game.getIdGame());
-                        validSize = true;
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                } while (!validSize);
-            }
-            String nextAction;
-            while(!game.getStatus().equals(GameStatus.ENDED)){
-                nextAction = scan.nextLine();
-                switch(nextAction){
-                    // All the choice could be done using text input, for example:
-                    // >> selectObjective
-                    // "obj1, obj2"
-                    // >> 1
-                    // "You chose obj1"
-                    // ...
+        if(!nicknameChosen){
+            do{
+                System.out.println("Choose your Nickname\n");
+                nickname = scan.nextLine();
+            } while(!server.checkNicknameValidity(nickname));
+            nicknameChosen = true;
+            gameController = server.addPlayerToGame(nickname, this);
+            game = gameController.getGame();
+            System.out.println("HI "+nickname+" :You have joined the game "+game.getIdGame()+"\n");
+        }
+        if(game.getSize()==1){
+            boolean validSize = false;
+            int gameSize;
+            do {
+                System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
+                gameSize = scan.nextInt();
+                try {
+                    server.updateSize(gameSize, game.getIdGame());
+                    validSize = true;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
+            } while (!validSize);
+        }
+        String nextAction;
+        while(!game.getStatus().equals(GameStatus.ENDED)){
+            nextAction = scan.nextLine();
+            switch(nextAction){
+                // All the choice could be done using text input, for example:
+                // >> selectObjective
+                // "obj1, obj2"
+                // >> 1
+                // "You chose obj1"
+                // ...
             }
-        }while (!game.getStatus().equals(GameStatus.ENDED));
+        }
     }
     public static void main(String[] args) throws Exception {
         final String serverName = "Server";
