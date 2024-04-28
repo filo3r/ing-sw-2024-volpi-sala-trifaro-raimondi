@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
@@ -108,6 +109,7 @@ public class Game extends Observable implements Serializable {
             this.numPlayer++;
             Player player = new Player(nickname, this.numPlayer, this.desk);
             this.players.add(player);
+            this.players.stream().forEach(p->p.addObserver(listener));
             addObserver(listener);
             notifyObservers(this);
             return true;
@@ -250,8 +252,9 @@ public class Game extends Observable implements Serializable {
      * Method to set the size of the game.
      * @param size The size of the game.
      */
-    public void setSize(int size) {
+    public void setSize(int size) throws RemoteException {
         this.size = size;
+        notifyObservers(this);
     }
 
 

@@ -82,9 +82,6 @@ public class RmiServer implements VirtualServer {
         if(!gc.isEmpty()){
             gc.getFirst().updateSize(size);
         }
-        for(VirtualView client: clients){
-            client.updateSizeChanged(size);
-        }
     }
 
     @Override

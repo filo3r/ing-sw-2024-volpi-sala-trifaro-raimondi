@@ -10,6 +10,7 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ public class Player extends Observable implements Serializable {
      */
     public static final int FINAL_CARD_OBJECTIVE = 1;
 
+    VirtualView listener;
 
     /**
      * Constructor of the Player class.
