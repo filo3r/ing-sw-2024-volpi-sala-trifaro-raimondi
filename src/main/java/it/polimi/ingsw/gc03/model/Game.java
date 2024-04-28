@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.model;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
+import it.polimi.ingsw.gc03.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -93,7 +94,7 @@ public class Game extends Observable implements Serializable {
      * @param nickname The player's nickname.
      * @return A boolean indicating whether a player has been added to the game or not.
      */
-    public boolean addPlayer(String nickname) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+    public boolean addPlayer(String nickname, VirtualView listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // The game is full
         if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
             throw new DeskIsFullException();
@@ -107,6 +108,7 @@ public class Game extends Observable implements Serializable {
             this.numPlayer++;
             Player player = new Player(nickname, this.numPlayer, this.desk);
             this.players.add(player);
+            addObserver(listener);
             notifyObservers(this);
             return true;
         }
@@ -116,7 +118,7 @@ public class Game extends Observable implements Serializable {
     /**
      * Method for removing a player from the game.
      * @param nickname The player's nickname.
-     * @return A Boolean value indicating whether or not a player has been removed from the game.
+     * @return A Boolean value indicating whether a player has been removed from the game.
      */
     public boolean removePlayer(String nickname) throws RemoteException {
         for (int i = 0; i < this.players.size(); i++) {

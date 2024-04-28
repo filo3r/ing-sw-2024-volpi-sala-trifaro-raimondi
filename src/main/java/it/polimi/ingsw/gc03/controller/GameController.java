@@ -8,6 +8,7 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -61,13 +62,13 @@ public class GameController implements Runnable, Serializable {
      * @throws PlayerAlreadyJoinedException This exception is thrown to prevent duplicate addition of a player in the
      *                                      same game.
      */
-    public void addPlayerToGame(String playerNickname) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+    public void addPlayerToGame(String playerNickname, VirtualView listener) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // It's possible to add new players only if the game's status is WAITING
         // When the game is in WAITING status, the players.size < game.size, so
         // new players can join.
         if (game.getStatus().equals(GameStatus.WAITING)) {
             try {
-                game.addPlayer(playerNickname);
+                game.addPlayer(playerNickname, listener);
             } catch (DeskIsFullException e) {
                 throw new DeskIsFullException();
             } catch (PlayerAlreadyJoinedException e) {
@@ -82,7 +83,6 @@ public class GameController implements Runnable, Serializable {
         } else {
          throw new CannotJoinGameException();
         }
-        this.getGame().notifyObservers(this.getGame());
     }
 
 

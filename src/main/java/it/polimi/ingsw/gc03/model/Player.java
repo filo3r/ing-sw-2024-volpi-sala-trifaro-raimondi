@@ -19,7 +19,7 @@ import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList
 /**
  * This class represents a player in the game.
  */
-public class Player implements Serializable {
+public class Player extends Observable implements Serializable {
 
     /**
      * Player's nickname.

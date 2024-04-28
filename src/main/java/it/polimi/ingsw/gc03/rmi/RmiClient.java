@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.Desk;
 import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
@@ -24,6 +25,8 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     final VirtualServer server;
     private Game game;
     private GameController gameController;
+    private String nickname;
+
     public RmiClient(VirtualServer server) throws RemoteException{
         this.server = server;
     }
@@ -38,13 +41,12 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
         boolean nicknameChosen = false;
         do{
             if(!nicknameChosen){
-                String nickname;
                 do{
                     System.out.println("Choose your Nickname\n");
                     nickname = scan.nextLine();
                 } while(!server.checkNicknameValidity(nickname));
                 nicknameChosen = true;
-                gameController = server.addPlayerToGame(nickname);
+                gameController = server.addPlayerToGame(nickname, this);
                 game = gameController.getGame();
                 System.out.println("HI "+nickname+" :You have joined the game "+game.getIdGame()+"\n");
             }
@@ -62,8 +64,8 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
                     }
                 } while (!validSize);
             }
-            String nextAction = "done";
-            while(!game.getStatus().equals(GameStatus.ENDED) && nextAction.equals("done")){
+            String nextAction;
+            while(!game.getStatus().equals(GameStatus.ENDED)){
                 nextAction = scan.nextLine();
                 switch(nextAction){
                     // All the choice could be done using text input, for example:
@@ -73,9 +75,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
                     // "You chose obj1"
                     // ...
                 }
-                nextAction = "done";
             }
-            System.out.println("\n---END OF CURRENT GAME DEV---\n");
         }while (!game.getStatus().equals(GameStatus.ENDED));
     }
     public static void main(String[] args) throws Exception {
@@ -105,6 +105,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     public void updateDesk(Desk desk) throws RemoteException {
         System.err.println("[EVENT] DeskModel has changed");
     }
+
 
     @Override
     public void updateCodex(Codex codex) throws RemoteException {
