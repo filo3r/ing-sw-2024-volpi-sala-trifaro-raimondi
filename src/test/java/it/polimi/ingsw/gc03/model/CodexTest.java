@@ -53,15 +53,16 @@ class CodexTest {
     @Test
     void insertIntoCodex() throws RemoteException {
         codex.insertStarterIntoCodex(side);
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, -1, 0));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 0, -1));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 81, 0));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 0, 81));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 40, 40));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 1, 1));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 2, 2));
-        assertThrows(IllegalArgumentException.class, () -> codex.insertIntoCodex(side, 40, 40));
-        assertTrue(codex.insertIntoCodex(side, 40, 41));
+        assertFalse(codex.insertIntoCodex(side, -1, 0));
+        assertFalse(codex.insertIntoCodex(side, 0, -1));
+        assertFalse(codex.insertIntoCodex(side, 81, 0));
+        assertFalse(codex.insertIntoCodex(side, 0, 81));
+        assertFalse(codex.insertIntoCodex(side, 40, 40));
+        assertFalse(codex.insertIntoCodex(side, 1, 1));
+        assertFalse(codex.insertIntoCodex(side, 2, 2));
+        assertFalse(codex.insertIntoCodex(side, 40, 40));
+        assertFalse(codex.insertIntoCodex(side, 40, 41));
+        assertTrue(codex.insertIntoCodex(side,41,41));
     }
 
 
