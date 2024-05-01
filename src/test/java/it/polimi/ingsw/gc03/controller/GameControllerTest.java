@@ -9,6 +9,8 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.rmi.RmiClient;
+import it.polimi.ingsw.gc03.rmi.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,30 +35,32 @@ class GameControllerTest {
     @DisplayName("Players added to the game")
     void addPlayerToGame() throws CannotJoinGameException, PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         // A player is added to the game
-        gameController.addPlayerToGame("Player1");
+        VirtualView listener = new RmiClient(null);
+        gameController.addPlayerToGame("Player1", listener);
         // A player tries to join before the game's size is changed.
-        assertThrows(DeskIsFullException.class, () -> gameController.addPlayerToGame("Player4"));
+        assertThrows(DeskIsFullException.class, () -> gameController.addPlayerToGame("Player4", listener));
         // The player sets the game's size as 2
         gameController.getGame().setSize(2);
         // The same player tryes to join again
-        assertThrows(PlayerAlreadyJoinedException.class, () -> gameController.addPlayerToGame("Player1"));
+        assertThrows(PlayerAlreadyJoinedException.class, () -> gameController.addPlayerToGame("Player1", listener));
         // A second player tries to join
-        gameController.addPlayerToGame("Player2");
+        gameController.addPlayerToGame("Player2", listener);
         // A third player tries to join
-        assertThrows(CannotJoinGameException.class, ()->gameController.addPlayerToGame("Player3"));
+        assertThrows(CannotJoinGameException.class, ()->gameController.addPlayerToGame("Player3", listener));
 
         assertEquals(2, gameController.getGame().getPlayers().size());
         assertEquals(GameStatus.STARTING, gameController.getGame().getStatus());
-        assertThrows(CannotJoinGameException.class, ()->gameController.addPlayerToGame("Player3"));
+        assertThrows(CannotJoinGameException.class, ()->gameController.addPlayerToGame("Player3", listener));
     }
 
 
     @Test
     @DisplayName("Placing cards on Codex and simple game")
     void placingCards() throws Exception {
-        gameController.addPlayerToGame("Player1");
+        VirtualView listener = new RmiClient(null);
+        gameController.addPlayerToGame("Player1", listener);
         gameController.getGame().setSize(2);
-        gameController.addPlayerToGame("Player2");
+        gameController.addPlayerToGame("Player2", listener);
 
         // For testing purposes the first player is in position 0
         gameController.getGame().setCurrPlayer(0);
@@ -123,10 +127,10 @@ class GameControllerTest {
     @Test
     public void testReconnectPlayer() throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         Game game = gameController.getGame();
-
-        gameController.addPlayerToGame("Player1");
+        VirtualView listener = new RmiClient(null);
+        gameController.addPlayerToGame("Player1", listener);
         game.setSize(2);
-        gameController.addPlayerToGame("Player2");
+        gameController.addPlayerToGame("Player2", listener);
         Player player1 = game.getPlayers().get(0);
         Player player2 = game.getPlayers().get(1);
 
@@ -141,9 +145,10 @@ class GameControllerTest {
 
     @Test
     void checkFinalActionTestCall() throws Exception {
-        gameController.addPlayerToGame("Player1");
+        VirtualView listener = new RmiClient(null);
+        gameController.addPlayerToGame("Player1", listener);
         gameController.updateSize(2);
-        gameController.addPlayerToGame("Player2");
+        gameController.addPlayerToGame("Player2", listener);
         Game game = gameController.getGame();
         game.setStatus(GameStatus.RUNNING);
         Card card;

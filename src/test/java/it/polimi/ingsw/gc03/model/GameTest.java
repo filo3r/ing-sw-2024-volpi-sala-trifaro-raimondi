@@ -4,6 +4,8 @@ import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
+import it.polimi.ingsw.gc03.rmi.RmiClient;
+import it.polimi.ingsw.gc03.rmi.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,22 +37,24 @@ class GameTest {
     @Test
     void addPlayer() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         int playerNum = game.getNumPlayer();
-        game.addPlayer("newNick");
+        VirtualView listener = new RmiClient(null);
+        game.addPlayer("newNick", listener);
         assertEquals(game.getNumPlayer(),playerNum+1);
         game.setSize(2);
-        assertThrows(PlayerAlreadyJoinedException.class, ()-> game.addPlayer("newNick"));
-        game.addPlayer("newNick1");
-        assertThrows(DeskIsFullException.class, ()->game.addPlayer("newNick2"));
+        assertThrows(PlayerAlreadyJoinedException.class, ()-> game.addPlayer("newNick", listener));
+        game.addPlayer("newNick1", listener);
+        assertThrows(DeskIsFullException.class, ()->game.addPlayer("newNick2", listener));
         game.setSize(4);
-        game.addPlayer("newNick2");
-        game.addPlayer("newNick3");
-        assertThrows(DeskIsFullException.class, ()-> game.addPlayer("newNick4"));
+        game.addPlayer("newNick2", listener);
+        game.addPlayer("newNick3", listener);
+        assertThrows(DeskIsFullException.class, ()-> game.addPlayer("newNick4", listener));
 
     }
 
     @Test
     void removePlayer() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
-        game.addPlayer("newNick");
+        VirtualView listener = new RmiClient(null);
+        game.addPlayer("newNick", listener);
         int newPlayerNum = game.getNumPlayer();
         assertTrue(game.removePlayer("newNick"));
         assertEquals(newPlayerNum-1,game.getNumPlayer());
@@ -86,8 +90,9 @@ class GameTest {
     @Test
     void getOnlinePlayers() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         game.setSize(2);
-        game.addPlayer("Test1");
-        game.addPlayer("Test2");
+        VirtualView listener = new RmiClient(null);
+        game.addPlayer("Test1", listener);
+        game.addPlayer("Test2", listener);
         game.getPlayers().get(0).setOnline(true);
         game.getPlayers().get(1).setOnline(false);
         int flag=0;
@@ -101,14 +106,16 @@ class GameTest {
 
     @Test
     void stopGamePoints() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
-        game.addPlayer("Test");
+        VirtualView listener = new RmiClient(null);
+        game.addPlayer("Test", listener);
         game.getPlayers().get(0).getCodex().setPointCodex(25);
         assertTrue(game.stopGame());
     }
 
     @Test
     void stopGameCards() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
-        game.addPlayer("Test");
+        VirtualView listener = new RmiClient(null);
+        game.addPlayer("Test", listener);
         ArrayList<CardResource> deckResource= new ArrayList<>();
         ArrayList<CardGold> deckGold= new ArrayList<>();
         game.getDesk().setDeckResource(deckResource);
