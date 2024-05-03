@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.model.card.card.objective;
+package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import com.google.gson.annotations.JsonAdapter;
 import it.polimi.ingsw.gc03.model.Codex;

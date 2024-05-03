@@ -6,11 +6,7 @@ import java.time.LocalTime;
 /**
  * This class represents a message in the chat.
  */
-public class Message implements Serializable {
-    /*
-     * The unique message's id.
-     */
-    //private int idMessage; // Probabilmente è meglio toglierlo per semplificare, non è implementato nel metodo addMessage di Game
+public class ChatMessage implements Serializable {
 
     /**
      * The message's sender.
@@ -34,28 +30,11 @@ public class Message implements Serializable {
      * @param text The message's text.
      * @param timestamp The message's timestamp.
      */
-    public Message(Player sender, String text, LocalTime timestamp) {
+    public ChatMessage(Player sender, String text, LocalTime timestamp) {
         this.text = text;
         this.timestamp = timestamp;
         this.sender = sender;
     }
-
-    /*
-     * Getter method for retrieving the unique id of the message.
-     * @return The unique id of the message.
-     */
-    /*public int getIdMessage() {
-        return idMessage;
-    }
-
-    /*
-     * Setter method for setting the unique id of the message.
-     * @param idMessage The unique id of the message to set.
-     */
-    /*public void setIdMessage(int idMessage) {
-        this.idMessage = idMessage;
-    }
-     */
 
 
     /**

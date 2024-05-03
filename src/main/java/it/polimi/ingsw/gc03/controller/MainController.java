@@ -5,7 +5,7 @@ import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

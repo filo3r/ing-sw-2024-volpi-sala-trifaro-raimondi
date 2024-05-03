@@ -8,9 +8,9 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MessageTest {
+class ChatMessageTest {
 
-    private Message message;
+    private ChatMessage chatMessage;
 
     private String text;
 
@@ -27,7 +27,7 @@ class MessageTest {
         desk = new Desk();
         sender = new Player("TestName",1,desk);
         timestamp = LocalTime.of(12,0,0);
-        message = new Message(sender,text,timestamp);
+        chatMessage = new ChatMessage(sender,text,timestamp);
     }
 
     @AfterEach
@@ -36,49 +36,49 @@ class MessageTest {
         desk = null;
         sender = null;
         timestamp = null;
-        message = null;
+        chatMessage = null;
     }
 
     @Test
     void getText() {
-        assertEquals(text,message.getText());
+        assertEquals(text, chatMessage.getText());
     }
 
     @Test
     void setText() {
         String newText ="Goodbye";
-        String oldText = message.getText();
-        message.setText(newText);
-        assertEquals(newText,message.getText());
+        String oldText = chatMessage.getText();
+        chatMessage.setText(newText);
+        assertEquals(newText, chatMessage.getText());
         assertNotEquals(oldText,newText);
     }
 
     @Test
     void getTimestamp() {
-        assertEquals(timestamp,message.getTimestamp());
+        assertEquals(timestamp, chatMessage.getTimestamp());
     }
 
     @Test
     void setTimestamp() {
         LocalTime newTime = LocalTime.of(21,0,0);
-        LocalTime oldTime = message.getTimestamp();
-        message.setTimestamp(newTime);
-        assertEquals(newTime,message.getTimestamp());
+        LocalTime oldTime = chatMessage.getTimestamp();
+        chatMessage.setTimestamp(newTime);
+        assertEquals(newTime, chatMessage.getTimestamp());
         assertNotEquals(oldTime,newTime);
     }
 
     @Test
     void getSender() {
-        assertEquals(sender,message.getSender());
+        assertEquals(sender, chatMessage.getSender());
     }
 
     @Test
     void setSender() {
         desk1 = new Desk();
         Player newSender = new Player("TestName2",4,desk1);
-        Player oldSender = message.getSender();
-        message.setSender(newSender);
-        assertEquals(newSender,message.getSender());
+        Player oldSender = chatMessage.getSender();
+        chatMessage.setSender(newSender);
+        assertEquals(newSender, chatMessage.getSender());
         assertNotEquals(oldSender,newSender);
     }
 }

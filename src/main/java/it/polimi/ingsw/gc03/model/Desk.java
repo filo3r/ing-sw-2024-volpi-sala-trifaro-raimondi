@@ -7,9 +7,9 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
-import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategy;
-import it.polimi.ingsw.gc03.model.card.card.objective.CalculateScoreStrategyAdapter;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategy;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategyAdapter;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 
 import java.io.*;
 import java.lang.reflect.Type;

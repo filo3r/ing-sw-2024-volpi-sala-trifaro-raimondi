@@ -8,7 +8,7 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -39,8 +39,6 @@ public class GameController implements Runnable, Serializable {
      * Specific task for operations that must be performed periodically.
      */
     private TimerTask timerTask;
-
-    private final int ENDING_SCORE = 20;
 
 
     /**
@@ -250,7 +248,7 @@ public class GameController implements Runnable, Serializable {
      * @param player The player whose action is to be updated based on the game's state.
      */
     private synchronized void checkFinalAction(Player player) {
-        if (player.getScore() >= ENDING_SCORE) {
+        if (player.getScore() >= Game.STOP_POINT_GAME) {
             if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                 game.setStatus(GameStatus.ENDING);
             }

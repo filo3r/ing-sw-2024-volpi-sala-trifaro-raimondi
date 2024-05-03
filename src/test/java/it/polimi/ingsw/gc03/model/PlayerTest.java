@@ -1,12 +1,8 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.model.card.Card;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 

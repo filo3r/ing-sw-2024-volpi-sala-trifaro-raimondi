@@ -1,7 +1,5 @@
 package it.polimi.ingsw.gc03.controller;
 
-import com.sun.javafx.scene.shape.ArcHelper;
-import com.sun.tools.javac.Main;
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -9,16 +7,14 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.rmi.RmiClient;
-import it.polimi.ingsw.gc03.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
+import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
