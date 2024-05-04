@@ -46,7 +46,7 @@ public class GameController implements Runnable, Serializable {
     /**
      * Constructor of the GameController class.
      */
-    public GameController() {
+    public GameController() throws RemoteException {
         game = new Game(random.nextInt(2147483647));
         new Thread(this).start();
     }

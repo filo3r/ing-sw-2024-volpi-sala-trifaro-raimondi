@@ -241,8 +241,9 @@ public class Codex extends Observable implements Serializable {
      * @param row The row to insert the side of the card.
      * @param column The column to insert the side of the card.
      */
-    private void insertSide(Side side, int row, int column) {
+    private void insertSide(Side side, int row, int column) throws RemoteException {
         this.codex[row][column] = side;
+        notifyObservers(this);
         // Set the corners that are covered by the inserted card.
         if (checkTopLeftConnection(row, column)) {
             Side topLeft = this.codex[row - 1][column - 1];
@@ -430,6 +431,7 @@ public class Codex extends Observable implements Serializable {
      */
     public void insertStarterIntoCodex(Side side) throws RemoteException {
         this.codex[40][40] = side;
+        notifyObservers(this);
         this.cardStarterInserted = true;
         // Update minimums and maximums of rows and columns
         this.minRow = 40;

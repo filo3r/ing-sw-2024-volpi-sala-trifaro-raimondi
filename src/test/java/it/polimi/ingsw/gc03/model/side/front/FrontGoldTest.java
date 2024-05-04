@@ -7,6 +7,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FrontGoldTest {
@@ -17,7 +19,7 @@ class FrontGoldTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         desk = new Desk();
         Card card= desk.drawCardDeck(desk.getDeckGold());
         CardGold cardGold = (CardGold) card;

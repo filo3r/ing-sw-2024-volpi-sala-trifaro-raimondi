@@ -27,7 +27,7 @@ class GameControllerTest {
     private GameController gameController;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         gameController = new GameController();
     }
 

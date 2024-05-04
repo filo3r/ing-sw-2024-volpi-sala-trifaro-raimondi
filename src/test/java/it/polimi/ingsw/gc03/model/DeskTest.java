@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +21,7 @@ class DeskTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         desk = new Desk();
     }
 
@@ -33,7 +34,7 @@ class DeskTest {
      * Check if drawCard get the right card from ResourceDeck and if it removes the card from the ResourceDeck
      */
     @Test
-    void drawCardDeckResource() {
+    void drawCardDeckResource() throws RemoteException {
         Card firstCard = desk.getDeckResource().getFirst();
         Card cardResource = desk.drawCardDeck(desk.getDeckResource());
         assertEquals(cardResource,firstCard);
@@ -44,7 +45,7 @@ class DeskTest {
      * Check if drawCard get the right card from GoldDeck and if it removes the card from the GoldDeck
      */
     @Test
-    void drawCardDeckGold(){
+    void drawCardDeckGold() throws RemoteException {
         Card firstCard = desk.getDeckGold().getFirst();
         Card cardGold = desk.drawCardDeck(desk.getDeckGold());
         assertEquals(cardGold,firstCard);
@@ -55,7 +56,7 @@ class DeskTest {
      * Check if drawCard get the right card from StarterDeck and if it removes the card from the StarterDeck
      */
     @Test
-    void drawCardDeckStarter(){
+    void drawCardDeckStarter() throws RemoteException {
         Card firstCard = desk.getDeckStarter().getFirst();
         Card cardStarter = desk.drawCardDeck(desk.getDeckStarter());
         assertEquals(cardStarter,firstCard);
@@ -66,7 +67,7 @@ class DeskTest {
      * Check if drawCard get the right card from ObjectiveDeck and if it removes the card from the ObjectiveDeck
      */
     @Test
-    void drawCardDeckObjective(){
+    void drawCardDeckObjective() throws RemoteException {
         Card firstCard = desk.getDeckObjective().getFirst();
         Card cardObjective = desk.drawCardDeck(desk.getDeckObjective());
         assertEquals(cardObjective,firstCard);
@@ -78,7 +79,7 @@ class DeskTest {
      */
 
     @Test
-    void drawCardDeckEmpty(){
+    void drawCardDeckEmpty() throws RemoteException {
         Card card;
         //Empty the Deck;
         while(!desk.getDeckGold().isEmpty()){
@@ -92,7 +93,7 @@ class DeskTest {
      * Check if drawCardDisplayed returns the correct GoldCard
      */
     @Test
-    void drawCardDisplayedGold() {
+    void drawCardDisplayedGold() throws RemoteException {
         int i = 1;
         Card displayedCard = desk.getDisplayedGold().get(i);
         Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
@@ -103,7 +104,7 @@ class DeskTest {
      * Check if drawCardDisplayed returns the correct ResourceCard
      */
     @Test
-    void drawCardDisplayedResource() {
+    void drawCardDisplayedResource() throws RemoteException {
         int i = 1;
         Card displayedCard = desk.getDisplayedResource().get(i);
         Card card = desk.drawCardDisplayed(desk.getDisplayedResource(),i);
@@ -114,7 +115,7 @@ class DeskTest {
      * Check if drawCardDisplayed returns the correct GoldCard;
      */
     @Test
-    void drawCardDisplayedGoldEmpty(){
+    void drawCardDisplayedGoldEmpty() throws RemoteException {
         Card card;
         int i=0;
         while(!desk.getDisplayedGold().isEmpty()){
@@ -128,7 +129,7 @@ class DeskTest {
      * Check if drawCardDisplayed return null if displayedResource is Empty
      */
     @Test
-    void drawCardDisplayedResourceEmpty(){
+    void drawCardDisplayedResourceEmpty() throws RemoteException {
         Card card;
         int i=0;
         while(!desk.getDisplayedResource().isEmpty()){
@@ -142,7 +143,7 @@ class DeskTest {
      * Check if drawCardDisplayed return null if index is higher than displayed.size()
      */
     @Test
-    void drawCardDisplayedWrongIndexOver(){
+    void drawCardDisplayedWrongIndexOver() throws RemoteException {
         int i=2;
         Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
         assertEquals(card,null);
@@ -152,7 +153,7 @@ class DeskTest {
      * Check if drawCardDisplayed return null if index is lower than displayed.size()
      */
     @Test
-    void drawCardDisplayedWrongIndexUnder(){
+    void drawCardDisplayedWrongIndexUnder() throws RemoteException {
         int i=-1;
         Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
         assertEquals(card,null);
@@ -163,7 +164,7 @@ class DeskTest {
     }
 
     @Test
-    void setDeckStarter() {
+    void setDeckStarter() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<CardStarter> deckStarter = desk.getDeckStarter();
         desk.setDeckStarter(desk1.getDeckStarter());
@@ -176,7 +177,7 @@ class DeskTest {
     }
 
     @Test
-    void setDeckResource() {
+    void setDeckResource() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<CardResource> deckResource = desk.getDeckResource();
         desk.setDeckResource(desk1.getDeckResource());
@@ -189,7 +190,7 @@ class DeskTest {
     }
 
     @Test
-    void setDeckGold() {
+    void setDeckGold() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<CardGold> deckGold = desk.getDeckGold();
         desk.setDeckGold(desk1.getDeckGold());
@@ -202,7 +203,7 @@ class DeskTest {
     }
 
     @Test
-    void setDeckObjective() {
+    void setDeckObjective() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<CardObjective> deckObjective = desk.getDeckObjective();
         desk.setDeckObjective(desk1.getDeckObjective());
@@ -216,7 +217,7 @@ class DeskTest {
     }
 
     @Test
-    void setDisplayedResource() {
+    void setDisplayedResource() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<Card> displayedResource= desk.getDisplayedResource();
         desk.setDisplayedResource(desk1.getDisplayedResource());
@@ -229,7 +230,7 @@ class DeskTest {
     }
 
     @Test
-    void setDisplayedGold() {
+    void setDisplayedGold() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<Card> displayedGold = desk.getDisplayedGold();
         desk.setDisplayedGold(desk1.getDisplayedGold());
@@ -242,7 +243,7 @@ class DeskTest {
     }
 
     @Test
-    void setDisplayedObjective() {
+    void setDisplayedObjective() throws RemoteException {
         Desk desk1 = new Desk();
         ArrayList<CardObjective> displayedObjective = desk.getDisplayedObjective();
         desk.setDisplayedObjective(desk1.getDisplayedObjective());

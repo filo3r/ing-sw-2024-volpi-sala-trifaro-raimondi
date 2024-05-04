@@ -13,6 +13,7 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.rmi.VirtualView;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
@@ -111,7 +112,7 @@ public class Player extends Observable implements Serializable {
      * @param number Player's number.
      * @param desk The game desk.
      */
-    public Player(String nickname, int number, Desk desk) {
+    public Player(String nickname, int number, Desk desk) throws RemoteException {
         this.nickname = nickname;
         this.number = number;
         this.color = createColorArrayList().get(number - 1);

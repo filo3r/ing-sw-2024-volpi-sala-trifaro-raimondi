@@ -77,7 +77,7 @@ public class Game extends Observable implements Serializable {
      * Game class constructor.
      * @param idGame The game's ID.
      */
-    public Game(int idGame) {
+    public Game(int idGame) throws RemoteException {
         this.idGame = idGame;
         this.size = 1;
         this.status = GameStatus.WAITING;
@@ -109,7 +109,9 @@ public class Game extends Observable implements Serializable {
             this.numPlayer++;
             Player player = new Player(nickname, this.numPlayer, this.desk);
             this.players.add(player);
-            this.players.stream().forEach(p->p.addObserver(listener));
+            this.players.forEach(p->p.addObserver(listener));
+            this.players.forEach(p->p.getCodex().addObserver(listener));
+            this.getDesk().addObserver(listener);
             addObserver(listener);
             notifyObservers(this);
             return true;
@@ -179,7 +181,7 @@ public class Game extends Observable implements Serializable {
     /**
      * Method for determining who won the game.
      */
-    private void decideWinner() {
+    private void decideWinner() throws RemoteException {
         int maxScore = 0;
         // Determine which score is the highest
         for (Player player : this.players) {
@@ -210,6 +212,7 @@ public class Game extends Observable implements Serializable {
         } else {
             this.winner.addAll(tempWinners);
         }
+        notifyObservers(this);
     }
 
 
@@ -379,7 +382,7 @@ public class Game extends Observable implements Serializable {
      * Method to get the winner of the game.
      * @return The winner or the winners of the game.
      */
-    public ArrayList<Player> getWinner() {
+    public ArrayList<Player> getWinner() throws RemoteException {
         // If the winner has not yet been determined
         if (this.winner.isEmpty()) {
             decideWinner();

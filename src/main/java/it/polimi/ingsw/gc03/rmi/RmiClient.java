@@ -19,6 +19,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
@@ -67,12 +68,12 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
         while(!game.getStatus().equals(GameStatus.ENDED)){
             nextAction = scan.nextLine();
             switch(nextAction){
-                // All the choice could be done using text input, for example:
-                // >> selectObjective
-                // "obj1, obj2"
-                // >> 1
-                // "You chose obj1"
-                // ...
+                // Simulate an eternal action, to develop the multithreading
+                case "action":
+                    while(true){
+                        System.out.println("Working...");
+                        TimeUnit.SECONDS.sleep(5);
+                    }
             }
         }
     }

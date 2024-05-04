@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +23,7 @@ class MessageTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         text ="Hello";
         desk = new Desk();
         sender = new Player("TestName",1,desk);
@@ -73,7 +74,7 @@ class MessageTest {
     }
 
     @Test
-    void setSender() {
+    void setSender() throws RemoteException {
         desk1 = new Desk();
         Player newSender = new Player("TestName2",4,desk1);
         Player oldSender = message.getSender();

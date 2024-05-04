@@ -23,7 +23,7 @@ class GameTest {
     private Desk desk;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         game = new Game(14547);
         desk = new Desk();
     }

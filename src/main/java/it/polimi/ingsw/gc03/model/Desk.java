@@ -13,6 +13,7 @@ import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -127,7 +128,7 @@ public class Desk extends Observable implements Serializable{
     /**
      * Constructor of the Desk class.
      */
-    public Desk() {
+    public Desk() throws RemoteException {
         // Create decks of cards
         if (!createDeckStarter() || !createDeckResource() || !createDeckGold() || !createDeckObjective())
             System.exit(1);
@@ -262,7 +263,7 @@ public class Desk extends Observable implements Serializable{
     /**
      * Method for initializing visible cards.
      */
-    private void initializeDisplayedCard() {
+    private void initializeDisplayedCard() throws RemoteException {
         // Resource cards
         this.displayedResource = new ArrayList<>(NUM_CARD_DISPLAYED);
         for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
@@ -289,13 +290,15 @@ public class Desk extends Observable implements Serializable{
      * @param deck The deck from which you want to draw a card.
      * @return The drawn card.
      */
-    public Card drawCardDeck(ArrayList<? extends Card> deck) {
+    public Card drawCardDeck(ArrayList<? extends Card> deck) throws RemoteException {
         boolean emptyDeck = deck.isEmpty();
         // Empty deck
-        if (emptyDeck)
+        if (emptyDeck) {
             return null;
-        else
+        } else{
+            notifyObservers(this);
             return deck.removeFirst();
+        }
     }
 
 
@@ -305,7 +308,7 @@ public class Desk extends Observable implements Serializable{
      * @param index The index of the card you want to take.
      * @return The card taken.
      */
-    public Card drawCardDisplayed(ArrayList<? extends Card> displayed, int index) {
+    public Card drawCardDisplayed(ArrayList<? extends Card> displayed, int index) throws RemoteException {
         // Invalid index
         if (index < 0 || index >= displayed.size() || displayed.isEmpty()){
             checkDisplayed();
@@ -314,6 +317,7 @@ public class Desk extends Observable implements Serializable{
         else {
             Card card = displayed.remove(index);
             checkDisplayed();
+            notifyObservers(this);
             return card;
         }
     }
@@ -322,7 +326,7 @@ public class Desk extends Observable implements Serializable{
     /**
      * Method for checking that the visible cards are always in the correct number.
      */
-    private void checkDisplayed() {
+    private void checkDisplayed() throws RemoteException {
         // Resource cards: Resource deck not empty
         while (this.displayedResource.size() < NUM_CARD_DISPLAYED && !this.deckResource.isEmpty()) {
             CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);

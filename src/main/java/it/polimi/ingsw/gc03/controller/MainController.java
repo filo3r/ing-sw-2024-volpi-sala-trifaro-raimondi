@@ -53,7 +53,7 @@ public class MainController implements Serializable {
      * Creates a new game and attempts to add the first player to it.
      * @param firstPlayerNickname The nickname of the first player.
      */
-    public synchronized void createGame(String firstPlayerNickname) {
+    public synchronized void createGame(String firstPlayerNickname) throws RemoteException {
         GameController controller = new GameController();
         gameControllers.add(controller);
     }
