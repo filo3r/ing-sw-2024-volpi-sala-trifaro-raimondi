@@ -1,23 +1,15 @@
-package it.polimi.ingsw.gc03.rmi;
+package it.polimi.ingsw.gc03.networking.rmi;
 
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.Desk;
 import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
-import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
-import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 

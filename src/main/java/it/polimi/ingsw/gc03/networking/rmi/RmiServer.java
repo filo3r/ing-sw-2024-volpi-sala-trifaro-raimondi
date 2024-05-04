@@ -1,9 +1,8 @@
-package it.polimi.ingsw.gc03.rmi;
+package it.polimi.ingsw.gc03.networking.rmi;
 
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;

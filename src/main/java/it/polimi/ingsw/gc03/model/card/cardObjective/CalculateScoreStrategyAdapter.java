@@ -1,8 +1,7 @@
-package it.polimi.ingsw.gc03.model.card.card.objective;
+package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import com.google.gson.*;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 
 

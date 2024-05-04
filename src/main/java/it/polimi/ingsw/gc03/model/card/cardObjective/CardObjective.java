@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.model.card.card.objective;
+package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.Codex;

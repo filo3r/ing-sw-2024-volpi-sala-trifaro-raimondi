@@ -4,13 +4,13 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Color;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
-import it.polimi.ingsw.gc03.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

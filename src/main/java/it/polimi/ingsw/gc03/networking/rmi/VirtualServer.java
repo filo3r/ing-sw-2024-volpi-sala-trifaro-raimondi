@@ -1,19 +1,13 @@
-package it.polimi.ingsw.gc03.rmi;
+package it.polimi.ingsw.gc03.networking.rmi;
 
 import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
-import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.model.side.Side;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

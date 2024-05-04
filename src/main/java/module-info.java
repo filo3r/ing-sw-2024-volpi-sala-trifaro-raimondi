@@ -6,8 +6,6 @@ module it.polimi.ingsw.gc03 {
     requires java.rmi;
 
 
-    opens it.polimi.ingsw.gc03 to javafx.fxml;
-    exports it.polimi.ingsw.gc03;
     exports it.polimi.ingsw.gc03.model.exceptions;
     opens it.polimi.ingsw.gc03.model.exceptions to javafx.fxml;
     exports it.polimi.ingsw.gc03.model.card;
@@ -20,9 +18,9 @@ module it.polimi.ingsw.gc03 {
     opens it.polimi.ingsw.gc03.model.side.back to javafx.fxml, com.google.gson;
     exports it.polimi.ingsw.gc03.model.enumerations;
     opens it.polimi.ingsw.gc03.model.enumerations to javafx.fxml, com.google.gson;
-    exports it.polimi.ingsw.gc03.model.card.card.objective;
-    opens it.polimi.ingsw.gc03.model.card.card.objective to javafx.fxml, com.google.gson;
-    exports it.polimi.ingsw.gc03.rmi;
+    exports it.polimi.ingsw.gc03.model.card.cardObjective;
+    opens it.polimi.ingsw.gc03.model.card.cardObjective to javafx.fxml, com.google.gson;
+    exports it.polimi.ingsw.gc03.networking.rmi;
     exports it.polimi.ingsw.gc03.model;
     opens it.polimi.ingsw.gc03.model to com.google.gson, javafx.fxml;
 }

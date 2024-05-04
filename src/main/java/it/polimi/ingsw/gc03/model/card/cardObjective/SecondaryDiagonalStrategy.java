@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.model.card.card.objective;
+package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import com.google.gson.annotations.JsonAdapter;
 import it.polimi.ingsw.gc03.model.Codex;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 
 /**
- * This class calculates the points of Objective cards that use the main diagonal.
+ * This class calculates the points of Objective cards that use the secondary diagonal.
  */
 @JsonAdapter(CalculateScoreStrategyAdapter.class)
-public class MainDiagonalStrategy implements CalculateScoreStrategy, Serializable {
+public class SecondaryDiagonalStrategy implements CalculateScoreStrategy, Serializable {
 
     /**
      * Method for calculating points.
@@ -26,30 +26,30 @@ public class MainDiagonalStrategy implements CalculateScoreStrategy, Serializabl
     @Override
     public int calculateScore(Codex codex, int point, ArrayList<Value> parameters) {
         // Convert Value to Kingdom
-        ArrayList<Kingdom> mainDiagonalCard = new ArrayList<>();
+        ArrayList<Kingdom> secondaryDiagonalCard = new ArrayList<>();
         for (Value parameter : parameters) {
             Kingdom card = Kingdom.fromValue(parameter);
-            mainDiagonalCard.add(card);
+            secondaryDiagonalCard.add(card);
         }
         // Calculation on the codex
         int pointCalculated = 0;
         int counterKingdom = 0;
         int[][] counterCard = new int[81][81];
-        for (int i = codex.getMinRow(); i <= codex.getMaxRow() - (mainDiagonalCard.size() - 1); i++) {
-            for (int j = codex.getMinColumn(); j <= codex.getMaxColumn() - (mainDiagonalCard.size() - 1); j++) {
+        for (int i = codex.getMaxRow(); i >= codex.getMinRow() + (secondaryDiagonalCard.size() - 1); i--) {
+            for (int j = codex.getMinColumn(); j <= codex.getMaxColumn() - (secondaryDiagonalCard.size() - 1); j++) {
                 if (codex.getCodex()[i][j] != null) {
-                    for (int k = 0; k < mainDiagonalCard.size(); k++) {
-                        if (codex.getCodex()[i + k][j + k] != null) {
-                            Side side = codex.getCodex()[i + k][j + k];
-                            if (side.getKingdom() == mainDiagonalCard.get(k) && counterCard[i + k][j + k] == 0) {
+                    for (int k = 0; k < secondaryDiagonalCard.size(); k++) {
+                        if (codex.getCodex()[i - k][j + k] != null) {
+                            Side side = codex.getCodex()[i - k][j + k];
+                            if (side.getKingdom() == secondaryDiagonalCard.get(k) && counterCard[i - k][j + k] == 0) {
                                 counterKingdom++;
                             }
                         }
                     }
-                    if (counterKingdom == mainDiagonalCard.size()) {
+                    if (counterKingdom == secondaryDiagonalCard.size()) {
                         pointCalculated = pointCalculated + point;
-                        for (int k = 0; k < mainDiagonalCard.size(); k++) {
-                            counterCard[i + k][j + k]++;
+                        for (int k = 0; k < secondaryDiagonalCard.size(); k++) {
+                            counterCard[i - k][j + k]++;
                         }
                     }
                 }

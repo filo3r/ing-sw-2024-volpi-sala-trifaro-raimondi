@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.model.card.card.objective;
+package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import com.google.gson.annotations.JsonAdapter;
 import it.polimi.ingsw.gc03.model.Codex;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 
 /**
- * This class calculates the points of Objective cards that use the pile starting from the top left corner of a
+ * This class calculates the points of Objective cards that use the pile starting from the top right corner of a
  * card.
  */
 @JsonAdapter(CalculateScoreStrategyAdapter.class)
-public class PileTopLeftStrategy implements CalculateScoreStrategy, Serializable {
+public class PileTopRightStrategy implements CalculateScoreStrategy, Serializable {
 
     /**
      * Method for calculating points.
@@ -37,15 +37,15 @@ public class PileTopLeftStrategy implements CalculateScoreStrategy, Serializable
         int counterKingdom = 0;
         int[][] counterCard = new int[81][81];
         for (int i = codex.getMaxRow(); i >= codex.getMinRow() + (((pileCard.size() - 1) * 2) - 1); i--) {
-            for (int j = codex.getMaxColumn(); j > codex.getMinColumn(); j--) {
+            for (int j = codex.getMinColumn(); j < codex.getMaxColumn(); j++) {
                 if (codex.getCodex()[i][j] != null) {
                     Side side = codex.getCodex()[i][j];
                     if (side.getKingdom() == pileCard.getFirst() && counterCard[i][j] == 0) {
                         counterKingdom++;
                         for (int k = 0; k < pileCard.size() - 1; k++) {
-                            if (codex.getCodex()[(i - 1) - (k * 2)][j - 1] != null) {
-                                side = codex.getCodex()[(i - 1) - (k * 2)][j - 1];
-                                if (side.getKingdom() == pileCard.get(k + 1) && counterCard[(i - 1) - (k * 2)][j - 1] == 0) {
+                            if (codex.getCodex()[(i - 1) - (k * 2)][j + 1] != null) {
+                                side = codex.getCodex()[(i - 1) - (k * 2)][j + 1];
+                                if (side.getKingdom() == pileCard.get(k + 1) && counterCard[(i - 1) - (k * 2)][j + 1] == 0) {
                                     counterKingdom++;
                                 }
                             }
@@ -54,7 +54,7 @@ public class PileTopLeftStrategy implements CalculateScoreStrategy, Serializable
                             pointCalculated = pointCalculated + point;
                             counterCard[i][j]++;
                             for (int k = 0; k < pileCard.size() - 1; k++) {
-                                counterCard[(i - 1) - (k * 2)][j - 1]++;
+                                counterCard[(i - 1) - (k * 2)][j + 1]++;
                             }
                         }
                     }

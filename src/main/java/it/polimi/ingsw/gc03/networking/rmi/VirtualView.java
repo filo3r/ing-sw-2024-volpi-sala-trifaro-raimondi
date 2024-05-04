@@ -1,9 +1,8 @@
-package it.polimi.ingsw.gc03.rmi;
+package it.polimi.ingsw.gc03.networking.rmi;
 
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.Desk;
 import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.card.card.objective.CardObjective;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

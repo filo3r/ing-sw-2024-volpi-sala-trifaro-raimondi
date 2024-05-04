@@ -1,10 +1,9 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -55,7 +54,7 @@ public class Game extends Observable implements Serializable {
     /**
      * Game's chat
      */
-    private ArrayList<Message> chat;
+    private ArrayList<ChatMessage> chat;
 
     /**
      * Winner or winners of the game.
@@ -70,7 +69,7 @@ public class Game extends Observable implements Serializable {
     /**
      * Points needed for a player to stop the game.
      */
-    private static final int STOP_POINT_GAME = 20;
+    public static final int STOP_POINT_GAME = 20;
 
 
     /**
@@ -145,8 +144,8 @@ public class Game extends Observable implements Serializable {
      */
     public void addMessage(Player sender, String text) throws RemoteException {
         LocalTime time = LocalTime.now();
-        Message message = new Message(sender, text, time);
-        this.chat.add(message);
+        ChatMessage chatMessage = new ChatMessage(sender, text, time);
+        this.chat.add(chatMessage);
         notifyObservers(this);
     }
 
@@ -364,7 +363,7 @@ public class Game extends Observable implements Serializable {
      * Method to get the chat messages in the game.
      * @return The chat messages in the game.
      */
-    public ArrayList<Message> getChat() {
+    public ArrayList<ChatMessage> getChat() {
         return chat;
     }
 
@@ -373,7 +372,7 @@ public class Game extends Observable implements Serializable {
      * Method to set the chat messages in the game.
      * @param chat The chat messages in the game.
      */
-    public void setChat(ArrayList<Message> chat) {
+    public void setChat(ArrayList<ChatMessage> chat) {
         this.chat = chat;
     }
 
