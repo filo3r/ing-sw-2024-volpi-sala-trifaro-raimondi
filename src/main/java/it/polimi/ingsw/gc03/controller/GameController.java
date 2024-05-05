@@ -398,6 +398,15 @@ public class GameController implements Runnable, Serializable {
         this.getGame().notifyObservers(this.getGame());
     }
 
+    // For testing purposes, no real case use
+    public void infiniteTask(String p) throws Exception {
+        int i = 0;
+        while(true){
+            Thread.sleep(1000);
+            System.out.println("seq: "+i+" gameID: "+getGame().getIdGame()+" client: "+p);
+            i+=1;
+        }
+    }
     /**
      * Retrieves the current game instance associated with this object.
      * @return The current instance of Game associated with this class.

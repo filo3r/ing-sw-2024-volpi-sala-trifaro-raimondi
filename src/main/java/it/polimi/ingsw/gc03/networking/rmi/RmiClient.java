@@ -62,10 +62,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
             switch(nextAction){
                 // Simulate an eternal action, to develop the multithreading
                 case "action":
-                    while(true){
-                        System.out.println("Working...");
-                        TimeUnit.SECONDS.sleep(5);
-                    }
+                    server.infiniteTask(game.getIdGame(), nickname);
             }
         }
     }

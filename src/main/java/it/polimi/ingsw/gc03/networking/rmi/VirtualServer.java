@@ -30,4 +30,8 @@ public interface VirtualServer extends Remote{
     void updateSize(int size, int gameID) throws Exception;
 
     boolean checkNicknameValidity(String nickname) throws RemoteException;
+
+    void addPlayerToSpecificGame(String nickname, int id, VirtualView listener) throws RemoteException;
+
+    void infiniteTask(int id, String p) throws Exception;
 }

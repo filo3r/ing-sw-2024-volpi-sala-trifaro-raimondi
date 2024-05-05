@@ -66,7 +66,7 @@ public class RmiServer implements VirtualServer {
      */
     @Override
     public GameController addPlayerToGame(String playerNickName, VirtualView listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException{
-        System.err.println("add request received");
+        System.err.println("addPlayerToGame request received");
         GameController gc = this.mainController.joinGame(playerNickName, listener);
         return gc;
     }
@@ -94,5 +94,21 @@ public class RmiServer implements VirtualServer {
             }
         }
         return true;
+    }
+
+    @Override
+    public void addPlayerToSpecificGame(String nickname, int id, VirtualView listener) throws RemoteException {
+        System.err.println("addPlayerToSpecificGame request received");
+        GameController gc = this.mainController.joinSpecificGame(nickname, id, listener);
+    }
+
+    // For testing purposes, no real case use
+    @Override
+    public void infiniteTask(int id, String p) throws Exception {
+        List<GameController> gc = this.mainController.getGameControllers().stream()
+                .filter(x->(x.getGame().getIdGame()==id)).toList();
+        if(!gc.isEmpty()){
+            gc.getFirst().infiniteTask(p);
+        }
     }
 }

@@ -67,11 +67,20 @@ public class MainController implements Serializable {
     public synchronized GameController joinGame(String playerNickname, VirtualView listener) throws RemoteException {
         //First of all check if there is any game where is possible to join (GCs stands for gameControllers
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
+        return addPlayerToGame(playerNickname, listener, GCs);
+    }
+
+    public synchronized GameController joinSpecificGame(String playerNickname, int id,  VirtualView listener) throws RemoteException {
+        List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == id)).toList();
+        return addPlayerToGame(playerNickname, listener, GCs);
+    }
+
+    private GameController addPlayerToGame(String playerNickname, VirtualView listener, List<GameController> GCs) throws RemoteException {
         if (!GCs.isEmpty()) {
             //If there are some (at least 1) available games to join, join the last.
             try {
-                gameControllers.getLast().addPlayerToGame(playerNickname, listener);
-                return gameControllers.getLast();
+                GCs.getFirst().addPlayerToGame(playerNickname, listener);
+                return GCs.getFirst();
             } catch (CannotJoinGameException e) {
                 throw new RuntimeException(e);
             } catch (PlayerAlreadyJoinedException e) {
