@@ -35,5 +35,6 @@ public interface VirtualServer extends Remote{
 
     void infiniteTask(int id, String p) throws Exception;
 
-    void pong(VirtualView client) throws RemoteException;
+
+    void ping(VirtualView client) throws RemoteException;
 }

@@ -22,7 +22,7 @@ public class RmiServer implements VirtualServer {
     private List<VirtualView> pingQueue = new ArrayList<>();
     public RmiServer(MainController mainController){
         this.mainController = MainController.getInstance();
-        startPingThread();
+        startPongThread();
     }
 
     public static void main(String[] args) throws RemoteException {
@@ -114,12 +114,28 @@ public class RmiServer implements VirtualServer {
         }
     }
 
-    private void startPingThread() {
+    private void startPongThread() {
         pingThread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(3000);
-                    pingClients();
+                    Thread.sleep(200);
+                    List<VirtualView> connectedClients;
+                    List<VirtualView> disconnectedClients;
+                    synchronized (clients) {
+                        connectedClients = new ArrayList<>(clients);
+                        disconnectedClients = new ArrayList<>();
+                        for (VirtualView client : connectedClients) {
+                            synchronized (pingQueue) {
+                                if (!pingQueue.remove(client)) {
+                                    disconnectedClients.add(client);
+                                }
+                            }
+                        }
+                    }
+                    if (!disconnectedClients.isEmpty()) {
+                        System.out.println("THOSE CLIENTS DONT PING " + disconnectedClients.toString());
+                    }
+                    pingClients(connectedClients);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -128,28 +144,20 @@ public class RmiServer implements VirtualServer {
         pingThread.start();
     }
 
-    private void pingClients() {
-        synchronized (clients) {
-            pingQueue.addAll(clients);
-            for (VirtualView client : pingQueue) {
-                try {
-                    client.pong();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+    private void pingClients(List<VirtualView> clients) {
+        for (VirtualView client : clients) {
+            try {
+                client.ping();
+            } catch (RemoteException e) {
+                System.err.println("Error pinging client: " + e.getMessage());
             }
         }
     }
 
     @Override
-    public void pong(VirtualView client) {
-        pingQueue.remove(client);
-        if (pingQueue.isEmpty()) {
-            System.out.println("[IMPORTANT] Tutti i client hanno risposto al ping.");
-        } else {
-            System.out.println("[IMPORTANT] Alcuni client non hanno risposto al ping.");
-            System.out.println(pingQueue.toString());
+    public void ping(VirtualView client) {
+        synchronized (pingQueue) {
+            pingQueue.add(client);
         }
-        pingQueue.clear();
     }
 }

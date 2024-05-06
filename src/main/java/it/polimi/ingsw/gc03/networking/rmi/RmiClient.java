@@ -10,9 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
@@ -20,8 +18,10 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private Game game;
     private GameController gameController;
     private String nickname;
+    private Thread pingThread;
     public RmiClient(VirtualServer server) throws RemoteException{
         this.server = server;
+        startPingThread();
     }
 
     private void run() throws Exception{
@@ -106,7 +106,28 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     }
 
     @Override
-    public void pong() throws RemoteException {
-        server.pong(this);
+    public void startPingThread() {
+        pingThread = new Thread(() -> {
+            while (true) {
+                try {
+                    server.ping(this);
+                    Thread.sleep(120);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (RemoteException e) {
+                    System.err.println("Error pinging server: " + e.getMessage());
+                }
+            }
+        });
+        pingThread.start();
+    }
+
+    @Override
+    public void ping() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.err.println("Ping timeout from server");
+        }
     }
 }
