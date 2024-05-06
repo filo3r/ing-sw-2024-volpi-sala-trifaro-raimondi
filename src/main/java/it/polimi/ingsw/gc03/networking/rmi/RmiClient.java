@@ -20,7 +20,6 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private Game game;
     private GameController gameController;
     private String nickname;
-    private Integer id;
     public RmiClient(VirtualServer server) throws RemoteException{
         this.server = server;
     }
@@ -28,7 +27,6 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private void run() throws Exception{
         this.server.connectClient(this);
         this.runCli();
-        this.id = new Random().nextInt(2147483647);
     }
 
     private void runCli() throws Exception {
