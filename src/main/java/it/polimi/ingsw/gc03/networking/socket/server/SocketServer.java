@@ -102,7 +102,7 @@ public class SocketServer extends Thread {
         } finally {
             // Ensure the server socket is closed
             closeSocketServer();
-            // Ensure the client handler pool is shit down
+            // Ensure the client handler pool is shut down
             shutdownClientHandlerPool();
         }
     }
