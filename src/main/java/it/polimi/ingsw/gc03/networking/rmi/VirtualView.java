@@ -8,15 +8,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 //manca tutto
 public interface VirtualView extends Remote {
-
-    void updatePlayerJoined(String playerJoined) throws RemoteException;
+    void updatePlayerJoined(String newPlayer) throws RemoteException;
     void updateSizeChanged(int size) throws RemoteException;
-
     void updateGame(Game game) throws RemoteException;
-
     void updateDesk(Desk desk) throws RemoteException;
-
-    void updateCodex(Codex codex)throws RemoteException;
-
+    void updateCodex(Codex codex) throws RemoteException;
     void reportError(String details) throws RemoteException;
+    void pong() throws RemoteException;
 }

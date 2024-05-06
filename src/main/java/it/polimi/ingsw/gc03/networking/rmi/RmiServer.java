@@ -16,11 +16,13 @@ import java.util.List;
 
 public class RmiServer implements VirtualServer {
     final MainController mainController;
-
+    private Thread pingThread;
     final List<VirtualView> clients = new ArrayList<>();
 
+    private List<VirtualView> pingQueue = new ArrayList<>();
     public RmiServer(MainController mainController){
         this.mainController = MainController.getInstance();
+        startPingThread();
     }
 
     public static void main(String[] args) throws RemoteException {
@@ -110,5 +112,44 @@ public class RmiServer implements VirtualServer {
         if(!gc.isEmpty()){
             gc.getFirst().infiniteTask(p);
         }
+    }
+
+    private void startPingThread() {
+        pingThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(3000);
+                    pingClients();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pingThread.start();
+    }
+
+    private void pingClients() {
+        synchronized (clients) {
+            pingQueue.addAll(clients);
+            for (VirtualView client : pingQueue) {
+                try {
+                    client.pong();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void pong(VirtualView client) {
+        pingQueue.remove(client);
+        if (pingQueue.isEmpty()) {
+            System.out.println("[IMPORTANT] Tutti i client hanno risposto al ping.");
+        } else {
+            System.out.println("[IMPORTANT] Alcuni client non hanno risposto al ping.");
+            System.out.println(pingQueue.toString());
+        }
+        pingQueue.clear();
     }
 }

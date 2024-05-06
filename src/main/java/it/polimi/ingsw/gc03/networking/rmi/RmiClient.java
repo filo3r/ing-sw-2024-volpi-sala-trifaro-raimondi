@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +20,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private Game game;
     private GameController gameController;
     private String nickname;
-
+    private Integer id;
     public RmiClient(VirtualServer server) throws RemoteException{
         this.server = server;
     }
@@ -27,6 +28,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private void run() throws Exception{
         this.server.connectClient(this);
         this.runCli();
+        this.id = new Random().nextInt(2147483647);
     }
 
     private void runCli() throws Exception {
@@ -103,5 +105,10 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     @Override
     public void reportError(String details) throws RemoteException {
 
+    }
+
+    @Override
+    public void pong() throws RemoteException {
+        server.pong(this);
     }
 }

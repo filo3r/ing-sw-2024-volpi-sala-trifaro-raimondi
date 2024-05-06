@@ -34,4 +34,6 @@ public interface VirtualServer extends Remote{
     void addPlayerToSpecificGame(String nickname, int id, VirtualView listener) throws RemoteException;
 
     void infiniteTask(int id, String p) throws Exception;
+
+    void pong(VirtualView client) throws RemoteException;
 }
