@@ -12,7 +12,7 @@ class TuiTest {
     @Test
     void tuiTest() {
         Tui tui = new Tui();
-        tui.Tui(140, 25);
+        tui.Tui(141, 30);
     }
 
     @Test
