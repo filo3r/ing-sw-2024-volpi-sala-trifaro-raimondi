@@ -30,7 +30,7 @@ public class Tui {
         screenWidth = width;
         screenHeight = height;
         screenSim = new CharSpecial[screenHeight][screenWidth];
-        screenToPrint = new String[screenHeight][screenWidth*75];
+        screenToPrint = new String[screenHeight][screenWidth*3];
         for (int i = 0; i < screenHeight; i++) {
             for (int j = 0; j < screenWidth * 3; j++) {
                 screenToPrint[i][j] = "";
