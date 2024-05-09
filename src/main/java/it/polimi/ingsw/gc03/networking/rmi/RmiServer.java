@@ -117,24 +117,28 @@ public class RmiServer implements VirtualServer {
         }
     }
 
-
     private void startPongThread() {
         pingThread = new Thread(() -> {
             final long TIMEOUT_MILLIS = 2000;
             while (true) {
-                List<VirtualView> disconnectedClients = new ArrayList<>();
-                synchronized (clients) {
-                    long currentTime = System.currentTimeMillis();
-                    for (VirtualView client : clients) {
-                        Long lastPingTime = clientPingTimestamps.get(client);
-                        if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
-                            disconnectedClients.add(client);
+                try {
+                    synchronized (clients) {
+                        long currentTime = System.currentTimeMillis();
+                        List<VirtualView> disconnectedClients = new ArrayList<>();
+                        for (VirtualView client : clients) {
+                            Long lastPingTime = clientPingTimestamps.get(client);
+                            if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
+                                disconnectedClients.add(client);
+                            }
                         }
+                        clients.removeAll(disconnectedClients);
+                        if (!disconnectedClients.isEmpty()) {
+                            System.out.println("This client has disconnected " + disconnectedClients.toString());
+                        }
+                        clients.wait(TIMEOUT_MILLIS);
                     }
-                    clients.removeAll(disconnectedClients);
-                }
-                if (!disconnectedClients.isEmpty()) {
-                    System.out.println("Disconnected clients: " + disconnectedClients.toString());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -143,7 +147,9 @@ public class RmiServer implements VirtualServer {
 
     @Override
     public void ping(VirtualView client) {
-        clientPingTimestamps.put(client, System.currentTimeMillis());
+        synchronized (clients) {
+            clientPingTimestamps.put(client, System.currentTimeMillis());
+            clients.notifyAll();
+        }
     }
-
 }
