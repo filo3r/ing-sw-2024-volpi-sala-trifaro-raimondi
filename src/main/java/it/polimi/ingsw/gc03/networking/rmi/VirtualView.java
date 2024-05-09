@@ -13,8 +13,5 @@ public interface VirtualView extends Remote {
     void updateGame(Game game) throws RemoteException;
     void updateDesk(Desk desk) throws RemoteException;
     void updateCodex(Codex codex) throws RemoteException;
-    void reportError(String details) throws RemoteException;
-    void startPingThread() throws RemoteException;
-
-    void ping() throws RemoteException;
+    void reportError(String details) throws RemoteException;;
 }

@@ -11,6 +11,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
@@ -18,10 +21,10 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     private Game game;
     private GameController gameController;
     private String nickname;
-    private Thread pingThread;
+    private final ScheduledExecutorService pingExecutor = Executors.newSingleThreadScheduledExecutor();
     public RmiClient(VirtualServer server) throws RemoteException{
         this.server = server;
-        startPingThread();
+        pingExecutor.scheduleAtFixedRate(this::sendPing, 0, 2, TimeUnit.SECONDS);
     }
 
     private void run() throws Exception{
@@ -105,29 +108,15 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
 
     }
 
-    @Override
-    public void startPingThread() {
-        pingThread = new Thread(() -> {
-            while (true) {
-                try {
-                    server.ping(this);
-                    Thread.sleep(120);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } catch (RemoteException e) {
-                    System.err.println("Error pinging server: " + e.getMessage());
-                }
-            }
-        });
-        pingThread.start();
+    private void sendPing() {
+        try {
+            server.ping(this);
+        } catch (RemoteException e) {
+            System.err.println("Error pinging server: " + e.getMessage());
+        }
     }
 
-    @Override
-    public void ping() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.err.println("Ping timeout from server");
-        }
+    public void stopPingThread() {
+        pingExecutor.shutdown();
     }
 }

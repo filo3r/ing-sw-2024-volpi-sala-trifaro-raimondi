@@ -13,13 +13,16 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RmiServer implements VirtualServer {
     final MainController mainController;
     private Thread pingThread;
     final List<VirtualView> clients = new ArrayList<>();
+    private final Map<VirtualView, Long> clientPingTimestamps = new ConcurrentHashMap<>();
 
-    private List<VirtualView> pingQueue = new ArrayList<>();
+
     public RmiServer(MainController mainController){
         this.mainController = MainController.getInstance();
         startPongThread();
@@ -114,50 +117,33 @@ public class RmiServer implements VirtualServer {
         }
     }
 
+
     private void startPongThread() {
         pingThread = new Thread(() -> {
+            final long TIMEOUT_MILLIS = 2000;
             while (true) {
-                try {
-                    Thread.sleep(200);
-                    List<VirtualView> connectedClients;
-                    List<VirtualView> disconnectedClients;
-                    synchronized (clients) {
-                        connectedClients = new ArrayList<>(clients);
-                        disconnectedClients = new ArrayList<>();
-                        for (VirtualView client : connectedClients) {
-                            synchronized (pingQueue) {
-                                if (!pingQueue.remove(client)) {
-                                    disconnectedClients.add(client);
-                                }
-                            }
+                List<VirtualView> disconnectedClients = new ArrayList<>();
+                synchronized (clients) {
+                    long currentTime = System.currentTimeMillis();
+                    for (VirtualView client : clients) {
+                        Long lastPingTime = clientPingTimestamps.get(client);
+                        if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
+                            disconnectedClients.add(client);
                         }
                     }
-                    if (!disconnectedClients.isEmpty()) {
-                        System.out.println("THOSE CLIENTS DONT PING " + disconnectedClients.toString());
-                    }
-                    pingClients(connectedClients);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    clients.removeAll(disconnectedClients);
+                }
+                if (!disconnectedClients.isEmpty()) {
+                    System.out.println("Disconnected clients: " + disconnectedClients.toString());
                 }
             }
         });
         pingThread.start();
     }
 
-    private void pingClients(List<VirtualView> clients) {
-        for (VirtualView client : clients) {
-            try {
-                client.ping();
-            } catch (RemoteException e) {
-                System.err.println("Error pinging client: " + e.getMessage());
-            }
-        }
-    }
-
     @Override
     public void ping(VirtualView client) {
-        synchronized (pingQueue) {
-            pingQueue.add(client);
-        }
+        clientPingTimestamps.put(client, System.currentTimeMillis());
     }
+
 }

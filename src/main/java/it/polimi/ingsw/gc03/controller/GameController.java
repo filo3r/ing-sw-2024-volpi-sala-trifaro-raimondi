@@ -202,7 +202,6 @@ public class GameController implements Runnable, Serializable {
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
             }
         }
-        this.getGame().notifyObservers(this.getGame());
     }
 
     /**
@@ -236,7 +235,6 @@ public class GameController implements Runnable, Serializable {
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
             }
         }
-        this.getGame().notifyObservers(this.getGame().getDesk());
     }
 
     /**
