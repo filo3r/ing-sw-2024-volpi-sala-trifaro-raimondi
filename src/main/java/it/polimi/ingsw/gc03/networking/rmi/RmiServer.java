@@ -21,7 +21,8 @@ public class RmiServer implements VirtualServer {
     private Thread pingThread;
     final List<VirtualView> clients = new ArrayList<>();
     private final Map<VirtualView, Long> clientPingTimestamps = new ConcurrentHashMap<>();
-
+    private final Object clientPingTimestampsLock = new Object();
+    private final long TIMEOUT_MILLIS  = 5000;
 
     public RmiServer(MainController mainController){
         this.mainController = MainController.getInstance();
@@ -40,8 +41,12 @@ public class RmiServer implements VirtualServer {
 
     @Override
     public void connectClient(VirtualView client) throws RemoteException {
-        synchronized(this.clients){
-            this.clients.add(client);
+        synchronized (clients) {
+            clients.add(client);
+            long currentTime = System.currentTimeMillis();
+            synchronized (clientPingTimestampsLock) {
+                clientPingTimestamps.put(client, currentTime);
+            }
         }
     }
 
@@ -119,21 +124,23 @@ public class RmiServer implements VirtualServer {
 
     private void startPongThread() {
         pingThread = new Thread(() -> {
-            final long TIMEOUT_MILLIS = 2000;
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
+                    long currentTime = System.currentTimeMillis();
+                    List<VirtualView> disconnectedClients = new ArrayList<>();
                     synchronized (clients) {
-                        long currentTime = System.currentTimeMillis();
-                        List<VirtualView> disconnectedClients = new ArrayList<>();
-                        for (VirtualView client : clients) {
-                            Long lastPingTime = clientPingTimestamps.get(client);
-                            if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
-                                disconnectedClients.add(client);
+                        synchronized (clientPingTimestampsLock) {
+                            for (VirtualView client : clients) {
+                                Long lastPingTime = clientPingTimestamps.get(client);
+                                if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
+                                    disconnectedClients.add(client);
+                                    System.err.println("Server: Client " + client + " disconnected due to timeout");
+                                }
                             }
-                        }
-                        clients.removeAll(disconnectedClients);
-                        if (!disconnectedClients.isEmpty()) {
-                            System.out.println("This client has disconnected " + disconnectedClients.toString());
+                            for (VirtualView disconnectedClient : disconnectedClients) {
+                                clients.remove(disconnectedClient);
+                                clientPingTimestamps.remove(disconnectedClient);
+                            }
                         }
                         clients.wait(TIMEOUT_MILLIS);
                     }
@@ -147,8 +154,13 @@ public class RmiServer implements VirtualServer {
 
     @Override
     public void ping(VirtualView client) {
+        synchronized (clientPingTimestampsLock) {
+            if (clients.contains(client)) {
+                long currentTime = System.currentTimeMillis();
+                clientPingTimestamps.put(client, currentTime);
+            }
+        }
         synchronized (clients) {
-            clientPingTimestamps.put(client, System.currentTimeMillis());
             clients.notifyAll();
         }
     }

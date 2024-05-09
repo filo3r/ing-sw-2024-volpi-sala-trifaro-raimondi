@@ -113,6 +113,7 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
             server.ping(this);
         } catch (RemoteException e) {
             System.err.println("Error pinging server: " + e.getMessage());
+            stopPingThread();
         }
     }
 
