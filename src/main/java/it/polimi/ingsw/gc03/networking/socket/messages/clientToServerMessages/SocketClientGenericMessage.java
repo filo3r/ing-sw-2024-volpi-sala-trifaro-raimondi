@@ -38,9 +38,9 @@ public abstract class SocketClientGenericMessage implements Serializable {
      * Executes the specified actions associated with the message within the context of game control.
      * @param gameController The game controller to interact with.
      * @throws RemoteException If a remote exception occurs.
-     * @throws GameEndedException If the game has ended, indicating no further actions are possible.
+     * @throws Exception If an exception occurs.
      */
-    public abstract void execute(GameController gameController) throws RemoteException, GameEndedException;
+    public abstract void execute(GameController gameController) throws RemoteException, Exception;
 
 
     /**

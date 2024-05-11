@@ -278,7 +278,7 @@ public class GameController implements Runnable, Serializable {
      * @param deck The deck from which the card is drawn.
      * @throws Exception If the player's current action is not DRAW or if the game state is not suitable for drawing a card.
      */
-    public synchronized void drawCardFromDeck(Player player,ArrayList<? extends Card> deck) throws Exception {
+    public synchronized void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws Exception {
         // Check that the player is authorized to draw
         if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             player.addCardToHand(game.getDesk().drawCardDeck(deck));
