@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gc03.view.tui;
 
+import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.model.Game;
+import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
@@ -8,7 +10,10 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.networking.rmi.RmiServer;
 
+
+import java.util.Scanner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +22,8 @@ import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
 public class Tui {
 
+    private GameController gameController;
+    private RmiServer rmiServer;
     private String nickname;
     private CharSpecial[][] screenSim;
     private int screenWidth;
@@ -155,6 +162,106 @@ public class Tui {
                 screenToPrint[i][index + 1] = String.valueOf(c);
                 screenToPrint[i][index + 2] = "\u001B[0m";
             }
+        }
+    }
+
+    public void showTitle(){
+        System.out.println("\n" +
+                "      ...                         ..                               ..   \n" +
+                "   xH88\"`~ .x8X                 dF                       .H88x.  :~)88: \n" +
+                " :8888   .f\"8888Hf        u.   '88bu.                   x888888X ~:8888 \n" +
+                ":8888>  X8L  ^\"\"`   ...ue888b  '*88888bu        .u     ~   \"8888X  %88\" \n" +
+                "X8888  X888h        888R Y888r   ^\"*8888N    ud8888.        X8888       \n" +
+                "88888  !88888.      888R I888>  beWE \"888L :888'8888.    .xxX8888xxxd>  \n" +
+                "88888   %88888      888R I888>  888E  888E d888 '88%\"   :88888888888\"   \n" +
+                "88888 '> `8888>     888R I888>  888E  888E 8888.+\"      ~   '8888       \n" +
+                "`8888L %  ?888   ! u8888cJ888   888E  888F 8888L       xx.  X8888:    . \n" +
+                " `8888  `-*\"\"   /   \"*888*P\"   .888N..888  '8888c. .+ X888  X88888x.x\"  \n" +
+                "   \"888.      :\"      'Y\"       `\"888*\"\"    \"88888%   X88% : '%8888\"    \n" +
+                "     `\"\"***~\"`                     \"\"         \"YP'     \"*=~    `\"\"      \n" +
+                "                                                                        \n" +
+                "                                                                        \n" +
+                "                                                                        \n");
+
+    }
+
+    private void runRmi(){
+
+    }
+
+    private void runSocket(){
+
+    }
+
+    public boolean chooseConnection(){
+        Scanner scanner = new Scanner(System.in);
+        boolean choiceMade = false;
+        System.out.println("\n\nCHOOSE YOUR CONNECTION TYPE :\n\n" +
+                "(To make a choice write the number and press enter) \n 1)RMI         2)SOCKET");
+        int choice = scanner.nextInt();
+
+        if (choice == 1 || choice == 2) {
+            if (choice == 1) {
+                System.out.println("Starting connection with RMI..");
+                choiceMade = true;
+                runRmi();
+                return choiceMade;
+            }
+            if (choice == 2) {
+                System.out.println("Starting connection with SOCKET");
+                choiceMade = true;
+                runSocket();
+                return choiceMade;
+            }
+        }
+        System.out.println("Invalid Choice...");
+        return choiceMade;
+    }
+
+    private boolean chooseNickname(){
+        Scanner scan = new Scanner(System.in);
+        boolean nicknameChosen = false;
+        System.out.println("\n\nCHOOSE YOUR NICKNAME\n\n"+"(Write your Nickname and press enter)");
+        nickname = scan.nextLine();
+        if(!server.checkNicknameValidity(nickname)){
+            System.out.println("Nickname not valid...");
+            return false;
+        }
+        return true;
+    }
+
+   public void run(){
+        showTitle();
+        while(!chooseConnection());
+        while(!chooseNickname());
+        gameController = server.addPlayerToGame(nickname, this);
+        game = gameController.getGame();
+        System.out.println("HI "+nickname+" :You have joined the game "+game.getIdGame()+"\n");
+
+        /* if(game.getSize()==1){
+              boolean validSize = false;
+              int gameSize;
+              do {
+                 System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
+                 gameSize = scan.nextInt();
+                 try {
+                    server.updateSize(gameSize, game.getIdGame());
+                     validSize = true;
+                 } catch (Exception e) {
+                      System.out.println(e.getMessage());
+                 }
+             } while (!validSize);
+         }
+           String nextAction;
+           while(!game.getStatus().equals(GameStatus.ENDED)){
+               nextAction = scan.nextLine();
+               switch(nextAction){
+                   // Simulate an eternal action, to develop the multithreading
+                   case "action":
+                       server.infiniteTask(game.getIdGame(), nickname);
+               }
+
+         */
         }
     }
 }
