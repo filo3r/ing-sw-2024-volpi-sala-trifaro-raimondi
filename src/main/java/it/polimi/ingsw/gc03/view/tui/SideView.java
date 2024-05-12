@@ -3,176 +3,160 @@ package it.polimi.ingsw.gc03.view.tui;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.front.FrontGold;
+import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 
 public class SideView {
     private CharSpecial[][] sideView = new CharSpecial[9][27];
 
     public CharSpecial[][] getSideView(Side side) {
         Kingdom kingdom = side.getKingdom();
-        generateFrame(kingdom);
+        generateAndPutBox(getColorFromKingdom(kingdom), 0,0, 27,9, '╔', '╗', '╚', '╝');
         putCornersOnFrame(side);
         return sideView;
     }
 
     public void putTopLeftValue(Side side){
+        CharColor color = getColorFromKingdom(side.getKingdom());
         switch (side.getTopLeftCorner()) {
             case COVERED -> {
                 for(int i = 0; i < 3; i++) {
                     for(int j = 0; j < 6; j++) {
-                        sideView[i][j] = new CharSpecial(getColorFromKingdom(side.getKingdom()), ' ');
+                        sideView[i][j] = new CharSpecial(color, ' ');
                     }
                 }
-                sideView[3][0] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╔');
+                sideView[3][0] = new CharSpecial(color, '╔');
                 for(int j = 0; j < 5; j++) {
-                    sideView[3][j+1] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
+                    sideView[3][j+1] = new CharSpecial(color, '═');
                 }
-                sideView[3][6] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╝');
+                sideView[3][6] = new CharSpecial(color, '╝');
                 for(int i = 0; i < 2; i++) {
-                    sideView[2-i][6] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
+                    sideView[2-i][6] = new CharSpecial(color, '║');
                 }
-                sideView[0][6] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╔');
+                sideView[0][6] = new CharSpecial(color, '╔');
             }
             case FUNGI, ANIMAL, PLANT, INSECT -> {
-                for(int j = 0; j < 4; j++) {
-                    sideView[2][j+1] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
-                }
-                for(int i = 0; i < 2; i++) {
-                    sideView[2-i][4] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
-                }
-                sideView[2][0] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╠');
-                sideView[2][4] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╝');
-                sideView[0][4] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╦');
-                sideView[1][2] = new CharSpecial(getColorFromKingdom(side.getKingdom()), getCharFromValue(side.getTopLeftCorner()));
+                generateAndPutBox(color,0,0, 5,3,'╔','╦','╠','╝');
+                sideView[1][2] = new CharSpecial(color, getCharFromValue(side.getTopLeftCorner()));
             }
         }
     }
 
     public void putTopRightValue(Side side){
+        CharColor color = getColorFromKingdom(side.getKingdom());
         switch (side.getTopRightCorner()) {
             case COVERED -> {
                 for(int i = 0; i < 3; i++) {
                     for(int j = 21; j < 27; j++) {
-                        sideView[i][j] = new CharSpecial(getColorFromKingdom(side.getKingdom()), ' ');
+                        sideView[i][j] = new CharSpecial(color, ' ');
                     }
                 }
-                sideView[0][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╗');
-                sideView[3][26] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╗');
+                sideView[0][21] = new CharSpecial(color, '╗');
+                sideView[3][26] = new CharSpecial(color, '╗');
                 for(int j = 0; j < 4; j++) {
-                    sideView[3][j+22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
+                    sideView[3][j+22] = new CharSpecial(color, '═');
                 }
-                sideView[3][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╚');
+                sideView[3][21] = new CharSpecial(color, '╚');
                 for(int i = 0; i < 2; i++) {
-                    sideView[2-i][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
+                    sideView[2-i][21] = new CharSpecial(color, '║');
                 }
-                sideView[3][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╚');
+                sideView[3][21] = new CharSpecial(color, '╚');
             }
             case FUNGI, ANIMAL, PLANT, INSECT -> {
-                for(int j = 0; j < 4; j++) {
-                    sideView[2][j+22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
-                }
-                for(int i = 0; i < 2; i++) {
-                    sideView[2-i][22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
-                }
-                sideView[0][22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╦');
-                sideView[2][22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╚');
-                sideView[2][26] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╣');
-                sideView[1][24] = new CharSpecial(getColorFromKingdom(side.getKingdom()), getCharFromValue(side.getTopLeftCorner()));
+                generateAndPutBox(color,22, 0, 5,3,'╦','╗','╚','╣');
+                sideView[1][24] = new CharSpecial(color, getCharFromValue(side.getTopRightCorner()));
             }
         }
     }
 
     public void putBottomLeftValue(Side side){
+        CharColor color = getColorFromKingdom(side.getKingdom());
         switch (side.getBottomLeftCorner()) {
             case COVERED -> {
                 for(int i = 5; i < 9; i++) {
                     for(int j = 0; j < 6; j++) {
-                        sideView[i][j] = new CharSpecial(getColorFromKingdom(side.getKingdom()), ' ');
+                        sideView[i][j] = new CharSpecial(color, ' ');
                     }
                 }
-                sideView[5][0] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╚');
+                sideView[5][0] = new CharSpecial(color, '╚');
                 for(int j = 0; j < 5; j++) {
-                    sideView[5][j+1] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
+                    sideView[5][j+1] = new CharSpecial(color, '═');
                 }
-                sideView[5][6] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╗');
+                sideView[5][6] = new CharSpecial(color, '╗');
                 for(int i = 0; i < 2; i++) {
-                    sideView[7-i][6] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
+                    sideView[7-i][6] = new CharSpecial(color, '║');
                 }
-                sideView[8][6] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╚');
+                sideView[8][6] = new CharSpecial(color, '╚');
             }
             case FUNGI, ANIMAL, PLANT, INSECT -> {
-                for(int j = 0; j < 4; j++) {
-                    sideView[6][j+1] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
-                }
-                for(int i = 0; i < 2; i++) {
-                    sideView[7-i][4] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
-                }
-                sideView[6][0] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╠');
-                sideView[6][4] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╗');
-                sideView[8][4] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╩');
-                sideView[7][2] = new CharSpecial(getColorFromKingdom(side.getKingdom()), getCharFromValue(side.getTopLeftCorner()));
+                generateAndPutBox(color,0, 6, 5,3,'╠','╗','╚','╩');
+                sideView[7][2] = new CharSpecial(color, getCharFromValue(side.getBottomLeftCorner()));
             }
         }
     }
 
     public void putBottomRightValue(Side side){
+        CharColor color = getColorFromKingdom(side.getKingdom());
         switch (side.getBottomRightCorner()) {
             case COVERED -> {
                 for(int i = 5; i < 9; i++) {
                     for(int j = 21; j < 27; j++) {
-                        sideView[i][j] = new CharSpecial(getColorFromKingdom(side.getKingdom()), ' ');
+                        sideView[i][j] = new CharSpecial(color, ' ');
                     }
                 }
-                sideView[5][26] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╝');
+                sideView[5][26] = new CharSpecial(color, '╝');
                 for(int j = 0; j < 4; j++) {
-                    sideView[5][j+22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
+                    sideView[5][j+22] = new CharSpecial(color, '═');
                 }
-                sideView[5][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╔');
+                sideView[5][21] = new CharSpecial(color, '╔');
                 for(int i = 0; i < 2; i++) {
-                    sideView[7-i][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
+                    sideView[7-i][21] = new CharSpecial(color, '║');
                 }
-                sideView[8][21] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╝');
+                sideView[8][21] = new CharSpecial(color, '╝');
             }
             case FUNGI, ANIMAL, PLANT, INSECT -> {
-                for(int j = 0; j < 4; j++) {
-                    sideView[6][j+22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '═');
-                }
-                for(int i = 0; i < 2; i++) {
-                    sideView[7-i][22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '║');
-                }
-                sideView[6][22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╔');
-                sideView[6][26] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╣');
-                sideView[8][26] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╝');
-                sideView[8][22] = new CharSpecial(getColorFromKingdom(side.getKingdom()), '╩');
-                sideView[7][24] = new CharSpecial(getColorFromKingdom(side.getKingdom()), getCharFromValue(side.getTopLeftCorner()));
+                generateAndPutBox(color,22, 6, 5,3,'╔','╣','╩','╝');
+                sideView[7][24] = new CharSpecial(color, getCharFromValue(side.getBottomRightCorner()));
             }
         }
     }
 
-    private void generateFrame(Kingdom kingdom){
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 27; j++){
-                sideView[i][j] = new CharSpecial(getColorFromKingdom(kingdom), ' ');
+    private void putCentralBoxes(Side side){
+        CharColor color = getColorFromKingdom(side.getKingdom());
+        if(side instanceof FrontResource){
+            if(((FrontResource) side).getPoint() != 0){
+                generateAndPutBox(color,11, 0, 5,3,'╦','╦','╚','╝');
+                char pointChar = (char) ((char)((FrontResource) side).getPoint()+'0');
+                sideView[1][13] = new CharSpecial(color, pointChar);
             }
         }
-
-        //Make all the lines without corners
-        for(int i = 0; i<27; i++){
-            sideView[0][i] = new CharSpecial(getColorFromKingdom(kingdom), '═');
+        if(side instanceof BackSide){
+            int count = ((BackSide) side).getCenter().size();
+            int centerX = ((2*count+3)-1)/2;
+            generateAndPutBox(color,13-centerX, 3, 2*count+3,3,'╔','╗','╚','╝');
+            int iterativeCenterPos = 13-centerX+2;
+            for(int i = 0; i<count; i++){
+                char c = getCharFromValue(((BackSide) side).getCenter().get(i));
+                sideView[4][iterativeCenterPos] =  new CharSpecial(color, c);
+                iterativeCenterPos++;
+                sideView[4][iterativeCenterPos] =  new CharSpecial(color, ' ');
+                iterativeCenterPos++;
+            }
         }
-        for(int i = 0; i<27; i++){
-            sideView[8][i] = new CharSpecial(getColorFromKingdom(kingdom), '═');
+        if(side instanceof FrontGold){
+            int count = ((FrontGold) side).getRequirementPlacement().size();
+            int centerX = ((2*count+3)-1)/2;
+            generateAndPutBox(color,13-centerX, 6, 2*count+3,3,'╔','╗','╩','╩');
+            int iterativeCenterPos = 13-centerX+2;
+            for(int i = 0; i<count; i++){
+                char c = getCharFromValue(((FrontGold) side).getRequirementPlacement().get(i));
+                sideView[7][iterativeCenterPos] =  new CharSpecial(color, c);
+                iterativeCenterPos++;
+                sideView[7][iterativeCenterPos] =  new CharSpecial(color, ' ');
+                iterativeCenterPos++;
+            }
         }
-
-        for(int i = 0; i<9; i++){
-            sideView[i][0] = new CharSpecial(getColorFromKingdom(kingdom), '║');
-        }
-        for(int i = 0; i<9; i++){
-            sideView[i][26] = new CharSpecial(getColorFromKingdom(kingdom), '║');
-        }
-        sideView[0][0] = new CharSpecial(getColorFromKingdom(kingdom), '╔');
-        sideView[0][26] = new CharSpecial(getColorFromKingdom(kingdom), '╗');
-        sideView[8][0] = new CharSpecial(getColorFromKingdom(kingdom), '╚');
-        sideView[8][26] = new CharSpecial(getColorFromKingdom(kingdom), '╝');
     }
 
     private void putCornersOnFrame(Side side) {
@@ -180,29 +164,34 @@ public class SideView {
         putTopRightValue(side);
         putBottomLeftValue(side);
         putBottomRightValue(side);
+        putCentralBoxes(side);
     }
 
-    private static CharSpecial[][] generateCorner(Kingdom kingdom, char topLeft, char topRight, char bottomLeft, char bottomRight) {
-        CharSpecial[][] square = new CharSpecial[3][5];
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 5; j++) {
-                square[i][j] = new CharSpecial(getColorFromKingdom(kingdom), ' ');
+    private void generateAndPutBox(CharColor color, int x, int y, int width, int height, char topLeft, char topRight, char bottomLeft, char bottomRight) {
+        CharSpecial[][] box = new CharSpecial[height][width];
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                box[i][j] = new CharSpecial(color, ' ');
             }
         }
-        square[0][0] = new CharSpecial(getColorFromKingdom(kingdom), topLeft);
-        square[0][4] = new CharSpecial(getColorFromKingdom(kingdom), topRight);
-        square[2][0] = new CharSpecial(getColorFromKingdom(kingdom), bottomLeft);
-        square[2][4] = new CharSpecial(getColorFromKingdom(kingdom), bottomRight);
-        for (int j = 1; j < 4; j++) {
-            square[0][j] = new CharSpecial(getColorFromKingdom(kingdom), '═');
-            square[2][j] = new CharSpecial(getColorFromKingdom(kingdom), '═');
+        for (int j = 1; j < width-1; j++) {
+            box[0][j] = new CharSpecial(color, '═');
+            box[height-1][j] = new CharSpecial(color, '═');
         }
-        for (int i = 1; i < 2; i++) {
-            square[i][0] = new CharSpecial(getColorFromKingdom(kingdom), '║');
-            square[i][4] = new CharSpecial(getColorFromKingdom(kingdom), '║');
+        for (int i = 1; i < height-1; i++) {
+            box[i][0] = new CharSpecial(color, '║');
+            box[i][width-1] = new CharSpecial(color, '║');
         }
+        box[0][0] = new CharSpecial(color, topLeft);
+        box[0][width-1] = new CharSpecial(color, topRight);
+        box[height-1][0] = new CharSpecial(color, bottomLeft);
+        box[height-1][width-1] = new CharSpecial(color, bottomRight);
 
-        return square;
+        for (int j = 0; j < height; j++) {
+            for (int k = 0; k < width; k++) {
+                sideView[y+j][x+k] = box[j][k];
+            }
+        }
     }
 
     private static char getCharFromValue(Value value) {

@@ -10,6 +10,9 @@ import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
 public class Tui {
@@ -38,11 +41,11 @@ public class Tui {
         }
         clearScreen(' ');
         // The following is just an initial test: it shows 5 cards, a possible starter card and 4 null cards
-        showSide(new FrontResource(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.COVERED, 0), 23,74);
-        showSide(new FrontResource(Kingdom.NULL, Value.EMPTY, Value.COVERED, Value.EMPTY,Value.EMPTY, 0), 23,118);
-        showSide(new FrontResource(Kingdom.NULL, Value.COVERED, Value.EMPTY, Value.EMPTY,Value.EMPTY, 0), 35,118);
-        showSide(new FrontResource(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.COVERED,Value.EMPTY, 0), 35,74);
-        showSide(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 0), 29,97); // STARTER
+        showSide(new FrontResource(Kingdom.NULL, Value.INSECT, Value.EMPTY, Value.EMPTY, Value.COVERED, 0), 23,74);
+        showSide(new FrontResource(Kingdom.NULL, Value.EMPTY, Value.COVERED, Value.EMPTY,Value.EMPTY, 0), 23,119);
+        showSide(new FrontGold(Kingdom.NULL, Value.COVERED, Value.EMPTY, Value.EMPTY,Value.EMPTY, 0, Value.COVERED, new ArrayList<>(Arrays.asList(Value.ANIMAL, Value.FUNGI))), 35,119);
+        showSide(new BackSide(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.COVERED,Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))), 35,74);
+        showSide(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 29,97); // STARTER
 
 
     }
