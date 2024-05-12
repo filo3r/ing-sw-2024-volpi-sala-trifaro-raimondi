@@ -10,7 +10,10 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
 import it.polimi.ingsw.gc03.networking.rmi.RmiServer;
+import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
+import it.polimi.ingsw.gc03.networking.socket.server.SocketServer;
 
 
 import java.util.Scanner;
@@ -22,8 +25,16 @@ import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
 public class Tui {
 
+    private Game game;
+
     private GameController gameController;
     private RmiServer rmiServer;
+
+    private RmiClient rmiClient;
+
+    private SocketServer socketServer;
+
+    private SocketClient socketClient;
     private String nickname;
     private CharSpecial[][] screenSim;
     private int screenWidth;
@@ -187,6 +198,7 @@ public class Tui {
 
     private void runRmi(){
 
+
     }
 
     private void runSocket(){
@@ -230,6 +242,22 @@ public class Tui {
         return true;
     }
 
+    public boolean chooseGameSize(){
+        Scanner scan = new Scanner(System.in);
+        boolean validSize = false;
+        int gameSize;
+        System.out.println("\n\nTHE INITIAL GAME SIZE IS 1, FOR ALLOWING OTHER PLAYERS TO JOIN, CHOOSE THE GAME'S SIZE:\n"+
+                "(Write the game size number and press enter)");
+        gameSize = scan.nextInt();
+        try {
+            server.updateSize(gameSize, game.getIdGame());
+            validSize = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return validSize;
+
+    }
    public void run(){
         showTitle();
         while(!chooseConnection());
@@ -237,31 +265,18 @@ public class Tui {
         gameController = server.addPlayerToGame(nickname, this);
         game = gameController.getGame();
         System.out.println("HI "+nickname+" :You have joined the game "+game.getIdGame()+"\n");
-
-        /* if(game.getSize()==1){
-              boolean validSize = false;
-              int gameSize;
-              do {
-                 System.out.println("The game size is 1, for allowing other players to join, choose the game's size:\n");
-                 gameSize = scan.nextInt();
-                 try {
-                    server.updateSize(gameSize, game.getIdGame());
-                     validSize = true;
-                 } catch (Exception e) {
-                      System.out.println(e.getMessage());
-                 }
-             } while (!validSize);
-         }
-           String nextAction;
-           while(!game.getStatus().equals(GameStatus.ENDED)){
-               nextAction = scan.nextLine();
+        if(game.getSize()==1) {
+            while (!chooseGameSize()) ;
+        }
+        String nextAction;
+        while(!game.getStatus().equals(GameStatus.ENDED)){
+            nextAction = scan.nextLine();
                switch(nextAction){
                    // Simulate an eternal action, to develop the multithreading
                    case "action":
                        server.infiniteTask(game.getIdGame(), nickname);
                }
 
-         */
         }
     }
 }
