@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import java.io.IOException;
 import java.io.Serializable;
 

@@ -3,8 +3,12 @@ package it.polimi.ingsw.gc03.listeners;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameModel;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.Value;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 
 /**
@@ -132,8 +136,123 @@ public interface GameListener extends Remote {
     void positionedCardIntoCodex(GameModel gameModel, int row, int column) throws RemoteException;
 
 
-    Aggiungere ancora metodi
+    /**
+     * This method is used to inform the client that the Starter card was placed into the Codex.
+     * @param gameModel The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void positionedStarterCardIntoCodex(GameModel gameModel) throws RemoteException;
 
+
+    /**
+     * This method is used to inform the client that the coordinates where he wants to insert the card are not valid.
+     * @param gameModel The immutable game model.
+     * @param row The row where the card wanted to be placed.
+     * @param column The column where the card wanted to be placed.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void invalidCoordinates(GameModel gameModel, int row, int column) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the positioning requirements are not respected.
+     * @param gameModel The immutable game model.
+     * @param requirementsPlacement The requirements for card placement.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void requirementsPlacementNotRespected(GameModel gameModel, ArrayList<Value> requirementsPlacement) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the points have been added.
+     * @param gameModel The immutable game model.
+     * @param player The player that has added the points.
+     * @param point The number of points that have been added.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void addedPoint(GameModel gameModel, Player player, int point) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the Objective card was chosen correctly.
+     * @param gameModel The immutable game model.
+     * @param cardObjective The chosen Objective card.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void objectiveCardChosen(GameModel gameModel, CardObjective cardObjective) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the Objective card was not chosen correctly.
+     * @param gameModel The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void objectiveCardNotChosen(GameModel gameModel) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the index is invalid.
+     * @param gameModel The immutable game model.
+     * @param index The index.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void indexNotValid(GameModel gameModel, int index) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that a deck has no cards.
+     * @param gameModel The immutable game model.
+     * @param deck The deck without cards.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void deckHasNoCards(GameModel gameModel, ArrayList<? extends Card> deck) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that a card has been successfully added to his hand.
+     * @param gameModel The immutable game model.
+     * @param card The card that was added.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void cardAddedToHand(GameModel gameModel, Card card) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that a card was not added to his hand.
+     * @param gameModel The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void cardNotAddedToHand(GameModel gameModel) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the conditions to end the game have been reached.
+     * @param gameModel The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void endGameConditionsReached(GameModel gameModel) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client that the points obtained with the Objective cards have been calculated.
+     * @param gameModel The immutable game model.
+     * @param objectivePoint The points obtained with Objective cards.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void addedPointObjective(GameModel gameModel, int objectivePoint) throws RemoteException;
+
+
+    /**
+     * This method is used to inform the client which players won the game.
+     * @param gameModel The immutable game model.
+     * @param nickname The nicknames of the players who won.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void winnerDeclared(GameModel gameModel, ArrayList<String> nickname) throws RemoteException;
+
+
+    // Additional methods may be necessary
+    // For other methods you have to create the respective message in serverToClientMessages
 
 
 }
