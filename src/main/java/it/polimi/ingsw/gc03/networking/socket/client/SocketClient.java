@@ -30,7 +30,7 @@ public class SocketClient {
     /**
      * Handler for processing messages received from the server.
      */
-    private final GameListenersHandlerClient messageActionHandler;
+    private final GameListenerHandlerClient messageActionHandler;
 
     /**
      * The input stream to receive data form the server.
@@ -59,7 +59,7 @@ public class SocketClient {
      * @param port The port number on which the server is listening.
      */
     public SocketClient(String ip, int port) {
-        this.messageActionHandler = new GameListenersHandlerClient();
+        this.messageActionHandler = new GameListenerHandlerClient();
         this.socketPing = new Ping;
         this.executorService = Executors.newSingleThreadExecutor();
         startConnection(ip, port);
