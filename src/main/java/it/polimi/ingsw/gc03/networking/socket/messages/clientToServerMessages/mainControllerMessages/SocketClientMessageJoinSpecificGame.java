@@ -2,6 +2,7 @@ package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.m
 
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
@@ -41,7 +42,7 @@ public class SocketClientMessageJoinSpecificGame extends SocketClientGenericMess
      */
     @Override
     public GameController execute(GameListener gameListener, MainController mainController) throws RemoteException {
-        return mainController.joinSpecificGame(GameListener gamelistener, this.nicknameClient, this.idGame);
+        return mainController.joinSpecificGame(GameListener gameListener, this.nicknameClient, this.idGame);
     }
 
 
