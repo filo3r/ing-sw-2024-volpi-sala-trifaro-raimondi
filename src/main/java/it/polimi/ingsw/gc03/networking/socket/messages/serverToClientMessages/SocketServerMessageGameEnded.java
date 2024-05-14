@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameModel;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
 
@@ -13,15 +13,15 @@ public class SocketServerMessageGameEnded extends SocketServerGenericMessage {
     /**
      * The immutable game model.
      */
-    private GameModel gameModel;
+    private GameImmutable gameImmutable;
 
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameModel The immutable game model.
+     * @param gameImmutable The immutable game model.
      */
-    public SocketServerMessageGameEnded(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public SocketServerMessageGameEnded(GameImmutable gameImmutable) {
+        this.gameImmutable = gameImmutable;
     }
 
 
@@ -33,7 +33,7 @@ public class SocketServerMessageGameEnded extends SocketServerGenericMessage {
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.gameEnded(this.gameModel);
+        gameListener.gameEnded(this.gameImmutable);
     }
 
 

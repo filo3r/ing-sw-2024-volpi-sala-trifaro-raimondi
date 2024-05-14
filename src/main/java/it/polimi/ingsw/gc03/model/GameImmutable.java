@@ -8,7 +8,7 @@ import java.io.Serializable;
  * It is used to provide clients with all the game information so they can view it but not modify it.
  * This approach maintains the integrity and flow of the game as managed by the server.
  */
-public class GameModel implements Serializable {
+public class GameImmutable implements Serializable {
 
 
 

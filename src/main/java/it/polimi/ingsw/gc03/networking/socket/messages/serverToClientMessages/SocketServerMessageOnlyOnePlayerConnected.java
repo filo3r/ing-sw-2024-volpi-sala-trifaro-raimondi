@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameModel;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
 
@@ -13,7 +13,7 @@ public class SocketServerMessageOnlyOnePlayerConnected extends SocketServerGener
     /**
      * The immutable game model.
      */
-    private GameModel gameModel;
+    private GameImmutable gameImmutable;
 
     /**
      * The number of seconds to wait until the game ends.
@@ -23,11 +23,11 @@ public class SocketServerMessageOnlyOnePlayerConnected extends SocketServerGener
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameModel The immutable game model.
+     * @param gameImmutable The immutable game model.
      * @param timer The number of seconds to wait until the game ends.
      */
-    public SocketServerMessageOnlyOnePlayerConnected(GameModel gameModel, int timer) {
-        this.gameModel = gameModel;
+    public SocketServerMessageOnlyOnePlayerConnected(GameImmutable gameImmutable, int timer) {
+        this.gameImmutable = gameImmutable;
         this.timer = timer;
     }
 
@@ -40,7 +40,7 @@ public class SocketServerMessageOnlyOnePlayerConnected extends SocketServerGener
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.onlyOnePlayerConnected(this.gameModel, this.timer);
+        gameListener.onlyOnePlayerConnected(this.gameImmutable, this.timer);
     }
 
 

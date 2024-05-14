@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameModel;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
 
@@ -13,7 +13,7 @@ public class SocketServerMessagePositionedCardIntoCodex extends SocketServerGene
     /**
      * The immutable game model.
      */
-    private GameModel gameModel;
+    private GameImmutable gameImmutable;
 
     /**
      * The row where the card was placed.
@@ -28,12 +28,12 @@ public class SocketServerMessagePositionedCardIntoCodex extends SocketServerGene
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameModel The immutable game model.
+     * @param gameImmutable The immutable game model.
      * @param row The row where the card was placed.
      * @param column The column where the card was placed.
      */
-    public SocketServerMessagePositionedCardIntoCodex(GameModel gameModel, int row, int column) {
-        this.gameModel = gameModel;
+    public SocketServerMessagePositionedCardIntoCodex(GameImmutable gameImmutable, int row, int column) {
+        this.gameImmutable = gameImmutable;
         this.row = row;
         this.column = column;
     }
@@ -47,7 +47,7 @@ public class SocketServerMessagePositionedCardIntoCodex extends SocketServerGene
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.positionedCardIntoCodex(this.gameModel, this.row, this.column);
+        gameListener.positionedCardIntoCodex(this.gameImmutable, this.row, this.column);
     }
 
 

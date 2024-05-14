@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameModel;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
 
@@ -14,15 +14,15 @@ public class SocketServerMessageObjectiveCardNotChosen extends SocketServerGener
     /**
      * The immutable game model.
      */
-    private GameModel gameModel;
+    private GameImmutable gameImmutable;
 
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameModel The immutable game model.
+     * @param gameImmutable The immutable game model.
      */
-    public SocketServerMessageObjectiveCardNotChosen(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public SocketServerMessageObjectiveCardNotChosen(GameImmutable gameImmutable) {
+        this.gameImmutable = gameImmutable;
     }
 
 
@@ -34,7 +34,7 @@ public class SocketServerMessageObjectiveCardNotChosen extends SocketServerGener
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.objectiveCardNotChosen(this.gameModel);
+        gameListener.objectiveCardNotChosen(this.gameImmutable);
     }
 
 

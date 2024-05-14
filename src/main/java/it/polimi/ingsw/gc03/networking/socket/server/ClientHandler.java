@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.networking.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -44,7 +43,7 @@ public class ClientHandler implements Runnable {
     /**
      * Listener for client socket messages.
      */
-    private final GameListenersHandleSocket gameListenersHandleSocket;
+    private final GameListenerHandlerServer gameListenerHandlerServer;
 
     /**
      * Input stream to receive data from the client.
@@ -78,7 +77,7 @@ public class ClientHandler implements Runnable {
         this.gameController = null;
         this.inputStream = new ObjectInputStream(socketClient.getInputStream());
         this.outputStream = new ObjectOutputStream(socketClient.getOutputStream());
-        this.gameListenersHandleSocket = new GameListenersHandleSocket(this.outputStream);
+        this.gameListenerHandlerServer = new GameListenerHandlerServer(this.outputStream);
     }
 
 
@@ -102,7 +101,7 @@ public class ClientHandler implements Runnable {
      *                This message should contain the necessary information to fetch or create a GameController instance.
      */
     private void processMessageForMainController(SocketClientGenericMessage message) {
-        GameController controller = message.execute(this.gameListenersHandleSocket, MainController.getInstance());
+        GameController controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
         // Assigns the controller and updates the nickname
         updateGameControllerAndNickname(controller);
     }
@@ -122,7 +121,7 @@ public class ClientHandler implements Runnable {
                 else if (message.getMessageType() != MessageType.PING)
                     message.execute(this.gameController);
             }
-        } catch (RemoteException | GameEndedException e) {
+        } catch (RemoteException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException ignored) {
             // Thread interrupted, exit gracefully
@@ -169,7 +168,7 @@ public class ClientHandler implements Runnable {
                     // Process ping and other messages
                     if (message.getMessageType() == MessageType.PING && message.getMessageType() != MessageType.MAIN_CONTROLLER) {
                         if (this.gameController != null)
-                            this.gameController.ping(message.getNicknameClient(), this.gameListenersHandleSocket);
+                            this.gameController.ping(message.getNicknameClient(), this.gameListenerHandlerServer);
                     } else {
                         this.messagesQueue.add(message);
                     }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.GameModel;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
 
@@ -14,7 +14,7 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
     /**
      * The immutable game model.
      */
-    private GameModel gameModel;
+    private GameImmutable gameImmutable;
 
     /**
      * The message that has been sent.
@@ -24,11 +24,11 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameModel The immutable game model.
+     * @param gameImmutable The immutable game model.
      * @param chatMessage The message that has been sent.
      */
-    public SocketServerMessageSentChatMessage(GameModel gameModel, ChatMessage chatMessage) {
-        this.gameModel = gameModel;
+    public SocketServerMessageSentChatMessage(GameImmutable gameImmutable, ChatMessage chatMessage) {
+        this.gameImmutable = gameImmutable;
         this.chatMessage = chatMessage;
     }
 
@@ -41,7 +41,7 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.sentChatMessage(this.gameModel, this.chatMessage);
+        gameListener.sentChatMessage(this.gameImmutable, this.chatMessage);
     }
 
 
