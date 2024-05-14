@@ -1,15 +1,20 @@
 package it.polimi.ingsw.gc03.view.tui;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class AsyncPrint {
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(10);
+
     public static void asyncPrint(StringBuilder text) {
-        new Thread(() -> {
+        executorService.submit(() -> {
             System.out.print(text);
-        }).start();
+        });
     }
 
     public static void asyncPrint(StringBuilder text, int row, int col) {
-        new Thread(() -> {
+        executorService.submit(() -> {
             System.out.print("\033[" + row + ";" + col + "H" + text);
-        }).start();
+        });
     }
 }

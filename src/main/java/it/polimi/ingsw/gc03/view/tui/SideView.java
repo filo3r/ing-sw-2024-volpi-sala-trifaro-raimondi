@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.view.tui;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.model.side.back.BackGold;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
@@ -18,8 +19,16 @@ public class SideView {
     }
 
     public void putTopLeftValue(Side side){
-        CharColor color = getColorFromKingdom(side.getKingdom());
+        CharColor color = getColorFromSide(side);
         switch (side.getTopLeftCorner()) {
+            case EMPTY -> {
+                generateAndPutBox(color, 0,0,5,3,'╔', '═','║','║');
+                for(int i = 0; i<2;i++){
+                    for(int j = 0; j<4;j++){
+                        sideView[i+1][j+1]=new CharSpecial(CharColor.WHITE,' ');
+                    }
+                }
+            }
             case COVERED -> {
                 for(int i = 0; i < 3; i++) {
                     for(int j = 0; j < 6; j++) {
@@ -44,8 +53,16 @@ public class SideView {
     }
 
     public void putTopRightValue(Side side){
-        CharColor color = getColorFromKingdom(side.getKingdom());
+        CharColor color = getColorFromSide(side);
         switch (side.getTopRightCorner()) {
+            case EMPTY -> {
+                generateAndPutBox(color, 22,0,5,3,'═', '╗','╚','║');
+                for(int i = 0; i<2;i++){
+                    for(int j = 0; j<4;j++){
+                        sideView[i+1][j+22]=new CharSpecial(CharColor.WHITE,' ');
+                    }
+                }
+            }
             case COVERED -> {
                 for(int i = 0; i < 3; i++) {
                     for(int j = 21; j < 27; j++) {
@@ -71,8 +88,16 @@ public class SideView {
     }
 
     public void putBottomLeftValue(Side side){
-        CharColor color = getColorFromKingdom(side.getKingdom());
+        CharColor color = getColorFromSide(side);
         switch (side.getBottomLeftCorner()) {
+            case EMPTY -> {
+                generateAndPutBox(color, 0,6,5,3,'║', '.','╚','═');
+                for(int i = 0; i<2;i++){
+                    for(int j = 0; j<4;j++){
+                        sideView[i+6][j+1]=new CharSpecial(CharColor.WHITE,' ');
+                    }
+                }
+            }
             case COVERED -> {
                 for(int i = 5; i < 9; i++) {
                     for(int j = 0; j < 6; j++) {
@@ -97,8 +122,16 @@ public class SideView {
     }
 
     public void putBottomRightValue(Side side){
-        CharColor color = getColorFromKingdom(side.getKingdom());
+        CharColor color = getColorFromSide(side);
         switch (side.getBottomRightCorner()) {
+            case EMPTY -> {
+                generateAndPutBox(color, 22,6,5,3,'.', '║','═','╝');
+                for(int i = 0; i<2;i++){
+                    for(int j = 0; j<4;j++){
+                        sideView[i+6][j+22]=new CharSpecial(CharColor.WHITE,' ');
+                    }
+                }
+            }
             case COVERED -> {
                 for(int i = 5; i < 9; i++) {
                     for(int j = 21; j < 27; j++) {
@@ -123,7 +156,7 @@ public class SideView {
     }
 
     private void putCentralBoxes(Side side){
-        CharColor color = getColorFromKingdom(side.getKingdom());
+        CharColor color = getColorFromSide(side);
         if(side instanceof FrontResource){
             if(((FrontResource) side).getPoint() != 0){
                 generateAndPutBox(color,11, 0, 5,3,'╦','╦','╚','╝');
@@ -156,6 +189,10 @@ public class SideView {
                 sideView[7][iterativeCenterPos] =  new CharSpecial(color, ' ');
                 iterativeCenterPos++;
             }
+//            generateAndPutBox(color,9, 0, 5,3,'╦','╦','╚','╩');
+//            sideView[1][11] = new CharSpecial(color, (char) ((FrontGold) side).getPoint());
+//            generateAndPutBox(color,13, 0, 5,3,'╦','╦','╚','╝');
+//            sideView[1][15] = new CharSpecial(color, getCharFromValue(((FrontGold) side).getRequirementPoint()));
         }
     }
 
@@ -233,6 +270,17 @@ public class SideView {
             default:
                 return 'N'; // NULL
         }
+    }
+
+    private static CharColor getColorFromSide(Side side) {
+        CharColor color = getColorFromKingdom(side.getKingdom());
+        if(side instanceof FrontGold){
+            return CharColor.GOLD;
+        }
+        if(side instanceof BackGold){
+            return CharColor.GOLD;
+        }
+        return color;
     }
 
     private static CharColor getColorFromKingdom(Kingdom kingdom) {
