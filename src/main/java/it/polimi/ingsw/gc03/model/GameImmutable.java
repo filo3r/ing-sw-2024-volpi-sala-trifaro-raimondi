@@ -2,6 +2,7 @@ package it.polimi.ingsw.gc03.model;
 
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,7 +65,7 @@ public class GameImmutable implements Serializable {
      * GameImmutable class constructor.
      * @param game The game instance to copy from.
      */
-    public GameImmutable(Game game) {
+    public GameImmutable(Game game) throws RemoteException {
         this.idGame = game.getIdGame();
         this.size = game.getSize();
         this.status = game.getStatus();
@@ -76,6 +77,86 @@ public class GameImmutable implements Serializable {
         this.winner = Collections.unmodifiableList(new ArrayList<>(game.getWinner()));
     }
 
+
+    /**
+     * Method to get the ID of the game.
+     * @return The ID of the game.
+     */
+    public int getIdGame() {
+        return idGame;
+    }
+
+
+    /**
+     * Method to get the size of the game.
+     * @return The size of the game.
+     */
+    public int getSize() {
+        return size;
+    }
+
+
+    /**
+     * Method to get the status of the game.
+     * @return The status of the game.
+     */
+    public GameStatus getStatus() {
+        return status;
+    }
+
+
+    /**
+     * Method to get the desk of the game.
+     * @return The desk of the game.
+     */
+    public Desk getDesk() {
+        return desk;
+    }
+
+
+    /**
+     * Method to get the number of players in the game.
+     * @return The number of players in the game.
+     */
+    public int getNumPlayer() {
+        return numPlayer;
+    }
+
+
+    /**
+     * Method to get the list of players in the game.
+     * @return The list of players in the game.
+     */
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+
+    /**
+     * Method to get the current player in the game.
+     * @return The current player in the game.
+     */
+    public int getCurrPlayer() {
+        return currPlayer;
+    }
+
+
+    /**
+     * Method to get the chat messages in the game.
+     * @return The chat messages in the game.
+     */
+    public List<ChatMessage> getChat() {
+        return chat;
+    }
+
+
+    /**
+     * Method to get the winner of the game.
+     * @return The winner or the winners of the game.
+     */
+    public List<Player> getWinner() {
+        return winner;
+    }
 
 
 }
