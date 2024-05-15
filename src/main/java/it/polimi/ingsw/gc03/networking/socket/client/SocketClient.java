@@ -15,7 +15,7 @@ import java.util.logging.Level;
  * The ClientSocket class handles all network communications between the client and the server using sockets.
  * This class uses an ExecutorService to manage threads for asynchronous message processing.
  */
-public class SocketClient {
+public class SocketClient implements ClientAction {
 
     /**
      * The socket connection to the server.
@@ -131,8 +131,20 @@ public class SocketClient {
     }
 
 
+    /**
+     * Flushes and resets the ObjectOutputStream. This ensures that all buffered data is sent
+     * and the buffer is cleared, preparing the stream for future use.
+     * @throws IOException If an error occurs during the flush or reset operations.
+     */
+    private void completeTransmission() throws IOException {
+        // Force all data to be transmitted to the destination
+        this.outputStream.flush();
+        // Clean the stream to prepare it for the next transmission
+        this.outputStream.reset();
+    }
 
-    // IMPLEMENTAZIONE DI TUTTI I METODI PER I MESSAGGI
+
+    // IMPLEMENTARE TUTTI I METODI DELLA ClientAction
 
 
 
