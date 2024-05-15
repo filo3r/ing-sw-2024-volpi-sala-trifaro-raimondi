@@ -46,12 +46,12 @@ public class Tui {
         showSide(new FrontGold(Kingdom.FUNGI, Value.COVERED, Value.EMPTY, Value.EMPTY,Value.EMPTY, 2, Value.INKWELL, new ArrayList<>(Arrays.asList(Value.ANIMAL, Value.FUNGI))), 35,119);
         showSide(new BackSide(Kingdom.ANIMAL, Value.EMPTY, Value.QUILL, Value.COVERED,Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))), 35,74);
         showSide(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 29,97); // STARTER
-
-
+        while(true){
+        }
     }
 
     public void refreshScreen() {
-
+        asyncClean();
         getScreenToPrint();
         StringBuilder screenText = new StringBuilder();
         for (int i = 0; i < screenHeight; i++) {
@@ -60,7 +60,7 @@ public class Tui {
             }
             screenText.append("\n");
         }
-        System.out.print(screenText);
+        asyncPrint(screenText);
     }
 
     public void clearScreen(char fillChar) {
@@ -176,6 +176,6 @@ public class Tui {
                         "                                                                        \n" +
                         "                                                                        \n" +
                         "                                                                        \n");
-    AsyncPrint.asyncPrint(sb);
+    asyncPrint(sb);
     }
 }
