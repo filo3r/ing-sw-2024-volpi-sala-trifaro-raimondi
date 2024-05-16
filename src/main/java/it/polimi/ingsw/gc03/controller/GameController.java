@@ -455,5 +455,9 @@ public class GameController implements Runnable, Serializable {
         }
     }
 
+    public int getIdGame(){
+        this.getGame().getIdGame();
+    }
+
 
 }

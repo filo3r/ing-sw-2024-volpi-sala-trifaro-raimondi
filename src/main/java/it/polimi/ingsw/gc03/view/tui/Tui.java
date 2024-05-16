@@ -12,6 +12,15 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
+import it.polimi.ingsw.gc03.networking.rmi.RmiServer;
+import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
+import it.polimi.ingsw.gc03.networking.socket.server.SocketServer;
+import it.polimi.ingsw.gc03.view.flow.UI;
+
+
+import java.util.Scanner;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -19,8 +28,19 @@ import java.util.Arrays;
 
 import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
-public class Tui {
+public class Tui extends UI {
 
+    private Game game;
+
+    private GameController gameController;
+    private RmiServer rmiServer;
+
+    private RmiClient rmiClient;
+
+    private SocketServer socketServer;
+
+    private SocketClient socketClient;
+    private String nickname;
     private CharSpecial[][] screenSim;
     private int screenWidth;
     private int screenHeight;

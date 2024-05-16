@@ -24,14 +24,14 @@ public class RmiServer implements VirtualServer {
     private final Object clientPingTimestampsLock = new Object();
     private final long TIMEOUT_MILLIS  = 5000;
 
-    public RmiServer(MainController mainController){
+    public RmiServer(){
         this.mainController = MainController.getInstance();
         startPongThread();
     }
 
     public static void main(String[] args) throws RemoteException {
         final String serverName = "Server";
-        VirtualServer server = new RmiServer(MainController.getInstance());
+        VirtualServer server = new RmiServer();
         VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server,0);
         Registry registry = LocateRegistry.createRegistry(2222);
         registry.rebind(serverName,stub);
