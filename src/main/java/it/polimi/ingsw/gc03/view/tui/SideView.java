@@ -189,10 +189,10 @@ public class SideView {
                 sideView[7][iterativeCenterPos] =  new CharSpecial(color, ' ');
                 iterativeCenterPos++;
             }
-//            generateAndPutBox(color,9, 0, 5,3,'╦','╦','╚','╩');
-//            sideView[1][11] = new CharSpecial(color, (char) ((FrontGold) side).getPoint());
-//            generateAndPutBox(color,13, 0, 5,3,'╦','╦','╚','╝');
-//            sideView[1][15] = new CharSpecial(color, getCharFromValue(((FrontGold) side).getRequirementPoint()));
+            generateAndPutBox(color,9, 0, 5,3,'╦','╦','╚','╩');
+            sideView[1][11] = new CharSpecial(color, (char) ('0' + ((FrontGold) side).getPoint()));
+            generateAndPutBox(color,13, 0, 5,3,'╦','╦','╩','╝');
+            sideView[1][15] = new CharSpecial(color, getCharFromValue(((FrontGold) side).getRequirementPoint()));
         }
     }
 

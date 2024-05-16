@@ -27,6 +27,7 @@ public class Tui {
 
     private int screenSimY = 364;
     private int screenSimX = 1093;
+    private boolean[][] visited = new boolean[81][81];
 
     private CharSpecial[][] middleScreen;
     private String[][] screenToPrint;
@@ -44,18 +45,25 @@ public class Tui {
             }
         }
         clearScreen(' ');
+        // Create a fake codex to test view
         Codex codex = new Codex();
         try {
-            codex.insertStarterIntoCodex(new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL, Value.INSECT))));
+            codex.insertStarterIntoCodex(new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))));
+            codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40+1);
+            codex.insertIntoCodex(new FrontResource(Kingdom.ANIMAL, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40+2);
+            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40);
+            codex.insertIntoCodex(new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
+            codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
             codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+2,40);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+2,40+2);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+3,40+3);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+3,40+1);
+            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
         translateCodexToScreenSim(codex);
+    refreshScreen();
+    while(true){
+
+    }
     }
 
     public void refreshScreen() {
@@ -120,36 +128,52 @@ public class Tui {
                 int rowIndex = row + i;
                 int colIndex = col + j;
                 if (rowIndex > 0 && rowIndex < 729 && colIndex > 0 && colIndex < 2187) {
-                    screenSim[rowIndex][colIndex] = sideArray[i][j];
+                    if(screenSim[rowIndex][colIndex].c == ' '){
+                        screenSim[rowIndex][colIndex] = sideArray[i][j];
+                    }
                 }
             }
         }
-        refreshScreen();
     }
 
     private void translateCodexToScreenSim(Codex codex){
-        // First check if starter card is positioned
         if(!codex.getCardStarterInserted()){
             return;
         }
-
         recursiveShowSide(codex.getCodex(), 40, 40);
     }
 
-    private static boolean[][] visited = new boolean[81][81];
     private  void recursiveShowSide(Side[][] codex, int i, int j) {
         if (i < 0 || i >= 81 || j < 0 || j >= 81 || visited[i][j] || codex[i][j] == null) {
             return;
         }
         visited[i][j] = true;
-        showSide(codex[i][j], i*9, j*27);
+        if(i!=40 || j!=40){
+            putSideOnScreen(codex, i, j, i<40, j<40);
+            putSideOnScreen(codex, i, j, i<40, j==40);
+            putSideOnScreen(codex, i, j, i<40, j>40);
+            putSideOnScreen(codex, i, j, i==40, j<40);
+            putSideOnScreen(codex, i, j, i==40, j>40);
+            putSideOnScreen(codex, i, j, i > 40, j < 40);
+            putSideOnScreen(codex, i, j, i>40, j==40);
+            putSideOnScreen(codex, i, j, i>40, j>40);
+        } else {
+            showSide(codex[i][j], i*9, j*27);
+        }
         recursiveShowSide(codex, i-1, j-1);
         recursiveShowSide(codex, i-1, j+1);
         recursiveShowSide(codex, i+1, j-1);
         recursiveShowSide(codex, i+1, j+1);
     }
 
-
+    // Extracted method from the method above because it was repeated multiple times
+    private void putSideOnScreen(Side[][] codex, int i, int j, boolean b, boolean b2) {
+        if(b && b2){
+            int toMoveY = (40-i)*3;
+            int toMoveX = (40-j)*5;
+            showSide(codex[i][j], i*9+toMoveY, j*27+toMoveX);
+        }
+    }
 
     // (x,y) is the top left point of screenSim that will be showed to the user.
     private void getScreenToPrint(int x , int y) {
@@ -167,9 +191,9 @@ public class Tui {
         }
 
         // replace the middleScreen with the right portion on screenSim
-        for (int i = 1; i < screenHeight; i++) {
-            for (int j = 1; j < screenWidth; j++) {
-                middleScreen[i][j] = screenSim[i+y-screenHeight/2][j+x-screenWidth/2];;
+        for (int i = 1; i < screenHeight - 1; i++) {
+            for (int j = 1; j < screenWidth - 1; j++) {
+                middleScreen[i][j] = screenSim[i + y - screenHeight / 2][j + x - screenWidth / 2];
             }
         }
 
