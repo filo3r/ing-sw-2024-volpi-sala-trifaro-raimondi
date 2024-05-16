@@ -26,7 +26,7 @@ public interface ClientAction {
 
 
     /**
-     * The client can create a new game.
+     * The client can join the first available game.
      * @param nickname The nickname of the client.
      * @throws IOException If an input or output exception occurs during action processing.
      * @throws InterruptedException If the thread is interrupted, either before or during the action.
@@ -94,7 +94,7 @@ public interface ClientAction {
 
 
     /**
-     * The client can place a card in the Codex.
+     * The client can select his personal Objective card.
      * @param player The player representing the client.
      * @param cardObjective The index of the card in the player's list of Objective cards that the player wishes to select.
      * @throws IOException If an input or output exception occurs during action processing.

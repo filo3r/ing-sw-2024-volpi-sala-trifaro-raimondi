@@ -1,10 +1,18 @@
 package it.polimi.ingsw.gc03.networking.socket.client;
 
+import it.polimi.ingsw.gc03.model.ChatMessage;
+import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.AsyncLogger;
+import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages.*;
+import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.mainControllerMessages.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -144,7 +152,194 @@ public class SocketClient implements ClientAction {
     }
 
 
-    // IMPLEMENTARE TUTTI I METODI DELLA ClientAction
+    /**
+     * This method is used to write on the output stream the message that the client wants to create a game.
+     * @param nickname The nickname of the client.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void createGame(String nickname) throws IOException {
+        this.nicknameClient = nickname;
+        SocketClientMessageCreateGame message = new SocketClientMessageCreateGame(nickname);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+        if (!this.ping().isAlive())
+            this.ping().start();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to join the first available game.
+     * @param nickname The nickname of the client.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void joinFirstAvailableGame(String nickname) throws IOException {
+        this.nicknameClient = nickname;
+        SocketClientMessageJoinFirstGame message = new SocketClientMessageJoinFirstGame(nickname);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+        if (!this.ping().isAlive())
+            this.ping().start();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to participate in a specific game.
+     * @param nickname The nickname of the client.
+     * @param idGame The id of the game.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void joinSpecificGame(String nickname, int idGame) throws IOException {
+        this.nicknameClient = nickname;
+        SocketClientMessageJoinSpecificGame message = new SocketClientMessageJoinSpecificGame(nickname, idGame);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+        if (!this.ping().isAlive())
+            this.ping().start();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to leave a game in progress.
+     * @param nickname The nickname of the client.
+     * @param idGame The id of the game.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void leaveGame(String nickname, int idGame) throws IOException {
+        this.nicknameClient = nickname;
+        SocketClientMessageLeaveGame message = new SocketClientMessageLeaveGame(nickname, idGame);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+        if (!this.ping().isAlive())
+            this.ping().start();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to reconnect to an ongoing game.
+     * @param nickname The nickname of the client.
+     * @param idGame The id of the game.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void reconnectToGame(String nickname, int idGame) throws IOException {
+        this.nicknameClient = nickname;
+        SocketClientMessageReconnectToGame message = new SocketClientMessageReconnectToGame(nickname, idGame);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+        if (!this.ping().isAlive())
+            this.ping().start();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to place the Starter card in the Codex.
+     * @param player The player representing the client.
+     * @param side The side of the Starter card to be placed into the Codex.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void placeStarterOnCodex(Player player, Side side) throws IOException {
+        SocketClientMessagePlaceStarterOnCodex message = new SocketClientMessagePlaceStarterOnCodex(player, side);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to place a card in the Codex.
+     * @param player The player representing the client.
+     * @param index The index of the card in the player's hand to be placed.
+     * @param frontCard A boolean indicating whether to place the front (true) or back (false) side of the card.
+     * @param row The row in the Codex where the card is to be placed.
+     * @param col The column in the Codex where the card is to be placed.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws IOException {
+        SocketClientMessagePlaceCardOnCodex message = new SocketClientMessagePlaceCardOnCodex(player, index, frontCard, row, col);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to select his personal Objective card.
+     * @param player The player representing the client.
+     * @param cardObjective The index of the card in the player's list of Objective cards that the player wishes to select.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void selectCardObjective(Player player, int cardObjective) throws IOException {
+        SocketClientMessageSelectCardObjective message = new SocketClientMessageSelectCardObjective(player, cardObjective);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to draw a card from the deck of cards.
+     * @param player The player representing the client.
+     * @param deck The deck from which the card is drawn.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws IOException {
+        SocketClientMessageDrawCardFromDeck message = new SocketClientMessageDrawCardFromDeck(player, deck);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to draw a card from the visible cards.
+     * @param player The player representing the client.
+     * @param deck The visible deck from which the card is drawn.
+     * @param index The index of the card in the displayed deck that the player wishes to draw.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws IOException {
+        SocketClientMessageDrawCardDisplayed message = new SocketClientMessageDrawCardDisplayed(player, deck, index);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+    }
+
+
+    /**
+     * This method is used to write on the output stream the message that the client wants to send a message in chat.
+     * @param chatMessage The message for the chat.
+     */
+    @Override
+    public void sendChatMessage(ChatMessage chatMessage) {
+        try {
+            SocketClientMessageNewChatMessage message = new SocketClientMessageNewChatMessage(chatMessage);
+            this.outputStream.writeObject(message);
+            completeTransmission();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * This method is used to write the message that the client sends as a ping to the output stream.
+     */
+    @Override
+    public void ping() {
+        if (this.outputStream != null) {
+            try {
+                SocketClientMessagePing message = new SocketClientMessagePing(this.nicknameClient);
+                this.outputStream.writeObject(message);
+                completeTransmission();
+            } catch (IOException e) {
+                AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Connection to server lost.");
+            }
+        }
+    }
 
 
 
