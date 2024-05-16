@@ -1,12 +1,10 @@
 package it.polimi.ingsw.gc03.model.card;
 
-import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.back.BackGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
-import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
-import java.util.ArrayList;
+
 
 /**
  * This class represents a Gold card.
@@ -26,7 +24,7 @@ public class CardGold extends Card implements Serializable {
     /**
      * The back side of the card.
      */
-    private BackSide backGold;
+    private BackGold backGold;
 
 
     /**
@@ -36,7 +34,7 @@ public class CardGold extends Card implements Serializable {
      * @param frontGold The front side of the card.
      * @param backGold The back side of the card.
      */
-    public CardGold(String idCard, Kingdom kingdom, FrontGold frontGold, BackSide backGold) {
+    public CardGold(String idCard, Kingdom kingdom, FrontGold frontGold, BackGold backGold) {
         super(idCard, true);
         this.kingdom = kingdom;
         this.frontGold = frontGold;
@@ -84,7 +82,7 @@ public class CardGold extends Card implements Serializable {
      * Getter method to retrieve the back side of the card.
      * @return The back side of the card.
      */
-    public BackSide getBackGold() {
+    public BackGold getBackGold() {
         return backGold;
     }
 
@@ -93,7 +91,7 @@ public class CardGold extends Card implements Serializable {
      * Setter method to set the back side of the card.
      * @param backGold new back of the GoldCard.
      */
-    public void setBackGold(BackSide backGold){
+    public void setBackGold(BackGold backGold){
         this.backGold=backGold;
     }
 

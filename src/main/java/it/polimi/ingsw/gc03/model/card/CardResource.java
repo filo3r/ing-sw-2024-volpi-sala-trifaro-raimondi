@@ -1,12 +1,10 @@
 package it.polimi.ingsw.gc03.model.card;
 
-import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.back.BackResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
-import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
-import java.util.ArrayList;
+
 
 /**
  * This class represents a Resource card.
@@ -26,7 +24,7 @@ public class CardResource extends Card implements Serializable {
     /**
      * The back side of the card.
      */
-    private  BackSide backResource;
+    private BackResource backResource;
 
 
     /**
@@ -36,7 +34,7 @@ public class CardResource extends Card implements Serializable {
      * @param frontResource The front side of the card.
      * @param backResource The back side of the card.
      */
-    public CardResource(String idCard, Kingdom kingdom, FrontResource frontResource, BackSide backResource) {
+    public CardResource(String idCard, Kingdom kingdom, FrontResource frontResource, BackResource backResource) {
         super(idCard, true);
         this.kingdom = kingdom;
         this.frontResource = frontResource;
@@ -84,7 +82,7 @@ public class CardResource extends Card implements Serializable {
      * Getter method to retrieve the back side of the card.
      * @return The back side of the card.
      */
-    public BackSide getBackResource() {
+    public BackResource getBackResource() {
         return backResource;
     }
 
@@ -93,7 +91,7 @@ public class CardResource extends Card implements Serializable {
      * Setter method to set the back side of the card.
      * @param backResource back of ResourceCard.
      */
-    public void setBackResource(BackSide backResource){
+    public void setBackResource(BackResource backResource){
         this.backResource=backResource;
     }
 

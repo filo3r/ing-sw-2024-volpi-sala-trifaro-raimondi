@@ -1,11 +1,9 @@
 package it.polimi.ingsw.gc03.model.card;
 
-import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
-import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
-import java.util.ArrayList;
+
 
 /**
  * This class represents a Starter card.
@@ -20,7 +18,7 @@ public class CardStarter extends Card implements Serializable {
     /**
      * The back side of the card.
      */
-    private BackSide backStarter;
+    private BackStarter backStarter;
 
 
     /**
@@ -29,7 +27,7 @@ public class CardStarter extends Card implements Serializable {
      * @param frontStarter The front side of the card.
      * @param backStarter The back side of the card.
      */
-    public CardStarter(String idCard, FrontStarter frontStarter, BackSide backStarter) {
+    public CardStarter(String idCard, FrontStarter frontStarter, BackStarter backStarter) {
         super(idCard, true);
         this.frontStarter = frontStarter;
         this.backStarter = backStarter;
@@ -58,7 +56,7 @@ public class CardStarter extends Card implements Serializable {
      * Getter method to retrieve the back side of the card.
      * @return The back side of the card.
      */
-    public BackSide getBackStarter() {
+    public BackStarter getBackStarter() {
         return backStarter;
     }
 
@@ -67,7 +65,7 @@ public class CardStarter extends Card implements Serializable {
      * Setter method to set the back side of the card.
      * @param backStarter back of the StarterCard.
      */
-    public void setBackStarter(BackSide backStarter) {
+    public void setBackStarter(BackStarter backStarter) {
         this.backStarter=backStarter;
     }
 
