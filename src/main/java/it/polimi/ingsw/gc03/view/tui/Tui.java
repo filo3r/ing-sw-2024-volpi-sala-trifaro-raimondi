@@ -16,6 +16,8 @@ import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Scanner;
 
 import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
@@ -29,6 +31,7 @@ public class Tui {
     private int screenSimX = 1093;
     private boolean[][] visited = new boolean[81][81];
 
+    private ArrayList<Coords> occupiedPositions = new ArrayList<Coords>();
     private CharSpecial[][] middleScreen;
     private String[][] screenToPrint;
 
@@ -56,21 +59,23 @@ public class Tui {
             codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
             codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
             codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
+            codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
         translateCodexToScreenSim(codex);
-    refreshScreen();
-    while(true){
+        generateAvailablePositions(codex);
+        refreshScreen();
 
-    }
+        while(true){
+        }
     }
 
     public void refreshScreen() {
-        asyncClean();
+
         getScreenToPrint(screenSimX, screenSimY);
         StringBuilder screenText = new StringBuilder();
-        for (int i = 0; i < screenHeight-1; i++) {
+        for (int i = 0; i < screenHeight; i++) {
             for (int j = 0; j < screenWidth; j++) {
                 screenText.append(screenToPrint[i][j * 3]).append(screenToPrint[i][j * 3 + 1]).append(screenToPrint[i][j * 3 + 2]);
             }
@@ -117,7 +122,6 @@ public class Tui {
             }
         }
         middleScreen[screenHeight - 2][1] = new CharSpecial(CharColor.WHITE, '>');
-        refreshScreen();
     }
 
     public void showSide(Side side, int row, int col){
@@ -148,30 +152,59 @@ public class Tui {
             return;
         }
         visited[i][j] = true;
-        if(i!=40 || j!=40){
-            putSideOnScreen(codex, i, j, i<40, j<40);
-            putSideOnScreen(codex, i, j, i<40, j==40);
-            putSideOnScreen(codex, i, j, i<40, j>40);
-            putSideOnScreen(codex, i, j, i==40, j<40);
-            putSideOnScreen(codex, i, j, i==40, j>40);
-            putSideOnScreen(codex, i, j, i > 40, j < 40);
-            putSideOnScreen(codex, i, j, i>40, j==40);
-            putSideOnScreen(codex, i, j, i>40, j>40);
-        } else {
-            showSide(codex[i][j], i*9, j*27);
-        }
+
+        int toMoveY = (40-i)*3;
+        int toMoveX = (40-j)*5;
+        showSide(codex[i][j], i*9+toMoveY, j*27+toMoveX);
+        occupiedPositions.add(new Coords(j,i));
+
         recursiveShowSide(codex, i-1, j-1);
         recursiveShowSide(codex, i-1, j+1);
         recursiveShowSide(codex, i+1, j-1);
         recursiveShowSide(codex, i+1, j+1);
     }
 
-    // Extracted method from the method above because it was repeated multiple times
-    private void putSideOnScreen(Side[][] codex, int i, int j, boolean b, boolean b2) {
-        if(b && b2){
-            int toMoveY = (40-i)*3;
-            int toMoveX = (40-j)*5;
-            showSide(codex[i][j], i*9+toMoveY, j*27+toMoveX);
+    private void generateAvailablePositions(Codex codex){
+        Iterator<Coords> occupiedPositionsIterator = occupiedPositions.iterator();
+        BackStarter test = new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>());
+        while(occupiedPositionsIterator.hasNext()){
+            Coords current = occupiedPositionsIterator.next();
+            int y1 =current.y*9+(40-current.y)*3;
+            int x1 = current.x*27+(40-current.x)*5;
+            try {
+                // put free space coords on top-left position
+                if(codex.simulateInsertIntoCodex(test, current.y-1, current.x-1)){
+                    int actualX = current.x-1;
+                    int actualY = current.y-1;
+                    generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1-5, y1-1);
+                }
+                // put free space coords on top-right position
+                if(codex.simulateInsertIntoCodex(test, current.y-1, current.x+1)){
+                    int actualX = current.x+1;
+                    int actualY = current.y-1;
+                    generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1+27, y1-1);
+                }
+                // put free space coords on bottom-left position
+                if(codex.simulateInsertIntoCodex(test, current.y+1, current.x-1)){
+                    int actualX = current.x-1;
+                    int actualY = current.y+1;
+                    generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1-5, y1+9);
+                }
+                // put free space coords on bottom-right position
+                if(codex.simulateInsertIntoCodex(test, current.y+1, current.x+1)){
+                    int actualX = current.x+1;
+                    int actualY = current.y+1;
+                    generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1+27, y1+9);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void generateTextOnScreen(String text, CharColor color, int x, int y){
+        for (int i = 0; i < text.length(); i++) {
+            screenSim[y][x+i] = new CharSpecial(color, text.charAt(i));
         }
     }
 
@@ -219,7 +252,6 @@ public class Tui {
             case GOLD -> "\u001B[33m";
             case WHITE -> "\u001B[37m";
             case BLACK -> "\u001B[30m";
-            default -> "\u001B[0m";
         };
         return ansiCode;
     }
@@ -242,5 +274,10 @@ public class Tui {
                         "                                                                        \n" +
                         "                                                                        \n");
     asyncPrint(sb);
+    }
+
+    public void showNotification(String message){
+        StringBuilder sb = new StringBuilder(message);
+        asyncPrint(sb);
     }
 }

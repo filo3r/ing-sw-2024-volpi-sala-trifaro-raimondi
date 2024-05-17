@@ -12,7 +12,7 @@ class TuiTest {
     @Test
     void tuiTest() {
         Tui tui = new Tui();
-        tui.Tui(221, 67); // 221, 67 is the optimal screen dimension for 13inch 2560×1600
+        tui.Tui(221, 72);
     }
 
     @Test
