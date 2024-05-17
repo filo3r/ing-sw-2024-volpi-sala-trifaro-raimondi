@@ -8,7 +8,7 @@ public class AsyncPrint {
 
     public static void asyncPrint(StringBuilder text) {
         executorService.submit(() -> {
-            System.out.print(text);
+            System.out.print(text+"\n");
         });
     }
 
@@ -18,22 +18,5 @@ public class AsyncPrint {
         });
     }
 
-    public static void asyncClean() {
-        executorService.submit(() -> {
-            try {
-                String os = System.getProperty("os.name").toLowerCase();
-                ProcessBuilder processBuilder;
-                if (os.contains("win")) {
-                    processBuilder = new ProcessBuilder("cmd", "/c", "cls");
-                } else {
-                    processBuilder = new ProcessBuilder("clear");
-                }
-                Process process = processBuilder.inheritIO().start();
-                process.waitFor();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
 }
