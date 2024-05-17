@@ -48,31 +48,36 @@ public class Tui {
             }
         }
         clearScreen(' ');
-        // Create a fake codex to test view
+        // Create a fake codex with multiple sequential additions to test codex view
         Codex codex = new Codex();
         try {
             codex.insertStarterIntoCodex(new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))));
-            codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40+1);
-            codex.insertIntoCodex(new FrontResource(Kingdom.ANIMAL, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40+2);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40);
-            codex.insertIntoCodex(new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
-            codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
-            codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
-            codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40+1);
+        codex.insertIntoCodex(new FrontResource(Kingdom.ANIMAL, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40+2);
+        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40);
+        codex.insertIntoCodex(new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
+        codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
+        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
+        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
         translateCodexToScreenSim(codex);
         generateAvailablePositions(codex);
         refreshScreen();
-
+        codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
+        translateCodexToScreenSim(codex);
+        generateAvailablePositions(codex);
+        refreshScreen();
+        codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40-1);
+        translateCodexToScreenSim(codex);
+        generateAvailablePositions(codex);
+        refreshScreen();
         while(true){
         }
     }
 
     public void refreshScreen() {
-
         getScreenToPrint(screenSimX, screenSimY);
         StringBuilder screenText = new StringBuilder();
         for (int i = 0; i < screenHeight; i++) {
@@ -82,6 +87,11 @@ public class Tui {
             screenText.append("\n");
         }
         asyncPrint(screenText);
+        for(int i = 0; i < 729; i++){
+            for(int j = 0; j < 2187; j++){
+                screenSim[i][j] = new CharSpecial(CharColor.WHITE, ' ');
+            }
+        }
     }
 
     public void clearScreen(char fillChar) {
@@ -145,6 +155,11 @@ public class Tui {
             return;
         }
         recursiveShowSide(codex.getCodex(), 40, 40);
+        for(int i = 0; i<visited.length; i++){
+            for(int j = 0; j< visited[0].length; j++){
+                visited[i][j] = false;
+            }
+        }
     }
 
     private  void recursiveShowSide(Side[][] codex, int i, int j) {
@@ -200,6 +215,7 @@ public class Tui {
                 throw new RuntimeException(e);
             }
         }
+        occupiedPositions.clear();
     }
 
     private void generateTextOnScreen(String text, CharColor color, int x, int y){
