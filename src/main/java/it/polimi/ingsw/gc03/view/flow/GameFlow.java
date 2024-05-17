@@ -1,13 +1,14 @@
 package it.polimi.ingsw.gc03.view.flow;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
+import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
-import it.polimi.ingsw.gc03.networking.rmi.RmiServer;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.flow.utilities.*;
@@ -17,6 +18,7 @@ import it.polimi.ingsw.gc03.view.flow.utilities.events.EventType;
 import it.polimi.ingsw.gc03.view.tui.Tui;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +36,13 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     private final FileDisconnection fileDisconnection;
 
     private String lastPlayerReconnected;
-    private int columnChosen = -1;
+    private int row;
+    private int col;
+
+    private boolean frontCard;
     private final UI ui;
+
+    private boolean chosenDeck;
 
 
 
@@ -103,7 +110,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                         case RUNNING, LASTROUND -> {
                             try {
                                 statusRunning(event);
-                            } catch (IOException | InterruptedException e) {
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                         }
@@ -166,15 +173,18 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                     askReadyToStart();
                 }
             }
+            case SENT_MESSAGE -> {
+                ui.show_sentMessage(event.getModel(), nickname);
+            }
         }
 
     }
 
-    private void statusRunning(EventElement event) throws IOException, InterruptedException {
+    private void statusRunning(EventElement event) throws Exception {
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
-                this.commandProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst();
+                this.commandProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
                 this.commandProcessor.setIdGame(event.getModel().getIdGame());
             }
             case PLACE_STARTER_ON_CODEX -> {
@@ -185,7 +195,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 ui.show_sentMessage(event.getModel(), nickname);
             }
 
-            case NEXT_TURN, PLAYER_RECONNECTED -> {
+            /*case NEXT_TURN, PLAYER_RECONNECTED -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
 
                 columnChosen = -1;
@@ -200,46 +210,40 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                     if (event.getType().equals(PLAYER_RECONNECTED)) {
 
                         if (nickname.equals(lastPlayerReconnected)) {
-                            placeCardOnCodex(event.getModel());
+                            askToPlaceCardOnCodex(event.getModel());
                             if (ended) return;
                         }
                         //else the player who has just reconnected is not me, and so I do nothing
                     } else {
-                        placeCardOnCodex(event.getModel());
+                        askToPlaceCardOnCodex(event.getModel());
                         if (ended) return;
                     }
                 }
             }
 
-            case DRAW_CARD -> {
+             */
 
+            case DRAW_FROM_CHOSEN_DECK ->{
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
-                    //It's my turn, so I'm the current playing
-                boolean choosenDeck = false;
-                if (!choosenDeck) {
-                    askDeckToDrawFrom(event.getModel());
-                    if (ended) return;
+                   askToChooseADeck(event.getModel());
+                   ui.showDrawnCard(event.getModel());
                 }
             }
             case PLACE_CARD_ON_CODEX -> {
                 ui.addImportantEvent("Player " + event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname() + " has positioned a Card on his Codex!");
                 if (!event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getHand().isEmpty() && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
-                    //Ask to place other tiles
-                    events.add(event.getModel(), ASK_TO_SELECT_CARD_TO_PLACE);
+                    askToPlaceCardOnCodex(event.getModel());
+                    ui.showPlacedCard(event.getModel(), nickname);
                 }
-                ui.showPlacedCard(event.getModel(), nickname);
-
             }
-            case GRABBED_TILE_NOT_CORRECT -> {
-                ui.show_grabbedTileNotCorrect(event.getModel(), nickname);
+            case CARD_CANNOT_BE_PLACED -> {
+                ui.showCardCannotBePlaced(event.getModel(), nickname);
 
-                if (event.getModel().getNicknameCurrentPlaying().equals(nickname)) {
-                    columnChosen = -1;
-                    askPickTiles(event.getModel());
+                if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
+                    events.add(event.getModel(),PLACE_CARD_ON_CODEX);
                 }
 
             }
-
         }
 
     }
@@ -255,7 +259,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                     throw new RuntimeException(e);
                 }
 
-                this.leave(nickname, event.getModel().getGameId());
+                this.leave(nickname, event.getModel().getIdGame());
                 this.youLeft();
             }
         }
@@ -278,7 +282,6 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     private void askNickname() {
         ui.show_insertNicknameMsg();
-        //nickname = scanner.nextLine();
         try {
             nickname = this.commandProcessor.getDataToProcess().popData();
         } catch (InterruptedException e) {
@@ -368,126 +371,102 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         setAsReady();
     }
 
-
-    /**
-     * Asks the player to choose number of tiles to pick up
-     *
-     * @param msg       message to be shown
-     * @param gameModel model where the message needs to be shown
-     * @return number of tiles to pick up
-     */
-    private Integer askNum(String msg, GameModelImmutable gameModel) {
-        String temp;
-        int numT = -1;
-        do {
-            try {
-                ui.show_askNum(msg, gameModel, nickname);
-                //System.out.flush();
-
-                try {
-                    temp = this.commandProcessor.getDataToProcess().popData();
-                    if (ended) return null;
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                numT = Integer.parseInt(temp);
-            } catch (InputMismatchException | NumberFormatException e) {
-                ui.show_NaNMsg();
-            }
-        } while (numT < 0);
-        return numT;
-    }
-
     /**
      * Asks about the tiles to pick up
      *
-     * @param gameModel game model {@link GameModelImmutable}
+     * @param gameModel game model {@link GameImmutable}
      */
-    public void askPickTiles(GameModelImmutable gameModel) {
-        ui.show_askPickTilesMainMsg();
-        int numTiles;
-        do {
-            numTiles = Objects.requireNonNullElse(askNum("> How many tiles do you want to get? ", gameModel), DefaultValue.minNumOfGrabbableTiles - 1);
-            if (ended) return;
-        } while (!(numTiles >= DefaultValue.minNumOfGrabbableTiles && numTiles <= DefaultValue.maxNumOfGrabbableTiles));
-
-        int row;
-        do {
-            row = Objects.requireNonNullElse(askNum("> Which tiles do you want to get?\n\t> Choose row: ", gameModel), DefaultValue.PlaygroundSize + 11);
-            if (ended) return;
-        } while (row > DefaultValue.PlaygroundSize);
-
-        int column;
-        do {
-            column = Objects.requireNonNullElse(askNum("> Which tiles do you want to get?\n\t> Choose column: ", gameModel), DefaultValue.PlaygroundSize + 1);
-            if (ended) return;
-        } while (column > DefaultValue.PlaygroundSize);
-
-        //Ask the direction only if the player wants to grab more than 1 tile
-        Direction d = Direction.RIGHT;
-        if (numTiles > 1) {
-            String direction;
-            do {
-                ui.show_direction();
-
-                try {
-                    direction = this.commandProcessor.getDataToProcess().popData();
-                    if (ended) return;
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                d = Direction.getDirection(direction);
-            } while (d == null);
-        }
-
-        grabTileFromPlayground(row, column, d, numTiles);
-    }
-
-    /**
-     * Asks the player which column to place the tiles
-     *
-     * @param model game model {@link GameModelImmutable}
-     */
-    private void askColumn(GameModelImmutable model) {
-        Integer column;
-        ui.show_askColumnMainMsg();
-        boolean isColumnBigEnough;
-        do {
-            isColumnBigEnough = true;
-            column = askNum("> Choose column to place all the tiles:", model);
-            ui.show_playerHand(model);
-            if (ended) return;
-
-            //Check by client side (// to server)
-            if (!(model.getPlayerEntity(this.nickname).getNumOfFreeSpacesInCol(column) >= model.getPlayerEntity(this.nickname).getInHandTile_IC().size())) {
-                ui.columnShelfTooSmall(model);
-                isColumnBigEnough = false;
+    public void askToChooseADeck(GameImmutable gameModel) throws Exception {
+        ui.showAskToChooseADeck();
+        String choice;
+        choice = this.commandProcessor.getDataToProcess().popData();
+        switch(choice){
+            case "gD" ->{
+                drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()),gameModel.getDesk().getDeckGold());
             }
-        } while (column == null || column >= DefaultValue.NumOfColumnsShelf || column < 0 || !isColumnBigEnough);
-        columnChosen = column;
+            case "g" ->{
+                ui.showDisplayedGold(gameModel);
+                boolean wrongIndex = true;
+                do {
+                    int index;
+                    ui.showAskIndex(gameModel);
+                    index = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+                    if(index==1 || index==0) {
+                        drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), index);
+                        wrongIndex = false;
+                    }
+                }while(wrongIndex);
+            }
+            case "rD" ->{
+                drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()),gameModel.getDesk().getDeckResource());
+            }
+            case "r" ->{
+                ui.showDisplayedResource(gameModel);
+                boolean wrongIndex = true;
+                do {
+                    int index;
+                    ui.showAskIndex(gameModel);
+                    index = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+                        if(index==1 || index==0) {
+                            drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), index);
+                            wrongIndex = false;
+                        }
+                }while(wrongIndex);
+            }
+            default->{
+                ui.invalidChoice();
+                askToChooseADeck(gameModel);
+            }
+        }
     }
 
     /**
-     * Asks the player which tile to place
+     * Asks the player which card to place and where
      *
-     * @param model game model {@link GameModelImmutable}
+     * @param model game model {@link GameImmutable}
      */
-    public void askWhichTileToPlace(GameModelImmutable model) {
+    public void askToPlaceCardOnCodex(GameImmutable model) throws Exception {
 
-        ui.show_whichTileToPlaceMsg();
+        ui.show_playerHand(model);
         Integer indexHand;
         do {
-            indexHand = Objects.requireNonNullElse(askNum("\t> Choose Tile in hand (0,1,2):", model), -1);
+            ui.showAskIndex(model);
+            indexHand = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
             ui.show_playerHand(model);
             if (ended) return;
-            if (indexHand < 0 || indexHand >= model.getPlayerEntity(nickname).getInHandTile_IC().size()) {
+            if (indexHand < 0 || indexHand >= model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getHand().size()) {
                 ui.show_wrongSelectionHandMsg();
                 indexHand = null;
             }
         } while (indexHand == null);
+        askCoordinates(model);
+        askSide(model);
+        placeCardOnCodex(model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst(),indexHand,frontCard,row,col);
+    }
 
-        positionTileOnShelf(columnChosen, model.getPlayerEntity(nickname).getInHandTile_IC().get(indexHand).getType());
+    public void askCoordinates(GameImmutable model) throws InterruptedException {
+        ui.showAskCoordinatesRow(model);
+        row = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+        ui.showAskCoordinatesCol(model);
+        col = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+    }
+
+    public void askSide(GameImmutable model) throws InterruptedException {
+        ui.show_askSide(model);
+        String side;
+        side = this.commandProcessor.getDataToProcess().popData();
+        switch(side){
+            case "f"->{
+                frontCard = true;
+            }
+            case "b"->{
+                frontCard = false;
+            }
+            default->{
+                ui.invalidChoice();
+                askSide(model);
+            }
+        }
 
     }
 
@@ -520,6 +499,31 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         }
     }
 
+    @Override
+    public void joinFirstAvailableGame(String nickname) throws IOException, InterruptedException, NotBoundException {
+
+    }
+
+    @Override
+    public void joinSpecificGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException {
+
+    }
+
+    @Override
+    public void leaveGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException {
+
+    }
+
+    @Override
+    public void reconnectToGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException {
+
+    }
+
+    @Override
+    public void placeStarterOnCodex(Player player, Side side) throws IOException, InterruptedException, Exception {
+
+    }
+
     /**
      * The client asks the server to join the first available game
      *
@@ -530,7 +534,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         ui.show_joiningFirstAvailableMsg(nick);
         try {
             clientActions.joinFirstAvailable(nick);
-        } catch (IOException | InterruptedException | NotBoundException e) {
+        } catch (Exception e) {
             noConnectionError();
         }
     }
@@ -546,7 +550,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         ui.show_joiningToGameIdMsg(idGame, nick);
         try {
             clientActions.joinGame(nick, idGame);
-        } catch (IOException | InterruptedException | NotBoundException e) {
+        } catch (Exception e) {
             noConnectionError();
         }
     }
@@ -564,7 +568,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
             ui.show_joiningToGameIdMsg(idGame, nick);
             try {
                 clientActions.reconnect(nickname, idGame);
-            } catch (IOException | InterruptedException | NotBoundException e) {
+            } catch (Exception e) {
                 noConnectionError();
             }
         } else {
@@ -588,7 +592,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     public void leave(String nick, int idGame) {
         try {
             clientActions.leave(nick, idGame);
-        } catch (IOException | NotBoundException e) {
+        } catch (Exception e) {
             noConnectionError();
         }
     }
@@ -610,55 +614,49 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         return false;
     }
 
-    /**
-     * The client asks the server to grab a tile from the playground
-     *
-     * @param x         x coordinate of the tile
-     * @param y         y coordinate of the tile
-     * @param direction direction of the tile {@link Direction}
-     * @param num       number of tiles to grab
-     */
+
+
     @Override
-    public void grabTileFromPlayground(int x, int y, Direction direction, int num) {
+    public void placeCardOnCodex(Player player,int index, boolean frontCard, int row,int col) throws Exception {
         try {
-            clientActions.grabTileFromPlayground(x, y, direction, num);
+            clientActions.placeCardOnCodex(player,index,frontCard,row,col);
         } catch (IOException e) {
             noConnectionError();
         }
     }
 
-    /**
-     * The client asks the server to position a tile on the shelf
-     *
-     * @param column column of the shelf
-     * @param type   type of the tile {@link TileType}
-     */
     @Override
-    public void positionTileOnShelf(int column, TileType type) {
-        try {
-            clientActions.positionTileOnShelf(column, type);
-        } catch (IOException | GameEndedException e) {
-            noConnectionError();
-        }
+    public void selectCardObjective(Player player, int cardObjective) throws IOException, InterruptedException, Exception {
+
     }
 
     @Override
-    public void heartbeat() {
+    public void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws IOException, InterruptedException, Exception {
+
+    }
+
+    @Override
+    public void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws IOException, InterruptedException, Exception {
 
     }
 
     /**
      * The client asks the server to send a message
      *
-     * @param msg message to send {@link Message}
+     * @param msg message to send
      */
     @Override
-    public void sendMessage(Message msg) {
+    public void sendChatMessage(ChatMessage msg) {
         try {
-            clientActions.sendMessage(msg);
+            clientActions.sendChatMessage(msg);
         } catch (RemoteException e) {
             noConnectionError();
         }
+    }
+
+    @Override
+    public void ping() throws RemoteException {
+
     }
 
 
@@ -668,10 +666,10 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     /**
      * A player has joined the game
-     * @param gameModel game model {@link GameModelImmutable}
+     * @param gameModel game model
      */
     @Override
-    public void playerJoined(GameModelImmutable gameModel) {
+    public void playerJoined(GameImmutable gameModel) {
         //shared.setLastModelReceived(gameModel);
         events.add(gameModel, PLAYER_JOINED);
 
@@ -682,13 +680,13 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     /**
      * A player has left the game
-     * @param gamemodel game model {@link GameModelImmutable}
+     * @param gamemodel game model
      * @param nick nickname of the player
      * @throws RemoteException if the reference could not be accessed
      */
     @Override
-    public void playerLeft(GameModelImmutable gamemodel, String nick) throws RemoteException {
-        if (gamemodel.getStatus().equals(GameStatus.WAIT)) {
+    public void playerLeft(GameImmutable gamemodel, String nick) throws RemoteException {
+        if (gamemodel.getStatus().equals(GameStatus.WAITING)) {
             ui.show_playerJoined(gamemodel, nickname);
         } else {
             ui.addImportantEvent("[EVENT]: Player " + nick + " decided to leave the game!");
@@ -696,24 +694,17 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     }
 
-    /**
-     * A player wanted to join a game but the game is full
-     * @param wantedToJoin player that wanted to join
-     * @param gameModel game model {@link GameModelImmutable}
-     * @throws RemoteException if the reference could not be accessed
-     */
     @Override
-    public void joinUnableGameFull(Player wantedToJoin, GameModelImmutable gameModel) throws RemoteException {
+    public void joinUnableGameFull(GameImmutable gameImmutable, Player player) throws RemoteException {
         events.add(null, JOIN_UNABLE_GAME_FULL);
     }
-
     /**
      * A player reconnected to the game
-     * @param gameModel game model {@link GameModelImmutable}
+     * @param gameModel game model
      * @param nickPlayerReconnected nickname of the player
      */
     @Override
-    public void playerReconnected(GameModelImmutable gameModel, String nickPlayerReconnected) {
+    public void playerReconnected(GameImmutable gameModel, String nickPlayerReconnected) {
         lastPlayerReconnected = nickPlayerReconnected;
         events.add(gameModel, PLAYER_RECONNECTED);
         ui.addImportantEvent("[EVENT]: Player reconnected!");
@@ -722,17 +713,16 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     /**
      * A player has sent a message
-     * @param gameModel game model {@link GameModelImmutable}
-     * @param msg message sent {@link Message}
+     * @param gameModel game model
+     * @param msg message sent
      */
     @Override
-    public void sentMessage(GameModelImmutable gameModel, Message msg) {
+    public void sentMessage(GameImmutable gameModel, ChatMessage msg) {
         //Show the message only if is for everyone or is for me (or I sent it)
-        if (msg.whoIsReceiver().equals("*") || msg.whoIsReceiver().equalsIgnoreCase(nickname) || msg.getSender().getNickname().equalsIgnoreCase(nickname)) {
-            ui.addMessage(msg, gameModel);
-            events.add(gameModel, SENT_MESSAGE);
-            //msg.setText("[PRIVATE]: " + msg.getText());
-        }
+
+        ui.addMessage(msg, gameModel);
+        events.add(gameModel, SENT_MESSAGE);
+        //msg.setText("[PRIVATE]: " + msg.getText());
     }
 
     /**
@@ -754,7 +744,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     @Override
     public void gameIdNotExists(int gameid) throws RemoteException {
         ui.show_noAvailableGamesToJoin("No currently game available with the following GameID: " + gameid);
-        events.add(null, GENERIC_ERROR_WHEN_ENTRYING_GAME);
+        events.add(null, ERROR_WHEN_ENTERING_GAME);
     }
 
     /**
@@ -765,7 +755,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     @Override
     public void genericErrorWhenEnteringGame(String why) throws RemoteException {
         ui.show_noAvailableGamesToJoin(why);
-        events.add(null, GENERIC_ERROR_WHEN_ENTRYING_GAME);
+        events.add(null, ERROR_WHEN_ENTERING_GAME);
     }
 
     /**
@@ -781,8 +771,6 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         if (nick.equals(nickname)) {
             ui.show_youReadyToStart(gameModel, nickname);
         }
-        // if(nick.equals(nickname))
-        //    toldIAmReady=true;
         events.add(gameModel, PLAYER_IS_READY_TO_START);
     }
 
@@ -818,42 +806,26 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     }
 
-    /**
-     * A tile has been grabbed
-     * @param gameModel game model {@link GameModelImmutable}
-     */
     @Override
-    public void grabbedTile(GameModelImmutable gameModel) {
-        events.add(gameModel, EventType.GRABBED_TILE);
+    public void sentChatMessage(GameImmutable gameImmutable, ChatMessage chatMessage) throws RemoteException {
+
     }
 
     /**
-     * A tile has not been grabbed correctly
-     * @param gameModel game model {@link GameModelImmutable}
+     * A card has been drawn
+     * @param gameModel game model
      */
     @Override
-    public void grabbedTileNotCorrect(GameModelImmutable gameModel) {
-        events.add(gameModel, EventType.GRABBED_TILE_NOT_CORRECT);
-        ui.addImportantEvent("[EVENT]: A set of not grabbable tiles has been requested by Player: " + gameModel.getNicknameCurrentPlaying());
-    }
-
-    /**
-     * A tile has been positioned
-     * @param gameModel game model {@link GameModelImmutable}
-     * @param type type of the tile {@link TileType}
-     * @param column column where the tile has been positioned
-     */
-    @Override
-    public void positionedTile(GameModelImmutable gameModel, TileType type, int column) {
-        events.add(gameModel, EventType.POSITIONED_TILE);
+    public void drawCard(GameImmutable gameModel) {
+        events.add(gameModel, DRAW_FROM_CHOSEN_DECK);
     }
 
     /**
      * It adds the NextTurn event to the event list
-     * @param gameModel game model {@link GameModelImmutable}
+     * @param gameModel game model
      */
     @Override
-    public void nextTurn(GameModelImmutable gameModel) {
+    public void nextTurn(GameImmutable gameModel) {
         events.add(gameModel, EventType.NEXT_TURN);
 
         //I remove all the input that the user sends when It is not his turn
@@ -862,13 +834,13 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     /**
      * Points have been added
-     * @param p player {@link Player}
-     * @param point point {@link Point}
-     * @param gamemodel game model {@link GameImmutable}
+     * @param p player
+     * @param point point
+     * @param gamemodel game model
      */
     @Override
     public void addedPoint(Player p, int point, GameImmutable gamemodel) {
-        ui.addImportantEvent("Player " + p.getNickname() + " obtained " + point.getPoint() + " points by achieving " + point.getReferredTo());
+        ui.addImportantEvent("Player " + p.getNickname() + " obtained " + point + " points");
         ui.show_addedPoint(p, point, gamemodel);
     }
 
@@ -886,18 +858,6 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
             ui.show_playerJoined(gameModel, nickname);
         }
     }
-
-    /**
-     * A column shelf is too small to place all the tiles
-     * @param gameModel game model {@link GameImmutable}
-     * @param column  column where the tiles should be placed
-     * @throws RemoteException if the reference could not be accessed
-     */
-    @Override
-    public void columnShelfTooSmall(GameImmutable gameModel, int column) throws RemoteException {
-        ui.addImportantEvent("Cannot place Tiles in " + column + " column because there are no spaces available to place all");
-    }
-
     /**
      * Only one player is connected
      * @param gameModel game model {@link GameImmutable}
@@ -909,6 +869,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         ui.addImportantEvent("Only one player is connected, waiting " + secondsToWaitUntilGameEnded + " seconds before calling Game Ended!");
     }
 
+    @Override
+    public void joinUnableNicknameAlreadyInUse(Player player) throws RemoteException {
+
+    }
+
     /**
      * Last circle begins
      * @param gameModel game model {@link GameImmutable}
@@ -917,6 +882,76 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     @Override
     public void lastCircle(GameImmutable gameModel) throws RemoteException {
         ui.addImportantEvent("Last cycle begins!");
+    }
+
+    @Override
+    public void positionedCardIntoCodex(GameImmutable gameImmutable, int row, int column) throws RemoteException {
+
+    }
+
+    @Override
+    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable) throws RemoteException {
+
+    }
+
+    @Override
+    public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
+
+    }
+
+    @Override
+    public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
+
+    }
+
+    @Override
+    public void addedPoint(GameImmutable gameImmutable, Player player, int point) throws RemoteException {
+
+    }
+
+    @Override
+    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective) throws RemoteException {
+
+    }
+
+    @Override
+    public void objectiveCardNotChosen(GameImmutable gameImmutable) throws RemoteException {
+
+    }
+
+    @Override
+    public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
+
+    }
+
+    @Override
+    public void deckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) throws RemoteException {
+
+    }
+
+    @Override
+    public void cardAddedToHand(GameImmutable gameImmutable, Card card) throws RemoteException {
+
+    }
+
+    @Override
+    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
+
+    }
+
+    @Override
+    public void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException {
+
+    }
+
+    @Override
+    public void addedPointObjective(GameImmutable gameImmutable, int objectivePoint) throws RemoteException {
+
+    }
+
+    @Override
+    public void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException {
+
     }
 
 

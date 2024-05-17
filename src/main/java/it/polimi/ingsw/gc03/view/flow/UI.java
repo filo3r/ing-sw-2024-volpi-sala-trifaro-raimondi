@@ -203,4 +203,43 @@ public abstract class UI {
      * Shows an error when there's no connection
      */
     protected abstract void show_noConnectionError();
+
+    public void showAskIndex(GameImmutable model) {
+    }
+
+    public void show_wrongSelectionHandMsg() {
+    }
+
+    public void showAskCoordinatesCol(GameImmutable model) {
+    }
+
+    public void showAskCoordinatesRow(GameImmutable model) {
+    }
+
+    public void showDisplayedResource(GameImmutable gameModel) {
+    }
+
+    public void showDisplayedGold(GameImmutable gameModel) {
+    }
+
+    public void showAskToChooseADeck() {
+    }
+
+    public void showCardCannotBePlaced(GameImmutable model, String nickname) {
+    }
+
+    public void showPlacedCard(GameImmutable model, String nickname) {
+    }
+
+    public void showDrawnCard(GameImmutable model) {
+    }
+
+    public void showPlaceStarterCardOnCodex(GameImmutable model) {
+    }
+
+    public void invalidChoice() {
+    }
+
+    public void show_askSide(GameImmutable model) {
+    }
 }
