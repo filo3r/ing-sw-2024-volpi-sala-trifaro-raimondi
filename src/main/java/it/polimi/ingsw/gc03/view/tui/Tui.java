@@ -1,23 +1,24 @@
 package it.polimi.ingsw.gc03.view.tui;
 
-import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.model.Codex;
-import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.Desk;
+import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.CardGold;
+import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.model.side.back.BackGold;
-import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import javafx.scene.SubScene;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
@@ -54,7 +55,7 @@ public class Tui {
         codex.insertIntoCodex(new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
         codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
         codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
-        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
+        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.NULL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
 
         displayCodex(codex);
 
@@ -70,6 +71,18 @@ public class Tui {
         moveScreenView(0,-2);
         displayCodex(codex);
 
+        Desk desk = null;
+        Player player = null;
+
+        try {
+            desk = new Desk();
+            player = new Player("ABC", 1, desk);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        resizeScreenView(221, 70);
+        showDesk(desk, player);
         while(true){
         }
     }
@@ -77,7 +90,7 @@ public class Tui {
     public void displayCodex(Codex codex){
         translateCodexToScreenSim(codex);
         generateAvailablePositions(codex);
-        refreshScreen();
+        refreshScreen(screenSimX, screenSimY);
     }
 
     // moveScreenView will move the view of the table x positions left and y positions up
@@ -99,8 +112,8 @@ public class Tui {
         clearScreen(' ');
     }
 
-    public void refreshScreen() {
-        getScreenToPrint(screenSimX, screenSimY);
+    public void refreshScreen(int centerX, int centerY) {
+        getScreenToPrint(centerX, centerY);
         StringBuilder screenText = new StringBuilder();
         for (int i = 0; i < screenHeight; i++) {
             for (int j = 0; j < screenWidth; j++) {
@@ -109,11 +122,7 @@ public class Tui {
             screenText.append("\n");
         }
         asyncPrint(screenText);
-        for(int i = 0; i < 729; i++){
-            for(int j = 0; j < 2187; j++){
-                screenSim[i][j] = new CharSpecial(CharColor.WHITE, ' ');
-            }
-        }
+        clearScreen(' ');
     }
 
     public void clearScreen(char fillChar) {
@@ -233,8 +242,7 @@ public class Tui {
                     int actualY = current.y+1;
                     generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1+27, y1+9);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (Exception ignored) {
             }
         }
         occupiedPositions.clear();
@@ -292,6 +300,126 @@ public class Tui {
             case BLACK -> "\u001B[30m";
         };
         return ansiCode;
+    }
+
+    public void showDesk(Desk desk, Player player) {
+        // Clear the main screen
+        clearScreen(' ');
+
+        Side topCardGold = desk.getDeckGold().getFirst().getFrontGold();
+        Side topCardResource = desk.getDeckResource().getFirst().getFrontResource();
+        ArrayList<Card> displayedResource = desk.getDisplayedResource();
+        ArrayList<Card> displayedGold = desk.getDisplayedGold();
+        ArrayList<CardObjective> publicObjectives = desk.getDisplayedObjective();
+        CardObjective firstPublicObjective = publicObjectives.getFirst();
+        CardObjective secondPublicObjective = publicObjectives.getLast();
+        // The player must have already chosen the private card objective
+        CardObjective privateObjective = player.getCardObjective().getFirst();
+
+        // Show top card of deck gold
+        int topLeftX = 1093-27-13-2;
+        int topLeftY = 364-16;
+        String textDeckGold = "Deck Gold";
+        int textDeckGoldX = topLeftX+textDeckGold.length();
+        int textDeckGoldY = topLeftY-2;
+        generateTextOnScreen(textDeckGold, CharColor.WHITE, textDeckGoldX, textDeckGoldY);
+        showSide(topCardGold, topLeftY, topLeftX);
+
+        // Show top card of deck resource
+        topLeftX = 1093-27-13-2;
+        topLeftY = 364-2;
+        String textDeckResource = "Deck Resource";
+        int textDeckResourceX = topLeftX+textDeckGold.length();
+        int textDeckResourceY = topLeftY-2;
+        generateTextOnScreen(textDeckResource, CharColor.WHITE, textDeckResourceX, textDeckResourceY);
+        showSide(topCardResource, topLeftY, topLeftX);
+
+        Side firstCardGold = null;
+        Side secondCardGold = null;
+        Side firstCardResource = null;
+        Side secondCardResource = null;
+
+
+        // Show the displayed cards
+        if(displayedGold.getFirst() instanceof CardResource){
+            firstCardGold = (FrontResource) ((CardResource) displayedGold.getFirst()).getFrontResource();
+        } else {
+            firstCardGold = (FrontGold) ((CardGold) displayedGold.getFirst()).getFrontGold();
+        }
+        if(displayedGold.size()>1){
+            if(displayedGold.getLast() instanceof CardGold){
+                secondCardGold = (FrontGold) ((CardGold) displayedGold.getLast()).getFrontGold();
+            } else {
+                secondCardGold = (FrontResource) ((CardResource) displayedGold.getLast()).getFrontResource();
+            }
+        }
+
+        if(displayedResource.getFirst() instanceof CardResource){
+            firstCardResource = (FrontResource) ((CardResource) displayedResource.getFirst()).getFrontResource();
+        } else {
+            firstCardResource = (FrontGold) ((CardGold) displayedResource.getFirst()).getFrontGold();
+        }
+
+        if(displayedResource.size()>1){
+            if(displayedResource.getLast() instanceof CardGold){
+                secondCardResource = (FrontGold) ((CardGold) displayedResource.getLast()).getFrontGold();
+            } else {
+                secondCardResource = (FrontResource) ((CardResource) displayedResource.getLast()).getFrontResource();
+            }
+        }
+
+        // Show the first displayed gold
+        topLeftX = 1093-13+4;
+        topLeftY = 364-16;
+        String textDisplayedGold = "Displayed Gold";
+        int textDisplayedGoldX = topLeftX+textDeckGold.length()+13;
+        int textDisplayedGoldY = topLeftY-2;
+        generateTextOnScreen(textDisplayedGold, CharColor.WHITE, textDisplayedGoldX, textDisplayedGoldY);
+        showSide(firstCardGold, topLeftY, topLeftX);
+        showSide(secondCardGold, topLeftY, topLeftX+27+1);
+
+        // Show the first displayed resource
+        topLeftX = 1093-13+4;
+        topLeftY = 364-2;
+        String textDisplayedResource = "Displayed Resource";
+        int textDisplayedResourceX = topLeftX+2*textDeckGold.length();
+        int textDisplayedResourceY = topLeftY-2;
+        generateTextOnScreen(textDisplayedResource, CharColor.WHITE, textDisplayedResourceX, textDisplayedResourceY);
+        showSide(firstCardResource, topLeftY, topLeftX);
+        showSide(secondCardResource, topLeftY, topLeftX+27+1);
+
+        String text = "Public Objectives:";
+        generateTextOnScreen("Public Objectives:", CharColor.GOLD, 1093-text.length()/2, textDisplayedResourceY+12);
+        if(firstPublicObjective.getObjective().length()/2>=screenWidth-1){
+            text = firstPublicObjective.getObjective();
+            generateTextOnScreen(firstPublicObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+14);
+            generateTextOnScreen(firstPublicObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+15);
+        } else{
+            text = firstPublicObjective.getObjective();
+            generateTextOnScreen(firstPublicObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+14);
+        }
+
+        if(secondPublicObjective.getObjective().length()/2>=screenWidth-1){
+            text = secondPublicObjective.getObjective();
+            generateTextOnScreen(secondPublicObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+17);
+            generateTextOnScreen(secondPublicObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+18);
+        } else{
+            text = secondPublicObjective.getObjective();
+            generateTextOnScreen(secondPublicObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+17);
+        }
+        text = "Private Objective:";
+        generateTextOnScreen("Private Objective:", CharColor.GOLD, 1093-text.length()/2, textDisplayedResourceY+20);
+
+        if(privateObjective.getObjective().length()/2>=screenWidth-1){
+            text = privateObjective.getObjective();
+            generateTextOnScreen(privateObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+22);
+            generateTextOnScreen(privateObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+23);
+        } else{
+            text = privateObjective.getObjective();
+            generateTextOnScreen(privateObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, textDisplayedResourceY+22);
+        }
+
+        refreshScreen(1093, 364);
     }
 
     public void showTitle() {

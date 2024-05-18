@@ -45,7 +45,7 @@ public class SideView {
                 }
                 sideView[0][6] = new CharSpecial(color, '╔');
             }
-            case FUNGI, ANIMAL, PLANT, INSECT -> {
+            case FUNGI, ANIMAL, PLANT, INSECT, QUILL, INKWELL, MANUSCRIPT -> {
                 generateAndPutBox(color,0,0, 5,3,'╔','╦','╠','╝');
                 sideView[1][2] = new CharSpecial(color, getCharFromValue(side.getTopLeftCorner()));
             }
@@ -80,7 +80,7 @@ public class SideView {
                 }
                 sideView[3][21] = new CharSpecial(color, '╚');
             }
-            case FUNGI, ANIMAL, PLANT, INSECT -> {
+            case FUNGI, ANIMAL, PLANT, INSECT, QUILL, INKWELL, MANUSCRIPT -> {
                 generateAndPutBox(color,22, 0, 5,3,'╦','╗','╚','╣');
                 sideView[1][24] = new CharSpecial(color, getCharFromValue(side.getTopRightCorner()));
             }
@@ -114,7 +114,7 @@ public class SideView {
                 }
                 sideView[8][6] = new CharSpecial(color, '╚');
             }
-            case FUNGI, ANIMAL, PLANT, INSECT -> {
+            case FUNGI, ANIMAL, PLANT, INSECT, QUILL, INKWELL, MANUSCRIPT -> {
                 generateAndPutBox(color,0, 6, 5,3,'╠','╗','╚','╩');
                 sideView[7][2] = new CharSpecial(color, getCharFromValue(side.getBottomLeftCorner()));
             }
@@ -148,7 +148,7 @@ public class SideView {
                 }
                 sideView[8][21] = new CharSpecial(color, '╝');
             }
-            case FUNGI, ANIMAL, PLANT, INSECT -> {
+            case FUNGI, ANIMAL, PLANT, INSECT, QUILL, INKWELL, MANUSCRIPT -> {
                 generateAndPutBox(color,22, 6, 5,3,'╔','╣','╩','╝');
                 sideView[7][24] = new CharSpecial(color, getCharFromValue(side.getBottomRightCorner()));
             }
