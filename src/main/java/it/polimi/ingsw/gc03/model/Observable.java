@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

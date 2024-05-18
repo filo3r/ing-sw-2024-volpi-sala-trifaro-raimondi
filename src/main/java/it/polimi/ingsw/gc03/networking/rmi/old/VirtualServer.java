@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.networking.rmi;
+package it.polimi.ingsw.gc03.networking.rmi.old;
 
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.model.Game;

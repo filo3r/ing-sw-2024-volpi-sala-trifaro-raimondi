@@ -10,7 +10,7 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
-import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

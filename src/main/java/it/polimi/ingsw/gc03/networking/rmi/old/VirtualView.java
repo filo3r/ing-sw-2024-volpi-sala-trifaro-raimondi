@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.networking.rmi;
+package it.polimi.ingsw.gc03.networking.rmi.old;
 
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.Desk;

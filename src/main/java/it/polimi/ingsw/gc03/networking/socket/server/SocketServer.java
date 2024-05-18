@@ -28,6 +28,12 @@ public class SocketServer extends Thread {
 
 
     /**
+     * Class constructor.
+     */
+    public SocketServer() {}
+
+
+    /**
      * Initializes and starts the server socket on the specified port.
      * @param port The port on which the server should listen.
      * @throws IOException if an I/O error occurs while opening the socket.
@@ -106,4 +112,6 @@ public class SocketServer extends Thread {
             shutdownClientHandlerPool();
         }
     }
+
+
 }

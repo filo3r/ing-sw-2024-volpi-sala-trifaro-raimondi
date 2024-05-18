@@ -3,7 +3,7 @@ package it.polimi.ingsw.gc03.model;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

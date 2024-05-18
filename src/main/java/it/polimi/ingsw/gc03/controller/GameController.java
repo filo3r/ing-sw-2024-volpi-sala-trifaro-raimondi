@@ -8,7 +8,8 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -18,7 +19,7 @@ import java.util.*;
 /**
  * This class controls the gameplay flow of a match, from start to finish.
  */
-public class GameController implements Runnable, Serializable {
+public class GameController implements GameControllerInterface, Runnable, Serializable {
 
     /**
      * Instance of the game on which the control takes place.
