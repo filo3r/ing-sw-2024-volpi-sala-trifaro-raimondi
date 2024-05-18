@@ -21,7 +21,7 @@ public class SideView {
     public void putTopLeftValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getTopLeftCorner()) {
-            case EMPTY -> {
+            case NULL -> {
                 generateAndPutBox(color, 0,0,5,3,'╔', '═','║','║');
                 for(int i = 0; i<2;i++){
                     for(int j = 0; j<4;j++){
@@ -49,13 +49,16 @@ public class SideView {
                 generateAndPutBox(color,0,0, 5,3,'╔','╦','╠','╝');
                 sideView[1][2] = new CharSpecial(color, getCharFromValue(side.getTopLeftCorner()));
             }
+            case EMPTY -> {
+                generateAndPutBox(color,0,0, 5,3,'╔','╦','╠','╝');
+            }
         }
     }
 
     public void putTopRightValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getTopRightCorner()) {
-            case EMPTY -> {
+            case NULL -> {
                 generateAndPutBox(color, 22,0,5,3,'═', '╗','╚','║');
                 for(int i = 0; i<2;i++){
                     for(int j = 0; j<4;j++){
@@ -84,13 +87,16 @@ public class SideView {
                 generateAndPutBox(color,22, 0, 5,3,'╦','╗','╚','╣');
                 sideView[1][24] = new CharSpecial(color, getCharFromValue(side.getTopRightCorner()));
             }
+            case EMPTY -> {
+                generateAndPutBox(color,22, 0, 5,3,'╦','╗','╚','╣');
+            }
         }
     }
 
     public void putBottomLeftValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getBottomLeftCorner()) {
-            case EMPTY -> {
+            case NULL -> {
                 generateAndPutBox(color, 0,6,5,3,'║', '.','╚','═');
                 for(int i = 0; i<2;i++){
                     for(int j = 0; j<4;j++){
@@ -118,13 +124,16 @@ public class SideView {
                 generateAndPutBox(color,0, 6, 5,3,'╠','╗','╚','╩');
                 sideView[7][2] = new CharSpecial(color, getCharFromValue(side.getBottomLeftCorner()));
             }
+            case EMPTY -> {
+                generateAndPutBox(color,0, 6, 5,3,'╠','╗','╚','╩');
+            }
         }
     }
 
     public void putBottomRightValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getBottomRightCorner()) {
-            case EMPTY -> {
+            case NULL -> {
                 generateAndPutBox(color, 22,6,5,3,'.', '║','═','╝');
                 for(int i = 0; i<2;i++){
                     for(int j = 0; j<4;j++){
@@ -151,6 +160,9 @@ public class SideView {
             case FUNGI, ANIMAL, PLANT, INSECT, QUILL, INKWELL, MANUSCRIPT -> {
                 generateAndPutBox(color,22, 6, 5,3,'╔','╣','╩','╝');
                 sideView[7][24] = new CharSpecial(color, getCharFromValue(side.getBottomRightCorner()));
+            }
+            case EMPTY -> {
+                generateAndPutBox(color,22, 6, 5,3,'╔','╣','╩','╝');
             }
         }
     }
