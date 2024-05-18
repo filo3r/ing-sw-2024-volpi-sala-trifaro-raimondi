@@ -40,14 +40,7 @@ public class Tui {
         screenHeight = height;
         // screenSim represents the whole codex: 81x81 -> 81*9 x 81*27 = 728x2187 since every side is 9x27
         screenSim = new CharSpecial[729][2187];
-        middleScreen = new CharSpecial[screenHeight][screenWidth];
-        screenToPrint = new String[screenHeight][screenWidth*3];
-        for (int i = 0; i < screenHeight; i++) {
-            for (int j = 0; j < screenWidth * 3; j++) {
-                screenToPrint[i][j] = "";
-            }
-        }
-        clearScreen(' ');
+        resizeScreenView(screenWidth, screenHeight);
         // Create a fake codex with multiple sequential additions to test codex view
         Codex codex = new Codex();
         try {
@@ -62,19 +55,48 @@ public class Tui {
         codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
         codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
         codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
-        translateCodexToScreenSim(codex);
-        generateAvailablePositions(codex);
-        refreshScreen();
+
+        displayCodex(codex);
+
         codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
-        translateCodexToScreenSim(codex);
-        generateAvailablePositions(codex);
-        refreshScreen();
+
+        resizeScreenView(200, 40);
+
+        moveScreenView(0,-5);
+        displayCodex(codex);
+
         codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40-1);
-        translateCodexToScreenSim(codex);
-        generateAvailablePositions(codex);
-        refreshScreen();
+
+        moveScreenView(0,-2);
+        displayCodex(codex);
+
         while(true){
         }
+    }
+
+    public void displayCodex(Codex codex){
+        translateCodexToScreenSim(codex);
+        generateAvailablePositions(codex);
+        refreshScreen();
+    }
+
+    // moveScreenView will move the view of the table x positions left and y positions up
+    public void moveScreenView(int x, int y){
+        screenSimX-=x;
+        screenSimY-=y;
+    }
+
+    public void resizeScreenView(int width, int height){
+        screenWidth=width;
+        screenHeight=height;
+        middleScreen = new CharSpecial[screenHeight][screenWidth];
+        screenToPrint = new String[screenHeight][screenWidth*3];
+        for (int i = 0; i < screenHeight; i++) {
+            for (int j = 0; j < screenWidth * 3; j++) {
+                screenToPrint[i][j] = "";
+            }
+        }
+        clearScreen(' ');
     }
 
     public void refreshScreen() {
