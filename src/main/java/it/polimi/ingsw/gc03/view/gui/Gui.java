@@ -1,4 +1,6 @@
 package it.polimi.ingsw.gc03.view.gui;
 
-public class Gui {
+import it.polimi.ingsw.gc03.view.flow.UI;
+
+public class Gui extends UI {
 }

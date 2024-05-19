@@ -1,12 +1,15 @@
 package it.polimi.ingsw.gc03.view.flow.utilities;
 
-public class BufferData {
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+public class InputQueue {
     private Queue<String> data;
 
     /**
      * init
      */
-    public BufferData(){
+    public InputQueue(){
         data = new ArrayDeque<>();
     }
 

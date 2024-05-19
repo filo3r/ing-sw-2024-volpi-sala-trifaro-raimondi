@@ -13,6 +13,7 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import it.polimi.ingsw.gc03.view.flow.UI;
 import javafx.scene.SubScene;
 
 import java.rmi.RemoteException;
@@ -22,7 +23,7 @@ import java.util.Iterator;
 
 import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
 
-public class Tui {
+public class Tui extends UI {
 
     private CharSpecial[][] screenSim;
     private int screenWidth;

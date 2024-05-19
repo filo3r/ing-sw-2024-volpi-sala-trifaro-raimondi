@@ -1,17 +1,20 @@
 package it.polimi.ingsw.gc03.view.flow.utilities;
 
+import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.flow.GameFlow;
+
+import java.time.LocalTime;
 
 public class CommandProcessor extends Thread{
     /**
      * The buffer from which I pop the data
      */
-    private final BufferData bufferInput;
+    private final InputQueue bufferInput;
     /**
      * The data to process
      */
-    private final BufferData dataToProcess;
+    private final InputQueue dataToProcess;
     /**
      * The game flow
      */
@@ -31,9 +34,9 @@ public class CommandProcessor extends Thread{
      * @param bufferInput
      * @param gameFlow
      */
-    public CommandProcessor(BufferData bufferInput, GameFlow gameFlow) {
+    public CommandProcessor(InputQueue bufferInput, GameFlow gameFlow) {
         this.bufferInput = bufferInput;
-        dataToProcess = new BufferData();
+        dataToProcess = new InputQueue();
         this.gameFlow = gameFlow;
         this.p = null;
         this.gameId = null;
@@ -56,23 +59,23 @@ public class CommandProcessor extends Thread{
             }
 
             //I popped an input from the buffer
-            if (p != null && txt.startsWith("/cs")) {
+            /*if (p != null && txt.startsWith("/cs")) {
                 txt = txt.charAt(3) == ' ' ? txt.substring(4) : txt.substring(3);
                 if(txt.contains(" ")){
                     String receiver = txt.substring(0, txt.indexOf(" "));
                     String msg = txt.substring(receiver.length() + 1);
                     gameFlow.sendMessage(new MessagePrivate(msg, p, receiver));
                 }
-            } else if (p != null && txt.startsWith("/c")) {
+            } else
+            */if (p != null && txt.startsWith("/c")) {
                 //I send a message
+                LocalTime localtime = LocalTime.now();
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                gameFlow.sendMessage(new Message(txt, p));
+                gameFlow.sendChatMessage(new ChatMessage(p, txt, localtime));
 
             } else if (txt.startsWith("/quit") || (txt.startsWith("/leave"))) {
                 assert p != null;
                 System.exit(1);
-                //gameFlow.leave(p.getNickname(), gameId);
-                // gameFlow.youLeft();
 
             } else {
                 //I didn't pop a message
@@ -104,7 +107,7 @@ public class CommandProcessor extends Thread{
     /**
      * @return data to process
      */
-    public BufferData getDataToProcess() {
+    public InputQueue getDataToProcess() {
         return dataToProcess;
     }
 

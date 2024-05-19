@@ -1,16 +1,16 @@
 package it.polimi.ingsw.gc03.view.flow.utilities;
 
 public class InputReaderGUI implements InputReader{
-    private final BufferData buffer;
+    private final InputQueue buffer;
 
     /**
      * Init
      */
     public InputReaderGUI(){
-        buffer = new BufferData();
+        buffer = new InputQueue();
     }
     @Override
-    public BufferData getBuffer() {
+    public InputQueue getBuffer() {
         return null;
     }
     /**

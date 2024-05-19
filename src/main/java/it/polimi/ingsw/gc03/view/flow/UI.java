@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.view.flow;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.Card;
 
 import java.util.List;
 
@@ -92,14 +92,6 @@ public abstract class UI {
     protected abstract void show_playerJoined(GameImmutable gameModel, String nick);
 
     /**
-     * Shows that the playing player is ready to start
-     *
-     * @param gameModel     model where events happen
-     * @param nickname player's nickname
-     */
-    protected abstract void show_youReadyToStart(GameImmutable gameModel, String nickname);
-
-    /**
      * Show the message for next turn or reconnected player
      *
      * @param model    model where events happen
@@ -124,14 +116,6 @@ public abstract class UI {
 
 
     /**
-     * Shows error message on wrong tile selection
-     *
-     * @param model    the model where to show the tiles grabbed weren't correct
-     * @param nickname the player who tried to grab the wrong tiles
-     */
-    protected abstract void show_grabbedTileNotCorrect(GameImmutable model, String nickname);
-
-    /**
      * Shows generic error message
      */
     protected abstract void show_NaNMsg();
@@ -141,36 +125,6 @@ public abstract class UI {
      */
     protected abstract void show_returnToMenuMsg();
 
-    /**
-     * Shows the message that asks for column to be chosen
-     */
-    protected abstract void show_askColumnMainMsg();
-
-    /**
-     * Shows the message that asks for direction to be chosen
-     */
-    protected abstract void show_direction();
-
-    /**
-     * Shows the message that asks for tiles to be picked
-     */
-    protected abstract void show_askPickTilesMainMsg();
-
-    /**
-     * Shows the added point message
-     *
-     * @param p         the player to whom the point was added
-     * @param point     the point added to that player
-     * @param gameModel the model in which the player and point exist
-     */
-    protected abstract void show_addedPoint(Player p, int point, GameImmutable gameModel);
-
-    /**
-     * Shows error message when chosen column has too little space
-     *
-     * @param model the model to check
-     */
-    protected abstract void columnShelfTooSmall(GameImmutable model);
 
     //----------------------
     //ACTIONS
@@ -237,9 +191,30 @@ public abstract class UI {
     public void showPlaceStarterCardOnCodex(GameImmutable model) {
     }
 
-    public void invalidChoice() {
+    public void showInvalidInput() {
     }
 
     public void show_askSide(GameImmutable model) {
+    }
+
+    public void show_askChooseACardObjective(GameImmutable model) {
+    }
+
+    public void showCardObjectiveToChoose(GameImmutable model) {
+    }
+
+    public void showCommonCards(GameImmutable model) {
+    }
+
+    public void showCodex(GameImmutable model) {
+    }
+
+    public void showAskSize(GameImmutable model) {
+    }
+
+    public void show_sizeSetted() {
+    }
+
+    public void cardAddedToHand(GameImmutable model, Card card) {
     }
 }

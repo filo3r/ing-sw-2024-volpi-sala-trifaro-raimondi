@@ -1,11 +1,9 @@
 package it.polimi.ingsw.gc03.view.flow.utilities;
 
-import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
-
 import java.util.Scanner;
 
 public class InputReaderTUI extends Thread implements InputReader {
-    private final BufferData buffer = new BufferData();
+    private final InputQueue buffer = new InputQueue();
 
     /**
      * Init
@@ -30,7 +28,7 @@ public class InputReaderTUI extends Thread implements InputReader {
     /**
      * @return the buffer
      */
-    public BufferData getBuffer(){
+    public InputQueue getBuffer(){
         return buffer;
     }
 }

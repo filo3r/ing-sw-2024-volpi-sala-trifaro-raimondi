@@ -3,18 +3,18 @@ package it.polimi.ingsw.gc03.view.flow;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.view.flow.utilities.FileDisconnection;
+import it.polimi.ingsw.gc03.view.flow.utilities.SaveGameData;
 
 public abstract class Flow implements GameListener {
 
-    protected void resetGameId(FileDisconnection fileDisconnection, GameImmutable model) {
+    protected void resetGameId(SaveGameData saveGameData, GameImmutable model) {
         for (Player p : model.getPlayers()) {
-            fileDisconnection.setLastGameId(p.getNickname(), -1);
+            saveGameData.setLastGameId(p.getNickname(), -1);
         }
     }
 
-    protected void saveGameId(FileDisconnection fileDisconnection, String nick, int gameId) {
-        fileDisconnection.setLastGameId(nick, gameId);
+    protected void saveGameId(SaveGameData saveGameData, String nick, int gameId) {
+        saveGameData.setLastGameId(nick, gameId);
     }
 
     public abstract void noConnectionError();

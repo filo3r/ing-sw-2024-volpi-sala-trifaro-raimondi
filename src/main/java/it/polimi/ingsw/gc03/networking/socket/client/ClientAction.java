@@ -141,12 +141,7 @@ public interface ClientAction {
      */
     void ping() throws RemoteException;
 
+    void setGameSize(int size) throws RemoteException;
 
-    void joinFirstAvailable(String nick);
 
-    void joinGame(String nick, int idGame);
-
-    void reconnect(String nickname, int idGame);
-
-    void leave(String nick, int idGame);
 }

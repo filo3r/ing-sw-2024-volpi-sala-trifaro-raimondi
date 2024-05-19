@@ -1,12 +1,19 @@
 package it.polimi.ingsw.gc03.view.flow.utilities;
 
-public class FileDisconnection {
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import
+
+public class SaveGameData {
     private final String path;
 
     /**
      * Init class
      */
-    public FileDisconnection() {
+    public SaveGameData() {
         path = System.getProperty("user.home") + "/AppData/Roaming/.MyShelfie";
     }
 
