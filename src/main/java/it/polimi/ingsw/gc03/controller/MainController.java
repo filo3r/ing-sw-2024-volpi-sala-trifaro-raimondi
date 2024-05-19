@@ -5,8 +5,8 @@ import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.networking.rmi.VirtualView;
-
+import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
  * Manages the lifecycle and interactions of multiple game sessions within the application.
  * This class follows the Singleton design pattern to ensure only one instance manages the game controllers globally.
  */
-public class MainController implements Serializable {
+public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Instance of the MainController, needed for the singleton design pattern.
