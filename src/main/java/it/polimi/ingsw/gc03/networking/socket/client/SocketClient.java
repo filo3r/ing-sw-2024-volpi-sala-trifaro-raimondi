@@ -85,6 +85,7 @@ public class SocketClient implements ClientAction {
             this.socketClient = new Socket(ip, port);
             this.inputStream = new ObjectInputStream(this.socketClient.getInputStream());
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
+            AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection established to server.");
             this.executorService.submit(this::processMessages);
             this.socketPing.start();
         } catch (IOException e) {
@@ -125,6 +126,7 @@ public class SocketClient implements ClientAction {
             this.executorService.shutdown();
             if (!this.executorService.awaitTermination(60, TimeUnit.SECONDS))
                 this.executorService.shutdownNow();
+            AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection with the server has been closed.");
         } catch (IOException | InterruptedException e) {
             AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Error when closing resources: " + e.getMessage());
         }
@@ -343,6 +345,19 @@ public class SocketClient implements ClientAction {
     }
 
 
+    /**
+     * This method is used to write on the output stream the message that the client changed the game size.
+     * @param nickname The nickname of the client.
+     * @param size The number of players participating in the game.
+     * @param idGame The id of the game.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    @Override
+    public void setGameSize(String nickname, int size, int idGame) throws IOException {
+        SocketClientMessageSetGameSize message = new SocketClientMessageSetGameSize(nickname, size, idGame);
+        this.outputStream.writeObject(message);
+        completeTransmission();
+    }
 
 
 }

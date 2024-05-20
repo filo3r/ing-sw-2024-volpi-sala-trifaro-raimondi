@@ -54,7 +54,7 @@ public interface ClientAction {
      * @throws InterruptedException If the thread is interrupted, either before or during the action.
      * @throws NotBoundException If a name in the registry was not found.
      */
-    void leaveGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException;
+    void playerLeft(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException;
 
 
     /**
@@ -141,7 +141,16 @@ public interface ClientAction {
      */
     void ping() throws RemoteException;
 
-    void setGameSize(int size) throws RemoteException;
+
+    /**
+     * The client can choose the number of players participating in the game.
+     * @param nickname The nickname of the client.
+     * @param size The number of players participating in the game.
+     * @param idGame The id of the game.
+     * @throws RemoteException If an error occurs in remote communication.
+     * @throws Exception If an abnormal condition has occurred during the execution of the action.
+     */
+    void setGameSize(String nickname, int size, int idGame) throws RemoteException, Exception;
 
 
 }

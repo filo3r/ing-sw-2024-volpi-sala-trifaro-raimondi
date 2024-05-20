@@ -20,22 +20,22 @@ import java.util.logging.Level;
 public class RmiServer extends UnicastRemoteObject implements MainControllerInterface {
 
     /**
-     * The main server rmi for listening to client connections.
+     * The singleton instance of the RMI server.
      */
     private static RmiServer rmiServer = null;
 
     /**
-     *
+     * The registry for binding the RMI server instance.
      */
     private static Registry rmiRegistry = null;
 
     /**
-     *
+     * The main controller handling game logic and management.
      */
     private final MainController mainController;
 
     /**
-     *
+     * Flag indicating whether the RMI server is currently running.
      */
     private static boolean isRmiServerRunning = false;
 
