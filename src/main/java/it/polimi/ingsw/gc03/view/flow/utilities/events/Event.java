@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.view.flow.utilities.events;
 
 import it.polimi.ingsw.gc03.model.GameImmutable;
 
-public class EventElement {
+public class Event {
     private GameImmutable model;
     private EventType type;
 
@@ -12,7 +12,7 @@ public class EventElement {
      * @param model
      * @param type
      */
-    public EventElement(GameImmutable model, EventType type) {
+    public Event(GameImmutable model, EventType type) {
         this.model = model;
         this.type = type;
     }

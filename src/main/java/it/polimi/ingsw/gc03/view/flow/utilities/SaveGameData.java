@@ -1,75 +1,49 @@
 package it.polimi.ingsw.gc03.view.flow.utilities;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
-import
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.gc03.model.GameImmutable;
+
 
 public class SaveGameData {
     private final String path;
-
     /**
      * Init class
      */
     public SaveGameData() {
-        path = System.getProperty("user.home") + "/AppData/Roaming/.MyShelfie";
+        path = System.getProperty("user.home") + "/AppData/Roaming/.Codex";
     }
 
-    /**
-     * Returns the game id from the file
-     * @param nickname
-     * @return
-     */
-    public int getLastGameId(String nickname) {
-        //game data related to the player is stored in a json file named after the nickname the player had in that game
-        String gameId = null;
-        String time = null;
-        JSONParser parser = new JSONParser();
-        File file = new File(path + "/" + nickname + ".json");
-
-        try (InputStream is = new FileInputStream(file);
-             Reader reader = new InputStreamReader(Objects.requireNonNull(is, "Couldn't find json file"), StandardCharsets.UTF_8)) {
-            JSONObject obj = (JSONObject) parser.parse(reader);
-            gameId = (String) obj.get(DefaultValue.gameIdData);
-            time = (String) obj.get(DefaultValue.gameIdTime);
-        } catch (ParseException | IOException ex) {
-            return -1;
-        }
-        assert gameId != null;
-        if (LocalDateTime.parse(time).isBefore(LocalDateTime.now().plusSeconds(DefaultValue.twelveHS)))
-            return Integer.parseInt(gameId);
-        else
-            return -1;
-    }
-
-    /**
-     * Creates the file and writes the game id in it
-     * @param nickname
-     * @param gameId
-     */
-    @SuppressWarnings("unchecked")
-    public void setLastGameId(String nickname, int gameId) {
-        JSONObject data = new JSONObject();
-        data.put(DefaultValue.gameIdData, Integer.toString(gameId));
-        data.put(DefaultValue.gameIdTime, LocalDateTime.now().toString());
-        //if the directory doesn't exist, create it
-        new File(path).mkdirs();
-
-        File file = new File(path + "/" + nickname + ".json");
-        try {
-            //if the file does not exist, create it
-            file.createNewFile();
+    public void saveGameData(String nickname, int gameId){
+        ArrayList<Integer> gameData = loadGameData(nickname);
+        gameData.add(gameId);
+        Gson gson = new Gson();
+        try(FileWriter writer = new FileWriter(path + "/" + nickname + ".json")) {
+            gson.toJson(gameData,writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
-        try (FileWriter fileWriter = new FileWriter(path + "/" + nickname + ".json")) {
-            fileWriter.write(data.toJSONString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public int getLastId(String nickname){
+        ArrayList<Integer> gameData = loadGameData(nickname);
+        return gameData.getLast();
+    }
+    public ArrayList<Integer> loadGameData(String nickname)  {
+        Gson gson = new Gson();
+        try(FileReader reader = new FileReader(path + "/" + nickname + ".json")){
+            Type type = new TypeToken <ArrayList<Integer>>() {}.getType();
+            return gson.fromJson(reader,type);
+        }
+        catch (IOException e) {
+        return new ArrayList<Integer>();
         }
     }
 }

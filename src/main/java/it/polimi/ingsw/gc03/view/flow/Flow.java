@@ -9,12 +9,12 @@ public abstract class Flow implements GameListener {
 
     protected void resetGameId(SaveGameData saveGameData, GameImmutable model) {
         for (Player p : model.getPlayers()) {
-            saveGameData.setLastGameId(p.getNickname(), -1);
+            saveGameData.saveGameData(p.getNickname(),-1 );
         }
     }
 
     protected void saveGameId(SaveGameData saveGameData, String nick, int gameId) {
-        saveGameData.setLastGameId(nick, gameId);
+        saveGameData.saveGameData(nick, gameId);
     }
 
     public abstract void noConnectionError();

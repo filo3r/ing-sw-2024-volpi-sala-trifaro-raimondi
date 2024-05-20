@@ -7,7 +7,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class EventList {
-    private Queue<EventElement> lists;
+    private Queue<Event> lists;
     private boolean joined = false;
 
     /**
@@ -23,7 +23,7 @@ public class EventList {
      * @param type
      */
     public synchronized void add(GameImmutable model, EventType type) {
-        lists.add(new EventElement(model, type));
+        lists.add(new Event(model, type));
 
         if (type.equals(EventType.PLAYER_JOINED) || (model != null && (model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.LASTROUND)) ))
             joined = true;
@@ -36,7 +36,7 @@ public class EventList {
      *
      * @return an element from the queue(FIFO)
      */
-    public synchronized EventElement pop() {
+    public synchronized Event pop() {
         return lists.poll();
     }
 

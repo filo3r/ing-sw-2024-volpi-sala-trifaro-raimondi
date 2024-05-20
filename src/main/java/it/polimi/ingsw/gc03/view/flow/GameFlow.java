@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.ConnectionSelection;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
@@ -12,7 +13,7 @@ import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.flow.utilities.*;
-import it.polimi.ingsw.gc03.view.flow.utilities.events.EventElement;
+import it.polimi.ingsw.gc03.view.flow.utilities.events.Event;
 import it.polimi.ingsw.gc03.view.flow.utilities.events.EventList;
 import it.polimi.ingsw.gc03.view.flow.utilities.events.EventType;
 import it.polimi.ingsw.gc03.view.tui.Tui;
@@ -90,7 +91,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     @SuppressWarnings("BusyWait")
     @Override
     public void run() {
-        EventElement event;
+        Event event;
         events.add(null, APP_MENU);
 
         while (!Thread.interrupted()) {
@@ -131,7 +132,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         }
     }
 
-    private void statusNotInAGame(EventElement event) throws NotBoundException, IOException, InterruptedException {
+    private void statusNotInAGame(Event event) throws NotBoundException, IOException, InterruptedException {
         switch (event.getType()) {
             case APP_MENU -> {
                 boolean selectionok;
@@ -140,7 +141,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 } while (!selectionok);
             }
 
-            case JOIN_UNABLE_NICKNAME_ALREADY_IN -> {
+            case JOIN_UNABLE_NICKNAME_ALREADY_IN_USE -> {
                 nickname = null;
                 events.add(null, APP_MENU);
                 ui.addImportantEvent("WARNING> Nickname already used!");
@@ -162,7 +163,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
             }
         }
     }
-    private void statusWait(EventElement event) throws IOException, InterruptedException {
+    private void statusWait(Event event) throws IOException, InterruptedException {
         String nickLastPlayer = event.getModel().getPlayers().getLast().getNickname();
         //If the event is that I joined then I wait until the user inputs 'y'
         switch (event.getType()) {
@@ -179,7 +180,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     }
 
-    private void statusRunning(EventElement event) throws Exception {
+    private void statusRunning(Event event) throws Exception {
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
@@ -203,9 +204,6 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
             /*case NEXT_TURN, PLAYER_RECONNECTED -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
-
-                columnChosen = -1;
-
                 if (event.getType().equals(PLAYER_RECONNECTED) && lastPlayerReconnected.equals(nickname)) {
                     this.commandProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst();
                     this.commandProcessor.setIdGame(event.getModel().getIdGame());
@@ -239,12 +237,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 ui.addImportantEvent("Player " + event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname() + " has positioned a Card on his Codex!");
                 if (!event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getHand().isEmpty() && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
                     askToPlaceCardOnCodex(event.getModel());
-                    ui.showPlacedCard(event.getModel(), nickname);
+                    ui.showCodex(event.getModel());
                 }
             }
             case CARD_CANNOT_BE_PLACED -> {
                 ui.showCardCannotBePlaced(event.getModel(), nickname);
-
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
                     events.add(event.getModel(),PLACE_CARD_ON_CODEX);
                 }
@@ -253,7 +250,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         }
 
     }
-    private void statusEnded(EventElement event) throws NotBoundException, IOException, InterruptedException {
+    private void statusEnded(Event event) throws NotBoundException, IOException, InterruptedException {
         switch (event.getType()) {
             case GAMEENDED -> {
                 ui.show_returnToMenuMsg();
@@ -286,6 +283,9 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         this.ended = ended;
     }
 
+    /**
+     * Aks to choose a Nickname
+     */
     private void askNickname() {
         ui.show_insertNicknameMsg();
         try {
@@ -328,7 +328,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 else
                     joinSpecificGame(nickname, gameId);
             }
-            case "x" -> reconnectToGame(nickname, saveGameData.getLastGameId(nickname));
+            case "r" -> reconnectToGame(nickname, saveGameData.getLastId(nickname));
             default -> {
                 return false;
             }
@@ -337,6 +337,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         return true;
     }
 
+    /**
+     * Asks to set the GameSize
+     * @param model
+     * @throws InterruptedException
+     */
     private void askGameSize(GameImmutable model) throws InterruptedException {
         ui.showAskSize(model);
         boolean sizeValid = false;
@@ -428,6 +433,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         }
     }
 
+    /**
+     * Asks to choose a CardObjective
+     * @param model
+     * @throws Exception
+     */
     public void askToChooseACardObjective(GameImmutable model) throws Exception {
         ui.show_askChooseACardObjective(model);
         boolean wrongIndex = true;
@@ -466,6 +476,12 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         ui.showCodex(model);
     }
 
+    /**
+     * Asks which Side of the StarterCard to use
+     * @param model
+     * @return
+     * @throws InterruptedException
+     */
     public Side askSideStarter(GameImmutable model) throws InterruptedException {
         ui.show_askSide(model);
         String choice;
@@ -485,6 +501,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         return side;
     }
 
+    /**
+     * Asks to place a StarterCard
+     * @param model
+     * @throws Exception
+     */
     public void askToPlaceStarterOnCodex(GameImmutable model) throws Exception {
         Side side;
         do {
@@ -561,6 +582,10 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         }
     }
 
+    /**
+     * Client asks to set the size
+     * @param size
+     */
     public void setGameSize(int size) {
         ui.show_sizeSetted();
         try{
@@ -639,7 +664,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     @Override
     public void leaveGame(String nick, int idGame) {
         try {
-            clientActions.leaveGame(nick, idGame);
+            clientActions.playerLeft(nick, idGame);
         } catch (Exception e) {
             noConnectionError();
         }

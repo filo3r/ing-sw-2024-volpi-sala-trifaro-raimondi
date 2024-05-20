@@ -182,9 +182,6 @@ public abstract class UI {
     public void showCardCannotBePlaced(GameImmutable model, String nickname) {
     }
 
-    public void showPlacedCard(GameImmutable model, String nickname) {
-    }
-
     public void showDrawnCard(GameImmutable model) {
     }
 
