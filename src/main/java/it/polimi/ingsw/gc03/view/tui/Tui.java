@@ -13,8 +13,7 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
-import it.polimi.ingsw.gc03.view.flow.UI;
-import javafx.scene.SubScene;
+import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

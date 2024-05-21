@@ -1,16 +1,16 @@
-package it.polimi.ingsw.gc03.view.flow.utilities;
+package it.polimi.ingsw.gc03.view.inputHandler;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.view.flow.GameFlow;
+import it.polimi.ingsw.gc03.view.ui.GameFlow;
 
 import java.time.LocalTime;
 
-public class CommandProcessor extends Thread{
+public class InputProcessor extends Thread{
     /**
      * The buffer from which I pop the data
      */
-    private final InputQueue bufferInput;
+    private final InputQueue inputQueue;
     /**
      * The data to process
      */
@@ -31,11 +31,11 @@ public class CommandProcessor extends Thread{
     /**
      * Init class
      *
-     * @param bufferInput
+     * @param inputQueue
      * @param gameFlow
      */
-    public CommandProcessor(InputQueue bufferInput, GameFlow gameFlow) {
-        this.bufferInput = bufferInput;
+    public InputProcessor(InputQueue inputQueue, GameFlow gameFlow) {
+        this.inputQueue = inputQueue;
         dataToProcess = new InputQueue();
         this.gameFlow = gameFlow;
         this.p = null;
@@ -53,21 +53,12 @@ public class CommandProcessor extends Thread{
             //I keep popping data from the buffer sync
             //(so I wait myself if no data is available on the buffer)
             try {
-                txt = bufferInput.popData();
+                txt = inputQueue.popData();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
-            //I popped an input from the buffer
-            /*if (p != null && txt.startsWith("/cs")) {
-                txt = txt.charAt(3) == ' ' ? txt.substring(4) : txt.substring(3);
-                if(txt.contains(" ")){
-                    String receiver = txt.substring(0, txt.indexOf(" "));
-                    String msg = txt.substring(receiver.length() + 1);
-                    gameFlow.sendMessage(new MessagePrivate(msg, p, receiver));
-                }
-            } else
-            */if (p != null && txt.startsWith("/c")) {
+            if (p != null && txt.startsWith("/chat")) {
                 //I send a message
                 LocalTime localtime = LocalTime.now();
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
@@ -78,9 +69,6 @@ public class CommandProcessor extends Thread{
                 System.exit(1);
 
             } else {
-                //I didn't pop a message
-
-                //I add the data to the buffer processed via GameFlow
                 dataToProcess.addData(txt);
             }
         }

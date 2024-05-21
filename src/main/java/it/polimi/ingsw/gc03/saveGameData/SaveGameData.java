@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.view.flow.utilities;
+package it.polimi.ingsw.gc03.saveGameData;
 
 import java.io.*;
 import java.lang.reflect.Type;

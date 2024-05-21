@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.view.flow.utilities;
+package it.polimi.ingsw.gc03.view.inputHandler;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

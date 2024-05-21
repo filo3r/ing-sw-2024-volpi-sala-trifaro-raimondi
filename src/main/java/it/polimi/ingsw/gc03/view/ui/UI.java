@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.view.flow;
+package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;

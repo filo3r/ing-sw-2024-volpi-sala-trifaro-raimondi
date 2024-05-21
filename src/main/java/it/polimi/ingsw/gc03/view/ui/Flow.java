@@ -1,9 +1,9 @@
-package it.polimi.ingsw.gc03.view.flow;
+package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.view.flow.utilities.SaveGameData;
+import it.polimi.ingsw.gc03.saveGameData.SaveGameData;
 
 public abstract class Flow implements GameListener {
 

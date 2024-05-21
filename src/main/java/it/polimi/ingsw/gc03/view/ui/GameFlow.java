@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.view.flow;
+package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
@@ -12,10 +12,11 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
-import it.polimi.ingsw.gc03.view.flow.utilities.*;
-import it.polimi.ingsw.gc03.view.flow.utilities.events.Event;
-import it.polimi.ingsw.gc03.view.flow.utilities.events.EventList;
-import it.polimi.ingsw.gc03.view.flow.utilities.events.EventType;
+import it.polimi.ingsw.gc03.saveGameData.SaveGameData;
+import it.polimi.ingsw.gc03.view.ui.events.Event;
+import it.polimi.ingsw.gc03.view.ui.events.EventList;
+import it.polimi.ingsw.gc03.view.ui.events.EventType;
+import it.polimi.ingsw.gc03.view.inputHandler.*;
 import it.polimi.ingsw.gc03.view.tui.Tui;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static it.polimi.ingsw.gc03.view.flow.utilities.events.EventType.*;
+import static it.polimi.ingsw.gc03.view.ui.events.EventType.*;
 
 public class GameFlow extends Flow implements Runnable, ClientAction {
 
@@ -43,12 +44,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     private boolean frontCard;
     private final UI ui;
 
-    private boolean chosenDeck;
 
 
 
 
-    protected CommandProcessor commandProcessor;
+    protected InputProcessor inputProcessor;
     protected InputReader inputReader;
 
     protected List<String> importantEvents;
@@ -58,7 +58,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         //Invoked for starting with TUI
         switch (connectionSelection) {
             case SOCKET -> clientActions = new SocketClient();
-            case RMI -> clientActions = new RmiClient();
+            case RMI -> clientActions = new RmiClient(,this);
         }
         ui = new Tui();
 
@@ -66,7 +66,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         nickname = "";
         saveGameData = new SaveGameData();
         this.inputReader = new InputReaderTUI();
-        this.commandProcessor = new CommandProcessor(this.inputReader.getBuffer(), this);
+        this.inputProcessor = new InputProcessor(this.inputReader.getQueue(), this);
 
         new Thread(this).start();
     }
@@ -84,7 +84,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         nickname = "";
         saveGameData = new SaveGameData();
 
-        this.commandProcessor = new CommandProcessor(this.inputReader.getBuffer(), this);
+        this.inputProcessor = new InputProcessor(this.inputReader.getQueue(), this);
         new Thread(this).start();
     }
 
@@ -155,7 +155,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 nickname = null;
                 ui.show_returnToMenuMsg();
                 try {
-                    this.commandProcessor.getDataToProcess().popData();
+                    this.inputProcessor.getDataToProcess().popData();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -184,8 +184,8 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
-                this.commandProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
-                this.commandProcessor.setIdGame(event.getModel().getIdGame());
+                this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
+                this.inputProcessor.setIdGame(event.getModel().getIdGame());
             }
             case PLACE_STARTER_ON_CODEX -> {
                 askToPlaceStarterOnCodex(event.getModel());
@@ -202,11 +202,11 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 ui.show_sentMessage(event.getModel(), nickname);
             }
 
-            /*case NEXT_TURN, PLAYER_RECONNECTED -> {
+            case NEXT_TURN, PLAYER_RECONNECTED -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
                 if (event.getType().equals(PLAYER_RECONNECTED) && lastPlayerReconnected.equals(nickname)) {
-                    this.commandProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst();
-                    this.commandProcessor.setIdGame(event.getModel().getIdGame());
+                    this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
+                    this.inputProcessor.setIdGame(event.getModel().getIdGame());
                 }
 
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
@@ -225,7 +225,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 }
             }
 
-             */
+
 
             case DRAW_FROM_CHOSEN_DECK ->{
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
@@ -255,9 +255,9 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
             case GAMEENDED -> {
                 ui.show_returnToMenuMsg();
                 //new Scanner(System.in).nextLine();
-                this.commandProcessor.getDataToProcess().popAllData();
+                this.inputProcessor.getDataToProcess().popAllData();
                 try {
-                    this.commandProcessor.getDataToProcess().popData();
+                    this.inputProcessor.getDataToProcess().popData();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -273,8 +273,8 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         ui.resetImportantEvents();
         events.add(null, APP_MENU);
 
-        this.commandProcessor.setPlayer(null);
-        this.commandProcessor.setIdGame(null);
+        this.inputProcessor.setPlayer(null);
+        this.inputProcessor.setIdGame(null);
     }
     public boolean isEnded() {
         return ended;
@@ -289,7 +289,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     private void askNickname() {
         ui.show_insertNicknameMsg();
         try {
-            nickname = this.commandProcessor.getDataToProcess().popData();
+            nickname = this.inputProcessor.getDataToProcess().popData();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -307,7 +307,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         ui.show_menuOptions();
 
         try {
-            optionChoose = this.commandProcessor.getDataToProcess().popData();
+            optionChoose = this.inputProcessor.getDataToProcess().popData();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -347,7 +347,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         boolean sizeValid = false;
         do{
             int size;
-            size = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+            size = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
             if(size>1 && size<=4){
                 sizeValid = true;
                 setGameSize(size);
@@ -369,7 +369,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
             ui.show_inputGameIdMsg();
             try {
                 try {
-                    temp = this.commandProcessor.getDataToProcess().popData();
+                    temp = this.inputProcessor.getDataToProcess().popData();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -392,7 +392,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     public void askToChooseADeck(GameImmutable gameModel) throws Exception {
         ui.showAskToChooseADeck();
         String choice;
-        choice = this.commandProcessor.getDataToProcess().popData();
+        choice = this.inputProcessor.getDataToProcess().popData();
         switch(choice){
             case "gD" ->{
                 drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()),gameModel.getDesk().getDeckGold());
@@ -403,7 +403,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 do {
                     int index;
                     ui.showAskIndex(gameModel);
-                    index = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+                    index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
                     if(index==1 || index==0) {
                         drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), index);
                         wrongIndex = false;
@@ -419,7 +419,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 do {
                     int index;
                     ui.showAskIndex(gameModel);
-                    index = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+                    index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
                         if(index==1 || index==0) {
                             drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), index);
                             wrongIndex = false;
@@ -444,7 +444,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         do{
             int index;
             ui.showAskIndex(model);
-            index = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+            index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
             if(index==1 || index==0) {
                 selectCardObjective(model.getPlayers().get(model.getCurrPlayer()), index);
                 wrongIndex = false;
@@ -462,7 +462,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         Integer indexHand;
         do {
             ui.showAskIndex(model);
-            indexHand = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+            indexHand = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
             ui.show_playerHand(model);
             if (ended) return;
             if (indexHand < 0 || indexHand >= model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getHand().size()) {
@@ -485,7 +485,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     public Side askSideStarter(GameImmutable model) throws InterruptedException {
         ui.show_askSide(model);
         String choice;
-        choice= this.commandProcessor.getDataToProcess().popData();
+        choice= this.inputProcessor.getDataToProcess().popData();
         Side side = null;
         switch(choice){
             case "f"->{
@@ -524,9 +524,9 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
 
     public void askCoordinates(GameImmutable model) throws InterruptedException {
         ui.showAskCoordinatesRow(model);
-        row = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+        row = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
         ui.showAskCoordinatesCol(model);
-        col = Integer.parseInt(this.commandProcessor.getDataToProcess().popData());
+        col = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
     }
 
     /**
@@ -537,7 +537,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     public void askSide(GameImmutable model) throws InterruptedException {
         ui.show_askSide(model);
         String side;
-        side = this.commandProcessor.getDataToProcess().popData();
+        side = this.inputProcessor.getDataToProcess().popData();
         switch(side){
             case "f"->{
                 frontCard = true;
@@ -647,7 +647,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         } else {
             ui.show_noAvailableGamesToJoin("No disconnection previously detected");
             try {
-                this.commandProcessor.getDataToProcess().popData();
+                this.inputProcessor.getDataToProcess().popData();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -867,7 +867,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         events.add(gameModel, EventType.NEXT_TURN);
 
         //I remove all the input that the user sends when It is not his turn
-        this.commandProcessor.getDataToProcess().popAllData();
+        this.inputProcessor.getDataToProcess().popAllData();
     }
 
     /**
@@ -994,7 +994,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     /*==Testing purpose==*/
     @Deprecated
     public InputQueue getBuffer_ForTesting() {
-        return this.inputReader.getBuffer();
+        return this.inputReader.getQueue();
     }
 
     @Deprecated

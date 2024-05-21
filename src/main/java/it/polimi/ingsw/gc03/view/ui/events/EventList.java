@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gc03.view.flow.utilities.events;
+package it.polimi.ingsw.gc03.view.ui.events;
 
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;

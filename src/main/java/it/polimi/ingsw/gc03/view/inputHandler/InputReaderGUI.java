@@ -1,16 +1,16 @@
-package it.polimi.ingsw.gc03.view.flow.utilities;
+package it.polimi.ingsw.gc03.view.inputHandler;
 
 public class InputReaderGUI implements InputReader{
-    private final InputQueue buffer;
+    private final InputQueue inputQueue;
 
     /**
      * Init
      */
     public InputReaderGUI(){
-        buffer = new InputQueue();
+        inputQueue = new InputQueue();
     }
     @Override
-    public InputQueue getBuffer() {
+    public InputQueue getQueue() {
         return null;
     }
     /**
@@ -18,7 +18,7 @@ public class InputReaderGUI implements InputReader{
      * @param txt text to add to the buffer
      */
     public synchronized void addTxt(String txt){
-        buffer.addData(txt);
+        inputQueue.addData(txt);
     }
 
 }
