@@ -1,7 +1,9 @@
 package it.polimi.ingsw.gc03.model;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  * This class represents a message in the chat.
@@ -23,6 +25,10 @@ public class ChatMessage implements Serializable {
      */
     private LocalTime timestamp;
 
+    /**
+     * The message's receiver(s).
+     */
+    ArrayList<Player> receiver;
 
     /**
      * Constructor for the Message class.
@@ -30,10 +36,11 @@ public class ChatMessage implements Serializable {
      * @param text The message's text.
      * @param timestamp The message's timestamp.
      */
-    public ChatMessage(Player sender, String text, LocalTime timestamp) {
+    public ChatMessage(ArrayList<Player> receiver, Player sender, String text, LocalTime timestamp) {
         this.text = text;
         this.timestamp = timestamp;
         this.sender = sender;
+        this.receiver = receiver;
     }
 
 

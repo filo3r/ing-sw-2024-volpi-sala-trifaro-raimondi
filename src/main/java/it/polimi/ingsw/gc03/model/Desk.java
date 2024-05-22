@@ -3,6 +3,8 @@ package it.polimi.ingsw.gc03.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -16,6 +18,7 @@ import java.lang.reflect.Type;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +26,7 @@ import java.util.logging.Logger;
 /**
  * This class represents the game board.
  */
-public class Desk extends Observable implements Serializable{
+public class Desk implements Serializable{
 
     /**
      * Deck of Starter cards.
@@ -59,6 +62,16 @@ public class Desk extends Observable implements Serializable{
      * Visible Objective cards.
      */
     private ArrayList<CardObjective> displayedObjective;
+
+    /**
+     * Game Listeners for updates
+     */
+    private transient List<GameListener> listeners;
+
+    /**
+     * Listeners handler
+     */
+    private transient ListenersHandler listenersHandler;
 
 
 
@@ -125,15 +138,18 @@ public class Desk extends Observable implements Serializable{
     private static final Logger logger = Logger.getLogger(Desk.class.getName());
 
 
+    Game game;
+
     /**
      * Constructor of the Desk class.
      */
-    public Desk() throws RemoteException {
+    public Desk(Game game) throws RemoteException {
         // Create decks of cards
         if (!createDeckStarter() || !createDeckResource() || !createDeckGold() || !createDeckObjective())
             System.exit(1);
         // Initialize visible cards
         initializeDisplayedCard();
+        this.game = game;
     }
 
 
@@ -296,8 +312,9 @@ public class Desk extends Observable implements Serializable{
         if (emptyDeck) {
             return null;
         } else{
-            notifyObservers(this);
-            return deck.removeFirst();
+            Card drawnCard =  deck.removeFirst();
+            listenersHandler.notifyCardAddedToHand(this.game, drawnCard);
+            return drawnCard;
         }
     }
 
@@ -317,7 +334,7 @@ public class Desk extends Observable implements Serializable{
         else {
             Card card = displayed.remove(index);
             checkDisplayed();
-            notifyObservers(this);
+            listenersHandler.notifyCardAddedToHand(this.game, card);
             return card;
         }
     }
@@ -475,70 +492,19 @@ public class Desk extends Observable implements Serializable{
         this.displayedObjective = displayedObjective;
     }
 
-
-    // Questi metodi vanno spostati nella view
-/*    public void printDeckStarter() {
-        System.out.println("STARTER DECK:");
-        for (CardStarter card : deckStarter) {
-            card.printCardStarter(card);
-        }
+    /**
+     * @param lis adds the listener to the list
+     */
+    public void addListener(GameListener lis) {
+        listenersHandler.addListener(lis);
     }
 
-    public void printDeckResource() {
-        System.out.println("RESOURCE DECK:");
-        for (CardResource card : deckResource) {
-            card.printCardResource(card);
-        }
+    /**
+     * @param lis remove the listener to the list
+     */
+    public void removeListener(GameListener lis) {
+        listenersHandler.removeListener(lis);
     }
 
-    public void printDeckGold() {
-        System.out.println("GOLD DECK:");
-        for (CardGold card : deckGold) {
-            card.printCardGold(card);
-        }
-    }
-
-    public void printDeckObjective() {
-        System.out.println("OBJECTIVE DECK:");
-        for (CardObjective card : deckObjective) {
-            card.printCardObjective(card);
-        }
-    }
-
-    public void printDisplayedResourceCards() {
-        System.out.println("DISPLAYED RESOURCE CARDS:");
-        ArrayList<CardResource> convertedResource = new ArrayList<>();
-        for(Card card :displayedResource){
-            if(card instanceof CardResource){
-                CardResource cardResource = (CardResource) card;
-                convertedResource.add(cardResource);
-            }
-        }
-        for (Card card : convertedResource) {
-            //card.printCardResource(card);
-        }
-    }
-
-    public void printDisplayedGoldCards() {
-        System.out.println("DISPLAYED GOLD CARDS:");
-        ArrayList<CardGold> convertedGold = new ArrayList<>();
-        for(Card card :displayedGold){
-            if(card instanceof CardGold){
-                CardGold cardGold = (CardGold) card;
-                convertedGold.add(cardGold);
-            }
-        }
-        for (CardGold cardGold : convertedGold) {
-            //cardGold.printCardGold(cardGold);
-        }
-    }
-
-    public void printDisplayedObjectiveCards() {
-        System.out.println("DISPLAYED OBJECTIVE CARDS:");
-        for (CardObjective card : displayedObjective) {
-            //card.printCardObjective(card);
-        }
-    }
-*/
 
 }

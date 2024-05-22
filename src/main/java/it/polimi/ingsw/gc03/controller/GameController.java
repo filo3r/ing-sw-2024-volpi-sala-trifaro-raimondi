@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.controller;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
@@ -61,7 +62,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @throws PlayerAlreadyJoinedException This exception is thrown to prevent duplicate addition of a player in the
      *                                      same game.
      */
-    public void addPlayerToGame(String playerNickname, VirtualView listener) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+    public void addPlayerToGame(String playerNickname, GameListener listener) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // It's possible to add new players only if the game's status is WAITING
         // When the game is in WAITING status, the players.size < game.size, so
         // new players can join.
@@ -134,7 +135,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 game.setStatus(GameStatus.RUNNING);
             }
         }
-        this.getGame().notifyObservers(this.getGame());
     }
 
 
@@ -186,7 +186,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("The player has already placed his starter card");
         }
         // Proceed with inserting the starting card into the player's Codex
-        player.getCodex().insertStarterIntoCodex(side);
+        player.getCodex().insertStarterIntoCodex(side, this.game);
         // Check if the objective cards are in the correct number
         if (player.getCardObjective().size() == Player.FINAL_CARD_OBJECTIVE) {
             // The player's action is updated to WAIT
@@ -224,7 +224,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("The player has already chosen his personal objective");
         }
         // The player can choose his Objective card
-        player.selectObjectiveCard(cardObjective);
+        player.selectObjectiveCard(cardObjective, this.game);
         if (player.getCodex().getCardStarterInserted()) {
             player.setAction((PlayerAction.WAIT));
             List<Player> firstMovers = game.getPlayers().stream().
@@ -288,7 +288,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         } else {
             throw new Exception("Player's action is not draw.");
         }
-        this.getGame().notifyObservers(this.getGame().getDesk());
     }
 
 
@@ -311,7 +310,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         } else {
             throw new Exception("Player's action is not draw.");
         }
-        this.getGame().notifyObservers(this.getGame().getDesk());
     }
 
     /**
@@ -373,7 +371,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING) || game.getStatus().equals(GameStatus.LASTROUND)) {
             if (player.getAction().equals(PlayerAction.PLACE)) {
                 Side side = getSide(player, index, frontCard);
-                if (player.getCodex().insertIntoCodex(side, row, col)) {
+                if (player.getCodex().insertIntoCodex(this.game, side, row, col)) {
                     player.removeCardFromHand(index);
                     updateCurrPlayer();
                     if (game.getStatus().equals(GameStatus.LASTROUND)) {
@@ -394,7 +392,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         } else {
             throw new Exception("The current GameStatus is not either RUNNING or ENDING");
         }
-        this.getGame().notifyObservers(this.getGame());
     }
 
     // For testing purposes, no real case use
@@ -455,10 +452,5 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
     }
-
-    public int getIdGame(){
-        this.getGame().getIdGame();
-    }
-
 
 }

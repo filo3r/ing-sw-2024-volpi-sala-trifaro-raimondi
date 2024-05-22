@@ -473,5 +473,19 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
+    /**
+     * This method is used to write the message indicating which players won the game to the output stream.
+     * @param gameImmutable The immutable game model.
+     * @param size The new game size.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    @Override
+    public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
+        try {
+            SocketServerMessageGameSizeUpdated message = new SocketServerMessageGameSizeUpdated(gameImmutable, size);
+            this.outputStream.writeObject(message);
+            completeTransmission();
+        } catch (IOException e) {}
+    }
 
 }

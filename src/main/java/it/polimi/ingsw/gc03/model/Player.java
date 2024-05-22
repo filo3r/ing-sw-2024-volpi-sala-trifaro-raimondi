@@ -1,5 +1,7 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -15,13 +17,15 @@ import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
+
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
 
 /**
  * This class represents a player in the game.
  */
-public class Player extends Observable implements Serializable {
+public class Player   implements Serializable {
 
     /**
      * Player's nickname.
@@ -104,7 +108,16 @@ public class Player extends Observable implements Serializable {
      */
     public static final int FINAL_CARD_OBJECTIVE = 1;
 
-    VirtualView listener;
+    /**
+     * Game Listeners for updates
+     */
+    private transient List<GameListener> listeners;
+
+    /**
+     * Listeners handler
+     */
+    private transient ListenersHandler listenersHandler;
+
 
     /**
      * Constructor of the Player class.
@@ -112,7 +125,7 @@ public class Player extends Observable implements Serializable {
      * @param number Player's number.
      * @param desk The game desk.
      */
-    public Player(String nickname, int number, Desk desk) throws RemoteException {
+    public Player(String nickname, int number, Desk desk, Game game) throws RemoteException {
         this.nickname = nickname;
         this.number = number;
         this.color = createColorArrayList().get(number - 1);
@@ -137,6 +150,8 @@ public class Player extends Observable implements Serializable {
         this.online = true;
         this.skipTurn = false;
         this.action = PlayerAction.FIRSTMOVES;
+        listeners = new ArrayList<>();
+        listenersHandler = new ListenersHandler();
     }
 
 
@@ -145,7 +160,7 @@ public class Player extends Observable implements Serializable {
      * @param index The index of the card the player wants to keep.
      * @return A boolean indicating whether the operation was successful or not.
      */
-    public boolean selectObjectiveCard(int index) {
+    public boolean selectObjectiveCard(int index, Game game) {
         if (index < 0 || index >= this.cardObjective.size()) {
             return false;
         } else {
@@ -157,6 +172,7 @@ public class Player extends Observable implements Serializable {
             }
             this.cardObjective.clear();
             this.cardObjective.addAll(newCardObjective);
+            listenersHandler.notifyObjectiveCardChosen(game, this.cardObjective.getLast());
             return true;
         }
     }
@@ -185,7 +201,6 @@ public class Player extends Observable implements Serializable {
         // If you can't insert the card into any cell
         if (skip == 0)
             this.skipTurn = true;
-        return;
     }
 
 
@@ -449,5 +464,18 @@ public class Player extends Observable implements Serializable {
         this.hand.remove(CardPositionInHand);
     }
 
+    /**
+     * @param lis adds the listener to the list
+     */
+    public void addListener(GameListener lis) {
+        listeners.add(lis);
+    }
+
+    /**
+     * @param lis remove the listener from the list
+     */
+    public void removeListener(GameListener lis) {
+        listeners.remove(lis);
+    }
 
 }

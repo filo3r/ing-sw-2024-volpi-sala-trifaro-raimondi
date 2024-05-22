@@ -156,10 +156,10 @@ class GameControllerTest {
             card =game.getDesk().drawCardDisplayed(game.getDesk().getDisplayedResource(),0);
         }
         while(!game.getDesk().getDeckResource().isEmpty()){
-            card =game.getDesk().drawCardDeck(game.getDesk().getDeckResource());
+            card =game.getDesk().drawCardDeck(this.gameController.getGame(), game.getDesk().getDeckResource());
         }
         while(!game.getDesk().getDeckGold().isEmpty()){
-            card =game.getDesk().drawCardDeck(game.getDesk().getDeckGold());
+            card =game.getDesk().drawCardDeck(this.gameController.getGame(), game.getDesk().getDeckGold());
         }
         game.getPlayers().getFirst().setAction(PlayerAction.DRAW);
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
@@ -9,12 +11,13 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * This class represents a game.
  */
-public class Game extends Observable implements Serializable {
+public class Game {
 
     /**
      * Game's ID.
@@ -71,6 +74,11 @@ public class Game extends Observable implements Serializable {
      */
     public static final int STOP_POINT_GAME = 20;
 
+    /**
+     * Listener handler
+     */
+    private transient ListenersHandler listenersHandler;
+
 
     /**
      * Game class constructor.
@@ -80,12 +88,13 @@ public class Game extends Observable implements Serializable {
         this.idGame = idGame;
         this.size = 1;
         this.status = GameStatus.WAITING;
-        this.desk = new Desk();
+        this.desk = new Desk(this);
         this.numPlayer = 0;
         this.players = new ArrayList<>(MAX_NUM_PLAYERS);
         this.currPlayer = 0;
         this.chat = new ArrayList<>();
         this.winner = new ArrayList<>(MAX_NUM_PLAYERS);
+        listenersHandler = new ListenersHandler();
     }
 
 
@@ -94,25 +103,27 @@ public class Game extends Observable implements Serializable {
      * @param nickname The player's nickname.
      * @return A boolean indicating whether a player has been added to the game or not.
      */
-    public boolean addPlayer(String nickname, VirtualView listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+    public boolean addPlayer(String nickname, GameListener listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+        Player player = new Player(nickname, this.numPlayer, this.desk, this);
         // The game is full
         if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
+            listenersHandler.notifyJoinUnableGameFull(this, player);
             throw new DeskIsFullException();
         } else {
             // Check that the nickname is different from other players who have already entered
-            for (Player player : this.players) {
-                if (nickname.equals(player.getNickname()))
+            for (Player player1 : this.players) {
+                if (nickname.equals(player1.getNickname()))
+                    listenersHandler.notifyJoinUnableNicknameAlreadyInUse(player);
                     throw new PlayerAlreadyJoinedException();
             }
             // The player can be added
             this.numPlayer++;
-            Player player = new Player(nickname, this.numPlayer, this.desk);
             this.players.add(player);
-            this.players.forEach(p->p.addObserver(listener));
-            this.players.forEach(p->p.getCodex().addObserver(listener));
-            this.getDesk().addObserver(listener);
-            addObserver(listener);
-            notifyObservers(this);
+            this.players.forEach(player1->player1.addListener(listener));
+            this.players.forEach(player1->player1.getCodex().addListener(listener));
+            this.getDesk().addListener(listener);
+            addListener(listener);
+            listenersHandler.notifyPlayerJoined(this);
             return true;
         }
     }
@@ -124,15 +135,13 @@ public class Game extends Observable implements Serializable {
      * @return A Boolean value indicating whether a player has been removed from the game.
      */
     public boolean removePlayer(String nickname) throws RemoteException {
-        for (int i = 0; i < this.players.size(); i++) {
-            if (nickname.equals(this.players.get(i).getNickname())) {
-                this.players.remove(i);
-                this.numPlayer--;
-                notifyObservers(this);
-                return true;
-            }
+        List<Player> player = this.players.stream().filter(x->x.getNickname().equals(nickname)).toList();
+        if (player.size()>0) {
+            this.players.removeIf(player1 -> player1.equals(player.get(0)));
+            this.numPlayer--;
+            listenersHandler.notifyPlayerLeft(this, player.get(0).getNickname());
+            return true;
         }
-        notifyObservers(this);
         return false;
     }
 
@@ -142,11 +151,11 @@ public class Game extends Observable implements Serializable {
      * @param sender The nickname of the player who wrote the message.
      * @param text The text of the message.
      */
-    public void addMessage(Player sender, String text) throws RemoteException {
+    public void addMessage(ArrayList<Player> receiver, Player sender, String text) throws RemoteException {
         LocalTime time = LocalTime.now();
-        ChatMessage chatMessage = new ChatMessage(sender, text, time);
+        ChatMessage chatMessage = new ChatMessage(receiver, sender, text, time);
         this.chat.add(chatMessage);
-        notifyObservers(this);
+        listenersHandler.notifySentChatMessage(this, chatMessage);
     }
 
 
@@ -158,7 +167,7 @@ public class Game extends Observable implements Serializable {
             this.currPlayer++;
         else
             this.currPlayer = 0;
-        notifyObservers(this);
+        listenersHandler.notifyNextTurn(this);
     }
 
 
@@ -211,7 +220,11 @@ public class Game extends Observable implements Serializable {
         } else {
             this.winner.addAll(tempWinners);
         }
-        notifyObservers(this);
+        ArrayList<String> winnerNicknames = new ArrayList<String>();
+        for (Player player : this.winner) {
+            winnerNicknames.add(player.getNickname());
+        }
+        listenersHandler.notifyWinnerDeclared(this, winnerNicknames);
     }
 
 
@@ -256,7 +269,7 @@ public class Game extends Observable implements Serializable {
      */
     public void setSize(int size) throws RemoteException {
         this.size = size;
-        notifyObservers(this);
+        listenersHandler.notifyGameSizeUpdated(this, size);
     }
 
 
@@ -400,5 +413,18 @@ public class Game extends Observable implements Serializable {
         this.winner = winner;
     }
 
+    /**
+     * @param lis adds the listener to the list
+     */
+    public void addListener(GameListener lis) {
+        listenersHandler.addListener(lis);
+    }
+
+    /**
+     * @param lis remove the listener to the list
+     */
+    public void removeListener(GameListener lis) {
+        listenersHandler.removeListener(lis);
+    }
 
 }

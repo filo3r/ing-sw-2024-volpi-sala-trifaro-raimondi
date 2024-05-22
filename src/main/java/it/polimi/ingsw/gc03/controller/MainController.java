@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.controller;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
@@ -64,7 +65,7 @@ public class MainController implements MainControllerInterface, Serializable {
      * new game.
      * @param playerNickname The nickname of the player attempting to join a game.
      */
-    public synchronized GameController joinGame(String playerNickname, VirtualView listener) throws RemoteException {
+    public synchronized GameController joinGame(String playerNickname, GameListener listener) throws RemoteException {
         //First of all check if there is any game where is possible to join (GCs stands for gameControllers
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
         return addPlayerToGame(playerNickname, listener, GCs);
@@ -75,7 +76,7 @@ public class MainController implements MainControllerInterface, Serializable {
         return addPlayerToGame(playerNickname, listener, GCs);
     }
 
-    private GameController addPlayerToGame(String playerNickname, VirtualView listener, List<GameController> GCs) throws RemoteException {
+    private GameController addPlayerToGame(String playerNickname, GameListener listener, List<GameController> GCs) throws RemoteException {
         if (!GCs.isEmpty()) {
             //If there are some (at least 1) available games to join, join the last.
             try {

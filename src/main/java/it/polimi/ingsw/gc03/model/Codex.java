@@ -1,5 +1,7 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
@@ -9,12 +11,13 @@ import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * This class represents a Codex.
  */
-public class Codex extends Observable implements Serializable {
+public class Codex implements Serializable {
 
     /**
      * Data structure of the codex.
@@ -64,6 +67,17 @@ public class Codex extends Observable implements Serializable {
      */
     private boolean cardStarterInserted;
 
+    /**
+     * Game Listeners for updates
+     */
+    private transient List<GameListener> listeners;
+
+    /**
+     * Listeners handler
+     */
+    private transient ListenersHandler listenersHandler;
+
+
 
     /**
      * Constructor for the Codex class.
@@ -80,6 +94,7 @@ public class Codex extends Observable implements Serializable {
         this.minColumn = 0;
         this.maxColumn = 81;
         this.cardStarterInserted = false;
+        listenersHandler = new ListenersHandler();
     }
 
 
@@ -243,7 +258,6 @@ public class Codex extends Observable implements Serializable {
      */
     private void insertSide(Side side, int row, int column) throws RemoteException {
         this.codex[row][column] = side;
-        notifyObservers(this);
         // Set the corners that are covered by the inserted card.
         if (checkTopLeftConnection(row, column)) {
             Side topLeft = this.codex[row - 1][column - 1];
@@ -429,15 +443,15 @@ public class Codex extends Observable implements Serializable {
      * Method for inserting the Starter card into the codex.
      * @param side The side of the card to insert.
      */
-    public void insertStarterIntoCodex(Side side) throws RemoteException {
+    public void insertStarterIntoCodex(Side side, Game game) throws RemoteException {
         this.codex[40][40] = side;
-        notifyObservers(this);
         this.cardStarterInserted = true;
         // Update minimums and maximums of rows and columns
         this.minRow = 40;
         this.maxRow = 40;
         this.minColumn = 40;
         this.maxColumn = 40;
+        listenersHandler.notifyPositionedStarterCardIntoCodex(game);
         // Update counter for values in the codex
         updateCounterCodex(side);
     }
@@ -445,12 +459,13 @@ public class Codex extends Observable implements Serializable {
 
     /**
      * Method of inserting one side of a card into the codex.
+     * @param game The game of the codex where the card will be inserted.
      * @param side The side of the card to insert.
      * @param row The row to insert the side of the card.
      * @param column The column to insert the side of the card.
      * @return true if the insertion was successful, otherwise false.
      */
-    public boolean insertIntoCodex(Side side, int row, int column) {
+    public boolean insertIntoCodex(Game game, Side side, int row, int column) {
         try {
             // Check the row and column and whether the Starter card has already been inserted
             if (row < 0 || row >= 81 || column < 0 || column >= 81 || !this.cardStarterInserted) {
@@ -481,6 +496,7 @@ public class Codex extends Observable implements Serializable {
                 updateCounterCodex(side);
                 calculatePointCodex(side);
                 this.counterCodex[7] = 0;
+                listenersHandler.notifyPositionedCardIntoCodex(game, row, column);
                 return true;
             }
         } catch (Exception e) {
@@ -667,82 +683,16 @@ public class Codex extends Observable implements Serializable {
 
 
     /**
-     * Method to print the codex table.
+     * @param lis adds the listener to the list
      */
-  /*  public void printCodexTable() {
-        System.out.println("CODEX:");
-        // Maximum length of column coordinates
-        int columnWidth = String.valueOf(this.codex[0].length - 1).length();
-        // Print coordinates above
-        System.out.print(" ".repeat(columnWidth + 4));
-        for (int i = minColumn - 3; i < maxColumn + 3; i++) {
-            System.out.printf("%-6d", i);
-        }
-        System.out.println();
-        // Print top lines
-        System.out.print(" ".repeat(columnWidth) + " +");
-        for (int i = minColumn - 3; i < maxColumn + 3; i++) {
-            System.out.print("-----+");
-        }
-        System.out.println();
-        // Print table with lines and cells filled
-        for (int i = minRow - 3; i < maxRow + 3; i++) {
-            // Print the row coordinate
-            System.out.printf("%-" + columnWidth + "d |", i);
-            // Print the contents of the row
-            for (int j = minColumn - 3; j < maxColumn + 3; j++) {
-                if (this.codex[i][j] != null) {
-                    System.out.print("  C  |");
-                } else {
-                    System.out.print("     |");
-                }
-            }
-            // Return after each row
-            System.out.println();
-            // Print the internal rows of the table
-            System.out.print(" ".repeat(columnWidth) + " +");
-            for (int k = minColumn - 3; k < maxColumn + 3; k++) {
-                System.out.print("-----+");
-            }
-            System.out.println();
-        }
+    public void addListener(GameListener lis) {
+        listeners.add(lis);
     }
-
-   */
-
 
     /**
-     * Method for printing card information contained in the codex.
+     * @param lis remove the listener from the list
      */
-   /* public void printCodexCard() {
-        for (int i = minRow - 3; i < maxRow + 3; i++) {
-            for (int j = minColumn - 3; j < maxColumn + 3; j++) {
-                if (this.codex[i][j] != null) {
-                    Side cardCodex = this.codex[i][j];
-                    System.out.println("CARD IN COORDINATES: (" + i + " , " + j + ")");
-                    System.out.println("Kingdom: " + cardCodex.getKingdom());
-                    System.out.println("Top Left Corner: " + cardCodex.getTopLeftCorner());
-                    System.out.println("Bottom Left Corner: " + cardCodex.getBottomLeftCorner());
-                    System.out.println("Top Right Corner: " + cardCodex.getTopRightCorner());
-                    System.out.println("Bottom Right Corner: " + cardCodex.getBottomRightCorner());
-                    if (cardCodex instanceof BackSide) {
-                        System.out.print("Center: ");
-                        ArrayList<Value> center = ((BackSide) cardCodex).getCenter();
-                        for (int k = 0; k < center.size(); k++) {
-                            if (k != 0) {
-                                System.out.print(", ");
-                            }
-                            System.out.print(center.get(k));
-                        }
-                        System.out.println();
-                    }
-                    System.out.println();
-                }
-            }
-        }
+    public void removeListener(GameListener lis) {
+        listeners.remove(lis);
     }
-
-    */
-
-
 }

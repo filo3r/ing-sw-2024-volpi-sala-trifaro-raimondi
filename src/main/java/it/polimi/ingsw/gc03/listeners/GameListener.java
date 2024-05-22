@@ -250,6 +250,14 @@ public interface GameListener extends Remote {
      */
     void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException;
 
+    /**
+     * This method is used to inform the client which players won the game.
+     * @param gameImmutable The immutable game model.
+     * @param size The new game size.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException;
+
 
     // Additional methods may be necessary
     // For other methods you have to create the respective message in serverToClientMessages package and method in ListenersHandler
