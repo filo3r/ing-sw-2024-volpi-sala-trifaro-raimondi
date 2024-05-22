@@ -2,14 +2,10 @@ package it.polimi.ingsw.gc03.saveGameData;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Objects;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+
 
 
 public class SaveGameData {

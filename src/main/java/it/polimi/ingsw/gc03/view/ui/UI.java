@@ -3,8 +3,12 @@ package it.polimi.ingsw.gc03.view.ui;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.enumerations.ConnectionSelection;
+import it.polimi.ingsw.gc03.model.enumerations.UISelection;
+import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
 
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class UI {
     protected List<String> importantEvents; //events that needs to be showed always in screen
@@ -13,10 +17,6 @@ public abstract class UI {
      * Initialises GUI or TUI
      */
     public abstract void init();
-
-    //----------------------
-    //SHOW
-    //----------------------
 
     /**
      * Shows menu options
@@ -213,5 +213,30 @@ public abstract class UI {
     }
 
     public void cardAddedToHand(GameImmutable model, Card card) {
+    }
+
+    public void showWinner(GameImmutable model) {
+    }
+
+    public void showAskUI() {
+        AsyncPrint.asyncPrint(new StringBuilder("\nCHOOSE WHICH TYPE OF UI YOU WANT TO USE:\n" +
+                " t) TUI            g)GUI\n" +
+                "(Write the letter and press Enter to make a choice)\n"));
+    }
+
+    public void showAskConnection() {
+
+    }
+
+    public void showAskNickname() {
+    }
+
+    public void showAskGameID() {
+    }
+
+    public void showAskJoin() {
+    }
+
+    public void showCardHasBeenDrawn(GameImmutable gameModel) {
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.view.ui;
 
+import it.polimi.ingsw.gc03.main.MainClient;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
@@ -7,12 +8,15 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.ConnectionSelection;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.enumerations.UISelection;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.saveGameData.SaveGameData;
+import it.polimi.ingsw.gc03.view.gui.Gui;
+import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.ui.events.EventType;
@@ -24,6 +28,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static it.polimi.ingsw.gc03.view.ui.events.EventType.*;
 
@@ -42,7 +47,9 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     private int col;
 
     private boolean frontCard;
-    private final UI ui;
+    private UI ui;
+
+    private MainClient mainClient;
 
 
 
@@ -54,39 +61,75 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     protected List<String> importantEvents;
     private boolean ended = false;
 
-    public GameFlow(ConnectionSelection connectionSelection) throws RemoteException {
-        //Invoked for starting with TUI
-        switch (connectionSelection) {
-            case SOCKET -> clientActions = new SocketClient();
-            case RMI -> clientActions = new RmiClient(,this);
+    public GameFlow() throws InterruptedException {
+        UISelection uiSelection;
+        uiSelection = askUI();
+        switch(uiSelection){
+            case GUI ->{
+                ui = new Gui();
+                this.inputReader = new InputReaderGUI();
+                this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
+            }
+
+            case TUI ->{
+                ui = new Tui();
+                this.inputReader = new InputReaderTUI();
+                this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
+            }
         }
-        ui = new Tui();
-
-        importantEvents = new ArrayList<>();
-        nickname = "";
-        saveGameData = new SaveGameData();
-        this.inputReader = new InputReaderTUI();
-        this.inputProcessor = new InputProcessor(this.inputReader.getQueue(), this);
-
+        ConnectionSelection connectionSelection;
+        connectionSelection = askConnection();
+        switch(connectionSelection){
+            case RMI->{
+                mainClient = new RmiClient();
+            }
+            case SOCKET ->{
+                mainClient = new SocketClient();
+            }
+        }
         new Thread(this).start();
     }
 
-    public GameFlow(GUIApplication guiApplication, ConnectionSelection connectionSelection) {
-        //Invoked for starting with GUI
-        switch (connectionSelection) {
-            case SOCKET -> clientActions = new SocketClient();
-            case RMI -> clientActions = new RmiClient();
-        }
-        this.inputReader = new InputReaderGUI();
-
-        ui = new GUI(guiApplication, (InputReaderGUI) inputReader);
-        importantEvents = new ArrayList<>();
-        nickname = "";
-        saveGameData = new SaveGameData();
-
-        this.inputProcessor = new InputProcessor(this.inputReader.getQueue(), this);
-        new Thread(this).start();
+    private ConnectionSelection askConnection() throws InterruptedException {
+        ui.showAskConnection();
+        String choice;
+        boolean choiceInvalid = true;
+        do{
+            choice = this.inputProcessor.getDataToProcess().popData();
+            if(choice.equals("r")){
+                choiceInvalid = false;
+                return ConnectionSelection.RMI;
+            }
+            if(choice.equals("s")){
+                choiceInvalid = false;
+                return ConnectionSelection.SOCKET;
+            }
+        }while(choiceInvalid);
+        return null;
     }
+
+    private UISelection askUI() {
+        ui.showAskUI();
+        Scanner scan = new Scanner(System.in.toString());
+        String uiChoice;
+        boolean choiceInvalid = true;
+        do{
+            uiChoice = scan.nextLine();
+            if(uiChoice.equals("t")){
+                choiceInvalid = false;
+                AsyncPrint.asyncPrint((new StringBuilder("TUI Starting...")));
+                return UISelection.TUI;
+
+            }
+            if(uiChoice.equals("g")){
+                choiceInvalid = false;
+                AsyncPrint.asyncPrint((new StringBuilder("GUI Starting...")));
+                return UISelection.GUI;
+            }
+        }while(choiceInvalid);
+        return null;
+    }
+
 
     @SuppressWarnings("BusyWait")
     @Override
@@ -253,6 +296,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     private void statusEnded(Event event) throws NotBoundException, IOException, InterruptedException {
         switch (event.getType()) {
             case GAMEENDED -> {
+                ui.showWinner(event.getModel());
                 ui.show_returnToMenuMsg();
                 //new Scanner(System.in).nextLine();
                 this.inputProcessor.getDataToProcess().popAllData();
@@ -586,10 +630,10 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
      * Client asks to set the size
      * @param size
      */
-    public void setGameSize(int size) {
+    public void setGameSize(int size,int idGame) throws Exception {
         ui.show_sizeSetted();
         try{
-            clientActions.setGameSize(size);
+            clientActions.setGameSize(nickname ,size, idGame);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -652,21 +696,6 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
                 throw new RuntimeException(e);
             }
             events.add(null, APP_MENU);
-        }
-    }
-
-    /**
-     * The client asks the server to leave the game
-     *
-     * @param nick   nickname of the player
-     * @param idGame id of the game to leave
-     */
-    @Override
-    public void leaveGame(String nick, int idGame) {
-        try {
-            clientActions.playerLeft(nick, idGame);
-        } catch (Exception e) {
-            noConnectionError();
         }
     }
 
@@ -768,7 +797,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         if (gamemodel.getStatus().equals(GameStatus.WAITING)) {
             ui.show_playerJoined(gamemodel, nickname);
         } else {
-            ui.addImportantEvent("[EVENT]: Player " + nick + " decided to leave the game!");
+            ui.addImportantEvent("[EVENT]: Player " + nick + " left the game!");
         }
 
     }
@@ -855,7 +884,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
      */
     @Override
     public void drawCard(GameImmutable gameModel) {
-        events.add(gameModel, DRAW_FROM_CHOSEN_DECK);
+        ui.showCardHasBeenDrawn(gameModel);
     }
 
     /**

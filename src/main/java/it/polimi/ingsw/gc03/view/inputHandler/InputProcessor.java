@@ -57,16 +57,19 @@ public class InputProcessor extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            if (p!= null && txt.startsWith("/pchat")){
+                LocalTime localTime = LocalTime.now();
+                String receiver = txt.substring(0,txt.indexOf(" "));
+                String message = txt.substring(receiver.length() + 1);
+                gameFlow.sendChatMessage(new ChatMessage(receiver,p,message,localTime));
+            }
 
             if (p != null && txt.startsWith("/chat")) {
                 //I send a message
                 LocalTime localtime = LocalTime.now();
+                String receiver = "everyone";
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                gameFlow.sendChatMessage(new ChatMessage(p, txt, localtime));
-
-            } else if (txt.startsWith("/quit") || (txt.startsWith("/leave"))) {
-                assert p != null;
-                System.exit(1);
+                gameFlow.sendChatMessage(new ChatMessage(receiver,p, txt, localtime));
 
             } else {
                 dataToProcess.addData(txt);

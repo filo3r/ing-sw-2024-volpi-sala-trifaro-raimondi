@@ -45,18 +45,6 @@ public interface ClientAction {
      */
     void joinSpecificGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException;
 
-
-    /**
-     * The client can leave a game in progress.
-     * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
-     * @throws IOException If an input or output exception occurs during action processing.
-     * @throws InterruptedException If the thread is interrupted, either before or during the action.
-     * @throws NotBoundException If a name in the registry was not found.
-     */
-    void playerLeft(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException;
-
-
     /**
      * The client can reconnect to an ongoing game.
      * @param nickname The nickname of the client.
