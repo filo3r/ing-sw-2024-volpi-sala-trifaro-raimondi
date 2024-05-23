@@ -64,13 +64,10 @@ class GameTest {
 
     @Test
     void addMessage() throws RemoteException {
-        Player player = new Player("Example",1,desk);
-        ArrayList<Player> receivers = new ArrayList<>();
-        receivers.add(new Player("Rec1",1,desk));
-        receivers.add(new Player("Rec2",1,desk));
         String text = "Hello";
-        game.addMessage(receivers, player,text);
-        assertEquals(game.getChat().getLast().getSender(),player);
+        game.addMessage("Player1", "Player2",text);
+        assertEquals(game.getChat().getLast().getSender(),"Player2");
+        assertEquals(game.getChat().getLast().getReceiver(),"Player1");
         assertEquals(game.getChat().getLast().getText(),text);
         assertNotEquals(game.getChat().getLast().getTimestamp(),LocalTime.now());
     }

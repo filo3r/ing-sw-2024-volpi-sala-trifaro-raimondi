@@ -151,7 +151,7 @@ public class Game {
      * @param sender The nickname of the player who wrote the message.
      * @param text The text of the message.
      */
-    public void addMessage(ArrayList<Player> receiver, Player sender, String text) throws RemoteException {
+    public void addMessage(String receiver, String sender, String text) throws RemoteException {
         LocalTime time = LocalTime.now();
         ChatMessage chatMessage = new ChatMessage(receiver, sender, text, time);
         this.chat.add(chatMessage);

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.gc03.view.tui;
 
-import it.polimi.ingsw.gc03.model.Codex;
-import it.polimi.ingsw.gc03.model.Desk;
-import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -16,6 +14,10 @@ import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.rmi.RemoteException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -44,29 +46,35 @@ public class Tui extends UI {
         resizeScreenView(screenWidth, screenHeight);
         // Create a fake codex with multiple sequential additions to test codex view
         Codex codex = new Codex();
+        Game game = null;
         try {
-            codex.insertStarterIntoCodex(new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))));
+            game = new Game(1);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40+1);
-        codex.insertIntoCodex(new FrontResource(Kingdom.ANIMAL, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40+2);
-        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40);
-        codex.insertIntoCodex(new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
-        codex.insertIntoCodex(new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
-        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
-        codex.insertIntoCodex(new FrontResource(Kingdom.PLANT, Value.NULL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
+        try {
+            codex.insertStarterIntoCodex(new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))), game);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.FUNGI, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40+1);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.ANIMAL, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40+2);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
+        codex.insertIntoCodex(game, new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.PLANT, Value.NULL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
 
         displayCodex(codex);
 
-        codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
 
         resizeScreenView(200, 40);
 
         moveScreenView(0,-5);
         displayCodex(codex);
 
-        codex.insertIntoCodex(new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40-1);
+        codex.insertIntoCodex(game, new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40-1);
 
         moveScreenView(0,-2);
         displayCodex(codex);
@@ -75,8 +83,8 @@ public class Tui extends UI {
         Player player = null;
 
         try {
-            desk = new Desk();
-            player = new Player("ABC", 1, desk);
+            desk = new Desk(game);
+            player = new Player("ABC", 1, desk, game);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -446,4 +454,29 @@ public class Tui extends UI {
         StringBuilder sb = new StringBuilder(message);
         asyncPrint(sb);
     }
+
+    public void showChat(Game game, Player player){
+        ArrayList<ChatMessage> personalChat = new ArrayList<ChatMessage>();
+        for(ChatMessage msg: game.getChat()){
+            if(msg.getReceiver().equals(player.getNickname()) || msg.getReceiver().equals("everyone") || msg.getSender().equals(player.getNickname())){
+                personalChat.add(msg);
+            }
+        }
+
+        int yPos = 364-screenHeight+2;
+        int xPos = 1093-screenWidth/2+2;
+        for(ChatMessage msg: personalChat){
+            generateTextOnScreen(msg.getSender(), CharColor.WHITE, xPos, yPos);
+            generateTextOnScreen(" -> ", CharColor.WHITE, xPos+msg.getSender().length()+1, yPos);
+            xPos += msg.getSender().length()+1;
+            generateTextOnScreen(msg.getReceiver(), CharColor.WHITE, xPos+4, yPos);
+            xPos += 4;
+            generateTextOnScreen(msg.getText(), CharColor.WHITE, xPos+msg.getReceiver().length()+1, yPos);
+            yPos += 1;
+        }
+        clearScreen(' ');
+        refreshScreen(1093, 364);
+    }
+
+
 }

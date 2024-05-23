@@ -312,6 +312,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+    @Override
+    public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
+        this.game.getChat().add(chatMessage);
+    }
+    
     /**
      * Method that retrieves a specific side of a card from a player's hand based on the index provided.
      * @param player The player whose hand is to be queried.

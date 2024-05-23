@@ -13,7 +13,7 @@ public class ChatMessage implements Serializable {
     /**
      * The message's sender.
      */
-    private Player sender;
+    private String sender;
 
     /**
      * The message's text.
@@ -28,7 +28,7 @@ public class ChatMessage implements Serializable {
     /**
      * The message's receiver(s).
      */
-    String receiver;
+    private String receiver;
 
     /**
      * Constructor for the Message class.
@@ -36,7 +36,7 @@ public class ChatMessage implements Serializable {
      * @param text The message's text.
      * @param timestamp The message's timestamp.
      */
-    public ChatMessage(String receiver, Player sender, String text, LocalTime timestamp) {
+    public ChatMessage(String receiver, String sender, String text, LocalTime timestamp) {
         this.text = text;
         this.timestamp = timestamp;
         this.sender = sender;
@@ -80,7 +80,7 @@ public class ChatMessage implements Serializable {
      * Getter method for retrieving the sender of the message.
      * @return The sender of the message.
      */
-    public Player getSender() {
+    public String getSender() {
         return sender;
     }
 
@@ -88,7 +88,7 @@ public class ChatMessage implements Serializable {
      * Setter method for setting the sender of the message.
      * @param sender The sender of the message to set.
      */
-    public void setSender(Player sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
