@@ -109,11 +109,6 @@ public class Player   implements Serializable {
     public static final int FINAL_CARD_OBJECTIVE = 1;
 
     /**
-     * Game Listeners for updates
-     */
-    private transient List<GameListener> listeners;
-
-    /**
      * Listeners handler
      */
     private transient ListenersHandler listenersHandler;
@@ -150,7 +145,6 @@ public class Player   implements Serializable {
         this.online = true;
         this.skipTurn = false;
         this.action = PlayerAction.FIRSTMOVES;
-        listeners = new ArrayList<>();
         listenersHandler = new ListenersHandler();
     }
 
@@ -468,14 +462,21 @@ public class Player   implements Serializable {
      * @param lis adds the listener to the list
      */
     public void addListener(GameListener lis) {
-        listeners.add(lis);
+        listenersHandler.addListener(lis);
     }
 
     /**
      * @param lis remove the listener from the list
      */
     public void removeListener(GameListener lis) {
-        listeners.remove(lis);
+        listenersHandler.removeListener(lis);
+    }
+
+    /**
+     * @return the list of listeners
+     */
+    public ArrayList<GameListener> getListeners() {
+        return listenersHandler.getGameListeners();
     }
 
 }

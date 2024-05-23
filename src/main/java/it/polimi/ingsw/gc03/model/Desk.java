@@ -64,11 +64,6 @@ public class Desk implements Serializable{
     private ArrayList<CardObjective> displayedObjective;
 
     /**
-     * Game Listeners for updates
-     */
-    private transient List<GameListener> listeners;
-
-    /**
      * Listeners handler
      */
     private transient ListenersHandler listenersHandler;
@@ -150,6 +145,7 @@ public class Desk implements Serializable{
         // Initialize visible cards
         initializeDisplayedCard();
         this.game = game;
+        listenersHandler = new ListenersHandler();
     }
 
 
@@ -506,5 +502,10 @@ public class Desk implements Serializable{
         listenersHandler.removeListener(lis);
     }
 
-
+    /**
+     * @return the list of listeners
+     */
+    public ArrayList<GameListener> getListeners() {
+        return listenersHandler.getGameListeners();
+    }
 }

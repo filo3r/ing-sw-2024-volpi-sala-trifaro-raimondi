@@ -8,6 +8,8 @@ import it.polimi.ingsw.gc03.networking.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.Ping;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages.*;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.mainControllerMessages.*;
+import it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages.SocketServerGenericMessage;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -99,7 +101,7 @@ public class SocketClient implements ClientAction {
      * Continuously processes messages received from the server.
      * This method runs in a separate thread managed by ExecutorService.
      */
-    private void processMessages() {
+    private void processMessages() throws InterruptedException {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 SocketServerGenericMessage message = (SocketServerGenericMessage) this.inputStream.readObject();

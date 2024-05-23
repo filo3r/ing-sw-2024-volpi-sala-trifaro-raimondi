@@ -316,7 +316,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
         this.game.getChat().add(chatMessage);
     }
-    
+
     /**
      * Method that retrieves a specific side of a card from a player's hand based on the index provided.
      * @param player The player whose hand is to be queried.
@@ -416,6 +416,19 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return game;
     }
 
+    public void addListener(GameListener gameListener, Player player){
+        game.addListener(gameListener);
+        game.getListeners().stream().forEach(x->player.addListener(x));
+        game.getPlayers().stream().filter(x->!x.equals(player)).forEach(x->x.addListener(gameListener));
+    }
+
+    public void removeListener(GameListener gameListener, Player player){
+        game.removeListener(gameListener);
+        player.getListeners().clear();
+        game.getPlayers().stream().filter(x->!x.equals(player)).forEach(x->x.removeListener(gameListener));
+    }
+
+
     /**
      * The main game loop that handles different game statuses and manages online player interactions.
      * This method runs continuously until the thread is interrupted, checking game status and adjusting the game flow
@@ -442,6 +455,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                         // then a timer start and if nobody reconnect before the timer's end
                         // the only player left is the winner
                         game.setStatus(GameStatus.HALTED);
+                        startTimer();
                     }
                 }
             }
@@ -454,6 +468,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 } catch (NoSuchGameException e) {
                     throw new RuntimeException(e);
                 }
+            }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }

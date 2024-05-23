@@ -68,11 +68,6 @@ public class Codex implements Serializable {
     private boolean cardStarterInserted;
 
     /**
-     * Game Listeners for updates
-     */
-    private transient List<GameListener> listeners;
-
-    /**
      * Listeners handler
      */
     private transient ListenersHandler listenersHandler;
@@ -500,8 +495,7 @@ public class Codex implements Serializable {
                 return true;
             }
         } catch (Exception e) {
-            // Handle the exception here, you can log it or take other actions as required
-            e.printStackTrace(); // or any other way you want to handle it
+            e.printStackTrace();
             return false;
         }
     }
@@ -686,13 +680,20 @@ public class Codex implements Serializable {
      * @param lis adds the listener to the list
      */
     public void addListener(GameListener lis) {
-        listeners.add(lis);
+        listenersHandler.addListener(lis);
     }
 
     /**
      * @param lis remove the listener from the list
      */
     public void removeListener(GameListener lis) {
-        listeners.remove(lis);
+        listenersHandler.removeListener(lis);
+    }
+
+    /**
+     * @return the list of listeners
+     */
+    public ArrayList<GameListener> getListeners() {
+        return listenersHandler.getGameListeners();
     }
 }

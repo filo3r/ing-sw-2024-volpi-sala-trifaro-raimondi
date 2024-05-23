@@ -7,6 +7,8 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.view.ui.Flow;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -345,6 +347,17 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     @Override
     public void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException {
         this.flow.winnerDeclared(gameImmutable, nickname);
+    }
+
+    /**
+     * Handles the event when the winners are declared.
+     * @param gameImmutable The immutable game model.
+     * @param size The new game size.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    @Override
+    public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
+        this.flow.gameSizeUpdated(gameImmutable, size);
     }
 
 

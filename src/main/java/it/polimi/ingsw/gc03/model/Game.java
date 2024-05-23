@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.model;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
@@ -103,29 +104,35 @@ public class Game {
      * @param nickname The player's nickname.
      * @return A boolean indicating whether a player has been added to the game or not.
      */
-    public boolean addPlayer(String nickname, GameListener listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+    public boolean addPlayer(String nickname, GameListener listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException, CannotJoinGameException {
         Player player = new Player(nickname, this.numPlayer, this.desk, this);
         // The game is full
-        if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
-            listenersHandler.notifyJoinUnableGameFull(this, player);
-            throw new DeskIsFullException();
-        } else {
-            // Check that the nickname is different from other players who have already entered
-            for (Player player1 : this.players) {
-                if (nickname.equals(player1.getNickname()))
-                    listenersHandler.notifyJoinUnableNicknameAlreadyInUse(player);
+        if(this.getStatus().equals(GameStatus.WAITING)){
+            if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
+                listenersHandler.notifyJoinUnableGameFull(this, player);
+                throw new DeskIsFullException();
+            } else {
+                // Check that the nickname is different from other players who have already entered
+                for (Player player1 : this.players) {
+                    if (nickname.equals(player1.getNickname()))
+                        listenersHandler.notifyJoinUnableNicknameAlreadyInUse(player);
                     throw new PlayerAlreadyJoinedException();
+                }
+                // The player can be added
+                this.numPlayer++;
+                this.players.add(player);
+                this.players.forEach(player1->player1.addListener(listener));
+                this.players.forEach(player1->player1.getCodex().addListener(listener));
+                this.getDesk().addListener(listener);
+                addListener(listener);
+                listenersHandler.notifyPlayerJoined(this);
+                return true;
             }
-            // The player can be added
-            this.numPlayer++;
-            this.players.add(player);
-            this.players.forEach(player1->player1.addListener(listener));
-            this.players.forEach(player1->player1.getCodex().addListener(listener));
-            this.getDesk().addListener(listener);
-            addListener(listener);
-            listenersHandler.notifyPlayerJoined(this);
-            return true;
+        } else {
+            listenersHandler.notifyGameStarted(this);
+            throw new CannotJoinGameException();
         }
+
     }
 
 
@@ -421,10 +428,16 @@ public class Game {
     }
 
     /**
-     * @param lis remove the listener to the list
+     * @param lis remove the listener from the list
      */
     public void removeListener(GameListener lis) {
         listenersHandler.removeListener(lis);
     }
 
+    /**
+     * @return the list of listeners
+     */
+    public ArrayList<GameListener> getListeners() {
+        return listenersHandler.getGameListeners();
+    }
 }
