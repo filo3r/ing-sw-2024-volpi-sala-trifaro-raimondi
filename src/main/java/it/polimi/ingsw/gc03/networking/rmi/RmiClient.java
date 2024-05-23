@@ -133,7 +133,7 @@ public class RmiClient implements ClientAction {
             this.ping.interrupt();
             AsyncLogger.log(Level.INFO, "[CLIENT RMI] Connection with the server has been closed.");
         } catch (Exception e) {
-            AsyncLogger.log(Level.SEVERE, "CLIENT RMI] Error closing connection with server: " + e.getMessage());
+            AsyncLogger.log(Level.SEVERE, "[CLIENT RMI] Error closing connection with server: " + e.getMessage());
         }
     }
 
