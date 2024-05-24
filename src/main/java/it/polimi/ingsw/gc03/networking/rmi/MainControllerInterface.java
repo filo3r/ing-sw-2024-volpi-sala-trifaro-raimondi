@@ -44,23 +44,12 @@ public interface MainControllerInterface extends Remote {
 
 
     /**
-     * This method removes a player from the game.
-     * @param gameListener The game listener to be notified about game events.
-     * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
-     * @throws RemoteException If an error occurs in remote communication.
-     */
-    GameController leaveGame(GameListener gameListener, String nickname, int idGame) throws RemoteException;
-
-
-    /**
      * This method reconnects a player to the game.
      * @param gameListener The game listener to be notified about game events.
      * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    GameController reconnectToGame(GameListener gameListener, String nickname, int idGame) throws RemoteException;
+    GameController reconnectToGame(GameListener gameListener, String nickname) throws RemoteException;
 
 
 }

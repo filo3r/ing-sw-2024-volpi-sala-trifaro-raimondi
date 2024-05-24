@@ -191,33 +191,18 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
 
 
     /**
-     * This method removes a player from the game.
-     * @param gameListener The game listener to be notified about game events.
-     * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
-     * @throws RemoteException If an error occurs in remote communication.
-     */
-    public GameController leaveGame(GameListener gameListener, String nickname, int idGame) throws RemoteException {
-        mainController.leaveGame(gameListener, nickname, idGame);
-        AsyncLogger.log(Level.INFO, "[SERVER RMI] The client " + nickname + " has left the game: " + idGame + ".");
-        return null;
-    }
-
-
-    /**
      * This method reconnects a player to the game.
      * @param gameListener The game listener to be notified about game events.
      * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    public GameController reconnectToGame(GameListener gameListener, String nickname, int idGame) throws RemoteException {
-        GameController gameController = mainController.reconnectToGame(gameListener, nickname, idGame);
+    public GameController reconnectToGame(GameListener gameListener, String nickname) throws RemoteException {
+        GameController gameController = mainController.reconnectToGame(gameListener, nickname);
         if (gameController == null) {
-            AsyncLogger.log(Level.WARNING, "[SERVER RMI] The client " + nickname + " did not reconnect to the game: " + idGame + ".");
+            AsyncLogger.log(Level.WARNING, "[SERVER RMI] The client " + nickname + " did not reconnect to the game.");
         } else {
             exportObjectIfNeeded(gameController);
-            AsyncLogger.log(Level.INFO, "[SERVER RMI] The client " + nickname + " reconnected to the game: " + idGame + ".");
+            AsyncLogger.log(Level.INFO, "[SERVER RMI] The client " + nickname + " reconnected to the game.");
         }
         return gameController;
     }

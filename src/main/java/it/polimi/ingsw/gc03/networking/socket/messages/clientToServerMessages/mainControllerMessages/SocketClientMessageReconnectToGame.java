@@ -23,9 +23,8 @@ public class SocketClientMessageReconnectToGame extends SocketClientGenericMessa
      * Constructs a new game reconnect request message with the specified client nickname and game id.
      * This message is flagged to be processed by the main controller of the application.
      * @param nicknameClient The nickname of the client who is reconnecting to the game.
-     * @param idGame The id of the game the client wants to reconnect.
      */
-    public SocketClientMessageReconnectToGame(String nicknameClient, int idGame) {
+    public SocketClientMessageReconnectToGame(String nicknameClient) {
         this.nicknameClient = nicknameClient;
         this.messageType = MessageType.MAIN_CONTROLLER;
         this.idGame = idGame;
@@ -41,7 +40,7 @@ public class SocketClientMessageReconnectToGame extends SocketClientGenericMessa
      */
     @Override
     public GameController execute(GameListener gameListener, MainController mainController) throws RemoteException {
-        return mainController.reconnectToGame(gameListener, this.nicknameClient, this.idGame);
+        return mainController.reconnectToGame(gameListener, this.nicknameClient);
     }
 
 

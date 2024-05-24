@@ -88,7 +88,7 @@ public class SocketClient implements ClientAction {
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
             AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection established to server.");
             this.executorService.submit(this::processMessages);
-            this.pingExecutor.scheduleAtFixedRate(this::ping, 0, PING_INTERVAL, TimeUnit.SECONDS);
+            pingExecutor.scheduleAtFixedRate(() -> sendPing(this.playerClient), 0, 2, TimeUnit.SECONDS);
         } catch (IOException e) {
             AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Failed to connect to server: " + e.getMessage());
             shutdownAndExit();
@@ -216,13 +216,12 @@ public class SocketClient implements ClientAction {
     /**
      * This method is used to write on the output stream the message that the client wants to reconnect to an ongoing game.
      * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
      * @throws IOException If an input or output exception occurs during action processing.
      */
     @Override
-    public void reconnectToGame(String nickname, int idGame) throws IOException {
+    public void reconnectToGame(String nickname) throws IOException {
         this.nicknameClient = nickname;
-        SocketClientMessageReconnectToGame message = new SocketClientMessageReconnectToGame(nickname, idGame);
+        SocketClientMessageReconnectToGame message = new SocketClientMessageReconnectToGame(nickname);
         this.outputStream.writeObject(message);
         completeTransmission();
     }
@@ -322,7 +321,7 @@ public class SocketClient implements ClientAction {
      * This method is used to write the message that the client sends as a ping to the output stream.
      */
     @Override
-    public void ping() {
+    public void sendPing(String player) {
         if (this.outputStream != null) {
             try {
                 SocketClientMessagePing message = new SocketClientMessagePing(this.nicknameClient);

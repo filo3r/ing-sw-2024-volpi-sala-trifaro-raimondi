@@ -684,7 +684,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         if (idGame != -1) {
             ui.show_joiningToGameIdMsg(idGame, nick);
             try {
-                clientActions.reconnectToGame(nickname, idGame);
+                clientActions.reconnectToGame(nickname);
             } catch (Exception e) {
                 noConnectionError();
             }
@@ -761,7 +761,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     @Override
     public void ping() throws RemoteException {
         try {
-            clientActions.ping();
+            clientActions.sendPing(nickname);
         }catch (RemoteException e){
             noConnectionError();
         }

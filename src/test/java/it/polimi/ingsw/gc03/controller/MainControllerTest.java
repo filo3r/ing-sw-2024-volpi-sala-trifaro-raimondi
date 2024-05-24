@@ -55,7 +55,7 @@ class MainControllerTest {
     @DisplayName("Simulate a player trying to join when there are no active games")
     void joinAndCreateGame() throws NoSuchGameException, RemoteException {
         VirtualView listener = new RmiClient(null);
-        mainController.joinGame("Player1", listener);
+        mainController.joinFirstAvailableGame("Player1", listener);
         assertEquals(1, mainController.getGameControllers().size());
         GameController gc = mainController.getGameControllers().get(0);
         // The first player tries to place a card
@@ -65,12 +65,12 @@ class MainControllerTest {
         assertThrows(Exception.class,() -> gc.placeStarterOnCodex(p1, p1.getCardStarter().getBackStarter()));
         // A new player tries join while the first player hasn't decided
         // yet the game's size
-        assertThrows(Exception.class, () -> mainController.joinGame("Player2", listener));
+        assertThrows(Exception.class, () -> mainController.joinFirstAvailableGame("Player2", listener));
         // The first player sets the game's size
         gc.getGame().setSize(2);
         //Player already joined
-        assertThrows(RuntimeException.class,()->mainController.joinGame("Player1", listener));
-        mainController.joinGame("Player2", listener);
+        assertThrows(RuntimeException.class,()->mainController.joinFirstAvailableGame("Player1", listener));
+        mainController.joinFirstAvailableGame("Player2", listener);
         Player p2 = gc.getGame().getPlayers().getLast();
         assertEquals(GameStatus.STARTING, gc.getGame().getStatus());
     }
@@ -78,7 +78,7 @@ class MainControllerTest {
     @DisplayName("Game ending and winner")
     void gameEnd() throws Exception {
         VirtualView listener = new RmiClient(null);
-        mainController.joinGame("Player1", listener);
+        mainController.joinFirstAvailableGame("Player1", listener);
         GameController gameController= mainController.getGameControllers().getFirst();
         Game game = gameController.getGame();
         game.setSize(2);
@@ -132,7 +132,7 @@ class MainControllerTest {
     @Test
     void deleteNotExistentGame() throws NoSuchGameException, RemoteException {
         VirtualView listener = new RmiClient(null);
-        mainController.joinGame("Player", listener);
+        mainController.joinFirstAvailableGame("Player", listener);
         int idGame = mainController.getGameControllers().getFirst().getGame().getIdGame();
         mainController.deleteGame(idGame);
         assertThrows(NoSuchGameException.class,()->mainController.deleteGame(idGame));

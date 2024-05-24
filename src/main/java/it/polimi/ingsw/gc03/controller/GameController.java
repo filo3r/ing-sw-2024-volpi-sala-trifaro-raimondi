@@ -79,8 +79,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         player.setOnline(this.getGame(), false);
     }
 
-    public void ping(Player player) {
-        playerPingTimestamps.put(player, System.currentTimeMillis());
+    public void ping(String player) {
+        List<Player> playerWhoPinged = this.getGame().getPlayers().stream().filter(p->p.getNickname().equals(player)).toList();
+        if(!playerWhoPinged.isEmpty()){
+            playerPingTimestamps.put(playerWhoPinged.getFirst(), System.currentTimeMillis());
+        }
     }
 
     /**
@@ -154,7 +157,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @param playerNickname Nickname of the player you want to reconnect.
      */
 
-    public synchronized void reconnectPlayer(String playerNickname) throws RemoteException {
+    public synchronized void reconnectPlayer(String playerNickname) throws Exception {
         // Check if there is any game with a player with "playerNickname" as nickname.
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
         if (!result.isEmpty()) {
@@ -165,6 +168,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 stopTimer();
                 game.setStatus(GameStatus.RUNNING);
             }
+        } else {
+            throw new Exception("No previous game to reconnect with that username");
         }
     }
 

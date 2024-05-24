@@ -77,7 +77,7 @@ public class RmiServer implements VirtualServer {
     @Override
     public GameController addPlayerToGame(String playerNickName, VirtualView listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException{
         System.err.println("addPlayerToGame request received");
-        GameController gc = this.mainController.joinGame(playerNickName, listener);
+        GameController gc = this.mainController.joinFirstAvailableGame(playerNickName, listener);
         return gc;
     }
 

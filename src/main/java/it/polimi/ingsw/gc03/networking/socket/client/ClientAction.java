@@ -48,12 +48,11 @@ public interface ClientAction {
     /**
      * The client can reconnect to an ongoing game.
      * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
      * @throws IOException If an input or output exception occurs during action processing.
      * @throws InterruptedException If the thread is interrupted, either before or during the action.
      * @throws NotBoundException If a name in the registry was not found.
      */
-    void reconnectToGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException;
+    void reconnectToGame(String nickname) throws IOException, InterruptedException, NotBoundException;
 
 
     /**
@@ -127,7 +126,7 @@ public interface ClientAction {
      * The client sends a ping message.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    void ping() throws RemoteException;
+    void sendPing(String player) throws RemoteException;
 
 
     /**

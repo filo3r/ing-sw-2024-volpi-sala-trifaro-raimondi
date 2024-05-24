@@ -1,17 +1,14 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -66,8 +63,8 @@ public class MainController implements MainControllerInterface, Serializable {
         // add the controller to the list of controllers
         gameControllers.add(controller);
         // add the player to the newly created game and add his listener to every component and vice versa
-        joinSpecificGame(firstPlayerNickname, controller.getGame().getIdGame(),gameListener);
-        controller.addListener(gameListener, controller.getGame().getPlayers().get(0));
+        joinSpecificGame(gameListener, firstPlayerNickname, controller.getGame().getIdGame());
+        controller.addListener(gameListener, controller.getGame().getPlayers().getFirst());
         return controller;
     }
 
@@ -77,13 +74,13 @@ public class MainController implements MainControllerInterface, Serializable {
      * new game.
      * @param playerNickname The nickname of the player attempting to join a game.
      */
-    public synchronized GameController joinGame(String playerNickname, GameListener listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException {
+    public synchronized GameController joinFirstAvailableGame(GameListener listener, String playerNickname) throws RemoteException {
         // joinGame will try to make the player join the first available game, if none exists, it will create a new game
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
         return addPlayerToGame(playerNickname, listener, GCs);
     }
 
-    public synchronized GameController joinSpecificGame(String playerNickname, int id,  GameListener listener) throws RemoteException {
+    public synchronized GameController joinSpecificGame(  GameListener listener, String playerNickname, int id) throws RemoteException {
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == id)).toList();
         return addPlayerToGame(playerNickname, listener, GCs);
     }
@@ -107,21 +104,27 @@ public class MainController implements MainControllerInterface, Serializable {
      * The method would allow players to reconnect to a game in progress.
      * @param playerNickname The nickname of the player who needs to reconnect.
      */
-    public synchronized void reconnect(String playerNickname, GameListener gameListener) throws RemoteException {
+    public synchronized GameController reconnectToGame( GameListener gameListener, String playerNickname) throws RemoteException {
         // Search for a game which has a player named playerNickname
         List<GameController> GCs = gameControllers.stream()
                 .filter(gc -> gc.getGame().getPlayers().stream()
                         .anyMatch(p -> p.getNickname().equals(playerNickname)))
-                .collect(Collectors.toList());
+                .toList();
         // If any player with playerNickname exists in some game
         if(!GCs.isEmpty()){
             //If the player is actually offline
             if(!GCs.getFirst().getGame().getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getOnline()){
-                GCs.getFirst().reconnectPlayer(playerNickname);
+                try {
+                    GCs.getFirst().reconnectPlayer(playerNickname);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 // Call the listener from the controller, it's not ideal but there aren't controls in the model for this
                 gameListener.playerReconnected(new GameImmutable(GCs.getFirst().getGame()), playerNickname);
+                return gameControllers.getFirst();
             }
         }
+        return null;
     }
 
 

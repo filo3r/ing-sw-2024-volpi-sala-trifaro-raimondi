@@ -86,14 +86,14 @@ public class RmiClient implements ClientAction {
      *
      * @param flow The Flow object that handles UI and game flow actions.
      */
-    public RmiClient(String ip, int port, Flow flow) {
+    public RmiClient(String ip, int port, Flow flow, String player) {
         super();
         this.nicknameClient = null;
         this.rmiRegistry = null;
         this.gameController = null;
         this.gameListenerHandlerClient = new GameListenerHandlerClient(flow);
         this.flow = flow;
-        pingExecutor.scheduleAtFixedRate(this::sendPing, 0, 2, TimeUnit.SECONDS);
+        pingExecutor.scheduleAtFixedRate(() -> sendPing(player), 0, 2, TimeUnit.SECONDS);
         connectToServer();
         this.ip = ip;
         this.port = port;
@@ -196,32 +196,15 @@ public class RmiClient implements ClientAction {
 
 
     /**
-     * The client can leave a game in progress.
-     * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
-     * @throws RemoteException If an error occurs in remote communication.
-     * @throws NotBoundException If a name in the registry was not found.
-     */
-    @Override
-    public void playerLeft(String nickname, int idGame) throws RemoteException, NotBoundException {
-        connectToGameServer();
-        this.mainController.leaveGame(this.gameListener, nickname, idGame);
-        this.nicknameClient = null;
-        this.gameController = null;
-    }
-
-
-    /**
      * The client can reconnect to an ongoing game.
      * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws NotBoundException If a name in the registry was not found.
      */
     @Override
-    public void reconnectToGame(String nickname, int idGame) throws RemoteException, NotBoundException {
+    public void reconnectToGame(String nickname) throws RemoteException, NotBoundException {
         connectToGameServer();
-        this.gameController = this.mainController.reconnectToGame(this.gameListener, nickname, idGame);
+        this.gameController = this.mainController.reconnectToGame(this.gameListener, nickname);
         this.nicknameClient = nickname;
     }
 
@@ -307,17 +290,6 @@ public class RmiClient implements ClientAction {
 
 
     /**
-     * The client sends a ping message.
-     * @throws RemoteException If an error occurs in remote communication.
-     */
-    @Override
-    public void ping() throws RemoteException {
-        if (this.gameController != null)
-            this.gameController.ping();
-    }
-
-
-    /**
      * The client can choose the number of players participating in the game.
      * @param size The number of players participating in the game.
      * @throws RemoteException If an error occurs in remote communication.
@@ -328,10 +300,11 @@ public class RmiClient implements ClientAction {
         this.gameController.updateGameSize(size);
     }
 
-    private void sendPing() {
+    @Override
+    public void sendPing(String player) {
         try {
             if (this.gameController != null) {
-                this.gameController.ping();
+                this.gameController.ping(player);
             }
         } catch (RemoteException e) {
             System.err.println("Error pinging server: " + e.getMessage());

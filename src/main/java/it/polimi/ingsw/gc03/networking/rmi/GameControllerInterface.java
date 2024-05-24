@@ -85,7 +85,7 @@ public interface GameControllerInterface extends Remote {
      * @param player The player who pinged the server
      * @throws RemoteException If an error occurs in remote communication.
      */
-    void ping(Player player) throws RemoteException;
+    void ping(String player) throws RemoteException;
 
     /**
      * This method updates the game's size.
