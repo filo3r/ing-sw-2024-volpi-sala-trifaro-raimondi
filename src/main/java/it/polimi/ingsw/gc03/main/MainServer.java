@@ -137,12 +137,16 @@ public class MainServer {
     private static String getUserInputIpAddress() {
         String input;
         Scanner scanner = new Scanner(System.in);
-        do {
-            AsyncPrint.asyncPrint("Enter the server's private IP address: ");
-            input = scanner.nextLine();
-            if (!isValidIPv4(input))
-                AsyncLogger.log(Level.WARNING, "[SERVER] Invalid IP address.");
-        } while (!isValidIPv4(input));
+        try {
+            do {
+                AsyncPrint.asyncPrint("[SERVER] Enter the server's private IP address: ");
+                input = scanner.nextLine();
+                if (!isValidIPv4(input))
+                    AsyncLogger.log(Level.WARNING, "[SERVER] Invalid IP address.");
+            } while (!isValidIPv4(input));
+        } finally {
+            scanner.close();
+        }
         return input;
     }
 

@@ -20,7 +20,7 @@ public class AsyncPrint {
 
     public static void asyncPrint(String text) {
         executorService.submit(() -> {
-            System.out.println(text);
+            System.out.print(text);
         });
     }
 

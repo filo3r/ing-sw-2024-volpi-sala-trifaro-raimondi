@@ -6,9 +6,8 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
-import it.polimi.ingsw.gc03.model.enumerations.ConnectionSelection;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
-import it.polimi.ingsw.gc03.model.enumerations.UISelection;
+import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
@@ -62,7 +61,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
     private boolean ended = false;
 
     public GameFlow() throws InterruptedException {
-        UISelection uiSelection;
+        OptionSelection uiSelection;
         uiSelection = askUI();
         switch(uiSelection){
             case GUI ->{
@@ -108,7 +107,7 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
         return null;
     }
 
-    private UISelection askUI() {
+    private OptionSelection askUI() {
         ui.showAskUI();
         Scanner scan = new Scanner(System.in.toString());
         String uiChoice;
@@ -118,13 +117,13 @@ public class GameFlow extends Flow implements Runnable, ClientAction {
             if(uiChoice.equals("t")){
                 choiceInvalid = false;
                 AsyncPrint.asyncPrint((new StringBuilder("TUI Starting...")));
-                return UISelection.TUI;
+                return OptionSelection.TUI;
 
             }
             if(uiChoice.equals("g")){
                 choiceInvalid = false;
                 AsyncPrint.asyncPrint((new StringBuilder("GUI Starting...")));
-                return UISelection.GUI;
+                return OptionSelection.GUI;
             }
         }while(choiceInvalid);
         return null;

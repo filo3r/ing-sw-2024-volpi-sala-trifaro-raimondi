@@ -3,12 +3,9 @@ package it.polimi.ingsw.gc03.view.ui;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.Card;
-import it.polimi.ingsw.gc03.model.enumerations.ConnectionSelection;
-import it.polimi.ingsw.gc03.model.enumerations.UISelection;
 import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
 
 import java.util.List;
-import java.util.Scanner;
 
 public abstract class UI {
     protected List<String> importantEvents; //events that needs to be showed always in screen
