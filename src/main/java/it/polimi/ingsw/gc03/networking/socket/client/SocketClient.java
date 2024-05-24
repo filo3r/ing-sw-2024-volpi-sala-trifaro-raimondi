@@ -55,11 +55,6 @@ public class SocketClient implements ClientAction {
     private ObjectOutputStream outputStream;
 
     /**
-     * Helper object to send periodic ping messages to the server to keep the connection alive.
-     */
-    private final Ping socketPing;
-
-    /**
      * Executor service to manage thread for handling incoming messages asynchronously.
      */
     private final ExecutorService executorService;
