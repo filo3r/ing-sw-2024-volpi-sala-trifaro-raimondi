@@ -89,7 +89,7 @@ public class RmiServer implements VirtualServer {
                 .filter(x->(x.getGame().getIdGame()==gameID)).toList();
         // If some exists, update its size
         if(!gc.isEmpty()){
-            gc.getFirst().updateSize(size);
+            gc.getFirst().updateGameSize(size);
         }
     }
 

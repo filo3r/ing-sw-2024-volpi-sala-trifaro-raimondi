@@ -400,8 +400,9 @@ public class Player   implements Serializable {
      * Method to set the player's online status.
      * @param online The player's online status.
      */
-    public void setOnline(boolean online) {
+    public void setOnline(Game game, boolean online) {
         this.online = online;
+        listenersHandler.notifyPlayerDisconnected(game, this.getNickname());
     }
 
 

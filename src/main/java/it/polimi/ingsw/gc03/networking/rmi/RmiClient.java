@@ -9,12 +9,17 @@ import it.polimi.ingsw.gc03.networking.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.Ping;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.GameListenerHandlerClient;
+import it.polimi.ingsw.gc03.view.ui.Flow;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 
@@ -60,9 +65,9 @@ public class RmiClient implements ClientAction {
     private Flow flow;
 
     /**
-     * Helper object to send periodic ping messages to the server to keep the connection alive.
+     * ping Executor to periodically send a ping message to the server
      */
-    private Ping ping;
+    private final ScheduledExecutorService pingExecutor = Executors.newSingleThreadScheduledExecutor();
 
     /**
      * Server ip.
@@ -88,9 +93,8 @@ public class RmiClient implements ClientAction {
         this.gameController = null;
         this.gameListenerHandlerClient = new GameListenerHandlerClient(flow);
         this.flow = flow;
-        this.ping = new Ping();
+        pingExecutor.scheduleAtFixedRate(this::sendPing, 0, 2, TimeUnit.SECONDS);
         connectToServer();
-        this.ping.start();
         this.ip = ip;
         this.port = port;
     }
@@ -130,7 +134,6 @@ public class RmiClient implements ClientAction {
             UnicastRemoteObject.exportObject(this.gameListenerHandlerClient);
             this.gameController = null;
             this.nicknameClient = null;
-            this.ping.interrupt();
             AsyncLogger.log(Level.INFO, "[CLIENT RMI] Connection with the server has been closed.");
         } catch (Exception e) {
             AsyncLogger.log(Level.SEVERE, "[CLIENT RMI] Error closing connection with server: " + e.getMessage());
@@ -316,15 +319,29 @@ public class RmiClient implements ClientAction {
 
     /**
      * The client can choose the number of players participating in the game.
-     * @param nickname The nickname of the client.
      * @param size The number of players participating in the game.
-     * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     @Override
     public void setGameSize(String nickname, int size, int idGame) throws RemoteException, Exception {
-        this.gameController.setGameSize(this.nicknameClient, size, idGame);
+        this.gameController.updateGameSize(size);
+    }
+
+    private void sendPing() {
+        try {
+            if (this.gameController != null) {
+                this.gameController.ping();
+            }
+        } catch (RemoteException e) {
+            System.err.println("Error pinging server: " + e.getMessage());
+            stopPingThread();
+            // STILL HAVE TO HANDLE THE DISCONNECTION FROM THE SERVER, BY NOTIFYING THE GUI AND TUI.
+        }
+    }
+
+    public void stopPingThread() {
+        pingExecutor.shutdown();
     }
 
 

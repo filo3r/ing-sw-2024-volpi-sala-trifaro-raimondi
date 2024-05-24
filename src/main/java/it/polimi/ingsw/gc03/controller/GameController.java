@@ -15,6 +15,10 @@ import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -43,14 +47,41 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     private TimerTask timerTask;
 
 
+    private final Map<Player, Long> playerPingTimestamps = new ConcurrentHashMap<>();
+
+    private final ScheduledExecutorService pingExecutor = Executors.newSingleThreadScheduledExecutor();
+    private static final long TIMEOUT_MILLIS = 5000; // Timeout period
+
     /**
      * Constructor of the GameController class.
      */
     public GameController() throws RemoteException {
         game = new Game(random.nextInt(2147483647));
         new Thread(this).start();
+        startPingThread();
     }
 
+    private void startPingThread() {
+        pingExecutor.scheduleAtFixedRate(this::checkPings, 0, 2, TimeUnit.SECONDS);
+    }
+
+    private void checkPings() {
+        long currentTime = System.currentTimeMillis();
+        for (Player player : game.getPlayers()) {
+            Long lastPingTime = playerPingTimestamps.get(player);
+            if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
+                handlePlayerTimeout(player);
+            }
+        }
+    }
+
+    private void handlePlayerTimeout(Player player) {
+        player.setOnline(this.getGame(), false);
+    }
+
+    public void ping(Player player) {
+        playerPingTimestamps.put(player, System.currentTimeMillis());
+    }
 
     /**
      * Method for adding a player to the game.
@@ -347,7 +378,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return side;
     }
 
-    public void updateSize(int size) throws Exception {
+    public void updateGameSize(int size) throws Exception {
         if(game.getSize() != 1 || size<=1 || size>4){
             throw new Exception("Game size is not valid");
         } else {

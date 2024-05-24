@@ -18,6 +18,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -63,6 +64,9 @@ public class SocketClient implements ClientAction {
      */
     private final ExecutorService executorService;
 
+    private final ScheduledExecutorService pingExecutor;
+    private static final long PING_INTERVAL = 2; // Ping interval in seconds
+
 
     /**
      * Constructor for SocketClient.
@@ -71,8 +75,8 @@ public class SocketClient implements ClientAction {
      */
     public SocketClient(String ip, int port) {
         this.messageActionHandler = new GameListenerHandlerClient();
-        this.socketPing = new Ping;
         this.executorService = Executors.newSingleThreadExecutor();
+        this.pingExecutor = Executors.newSingleThreadScheduledExecutor();
         startConnection(ip, port);
     }
 
@@ -89,7 +93,7 @@ public class SocketClient implements ClientAction {
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
             AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection established to server.");
             this.executorService.submit(this::processMessages);
-            this.socketPing.start();
+            this.pingExecutor.scheduleAtFixedRate(this::ping, 0, PING_INTERVAL, TimeUnit.SECONDS);
         } catch (IOException e) {
             AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Failed to connect to server: " + e.getMessage());
             shutdownAndExit();
@@ -120,8 +124,7 @@ public class SocketClient implements ClientAction {
      */
     public void stopConnection() {
         try {
-            if (this.socketPing.isAlive())
-                this.socketPing.interrupt();
+            this.pingExecutor.shutdownNow();
             this.inputStream.close();
             this.outputStream.close();
             this.socketClient.close();
@@ -168,8 +171,6 @@ public class SocketClient implements ClientAction {
         SocketClientMessageCreateGame message = new SocketClientMessageCreateGame(nickname);
         this.outputStream.writeObject(message);
         completeTransmission();
-        if (!this.ping().isAlive())
-            this.ping().start();
     }
 
 
@@ -184,8 +185,6 @@ public class SocketClient implements ClientAction {
         SocketClientMessageJoinFirstGame message = new SocketClientMessageJoinFirstGame(nickname);
         this.outputStream.writeObject(message);
         completeTransmission();
-        if (!this.ping().isAlive())
-            this.ping().start();
     }
 
 
@@ -201,8 +200,6 @@ public class SocketClient implements ClientAction {
         SocketClientMessageJoinSpecificGame message = new SocketClientMessageJoinSpecificGame(nickname, idGame);
         this.outputStream.writeObject(message);
         completeTransmission();
-        if (!this.ping().isAlive())
-            this.ping().start();
     }
 
 
@@ -218,8 +215,6 @@ public class SocketClient implements ClientAction {
         SocketClientMessageLeaveGame message = new SocketClientMessageLeaveGame(nickname, idGame);
         this.outputStream.writeObject(message);
         completeTransmission();
-        if (!this.ping().isAlive())
-            this.ping().start();
     }
 
 
@@ -235,8 +230,6 @@ public class SocketClient implements ClientAction {
         SocketClientMessageReconnectToGame message = new SocketClientMessageReconnectToGame(nickname, idGame);
         this.outputStream.writeObject(message);
         completeTransmission();
-        if (!this.ping().isAlive())
-            this.ping().start();
     }
 
 
@@ -342,6 +335,7 @@ public class SocketClient implements ClientAction {
                 completeTransmission();
             } catch (IOException e) {
                 AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Connection to server lost.");
+                // STILL HAVE TO HANDLE THE DISCONNECTION FROM THE SERVER, BY NOTIFYING THE GUI AND TUI.
             }
         }
     }
