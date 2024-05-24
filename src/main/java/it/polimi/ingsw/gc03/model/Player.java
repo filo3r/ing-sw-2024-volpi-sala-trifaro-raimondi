@@ -12,12 +12,10 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
@@ -176,7 +174,7 @@ public class Player   implements Serializable {
      * Method to check if the player can no longer place cards in his Codex. If the player can no longer place cards,
      * he skips his turns until the end of the game.
      */
-    public void checkSkipTurn() throws Exception {
+    public void checkSkipTurn() {
         int skip = 0;
         // The sides of the cards that have fewer requirements to be placed are the BackSide
         ArrayList<Value> center = new ArrayList<>(1);
@@ -185,7 +183,10 @@ public class Player   implements Serializable {
         // Check all cells of the Codex
         for (int i = this.codex.getMinRow() - 1; i <= this.codex.getMaxRow() + 1; i++) {
             for (int j = this.codex.getMinColumn() - 1; j <= this.codex.getMaxColumn() + 1; j++) {
-                boolean insertionPossible = this.codex.simulateInsertIntoCodex(backSide, i, j);
+                boolean insertionPossible = false;
+                try {
+                insertionPossible = this.codex.simulateInsertIntoCodex(backSide, i, j);
+                } catch (Exception ignored){}
                 if (insertionPossible)
                     skip++;
                 if (skip != 0)

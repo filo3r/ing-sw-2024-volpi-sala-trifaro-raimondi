@@ -19,15 +19,6 @@ import java.util.ArrayList;
 public interface GameControllerInterface extends Remote {
 
     /**
-     * This method removes a player from a game.
-     * @param gameListener The game listener to be notified about game events.
-     * @param nickname The nickname of the client.
-     * @throws RemoteException If an error occurs in remote communication.
-     */
-    void playerLeave(GameListener gameListener, String nickname) throws RemoteException;
-
-
-    /**
      * This method places the Starter card in the Codex.
      * @param player The player representing the client.
      * @param side The side of the Starter card to be placed into the Codex.
@@ -91,9 +82,10 @@ public interface GameControllerInterface extends Remote {
 
     /**
      * This method sends a ping message.
+     * @param player The player who pinged the server
      * @throws RemoteException If an error occurs in remote communication.
      */
-    void ping() throws RemoteException;
+    void ping(Player player) throws RemoteException;
 
     /**
      * This method updates the game's size.

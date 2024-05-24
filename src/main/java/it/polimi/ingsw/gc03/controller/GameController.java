@@ -159,7 +159,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
         if (!result.isEmpty()) {
             // The found player is set to online
-            result.getFirst().setOnline(true);
+            result.getFirst().setOnline(this. getGame(), true);
             // If the game was halted, it is set to running
             if (game.getStatus().equals(GameStatus.HALTED)) {
                 stopTimer();
@@ -347,6 +347,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
         this.game.getChat().add(chatMessage);
     }
+
 
     /**
      * Method that retrieves a specific side of a card from a player's hand based on the index provided.
