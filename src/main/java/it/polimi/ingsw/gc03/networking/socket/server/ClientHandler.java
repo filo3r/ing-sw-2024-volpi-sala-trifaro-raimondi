@@ -90,7 +90,10 @@ public class ClientHandler implements Runnable {
      */
     private void updateGameControllerAndNickname(GameController controller) {
         this.gameController = controller;
+        // Dovrebbe essere un metodo del ping, forse questo pezzo di codice va sistemato o magari anche cancellata
+        // questa riga sotto
         this.nicknameClient = Optional.ofNullable(controller).map(GameController::getNicknameClient).orElse(null);
+
     }
 
 
