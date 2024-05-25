@@ -91,9 +91,11 @@ public class SocketClient implements ClientAction {
      */
     public void startConnection(String ip, int port) {
         try {
+            AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Trying to connect to " + ip + ":" + port);
             this.socketClient = new Socket(ip, port);
-            this.inputStream = new ObjectInputStream(this.socketClient.getInputStream());
+            AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Socket created.");
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
+            this.inputStream = new ObjectInputStream(this.socketClient.getInputStream());
             AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection established to server.");
             this.executorService.submit(() -> {
                 try {
@@ -109,6 +111,7 @@ public class SocketClient implements ClientAction {
             shutdownAndExit();
         }
     }
+
 
 
     /**

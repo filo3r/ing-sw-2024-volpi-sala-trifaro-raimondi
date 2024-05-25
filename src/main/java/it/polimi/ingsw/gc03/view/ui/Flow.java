@@ -60,7 +60,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui();
+                ui = new Tui(210, 30);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -83,6 +83,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         Event event;
         events.add(null, APP_MENU);
         ui.show_GameTitle();
+        ui.show_menuOptions();
 
         while (!Thread.interrupted()) {
             if (events.isJoined()) {
