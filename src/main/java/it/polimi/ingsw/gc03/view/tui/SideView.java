@@ -8,9 +8,23 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 
+
+/**
+ * Class responsible for generating a visual representation of a side of a card.
+ */
 public class SideView {
+
+    /**
+     * 2D array representing the visual appearance of a side of a card.
+     */
     private CharSpecial[][] sideView = new CharSpecial[9][27];
 
+
+    /**
+     * Generates the visual representation of a given side.
+     * @param side The side of the card to visualize.
+     * @return The 2D array of CharSpecial representing the visual appearance of the side.
+     */
     public CharSpecial[][] getSideView(Side side) {
         Kingdom kingdom = side.getKingdom();
         generateAndPutBox(getColorFromKingdom(kingdom), 0,0, 27,9, '╔', '╗', '╚', '╝');
@@ -18,6 +32,11 @@ public class SideView {
         return sideView;
     }
 
+
+    /**
+     * Puts the top-left value of the side on the frame.
+     * @param side The side of the card.
+     */
     public void putTopLeftValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getTopLeftCorner()) {
@@ -55,6 +74,11 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Puts the top-right value of the side on the frame.
+     * @param side The side of the card.
+     */
     public void putTopRightValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getTopRightCorner()) {
@@ -93,6 +117,11 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Puts the bottom-left value of the side on the frame.
+     * @param side The side of the card.
+     */
     public void putBottomLeftValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getBottomLeftCorner()) {
@@ -130,6 +159,11 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Puts the bottom-right value of the side on the frame.
+     * @param side The side of the card.
+     */
     public void putBottomRightValue(Side side){
         CharColor color = getColorFromSide(side);
         switch (side.getBottomRightCorner()) {
@@ -167,6 +201,11 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Puts the central boxes on the side.
+     * @param side The side of the card.
+     */
     private void putCentralBoxes(Side side){
         CharColor color = getColorFromSide(side);
         if(side instanceof FrontResource){
@@ -208,6 +247,11 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Puts the corner values on the frame.
+     * @param side The side of the card.
+     */
     private void putCornersOnFrame(Side side) {
         putTopLeftValue(side);
         putTopRightValue(side);
@@ -216,6 +260,19 @@ public class SideView {
         putCentralBoxes(side);
     }
 
+
+    /**
+     * Generates and puts a box on the side view.
+     * @param color The color of the box.
+     * @param x The x-coordinate of the top-left corner of the box.
+     * @param y The y-coordinate of the top-left corner of the box.
+     * @param width The width of the box.
+     * @param height The height of the box.
+     * @param topLeft The character for the top-left corner of the box.
+     * @param topRight The character for the top-right corner of the box.
+     * @param bottomLeft The character for the bottom-left corner of the box.
+     * @param bottomRight The character for the bottom-right corner of the box.
+     */
     private void generateAndPutBox(CharColor color, int x, int y, int width, int height, char topLeft, char topRight, char bottomLeft, char bottomRight) {
         CharSpecial[][] box = new CharSpecial[height][width];
         for(int i = 0; i < height; i++) {
@@ -243,6 +300,12 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Converts a Value enum to its corresponding character representation.
+     * @param value The value to convert.
+     * @return The corresponding character.
+     */
     private static char getCharFromValue(Value value) {
         switch (value) {
             case FUNGI:
@@ -269,6 +332,12 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Converts a Kingdom enum to its corresponding character representation.
+     * @param kingdom The kingdom to convert.
+     * @return The corresponding character.
+     */
     private static char getCharFromKingdom(Kingdom kingdom) {
         switch (kingdom) {
             case FUNGI:
@@ -284,6 +353,12 @@ public class SideView {
         }
     }
 
+
+    /**
+     * Gets the color corresponding to a side.
+     * @param side The side to get the color for.
+     * @return The corresponding color.
+     */
     private static CharColor getColorFromSide(Side side) {
         CharColor color = getColorFromKingdom(side.getKingdom());
         if(side instanceof FrontGold){
@@ -295,6 +370,12 @@ public class SideView {
         return color;
     }
 
+
+    /**
+     * Gets the color corresponding to a kingdom.
+     * @param kingdom The kingdom to get the color for.
+     * @return The corresponding color.
+     */
     private static CharColor getColorFromKingdom(Kingdom kingdom) {
         CharColor color;
         switch (kingdom) {

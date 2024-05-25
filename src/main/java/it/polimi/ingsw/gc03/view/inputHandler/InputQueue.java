@@ -3,19 +3,29 @@ package it.polimi.ingsw.gc03.view.inputHandler;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+
+/**
+ * A thread-safe queue to handle input data for processing.
+ */
 public class InputQueue {
-    private Queue<String> data;
 
     /**
-     * init
+     * The underlying queue that stores input data.
+     */
+    private Queue<String> data;
+
+
+    /**
+     * Initializes the InputQueue.
      */
     public InputQueue(){
         data = new ArrayDeque<>();
     }
 
+
     /**
-     * Adds one element to the queue
-     * @param txt element to add
+     * Adds one element to the queue.
+     * @param txt The element to add.
      */
     public void addData(String txt){
         synchronized (this) {
@@ -24,10 +34,11 @@ public class InputQueue {
         }
     }
 
+
     /**
-     * Pops one element from the queue
-     * @return the popped element
-     * @throws InterruptedException
+     * Pops one element from the queue.
+     * @return The popped element.
+     * @throws InterruptedException If the thread is interrupted while waiting.
      */
     public String popData() throws InterruptedException {
         synchronized (this){
@@ -36,8 +47,9 @@ public class InputQueue {
         }
     }
 
+
     /**
-     *  Empties the queue
+     * Empties the queue.
      */
     public void popAllData(){
         synchronized (this) {
@@ -46,5 +58,6 @@ public class InputQueue {
             }
         }
     }
+
 
 }

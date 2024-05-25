@@ -56,6 +56,8 @@ public class MainController implements MainControllerInterface, Serializable {
      * Creates a new game and attempts to add the first player to it.
      * @param gameListener The game listener of the first player.
      * @param firstPlayerNickname The player who created the game.
+     * @return The created GameController.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized GameController createGame(GameListener gameListener, String firstPlayerNickname) throws RemoteException {
         // Creates a new GameController, which will create an empty Game.
@@ -73,6 +75,9 @@ public class MainController implements MainControllerInterface, Serializable {
      * Attempts to join a player to an available game that is waiting for players. If no such game exists, creates a
      * new game.
      * @param playerNickname The nickname of the player attempting to join a game.
+     * @param listener The game listener of the player.
+     * @return The GameController of the joined game.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized GameController joinFirstAvailableGame(GameListener listener, String playerNickname) throws RemoteException {
         // joinGame will try to make the player join the first available game, if none exists, it will create a new game
@@ -80,11 +85,29 @@ public class MainController implements MainControllerInterface, Serializable {
         return addPlayerToGame(playerNickname, listener, GCs);
     }
 
+
+    /**
+     * Attempts to join a player to a specific game identified by its ID.
+     * @param listener The game listener of the player.
+     * @param playerNickname The nickname of the player attempting to join the game.
+     * @param id The ID of the game to join.
+     * @return The GameController of the joined game.
+     * @throws RemoteException If there is an issue with remote communication.
+     */
     public synchronized GameController joinSpecificGame(  GameListener listener, String playerNickname, int id) throws RemoteException {
         List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == id)).toList();
         return addPlayerToGame(playerNickname, listener, GCs);
     }
 
+
+    /**
+     * Adds a player to a game from a list of available games.
+     * @param playerNickname The nickname of the player to add.
+     * @param listener The game listener of the player.
+     * @param GCs The list of available GameController instances.
+     * @return The GameController of the game the player joined or created.
+     * @throws RemoteException If there is an issue with remote communication.
+     */
     private GameController addPlayerToGame(String playerNickname, GameListener listener, List<GameController> GCs) throws RemoteException {
         if(!GCs.isEmpty()) {
             try {
@@ -101,8 +124,11 @@ public class MainController implements MainControllerInterface, Serializable {
 
 
     /**
-     * The method would allow players to reconnect to a game in progress.
+     * Allows players to reconnect to a game in progress.
+     * @param gameListener The game listener of the player who needs to reconnect.
      * @param playerNickname The nickname of the player who needs to reconnect.
+     * @return The GameController of the game the player reconnected to.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized GameController reconnectToGame(GameListener gameListener, String playerNickname) throws RemoteException {
         // Search for a game which has a player named playerNickname
@@ -153,7 +179,9 @@ public class MainController implements MainControllerInterface, Serializable {
     }
 
 
-    // Resets the singleton instance of MainController, mainly used for testing purposes.
+    /**
+     * Resets the singleton instance of MainController, mainly used for testing purposes.
+     */
     public static void resetInstance() {
         instance = null;
     }

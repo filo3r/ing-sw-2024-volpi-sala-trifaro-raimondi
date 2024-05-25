@@ -45,14 +45,25 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     private TimerTask timerTask;
 
-
+    /**
+     * Map to keep track of player ping timestamps.
+     */
     private final Map<Player, Long> playerPingTimestamps = new ConcurrentHashMap<>();
 
+    /**
+     * Executor for handling periodic ping checks.
+     */
     private final ScheduledExecutorService pingExecutor = Executors.newSingleThreadScheduledExecutor();
+
+    /**
+     * Timeout period for player pings.
+     */
     private static final long TIMEOUT_MILLIS = 5000; // Timeout period
+
 
     /**
      * Constructor of the GameController class.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public GameController() throws RemoteException {
         game = new Game(random.nextInt(2147483647));
@@ -60,10 +71,18 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         startPingThread();
     }
 
+
+    /**
+     * Starts a thread to periodically check player pings.
+     */
     private void startPingThread() {
         pingExecutor.scheduleAtFixedRate(this::checkPings, 0, 2, TimeUnit.SECONDS);
     }
 
+
+    /**
+     * Checks player ping timestamps and handles timeouts.
+     */
     private void checkPings() {
         long currentTime = System.currentTimeMillis();
         for (Player player : game.getPlayers()) {
@@ -74,6 +93,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+
+    /**
+     * Handles player timeout by setting the player to offline and removing their listener.
+     * @param player The player who timed out.
+     */
     private void handlePlayerTimeout(Player player) {
         if(player.getOnline()){
             player.setOnline(this.getGame(), false, this);
@@ -81,6 +105,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+
+    /**
+     * Updates the ping timestamp for a player.
+     * @param player The player who sent the ping.
+     */
     public void ping(String player) {
         List<Player> playerWhoPinged = this.getGame().getPlayers().stream().filter(p->p.getNickname().equals(player)).toList();
         if(!playerWhoPinged.isEmpty()){
@@ -88,15 +117,18 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+
     /**
      * Method for adding a player to the game.
      * @param playerNickname The player's nickname.
+     * @param listener The game listener for the player.
      * @throws CannotJoinGameException This exception is thrown when the game has already started, is paused, or has
      *                                 ended, thus preventing the addition of new players.
      * @throws DeskIsFullException This exception prevents additional players from being added when the game has
      *                             already reached the maximum number of players allowed.
      * @throws PlayerAlreadyJoinedException This exception is thrown to prevent duplicate addition of a player in the
      *                                      same game.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public void addPlayerToGame(String playerNickname, GameListener listener) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // It's possible to add new players only if the game's status is WAITING
@@ -154,9 +186,13 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             timerTask = null;
         }
     }
+
+
     /**
      * Method for managing a player's reconnection to the game.
      * @param playerNickname Nickname of the player you want to reconnect.
+     * @param gameListener The game listener for the player.
+     * @throws Exception If the player cannot be reconnected or the game is not in a suitable state.
      */
     public synchronized void reconnectPlayer(String playerNickname, GameListener gameListener) throws Exception {
         // Check if there is any game with a player with "playerNickname" as nickname.
@@ -178,6 +214,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
     /**
      * The method handles the transition and updating of player actions in the game.
+     * @throws Exception If there is an error during the transition.
      */
     private synchronized void updateCurrPlayer() throws Exception {
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
@@ -243,6 +280,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+
     /**
      * Selects a personal objective card for a player at the start of the game.
      * This method is called during the game's starting phase where players choose their personal objective cards.
@@ -275,6 +313,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
     }
+
 
     /**
      * Checks and updates the action of the given player based on the current game status.
@@ -354,7 +393,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     /**
      * Allows a player to send a message to the chat.
      * @param chatMessage The message for the chat.
-     * @throws RemoteException
+     * @throws RemoteException If there is an issue with remote communication.
      */
     @Override
     public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
@@ -392,6 +431,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return side;
     }
 
+
+    /**
+     * Updates the size of the game.
+     * @param size The new size of the game.
+     * @throws Exception If the game size is not valid.
+     */
     public void updateGameSize(int size) throws Exception {
         if(game.getSize() != 1 || size<=1 || size>4){
             throw new Exception("Game size is not valid");
@@ -399,6 +444,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             game.setSize(size);
         }
     }
+
 
     /**
      * Places a card from the player's hand onto a specified position in their Codex.
@@ -453,6 +499,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return game;
     }
 
+
     /**
      * Add a gameListener to every player in the game, and add every old listener to the new player
      * @param gameListener the game listener to add.
@@ -463,6 +510,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         game.getListeners().stream().forEach(x->player.addListener(x));
         game.getPlayers().stream().filter(x->!x.equals(player)).forEach(x->x.addListener(gameListener));
     }
+
 
     /**
      * When a player disconnects, this remove every listener to the player and the listener of the player from everybody else.
@@ -523,5 +571,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
     }
+
 
 }

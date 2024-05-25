@@ -22,7 +22,7 @@ public class InputProcessor extends Thread{
     /**
      * The player
      */
-    private String p;
+    private Player p;
     /**
      * The game id
      */
@@ -91,7 +91,7 @@ public class InputProcessor extends Thread{
      *
      * @param p player to set
      */
-    public void setPlayer(String p) {
+    public void setPlayer(Player p) {
         this.p = p;
     }
 
