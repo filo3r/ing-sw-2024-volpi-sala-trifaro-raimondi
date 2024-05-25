@@ -88,12 +88,9 @@ public class ClientHandler implements Runnable {
      * @param controller The GameController instance to set. This controller may be null if the previous execution did
      *                   not result in a valid controller.
      */
-    private void updateGameControllerAndNickname(GameController controller) {
+    private void updateGameControllerAndNickname(GameController controller, SocketClientGenericMessage message) {
         this.gameController = controller;
-        // Dovrebbe essere un metodo del ping, forse questo pezzo di codice va sistemato o magari anche cancellata
-        // questa riga sotto
-        this.nicknameClient = Optional.ofNullable(controller).map(GameController::getNicknameClient).orElse(null);
-
+        this.nicknameClient = controller != null ? message.getNicknameClient() : null;
     }
 
 
@@ -107,7 +104,7 @@ public class ClientHandler implements Runnable {
         try {
             GameController controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
             // Assigns the controller and updates the nickname
-            updateGameControllerAndNickname(controller);
+            updateGameControllerAndNickname(controller, message);
         } catch (RemoteException e) {
             AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error processing message for MainController: " + e.getMessage());
         }

@@ -27,7 +27,7 @@ public class SocketClientMessageNewChatMessage extends SocketClientGenericMessag
      * @param chatMessage The message for the chat.
      */
     public SocketClientMessageNewChatMessage(ChatMessage chatMessage) {
-        this.nicknameClient = chatMessage.getSender().getNickname();
+        this.nicknameClient = chatMessage.getSender();
         this.messageType = MessageType.GAME_CONTROLLER;
         this.chatMessage = chatMessage;
     }

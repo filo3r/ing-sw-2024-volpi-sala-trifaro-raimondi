@@ -131,13 +131,11 @@ public interface ClientAction {
 
     /**
      * The client can choose the number of players participating in the game.
-     * @param nickname The nickname of the client.
      * @param size The number of players participating in the game.
-     * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
-    void setGameSize(String nickname, int size, int idGame) throws RemoteException, Exception;
+    void gameSizeUpdated(int size) throws RemoteException, Exception;
 
 
 }

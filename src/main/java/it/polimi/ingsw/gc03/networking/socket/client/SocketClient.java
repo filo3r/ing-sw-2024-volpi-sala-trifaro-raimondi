@@ -162,7 +162,7 @@ public class SocketClient implements ClientAction {
      * and the buffer is cleared, preparing the stream for future use.
      * @throws IOException If an error occurs during the flush or reset operations.
      */
-    private void completeTransmission() throws IOException {
+    private synchronized void completeTransmission() throws IOException {
         // Force all data to be transmitted to the destination
         this.outputStream.flush();
         // Clean the stream to prepare it for the next transmission
@@ -342,8 +342,10 @@ public class SocketClient implements ClientAction {
         if (this.outputStream != null) {
             try {
                 SocketClientMessagePing message = new SocketClientMessagePing(this.nicknameClient);
-                this.outputStream.writeObject(message);
-                completeTransmission();
+                synchronized (this) {
+                    this.outputStream.writeObject(message);
+                    completeTransmission();
+                }
             } catch (IOException e) {
                 AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Connection to server lost.");
                 // STILL HAVE TO HANDLE THE DISCONNECTION FROM THE SERVER, BY NOTIFYING THE GUI AND TUI.
@@ -354,14 +356,12 @@ public class SocketClient implements ClientAction {
 
     /**
      * This method is used to write on the output stream the message that the client changed the game size.
-     * @param nickname The nickname of the client.
      * @param size The number of players participating in the game.
-     * @param idGame The id of the game.
      * @throws IOException If an input or output exception occurs during action processing.
      */
     @Override
-    public void setGameSize(String nickname, int size, int idGame) throws IOException {
-        SocketClientMessageSetGameSize message = new SocketClientMessageSetGameSize(nickname, size, idGame);
+    public void gameSizeUpdated(int size) throws IOException {
+        SocketClientMessageSetGameSize message = new SocketClientMessageSetGameSize(size);
         this.outputStream.writeObject(message);
         completeTransmission();
     }

@@ -85,14 +85,14 @@ public class RmiClient implements ClientAction {
      * Creates, starts, and connects an RMI Client to the server.
      * @param flow The Flow object that handles UI and game flow actions.
      */
-    public RmiClient(String ip, int port, Flow flow, String player) {
+    public RmiClient(String ip, int port, Flow flow) {
         super();
         this.nicknameClient = null;
         this.rmiRegistry = null;
         this.gameController = null;
         this.gameListenerHandlerClient = new GameListenerHandlerClient(flow);
         this.flow = flow;
-        pingExecutor.scheduleAtFixedRate(() -> sendPing(player), 0, 2, TimeUnit.SECONDS);
+        pingExecutor.scheduleAtFixedRate(() -> sendPing(null), 0, 2, TimeUnit.SECONDS);
         connectToServer();
         this.ip = ip;
         this.port = port;
@@ -294,7 +294,7 @@ public class RmiClient implements ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     @Override
-    public void setGameSize(String nickname, int size, int idGame) throws RemoteException, Exception {
+    public void gameSizeUpdated(int size) throws RemoteException, Exception {
         this.gameController.updateGameSize(size);
     }
 

@@ -44,55 +44,7 @@ public class Tui extends UI {
         // screenSim represents the whole codex: 81x81 -> 81*9 x 81*27 = 728x2187 since every side is 9x27
         screenSim = new CharSpecial[729][2187];
         resizeScreenView(screenWidth, screenHeight);
-        // Create a fake codex with multiple sequential additions to test codex view
-        Codex codex = new Codex();
-        Game game = null;
-        try {
-            game = new Game(1);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            codex.insertStarterIntoCodex(new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>(Arrays.asList(Value.ANIMAL))), game);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.FUNGI, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40+1);
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.ANIMAL, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40+2);
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-2,40);
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.INSECT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40-1);
-        codex.insertIntoCodex(game, new FrontGold(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.INSECT, 1, Value.COVERED, new ArrayList<>(Arrays.asList(Value.FUNGI,Value.FUNGI,Value.FUNGI))), 40+2,40);
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.PLANT, Value.ANIMAL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40+1,40+1);
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.PLANT, Value.NULL, Value.FUNGI, Value.ANIMAL,Value.FUNGI, 1), 40-1,40-1);
 
-        displayCodex(codex);
-
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40+1);
-
-        resizeScreenView(200, 40);
-
-        moveScreenView(0,-5);
-        displayCodex(codex);
-
-        codex.insertIntoCodex(game, new FrontResource(Kingdom.FUNGI, Value.INSECT, Value.INSECT, Value.INSECT,Value.INSECT, 7), 40+3,40-1);
-
-        moveScreenView(0,-2);
-        displayCodex(codex);
-
-        Desk desk = null;
-        Player player = null;
-
-        try {
-            desk = new Desk(game);
-            player = new Player("ABC", 1, desk, game);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-        resizeScreenView(221, 70);
-        showDesk(desk, player);
-        while(true){
-        }
     }
 
     public void displayCodex(Codex codex){
@@ -430,7 +382,8 @@ public class Tui extends UI {
         refreshScreen(1093, 364);
     }
 
-    public void showTitle() {
+    @Override
+    public void show_GameTitle() {
         StringBuilder sb = new StringBuilder(
                 "      ...                         ..                               ..   \n" +
                         "   xH88\"`~ .x8X                 dF                       .H88x.  :~)88: \n" +
@@ -476,6 +429,116 @@ public class Tui extends UI {
         }
         clearScreen(' ');
         refreshScreen(1093, 364);
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    protected void show_menuOptions() {
+
+    }
+
+    @Override
+    protected void show_creatingNewGameMsg(String nickname) {
+
+    }
+
+    @Override
+    protected void show_joiningFirstAvailableMsg(String nickname) {
+
+    }
+
+    @Override
+    protected void show_joiningToGameIdMsg(int idGame, String nickname) {
+
+    }
+
+    @Override
+    protected void show_inputGameIdMsg() {
+
+    }
+
+    @Override
+    protected void show_insertNicknameMsg() {
+
+    }
+
+    @Override
+    protected void show_chosenNickname(String nickname) {
+
+    }
+
+    @Override
+    protected void show_gameStarted(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void show_noAvailableGamesToJoin(String msgToVisualize) {
+
+    }
+
+    @Override
+    protected void show_gameEnded(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void show_playerJoined(GameImmutable gameModel, String nick) {
+
+    }
+
+    @Override
+    protected void show_nextTurnOrPlayerReconnected(GameImmutable model, String nickname) {
+
+    }
+
+    @Override
+    protected void show_playerHand(GameImmutable gameModel) {
+
+    }
+
+    @Override
+    protected void show_sentMessage(GameImmutable model, String nickname) {
+
+    }
+
+    @Override
+    protected void show_NaNMsg() {
+
+    }
+
+    @Override
+    protected void show_returnToMenuMsg() {
+
+    }
+
+    @Override
+    public void addImportantEvent(String input) {
+
+    }
+
+    @Override
+    protected int getLengthLongestMessage(GameImmutable model) {
+        return 0;
+    }
+
+    @Override
+    protected void addMessage(ChatMessage msg, GameImmutable model) {
+
+    }
+
+    @Override
+    protected void resetImportantEvents() {
+
+    }
+
+    @Override
+    protected void show_noConnectionError() {
+
     }
 
 

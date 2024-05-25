@@ -45,85 +45,35 @@ public class Flow implements Runnable, ClientAction, GameListener {
     private boolean frontCard;
     private UI ui;
 
-    private MainClient mainClient;
-
-
-
-
-
     protected InputProcessor inputProcessor;
     protected InputReader inputReader;
 
     protected List<String> importantEvents;
     private boolean ended = false;
 
-    public Flow() throws InterruptedException {
-        OptionSelection uiSelection;
-        uiSelection = askUI();
+    public Flow(OptionSelection uiSelection, OptionSelection connectionSelection, String serverIpAddress, int port) throws InterruptedException {
         switch(uiSelection){
-            case GUI ->{
+            case OptionSelection.GUI ->{
                 ui = new Gui();
                 this.inputReader = new InputReaderGUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
 
-            case TUI ->{
+            case OptionSelection.TUI ->{
                 ui = new Tui();
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
         }
-        OptionSelection connectionSelection;
-        connectionSelection = askConnection();
         switch(connectionSelection){
-            case RMI->{
-                mainClient = new RmiClient();
+            case OptionSelection.RMI->{
+                new RmiClient(serverIpAddress, port, this);
             }
-            case SOCKET ->{
-                mainClient = new SocketClient();
+            case OptionSelection.SOCKET ->{
+                new SocketClient(serverIpAddress, port, this);
             }
         }
         new Thread(this).start();
-    }
-
-    private OptionSelection askConnection() throws InterruptedException {
-        ui.showAskConnection();
-        String choice;
-        boolean choiceInvalid = true;
-        do{
-            choice = this.inputProcessor.getDataToProcess().popData();
-            if(choice.equals("r")){
-                choiceInvalid = false;
-                return OptionSelection.RMI;
-            }
-            if(choice.equals("s")){
-                choiceInvalid = false;
-                return OptionSelection.SOCKET;
-            }
-        }while(choiceInvalid);
-        return null;
-    }
-
-    private OptionSelection askUI() {
-        ui.showAskUI();
-        Scanner scan = new Scanner(System.in.toString());
-        String uiChoice;
-        boolean choiceInvalid = true;
-        do{
-            uiChoice = scan.nextLine();
-            if(uiChoice.equals("t")){
-                choiceInvalid = false;
-                AsyncPrint.asyncPrint((new StringBuilder("TUI Starting...")));
-                return OptionSelection.TUI;
-
-            }
-            if(uiChoice.equals("g")){
-                choiceInvalid = false;
-                AsyncPrint.asyncPrint((new StringBuilder("GUI Starting...")));
-                return OptionSelection.GUI;
-            }
-        }while(choiceInvalid);
-        return null;
     }
 
 
@@ -132,6 +82,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void run() {
         Event event;
         events.add(null, APP_MENU);
+        ui.show_GameTitle();
 
         while (!Thread.interrupted()) {
             if (events.isJoined()) {
@@ -236,7 +187,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
-                this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
+                this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getNickname());
                 this.inputProcessor.setIdGame(event.getModel().getIdGame());
             }
             case PLACE_STARTER_ON_CODEX -> {
@@ -257,7 +208,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case NEXT_TURN, PLAYER_RECONNECTED -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
                 if (event.getType().equals(PLAYER_RECONNECTED) && lastPlayerReconnected.equals(nickname)) {
-                    this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
+                    this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getNickname());
                     this.inputProcessor.setIdGame(event.getModel().getIdGame());
                 }
 
@@ -397,7 +348,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             size = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
             if(size>1 && size<=4){
                 sizeValid = true;
-                setGameSize(size,model.getIdGame());
+                gameSizeUpdated(size);
             }
         }while(!sizeValid);
 
@@ -633,10 +584,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * Client asks to set the size
      * @param size
      */
-    public void setGameSize(int size,int idGame) throws Exception {
+    public void gameSizeUpdated(int size) throws Exception {
         ui.show_sizeSetted();
         try{
-            clientActions.setGameSize(nickname ,size, idGame);
+            clientActions.gameSizeUpdated(size);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -679,12 +630,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * The client asks the server to reconnect to a specific game
      *
      * @param nick   nickname of the player
-     * @param idGame id of the game to reconnect
      */
     @Override
-    public void reconnectToGame(String nick, int idGame) {
+    public void reconnectToGame(String nick) {
         //System.out.println("> You have selected to join to Game with id: '" + idGame + "', trying to reconnect");
-            ui.show_joiningToGameIdMsg(idGame, nick);
+            ui.show_joiningToGameIdMsg(0, nick);
             try {
                 clientActions.reconnectToGame(nickname);
             } catch (Exception e) {
@@ -753,9 +703,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     @Override
-    public void ping() throws RemoteException {
+    public void sendPing(String player) throws RemoteException {
         try {
-            clientActions.ping();
+            clientActions.sendPing(player);
         }catch (RemoteException e){
             noConnectionError();
         }
@@ -857,15 +807,15 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.show_gameEnded(gameModel);
     }
 
-
-    /**
-     * A card has been drawn
-     * @param gameModel game model
-     */
-    @Override
-    public void drawCard(GameImmutable gameModel) {
-        events.add(gameModel,DRAW_CARD);
-    }
+//
+//    /**
+//     * A card has been drawn
+//     * @param gameModel game model
+//     */
+//    @Override
+//    public void drawCard(GameImmutable gameModel) {
+//        events.add(gameModel,DRAW_CARD);
+//    }
 
     /**
      * It adds the NextTurn event to the event list
@@ -929,19 +879,19 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.addImportantEvent(model.getPlayers().get(model.getCurrPlayer()).getNickname() + "positioned the Starter Card on his Codex");
     }
 
-    @Override
-    public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
-        ui.showInvalidInput();
-        ui.addImportantEvent();
-        //Valutare se serve perchè esiste già show InvalidInput nella ui e non serve un notify per tutti nel caso siano errati gli input
-    }
+//    @Override
+//    public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
+//        ui.showInvalidInput();
+//        ui.addImportantEvent();
+//        //Valutare se serve perchè esiste già show InvalidInput nella ui e non serve un notify per tutti nel caso siano errati gli input
+//    }
 
-    @Override
-    public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
-        ui.showReqNotRespected(gameImmutable,requirementsPlacement);
-        ui.addImportantEvent();
-        //Valutare se serve perchè esiste già show InvalidInput nella ui e non serve un notify per tutti nel caso siano errati gli input
-    }
+//    @Override
+//    public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
+//        ui.showReqNotRespected(gameImmutable,requirementsPlacement);
+//        ui.addImportantEvent();
+//        //Valutare se serve perchè esiste già show InvalidInput nella ui e non serve un notify per tutti nel caso siano errati gli input
+//    }
 
     @Override
     public void addedPoint(GameImmutable model, Player player, int point) throws RemoteException {
@@ -958,13 +908,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.showObjectiveNotChosen(model);
         events.add(model,CHOOSE_OBJECTIVE_CARD);
     }
-
-    @Override
-    public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
-        ui.showInvalidInput();
-        ui.addImportantEvent();
-        //valutare se serve perchè esiste già show InvalidInput nella ui e non serve un notify per tutti nel caso siano errati gli input
-    }
+//
+//    @Override
+//    public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
+//        ui.showInvalidInput();
+//        ui.addImportantEvent();
+//        //valutare se serve perchè esiste già show InvalidInput nella ui e non serve un notify per tutti nel caso siano errati gli input
+//    }
 
     @Override
     public void deckHasNoCards(GameImmutable model, ArrayList<? extends Card> deck) throws RemoteException {
@@ -986,12 +936,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.showCardAddedToHand(model,card);
     }
 
-    @Override
-    public void cardNotAddedToHand(GameImmutable model) throws RemoteException {
-        ui.showCardNotAddedHand(model);
-        ui.addImportantEvent();
-        //Valutare se serve
-    }
+//    @Override
+//    public void cardNotAddedToHand(GameImmutable model) throws RemoteException {
+//        ui.showCardNotAddedHand(model);
+//        ui.addImportantEvent();
+//        //Valutare se serve
+//    }
 
     @Override
     public void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException {
@@ -1006,5 +956,30 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void winnerDeclared(GameImmutable model, ArrayList<String> nickname) throws RemoteException {
         ui.addImportantEvent("And the Winner is..." + nickname);
+   }
+
+    @Override
+    public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
+
+    }
+
+    @Override
+    public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
+
+    }
+
+    @Override
+    public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
+
+    }
+
+    @Override
+    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
+
+    }
+
+    @Override
+    public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
+
     }
 }

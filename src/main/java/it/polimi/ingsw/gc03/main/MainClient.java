@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-
 /**
  * Main class for the client application.
  */
@@ -49,7 +48,7 @@ public class MainClient {
      * The main method for the client application.
      * @param args The command-line arguments.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         // Clear console
         try {
             clearConsole();
@@ -64,7 +63,7 @@ public class MainClient {
         // Set the client IP address
         List<String> ipAddresses = getLocalIpAddress();
         if (!ipAddresses.isEmpty()) {
-            clientIpAddress = ipAddresses.getFirst();
+            clientIpAddress = ipAddresses.get(0);
             AsyncLogger.log(Level.INFO, "[CLIENT] Client IP address automatically found: " + clientIpAddress);
         } else {
             AsyncLogger.log(Level.WARNING, "[CLIENT] Unable to automatically determine your IP address.");
@@ -76,7 +75,7 @@ public class MainClient {
         } catch (IOException | InterruptedException e) {
 
         }
-        // Get the ussr selection for connection type and interface type
+        // Get the user selection for connection type and interface type
         int userChoice = getUserChoice();
         // Clear console
         try {
@@ -87,7 +86,6 @@ public class MainClient {
         // Connect to the server using the specified connection type and interface type
         connectToServer(userChoice);
     }
-
 
     /**
      * Clears the console.
@@ -107,7 +105,6 @@ public class MainClient {
             }
         }
     }
-
 
     /**
      * Retrieves the local IP addresses of the machine.
@@ -133,7 +130,6 @@ public class MainClient {
         return ipAddresses;
     }
 
-
     /**
      * Prompts the user to enter an IP address.
      * @param ipType A string indicating which IP address is required ("ipServer" for the server's IP address,
@@ -143,22 +139,17 @@ public class MainClient {
     private static String getUserInputIpAddress(String ipType) {
         String input;
         Scanner scanner = new Scanner(System.in);
-        try {
-            do {
-                if ("ipServer".equals(ipType))
-                    AsyncPrint.asyncPrint("[CLIENT] Enter the server's private IP address: ");
-                else
-                    AsyncPrint.asyncPrint("[CLIENT] Enter your private IP address: ");
-                input = scanner.nextLine();
-                if (!isValidIPv4(input))
-                    AsyncLogger.log(Level.WARNING, "[CLIENT] Invalid IP address.");
-            } while (!isValidIPv4(input));
-        } finally {
-            scanner.close();
-        }
+        do {
+            if ("ipServer".equals(ipType))
+                AsyncPrint.asyncPrint("[CLIENT] Enter the server's private IP address: ");
+            else
+                AsyncPrint.asyncPrint("[CLIENT] Enter your private IP address: ");
+            input = scanner.nextLine();
+            if (!isValidIPv4(input))
+                AsyncLogger.log(Level.WARNING, "[CLIENT] Invalid IP address.");
+        } while (!isValidIPv4(input));
         return input;
     }
-
 
     /**
      * Validates an IPv4 address.
@@ -175,7 +166,6 @@ public class MainClient {
             return ip.matches(IPV4_PATTERN);
     }
 
-
     /**
      * Prompts the user to choose the connection type and interface type.
      * @return The user's choice as an integer.
@@ -183,33 +173,28 @@ public class MainClient {
     private static int getUserChoice() {
         int choice;
         Scanner scanner = new Scanner(System.in);
-        try {
-            do {
+        do {
+            AsyncPrint.asyncPrint("Select option:\n(1) TUI + RMI\n(2) TUI + Socket\n(3) GUI + RMI\n(4) GUI + Socket\nYour choice: ");
+            while (!scanner.hasNextInt()) {
+                AsyncLogger.log(Level.WARNING, "[CLIENT] Invalid choice. Enter a valid option number.");
                 AsyncPrint.asyncPrint("Select option:\n(1) TUI + RMI\n(2) TUI + Socket\n(3) GUI + RMI\n(4) GUI + Socket\nYour choice: ");
-                while (!scanner.hasNextInt()) {
-                    AsyncLogger.log(Level.WARNING, "[CLIENT] Invalid choice. Enter a valid option number.");
-                    AsyncPrint.asyncPrint("Select option:\n(1) TUI + RMI\n(2) TUI + Socket\n(3) GUI + RMI\n(4) GUI + Socket\nYour choice: ");
-                    scanner.next();
-                }
-                choice = scanner.nextInt();
-            } while (choice < 1 || choice > 4);
-        } finally {
-            scanner.close();
-        }
+                scanner.next();
+            }
+            choice = scanner.nextInt();
+        } while (choice < 1 || choice > 4);
         return choice;
     }
-
 
     /**
      * Connects to the server using the specified connection type and interface type.
      * @param userChoice The user choice for connection type and interface type.
      */
-    private static void connectToServer(int userChoice) {
+    private static void connectToServer(int userChoice)  {
         switch (userChoice) {
             case 1:
                 // TUI + RMI
                 try {
-                    RmiClient rmiClient = new RmiClient(serverIpAddress, RMI_PORT, new Flow(OptionSelection.RMI));
+                    new Flow(OptionSelection.TUI, OptionSelection.RMI, serverIpAddress, RMI_PORT);
                 } catch (Exception e) {
                     AsyncLogger.log(Level.SEVERE, "[CLIENT RMI] Failed to connect to server: " + e.getMessage());
                     System.exit(1);
@@ -218,7 +203,7 @@ public class MainClient {
             case 2:
                 // TUI + Socket
                 try {
-                    SocketClient socketClient = new SocketClient(serverIpAddress, SOCKET_PORT, new Flow(OptionSelection.SOCKET));
+                    new Flow(OptionSelection.TUI, OptionSelection.SOCKET, serverIpAddress, SOCKET_PORT);
                 } catch (InterruptedException e) {
                     AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Failed to connect to server: " + e.getMessage());
                     System.exit(1);
@@ -227,14 +212,18 @@ public class MainClient {
             case 3:
                 // GUI + RMI
                 try {
-                    // LOGICA PER LA GUI
+                    new Flow(OptionSelection.GUI, OptionSelection.RMI, serverIpAddress, RMI_PORT);
                 } catch (Exception e) {
 
                 }
                 break;
             case 4:
                 // GUI + Socket
-                // LOGICA PER LA GUI
+                try {
+                    new Flow(OptionSelection.GUI, OptionSelection.SOCKET, serverIpAddress, SOCKET_PORT);
+                } catch (InterruptedException e) {
+
+                }
                 break;
             default:
                 AsyncLogger.log(Level.SEVERE, "[CLIENT] Invalid selection.");
@@ -242,7 +231,6 @@ public class MainClient {
                 break;
         }
     }
-
 
     /**
      * Disables logging for JavaFX by setting the logging level of the JavaFX logger and its child loggers to OFF.

@@ -322,7 +322,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      */
     @Override
     public void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.endGameConditionReached(gameImmutable);
+        //this.flow.endGameConditionReached(gameImmutable);
     }
 
 

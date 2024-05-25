@@ -45,6 +45,7 @@ public class SocketServer extends Thread {
             this.start();
         } catch (IOException e) {
             AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error initializing server socket: " + e.getMessage());
+            throw e; // Re-throw the exception after logging it
         }
     }
 
@@ -52,10 +53,11 @@ public class SocketServer extends Thread {
     /**
      * Closes the server socket.
      */
-    private void closeSocketServer() {
+    private synchronized void closeSocketServer() {
         try {
-            if (!this.socketServer.isClosed() && this.socketServer != null)
+            if (this.socketServer != null && !this.socketServer.isClosed()) {
                 this.socketServer.close();
+            }
         } catch (IOException e) {
             AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error closing server socket: " + e.getMessage());
         }
@@ -68,8 +70,9 @@ public class SocketServer extends Thread {
     private void shutdownClientHandlerPool() {
         this.clientHandlerPool.shutdown();
         try {
-            if (!this.clientHandlerPool.awaitTermination(60, TimeUnit.SECONDS))
+            if (!this.clientHandlerPool.awaitTermination(60, TimeUnit.SECONDS)) {
                 this.clientHandlerPool.shutdownNow();
+            }
         } catch (InterruptedException e) {
             this.clientHandlerPool.shutdownNow();
             Thread.currentThread().interrupt();
@@ -103,8 +106,9 @@ public class SocketServer extends Thread {
             }
         } catch (IOException e) {
             // Handle errors in accepting client connections unless the thread has been interrupted
-            if (!isInterrupted())
+            if (!isInterrupted()) {
                 AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error accepting client connection on server socket: " + e.getMessage());
+            }
         } finally {
             // Ensure the server socket is closed
             closeSocketServer();
@@ -112,6 +116,4 @@ public class SocketServer extends Thread {
             shutdownClientHandlerPool();
         }
     }
-
-
 }

@@ -254,4 +254,7 @@ public abstract class UI {
 
     public void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
     }
+
+    public void show_GameTitle(){
+    }
 }

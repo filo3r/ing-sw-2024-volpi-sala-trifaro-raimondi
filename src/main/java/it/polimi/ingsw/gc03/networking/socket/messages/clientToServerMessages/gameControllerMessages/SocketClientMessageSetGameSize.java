@@ -28,12 +28,9 @@ public class SocketClientMessageSetGameSize extends SocketClientGenericMessage {
     /**
      * Constructs a new message that requires the change of the size of the game.
      * This message is flagged to be processed by the game controller of the application.
-     * @param nickname The nickname of the client.
      * @param size The size of the game.
-     * @param idGame The game id.
      */
-    public SocketClientMessageSetGameSize(String nickname, int size, int idGame) {
-        this.nicknameClient = nickname;
+    public SocketClientMessageSetGameSize(int size) {
         this.messageType = MessageType.GAME_CONTROLLER;
         this.size = size;
         this.idGame = idGame;
@@ -61,7 +58,7 @@ public class SocketClientMessageSetGameSize extends SocketClientGenericMessage {
      */
     @Override
     public void execute(GameController gameController) throws RemoteException, Exception {
-        gameController.setGameSize(this.nicknameClient, this.size, this.idGame);
+        gameController.updateGameSize(this.size);
     }
 
 
