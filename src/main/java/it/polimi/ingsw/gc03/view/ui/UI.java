@@ -3,8 +3,11 @@ package it.polimi.ingsw.gc03.view.ui;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class UI {
@@ -209,7 +212,7 @@ public abstract class UI {
     public void show_sizeSetted() {
     }
 
-    public void cardAddedToHand(GameImmutable model, Card card) {
+    public void showCardAddedToHand(GameImmutable model, Card card) {
     }
 
     public void showWinner(GameImmutable model) {
@@ -235,5 +238,20 @@ public abstract class UI {
     }
 
     public void showCardHasBeenDrawn(GameImmutable gameModel) {
+    }
+
+    public void showAskReconnectGameID() {
+    }
+
+    public void showCardNotAddedHand(GameImmutable model) {
+    }
+
+    public void showObjectiveChosen(GameImmutable model, CardObjective cardObjective) {
+    }
+
+    public void showObjectiveNotChosen(GameImmutable model) {
+    }
+
+    public void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
     }
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.view.inputHandler;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.view.ui.GameFlow;
+import it.polimi.ingsw.gc03.view.ui.Flow;
 
 import java.time.LocalTime;
 
@@ -18,7 +18,7 @@ public class InputProcessor extends Thread{
     /**
      * The game flow
      */
-    private final GameFlow gameFlow;
+    private final Flow flow;
     /**
      * The player
      */
@@ -32,12 +32,12 @@ public class InputProcessor extends Thread{
      * Init class
      *
      * @param inputQueue
-     * @param gameFlow
+     * @param flow
      */
-    public InputProcessor(InputQueue inputQueue, GameFlow gameFlow) {
+    public InputProcessor(InputQueue inputQueue, Flow flow) {
         this.inputQueue = inputQueue;
         dataToProcess = new InputQueue();
-        this.gameFlow = gameFlow;
+        this.flow = flow;
         this.p = null;
         this.gameId = null;
         this.start();
@@ -61,7 +61,7 @@ public class InputProcessor extends Thread{
                 LocalTime localTime = LocalTime.now();
                 String receiver = txt.substring(0,txt.indexOf(" "));
                 String message = txt.substring(receiver.length() + 1);
-                gameFlow.sendChatMessage(new ChatMessage(receiver,p,message,localTime));
+                flow.sendChatMessage(new ChatMessage(receiver,p,message,localTime));
             }
 
             if (p != null && txt.startsWith("/chat")) {
@@ -69,7 +69,7 @@ public class InputProcessor extends Thread{
                 LocalTime localtime = LocalTime.now();
                 String receiver = "everyone";
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                gameFlow.sendChatMessage(new ChatMessage(receiver,p, txt, localtime));
+                flow.sendChatMessage(new ChatMessage(receiver,p, txt, localtime));
 
             } else {
                 dataToProcess.addData(txt);

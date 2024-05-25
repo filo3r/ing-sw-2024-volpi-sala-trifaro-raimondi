@@ -5,7 +5,7 @@ import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
-import it.polimi.ingsw.gc03.view.ui.GameFlow;
+import it.polimi.ingsw.gc03.view.ui.Flow;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -209,7 +209,7 @@ public class MainClient {
             case 1:
                 // TUI + RMI
                 try {
-                    RmiClient rmiClient = new RmiClient(serverIpAddress, RMI_PORT, new GameFlow(OptionSelection.RMI));
+                    RmiClient rmiClient = new RmiClient(serverIpAddress, RMI_PORT, new Flow(OptionSelection.RMI));
                 } catch (Exception e) {
                     AsyncLogger.log(Level.SEVERE, "[CLIENT RMI] Failed to connect to server: " + e.getMessage());
                     System.exit(1);
