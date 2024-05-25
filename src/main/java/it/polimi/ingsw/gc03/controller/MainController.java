@@ -104,7 +104,7 @@ public class MainController implements MainControllerInterface, Serializable {
      * The method would allow players to reconnect to a game in progress.
      * @param playerNickname The nickname of the player who needs to reconnect.
      */
-    public synchronized GameController reconnectToGame( GameListener gameListener, String playerNickname) throws RemoteException {
+    public synchronized GameController reconnectToGame(GameListener gameListener, String playerNickname) throws RemoteException {
         // Search for a game which has a player named playerNickname
         List<GameController> GCs = gameControllers.stream()
                 .filter(gc -> gc.getGame().getPlayers().stream()
@@ -115,7 +115,8 @@ public class MainController implements MainControllerInterface, Serializable {
             //If the player is actually offline
             if(!GCs.getFirst().getGame().getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getOnline()){
                 try {
-                    GCs.getFirst().reconnectPlayer(playerNickname);
+                    GCs.getFirst().reconnectPlayer(playerNickname, gameListener);
+                    GCs.getFirst().addListener(gameListener, GCs.getFirst().getGame().getPlayers().stream().filter(x->x.getNickname().equals(playerNickname)).findFirst().get());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

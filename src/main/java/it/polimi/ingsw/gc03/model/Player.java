@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -23,7 +24,7 @@ import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList
 /**
  * This class represents a player in the game.
  */
-public class Player   implements Serializable {
+public class Player implements Serializable {
 
     /**
      * Player's nickname.
@@ -111,6 +112,10 @@ public class Player   implements Serializable {
      */
     private transient ListenersHandler listenersHandler;
 
+    /**
+     * Player's game listener.
+     */
+    private transient GameListener selfListener;
 
     /**
      * Constructor of the Player class.
@@ -118,7 +123,7 @@ public class Player   implements Serializable {
      * @param number Player's number.
      * @param desk The game desk.
      */
-    public Player(String nickname, int number, Desk desk, Game game) throws RemoteException {
+    public Player(String nickname, int number, Desk desk, Game game, GameListener gameListener) throws RemoteException {
         this.nickname = nickname;
         this.number = number;
         this.color = createColorArrayList().get(number - 1);
@@ -144,6 +149,7 @@ public class Player   implements Serializable {
         this.skipTurn = false;
         this.action = PlayerAction.FIRSTMOVES;
         listenersHandler = new ListenersHandler();
+        selfListener = gameListener;
     }
 
 
@@ -401,9 +407,17 @@ public class Player   implements Serializable {
      * Method to set the player's online status.
      * @param online The player's online status.
      */
-    public void setOnline(Game game, boolean online) {
+    public void setOnline(Game game, boolean online, GameController gameController) {
+        if(this.online && !online){
+            listenersHandler.notifyPlayerDisconnected(game, this.getNickname());
+            gameController.removeListener(selfListener, this);
+
+        }
+        if(!this.online && online){
+            listenersHandler.notifyPlayerReconnected(game, this.getNickname());
+            gameController.addListener(selfListener, this);
+        }
         this.online = online;
-        listenersHandler.notifyPlayerDisconnected(game, this.getNickname());
     }
 
 
@@ -479,6 +493,13 @@ public class Player   implements Serializable {
      */
     public ArrayList<GameListener> getListeners() {
         return listenersHandler.getGameListeners();
+    }
+
+    /**
+     * @return the player self listener
+     */
+    public GameListener getSelfListener() {
+        return selfListener;
     }
 
 }

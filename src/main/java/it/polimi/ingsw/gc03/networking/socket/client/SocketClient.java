@@ -9,6 +9,7 @@ import it.polimi.ingsw.gc03.networking.Ping;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages.*;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.mainControllerMessages.*;
 import it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages.SocketServerGenericMessage;
+import it.polimi.ingsw.gc03.view.ui.Flow;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -88,7 +89,7 @@ public class SocketClient implements ClientAction {
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
             AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection established to server.");
             this.executorService.submit(this::processMessages);
-            pingExecutor.scheduleAtFixedRate(() -> sendPing(this.playerClient), 0, 2, TimeUnit.SECONDS);
+            pingExecutor.scheduleAtFixedRate(() -> sendPing(this.nicknameClient), 0, 2, TimeUnit.SECONDS);
         } catch (IOException e) {
             AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Failed to connect to server: " + e.getMessage());
             shutdownAndExit();

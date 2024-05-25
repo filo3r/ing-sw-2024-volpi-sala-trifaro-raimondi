@@ -105,7 +105,7 @@ public class Game {
      * @return A boolean indicating whether a player has been added to the game or not.
      */
     public boolean addPlayer(String nickname, GameListener listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException, CannotJoinGameException {
-        Player player = new Player(nickname, this.numPlayer, this.desk, this);
+        Player player = new Player(nickname, this.numPlayer, this.desk, this, listener);
         // The game is full
         if(this.getStatus().equals(GameStatus.WAITING)){
             if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {

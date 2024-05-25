@@ -76,7 +76,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     }
 
     private void handlePlayerTimeout(Player player) {
-        player.setOnline(this.getGame(), false);
+        if(player.getOnline()){
+            player.setOnline(this.getGame(), false, this);
+            this.removeListener(player.getSelfListener(), player);
+        }
     }
 
     public void ping(String player) {
@@ -156,13 +159,13 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * Method for managing a player's reconnection to the game.
      * @param playerNickname Nickname of the player you want to reconnect.
      */
-
-    public synchronized void reconnectPlayer(String playerNickname) throws Exception {
+    public synchronized void reconnectPlayer(String playerNickname, GameListener gameListener) throws Exception {
         // Check if there is any game with a player with "playerNickname" as nickname.
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
         if (!result.isEmpty()) {
             // The found player is set to online
-            result.getFirst().setOnline(this. getGame(), true);
+            result.getFirst().setOnline(this. getGame(), true, this);
+            this.addListener(gameListener, result.getFirst());
             // If the game was halted, it is set to running
             if (game.getStatus().equals(GameStatus.HALTED)) {
                 stopTimer();
@@ -348,6 +351,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+
+    /**
+     * Allows a player to send a message to the chat.
+     * @param chatMessage The message for the chat.
+     * @throws RemoteException
+     */
     @Override
     public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
         this.game.getChat().add(chatMessage);
@@ -436,15 +445,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-    // For testing purposes, no real case use
-    public void infiniteTask(String p) throws Exception {
-        int i = 0;
-        while(true){
-            Thread.sleep(1000);
-            System.out.println("seq: "+i+" gameID: "+getGame().getIdGame()+" client: "+p);
-            i+=1;
-        }
-    }
+
     /**
      * Retrieves the current game instance associated with this object.
      * @return The current instance of Game associated with this class.
@@ -453,12 +454,22 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return game;
     }
 
+    /**
+     * Add a gameListener to every player in the game, and add every old listener to the new player
+     * @param gameListener the game listener to add.
+     * @param player the new player.
+     */
     public void addListener(GameListener gameListener, Player player){
         game.addListener(gameListener);
         game.getListeners().stream().forEach(x->player.addListener(x));
         game.getPlayers().stream().filter(x->!x.equals(player)).forEach(x->x.addListener(gameListener));
     }
 
+    /**
+     * When a player disconnects, this remove every listener to the player and the listener of the player from everybody else.
+     * @param gameListener the game listener to remove.
+     * @param player the player who disconnected.
+     */
     public void removeListener(GameListener gameListener, Player player){
         game.removeListener(gameListener);
         player.getListeners().clear();

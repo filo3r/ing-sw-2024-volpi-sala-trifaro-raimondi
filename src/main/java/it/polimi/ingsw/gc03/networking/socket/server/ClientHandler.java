@@ -168,7 +168,7 @@ public class ClientHandler implements Runnable {
                     // Process ping and other messages
                     if (message.getMessageType() == MessageType.PING && message.getMessageType() != MessageType.MAIN_CONTROLLER) {
                         if (this.gameController != null)
-                            this.gameController.ping(message.getNicknameClient(), this.gameListenerHandlerServer);
+                            this.gameController.ping(message.getNicknameClient());
                     } else {
                         this.messagesQueue.add(message);
                     }
