@@ -10,7 +10,6 @@ import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

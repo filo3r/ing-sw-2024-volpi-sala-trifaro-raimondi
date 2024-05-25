@@ -16,23 +16,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RmiServer implements VirtualServer {
+public class RmiServerOld implements VirtualServerOld {
     final MainController mainController;
     private Thread pingThread;
-    final List<VirtualView> clients = new ArrayList<>();
-    private final Map<VirtualView, Long> clientPingTimestamps = new ConcurrentHashMap<>();
+    final List<VirtualViewOld> clients = new ArrayList<>();
+    private final Map<VirtualViewOld, Long> clientPingTimestamps = new ConcurrentHashMap<>();
     private final Object clientPingTimestampsLock = new Object();
     private final long TIMEOUT_MILLIS  = 5000;
 
-    public RmiServer(MainController mainController){
+    public RmiServerOld(MainController mainController){
         this.mainController = MainController.getInstance();
         startPongThread();
     }
 
     public static void main(String[] args) throws RemoteException {
         final String serverName = "Server";
-        VirtualServer server = new RmiServer(MainController.getInstance());
-        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server,0);
+        VirtualServerOld server = new RmiServerOld(MainController.getInstance());
+        VirtualServerOld stub = (VirtualServerOld) UnicastRemoteObject.exportObject(server,0);
         Registry registry = LocateRegistry.createRegistry(2222);
         registry.rebind(serverName,stub);
         System.out.println("server bound");
@@ -40,7 +40,7 @@ public class RmiServer implements VirtualServer {
     }
 
     @Override
-    public void connectClient(VirtualView client) throws RemoteException {
+    public void connectClient(VirtualViewOld client) throws RemoteException {
         synchronized (clients) {
             clients.add(client);
             long currentTime = System.currentTimeMillis();
@@ -75,7 +75,7 @@ public class RmiServer implements VirtualServer {
      * @throws CannotJoinGameException
      */
     @Override
-    public GameController addPlayerToGame(String playerNickName, VirtualView listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException{
+    public GameController addPlayerToGame(String playerNickName, VirtualViewOld listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException{
         System.err.println("addPlayerToGame request received");
         GameController gc = this.mainController.joinFirstAvailableGame(playerNickName, listener);
         return gc;
@@ -107,7 +107,7 @@ public class RmiServer implements VirtualServer {
     }
 
     @Override
-    public void addPlayerToSpecificGame(String nickname, int id, VirtualView listener) throws RemoteException {
+    public void addPlayerToSpecificGame(String nickname, int id, VirtualViewOld listener) throws RemoteException {
         System.err.println("addPlayerToSpecificGame request received");
         GameController gc = this.mainController.joinSpecificGame(nickname, id, listener);
     }
@@ -127,17 +127,17 @@ public class RmiServer implements VirtualServer {
             while (!Thread.interrupted()) {
                 try {
                     long currentTime = System.currentTimeMillis();
-                    List<VirtualView> disconnectedClients = new ArrayList<>();
+                    List<VirtualViewOld> disconnectedClients = new ArrayList<>();
                     synchronized (clients) {
                         synchronized (clientPingTimestampsLock) {
-                            for (VirtualView client : clients) {
+                            for (VirtualViewOld client : clients) {
                                 Long lastPingTime = clientPingTimestamps.get(client);
                                 if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
                                     disconnectedClients.add(client);
                                     System.err.println("Server: Client " + client + " disconnected due to timeout");
                                 }
                             }
-                            for (VirtualView disconnectedClient : disconnectedClients) {
+                            for (VirtualViewOld disconnectedClient : disconnectedClients) {
                                 clients.remove(disconnectedClient);
                                 clientPingTimestamps.remove(disconnectedClient);
                             }
@@ -153,7 +153,7 @@ public class RmiServer implements VirtualServer {
     }
 
     @Override
-    public void ping(VirtualView client) {
+    public void ping(VirtualViewOld client) {
         synchronized (clientPingTimestampsLock) {
             if (clients.contains(client)) {
                 long currentTime = System.currentTimeMillis();

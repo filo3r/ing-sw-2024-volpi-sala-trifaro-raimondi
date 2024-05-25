@@ -42,7 +42,7 @@ public class SocketClientMessageJoinSpecificGame extends SocketClientGenericMess
      */
     @Override
     public GameController execute(GameListener gameListener, MainController mainController) throws RemoteException {
-        return mainController.joinSpecificGame(GameListener gameListener, this.nicknameClient, this.idGame);
+        return mainController.joinSpecificGame(gameListener, this.nicknameClient, this.idGame);
     }
 
 

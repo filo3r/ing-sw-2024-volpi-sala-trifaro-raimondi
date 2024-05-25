@@ -60,7 +60,13 @@ public class SocketClient implements ClientAction {
      */
     private final ExecutorService executorService;
 
+    /**
+     * The Flow object that handles UI and game flow actions.
+     */
+    private Flow flow;
+
     private final ScheduledExecutorService pingExecutor;
+
     private static final long PING_INTERVAL = 2; // Ping interval in seconds
 
 
@@ -68,9 +74,10 @@ public class SocketClient implements ClientAction {
      * Constructor for SocketClient.
      * @param ip The IP address of the server.
      * @param port The port number on which the server is listening.
+     * @param flow The Flow object that handles UI and game flow actions.
      */
-    public SocketClient(String ip, int port) {
-        this.messageActionHandler = new GameListenerHandlerClient();
+    public SocketClient(String ip, int port, Flow flow) {
+        this.messageActionHandler = new GameListenerHandlerClient(flow);
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingExecutor = Executors.newSingleThreadScheduledExecutor();
         startConnection(ip, port);
@@ -88,7 +95,14 @@ public class SocketClient implements ClientAction {
             this.inputStream = new ObjectInputStream(this.socketClient.getInputStream());
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
             AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Connection established to server.");
-            this.executorService.submit(this::processMessages);
+            this.executorService.submit(() -> {
+                try {
+                    processMessages();
+                } catch (Exception e) {
+                    AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Error in message processing task: " + e.getMessage());
+                    shutdownAndExit();
+                }
+            });
             pingExecutor.scheduleAtFixedRate(() -> sendPing(this.nicknameClient), 0, 2, TimeUnit.SECONDS);
         } catch (IOException e) {
             AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Failed to connect to server: " + e.getMessage());
@@ -199,12 +213,13 @@ public class SocketClient implements ClientAction {
     }
 
 
+    /*
     /**
      * This method is used to write on the output stream the message that the client wants to leave a game in progress.
      * @param nickname The nickname of the client.
      * @param idGame The id of the game.
      * @throws IOException If an input or output exception occurs during action processing.
-     */
+
     @Override
     public void leaveGame(String nickname, int idGame) throws IOException {
         this.nicknameClient = nickname;
@@ -212,6 +227,7 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
+    */
 
 
     /**

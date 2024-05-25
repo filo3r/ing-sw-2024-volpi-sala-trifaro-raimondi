@@ -6,9 +6,7 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;

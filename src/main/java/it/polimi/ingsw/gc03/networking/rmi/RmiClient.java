@@ -83,7 +83,6 @@ public class RmiClient implements ClientAction {
     /**
      * Class constructor.
      * Creates, starts, and connects an RMI Client to the server.
-     *
      * @param flow The Flow object that handles UI and game flow actions.
      */
     public RmiClient(String ip, int port, Flow flow, String player) {
@@ -102,7 +101,6 @@ public class RmiClient implements ClientAction {
 
     /**
      * Setups the connection to the RMI server.
-     *
      * @throws RemoteException   If an error occurs in remote communication.
      * @throws NotBoundException If a name in the registry was not found.
      */

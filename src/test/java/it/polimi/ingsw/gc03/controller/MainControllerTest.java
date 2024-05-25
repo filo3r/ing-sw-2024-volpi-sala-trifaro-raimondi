@@ -10,8 +10,8 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
-import it.polimi.ingsw.gc03.networking.rmi.old.RmiClient;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.old.RmiClientOld;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualViewOld;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +54,7 @@ class MainControllerTest {
     @Test
     @DisplayName("Simulate a player trying to join when there are no active games")
     void joinAndCreateGame() throws NoSuchGameException, RemoteException {
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         mainController.joinFirstAvailableGame("Player1", listener);
         assertEquals(1, mainController.getGameControllers().size());
         GameController gc = mainController.getGameControllers().get(0);
@@ -77,7 +77,7 @@ class MainControllerTest {
     @Test
     @DisplayName("Game ending and winner")
     void gameEnd() throws Exception {
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         mainController.joinFirstAvailableGame("Player1", listener);
         GameController gameController= mainController.getGameControllers().getFirst();
         Game game = gameController.getGame();
@@ -131,7 +131,7 @@ class MainControllerTest {
 
     @Test
     void deleteNotExistentGame() throws NoSuchGameException, RemoteException {
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         mainController.joinFirstAvailableGame("Player", listener);
         int idGame = mainController.getGameControllers().getFirst().getGame().getIdGame();
         mainController.deleteGame(idGame);

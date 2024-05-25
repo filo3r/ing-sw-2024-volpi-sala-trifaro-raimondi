@@ -101,9 +101,13 @@ public class ClientHandler implements Runnable {
      *                This message should contain the necessary information to fetch or create a GameController instance.
      */
     private void processMessageForMainController(SocketClientGenericMessage message) {
-        GameController controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
-        // Assigns the controller and updates the nickname
-        updateGameControllerAndNickname(controller);
+        try {
+            GameController controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
+            // Assigns the controller and updates the nickname
+            updateGameControllerAndNickname(controller);
+        } catch (RemoteException e) {
+            AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error processing message for MainController: " + e.getMessage());
+        }
     }
 
 
@@ -125,6 +129,8 @@ public class ClientHandler implements Runnable {
             throw new RuntimeException(e);
         } catch (InterruptedException ignored) {
             // Thread interrupted, exit gracefully
+        } catch (Exception e) {
+            AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Unexpected exception: " + e.getMessage());
         }
     }
 

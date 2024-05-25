@@ -217,7 +217,12 @@ public class MainClient {
                 break;
             case 2:
                 // TUI + Socket
-                SocketClient socketClient = new SocketClient(serverIpAddress, SOCKET_PORT); // Bisogna sistemare SocketClient per prendere Flow
+                try {
+                    SocketClient socketClient = new SocketClient(serverIpAddress, SOCKET_PORT, new Flow(OptionSelection.SOCKET));
+                } catch (InterruptedException e) {
+                    AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Failed to connect to server: " + e.getMessage());
+                    System.exit(1);
+                }
                 break;
             case 3:
                 // GUI + RMI

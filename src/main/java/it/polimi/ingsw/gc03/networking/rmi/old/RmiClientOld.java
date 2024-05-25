@@ -15,14 +15,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class RmiClient extends UnicastRemoteObject implements VirtualView{
+public class RmiClientOld extends UnicastRemoteObject implements VirtualViewOld {
 
-    final VirtualServer server;
+    final VirtualServerOld server;
     private Game game;
     private GameController gameController;
     private String nickname;
     private final ScheduledExecutorService pingExecutor = Executors.newSingleThreadScheduledExecutor();
-    public RmiClient(VirtualServer server) throws RemoteException{
+    public RmiClientOld(VirtualServerOld server) throws RemoteException{
         this.server = server;
         pingExecutor.scheduleAtFixedRate(this::sendPing, 0, 2, TimeUnit.SECONDS);
     }
@@ -72,9 +72,9 @@ public class RmiClient extends UnicastRemoteObject implements VirtualView{
     public static void main(String[] args) throws Exception {
         final String serverName = "Server";
         Registry registry = LocateRegistry.getRegistry("localhost",2222);
-        VirtualServer server = (VirtualServer) registry.lookup(serverName);
+        VirtualServerOld server = (VirtualServerOld) registry.lookup(serverName);
 
-        new RmiClient(server).run();
+        new RmiClientOld(server).run();
     }
 
     @Override

@@ -7,8 +7,8 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.networking.rmi.old.RmiClient;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualView;
+import it.polimi.ingsw.gc03.networking.rmi.old.RmiClientOld;
+import it.polimi.ingsw.gc03.networking.rmi.old.VirtualViewOld;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class GameControllerTest {
     @DisplayName("Players added to the game")
     void addPlayerToGame() throws CannotJoinGameException, PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         // A player is added to the game
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         gameController.addPlayerToGame("Player1", listener);
         // A player tries to join before the game's size is changed.
         assertThrows(DeskIsFullException.class, () -> gameController.addPlayerToGame("Player4", listener));
@@ -53,7 +53,7 @@ class GameControllerTest {
     @Test
     @DisplayName("Placing cards on Codex and simple game")
     void placingCards() throws Exception {
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         gameController.addPlayerToGame("Player1", listener);
         gameController.getGame().setSize(2);
         gameController.addPlayerToGame("Player2", listener);
@@ -123,7 +123,7 @@ class GameControllerTest {
     @Test
     public void testReconnectPlayer() throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         Game game = gameController.getGame();
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         gameController.addPlayerToGame("Player1", listener);
         game.setSize(2);
         gameController.addPlayerToGame("Player2", listener);
@@ -141,7 +141,7 @@ class GameControllerTest {
 
     @Test
     void checkFinalActionTestCall() throws Exception {
-        VirtualView listener = new RmiClient(null);
+        VirtualViewOld listener = new RmiClientOld(null);
         gameController.addPlayerToGame("Player1", listener);
         gameController.updateSize(2);
         gameController.addPlayerToGame("Player2", listener);

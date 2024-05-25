@@ -7,7 +7,7 @@ import it.polimi.ingsw.gc03.model.Game;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 //manca tutto
-public interface VirtualView extends Remote {
+public interface VirtualViewOld extends Remote {
     void updatePlayerJoined(String newPlayer) throws RemoteException;
     void updateSizeChanged(int size) throws RemoteException;
     void updateGame(Game game) throws RemoteException;

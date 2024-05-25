@@ -14,9 +14,9 @@ import java.util.List;
  * Virtual Interface for GameController and MainController methods.
  */
 //Dovrebbe essere completo
-public interface VirtualServer extends Remote{
+public interface VirtualServerOld extends Remote{
 
-    void connectClient(VirtualView client) throws RemoteException;
+    void connectClient(VirtualViewOld client) throws RemoteException;
 
     Game getGame() throws RemoteException;
 
@@ -25,16 +25,16 @@ public interface VirtualServer extends Remote{
 
     void resetInstance() throws RemoteException;
 
-    GameController addPlayerToGame(String playerNickName, VirtualView listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException;
+    GameController addPlayerToGame(String playerNickName, VirtualViewOld listener) throws RemoteException, PlayerAlreadyJoinedException, DeskIsFullException, CannotJoinGameException;
 
     void updateSize(int size, int gameID) throws Exception;
 
     boolean checkNicknameValidity(String nickname) throws RemoteException;
 
-    void addPlayerToSpecificGame(String nickname, int id, VirtualView listener) throws RemoteException;
+    void addPlayerToSpecificGame(String nickname, int id, VirtualViewOld listener) throws RemoteException;
 
     void infiniteTask(int id, String p) throws Exception;
 
 
-    void ping(VirtualView client) throws RemoteException;
+    void ping(VirtualViewOld client) throws RemoteException;
 }
