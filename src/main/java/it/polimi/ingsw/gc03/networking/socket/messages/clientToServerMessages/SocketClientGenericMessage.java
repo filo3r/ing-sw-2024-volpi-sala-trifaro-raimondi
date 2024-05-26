@@ -3,6 +3,8 @@ package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages;
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
+import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -32,7 +34,7 @@ public abstract class SocketClientGenericMessage implements Serializable {
      * @return The game controller.
      * @throws RemoteException If a remote exception occurs.
      */
-    public abstract GameController execute(GameListener gameListener, MainController mainController) throws RemoteException;
+    public abstract GameControllerInterface execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException;
 
 
     /**
@@ -41,7 +43,7 @@ public abstract class SocketClientGenericMessage implements Serializable {
      * @throws RemoteException If a remote exception occurs.
      * @throws Exception If an exception occurs.
      */
-    public abstract void execute(GameController gameController) throws RemoteException, Exception;
+    public abstract void execute(GameControllerInterface gameController) throws RemoteException, Exception;
 
 
     /**

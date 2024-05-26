@@ -130,7 +130,7 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
      * @param object The remote object to export.
      * @throws RemoteException If exporting the object fails.
      */
-    private void exportObjectIfNeeded(GameController object) throws RemoteException {
+    private void exportObjectIfNeeded(GameControllerInterface object) throws RemoteException {
         try {
             UnicastRemoteObject.exportObject(object, 0);
         } catch (RemoteException e) {
@@ -145,8 +145,8 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    public GameController createGame(GameListener gameListener, String nickname) throws RemoteException {
-        GameController gameController = mainController.createGame(gameListener, nickname);
+    public GameControllerInterface createGame(GameListener gameListener, String nickname) throws RemoteException {
+        GameControllerInterface gameController = mainController.createGame(gameListener, nickname);
         exportObjectIfNeeded(gameController);
         AsyncLogger.log(Level.INFO, "[SERVER RMI] The client " + nickname + " has created a new game.");
         return gameController;
@@ -159,8 +159,8 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    public GameController joinFirstAvailableGame(GameListener gameListener, String nickname) throws RemoteException {
-        GameController gameController = mainController.joinFirstAvailableGame(gameListener, nickname);
+    public GameControllerInterface joinFirstAvailableGame(GameListener gameListener, String nickname) throws RemoteException {
+        GameControllerInterface gameController = mainController.joinFirstAvailableGame(gameListener, nickname);
         if (gameController == null) {
             AsyncLogger.log(Level.WARNING, "[SERVER RMI] The client " + nickname + " has not been added to any games.");
         } else {
@@ -178,8 +178,8 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
      * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    public GameController joinSpecificGame(GameListener gameListener, String nickname, int idGame) throws RemoteException {
-        GameController gameController = mainController.joinSpecificGame(gameListener, nickname, idGame);
+    public GameControllerInterface joinSpecificGame(GameListener gameListener, String nickname, int idGame) throws RemoteException {
+        GameControllerInterface gameController = mainController.joinSpecificGame(gameListener, nickname, idGame);
         if (gameController == null) {
             AsyncLogger.log(Level.WARNING, "[SERVER RMI] The client " + nickname + " was not added to the game: " + idGame + ".");
         } else {
@@ -196,8 +196,8 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    public GameController reconnectToGame(GameListener gameListener, String nickname) throws RemoteException {
-        GameController gameController = mainController.reconnectToGame(gameListener, nickname);
+    public GameControllerInterface reconnectToGame(GameListener gameListener, String nickname) throws RemoteException {
+        GameControllerInterface gameController = mainController.reconnectToGame(gameListener, nickname);
         if (gameController == null) {
             AsyncLogger.log(Level.WARNING, "[SERVER RMI] The client " + nickname + " did not reconnect to the game.");
         } else {

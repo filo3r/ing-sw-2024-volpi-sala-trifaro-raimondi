@@ -4,6 +4,8 @@ import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
+import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
@@ -48,7 +50,7 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public GameController execute(GameListener gameListener, MainController mainController) throws RemoteException {
+    public GameController execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException {
         return null;
     }
 
@@ -60,7 +62,7 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
      * @throws Exception If an exception occurs.
      */
     @Override
-    public void execute(GameController gameController) throws RemoteException, Exception {
+    public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.selectCardObjective(this.player, this.cardObjective);
     }
 

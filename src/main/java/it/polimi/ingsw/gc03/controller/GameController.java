@@ -110,7 +110,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * Updates the ping timestamp for a player.
      * @param player The player who sent the ping.
      */
-    public void ping(String player) {
+    public void ping(String player) throws RemoteException {
         List<Player> playerWhoPinged = this.getGame().getPlayers().stream().filter(p->p.getNickname().equals(player)).toList();
         if(!playerWhoPinged.isEmpty()){
             playerPingTimestamps.put(playerWhoPinged.getFirst(), System.currentTimeMillis());

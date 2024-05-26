@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.networking.socket.server;
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.networking.AsyncLogger;
+import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class ClientHandler implements Runnable {
     /**
      * The game controller for the game session.
      */
-    private GameController gameController; //Oppure interfaccia???
+    private GameControllerInterface gameController;
 
     /**
      * Listener for client socket messages.
@@ -88,7 +89,7 @@ public class ClientHandler implements Runnable {
      * @param controller The GameController instance to set. This controller may be null if the previous execution did
      *                   not result in a valid controller.
      */
-    private void updateGameControllerAndNickname(GameController controller, SocketClientGenericMessage message) {
+    private void updateGameControllerAndNickname(GameControllerInterface controller, SocketClientGenericMessage message) {
         this.gameController = controller;
         this.nicknameClient = controller != null ? message.getNicknameClient() : null;
     }
@@ -102,7 +103,7 @@ public class ClientHandler implements Runnable {
      */
     private void processMessageForMainController(SocketClientGenericMessage message) {
         try {
-            GameController controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
+            GameControllerInterface controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
             // Assigns the controller and updates the nickname
             updateGameControllerAndNickname(controller, message);
         } catch (RemoteException e) {

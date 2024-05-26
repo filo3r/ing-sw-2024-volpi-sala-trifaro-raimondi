@@ -21,7 +21,7 @@ public interface MainControllerInterface extends Remote {
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    GameController createGame(GameListener gameListener, String nickname) throws RemoteException;
+    GameControllerInterface createGame(GameListener gameListener, String nickname) throws RemoteException;
 
 
     /**
@@ -30,7 +30,7 @@ public interface MainControllerInterface extends Remote {
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    GameController joinFirstAvailableGame(GameListener gameListener, String nickname) throws RemoteException;
+    GameControllerInterface joinFirstAvailableGame(GameListener gameListener, String nickname) throws RemoteException;
 
 
     /**
@@ -40,7 +40,7 @@ public interface MainControllerInterface extends Remote {
      * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    GameController joinSpecificGame(GameListener gameListener, String nickname, int idGame) throws RemoteException;
+    GameControllerInterface joinSpecificGame(GameListener gameListener, String nickname, int idGame) throws RemoteException;
 
 
     /**
@@ -49,6 +49,6 @@ public interface MainControllerInterface extends Remote {
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    GameController reconnectToGame(GameListener gameListener, String nickname) throws RemoteException;
+    GameControllerInterface reconnectToGame(GameListener gameListener, String nickname) throws RemoteException;
 
 }

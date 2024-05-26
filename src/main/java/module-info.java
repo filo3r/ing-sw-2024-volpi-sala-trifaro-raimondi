@@ -5,6 +5,7 @@ module it.polimi.ingsw.gc03 {
     requires java.logging;
     requires java.rmi;
     requires java.desktop;
+    requires jdk.compiler;
 
 
     exports it.polimi.ingsw.gc03.model.exceptions;

@@ -3,6 +3,8 @@ package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.m
 import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
+import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
@@ -39,7 +41,7 @@ public class SocketClientMessageReconnectToGame extends SocketClientGenericMessa
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public GameController execute(GameListener gameListener, MainController mainController) throws RemoteException {
+    public GameControllerInterface execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException {
         return mainController.reconnectToGame(gameListener, this.nicknameClient);
     }
 
@@ -50,7 +52,7 @@ public class SocketClientMessageReconnectToGame extends SocketClientGenericMessa
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void execute(GameController gameController) throws RemoteException {}
+    public void execute(GameControllerInterface gameController) throws RemoteException {}
 
 
 }

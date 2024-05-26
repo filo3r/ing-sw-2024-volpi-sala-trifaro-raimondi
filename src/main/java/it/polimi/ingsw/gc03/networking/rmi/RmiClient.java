@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.networking.rmi;
 
+import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
@@ -159,6 +160,7 @@ public class RmiClient implements ClientAction {
     @Override
     public void createGame(String nickname) throws RemoteException, NotBoundException {
         connectToGameServer();
+        System.out.println("QUI");
         this.gameController = this.mainController.createGame(this.gameListener, this.nicknameClient);
         this.nicknameClient = nickname;
     }
