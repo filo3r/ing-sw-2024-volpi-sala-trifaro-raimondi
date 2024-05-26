@@ -78,6 +78,7 @@ public class Codex implements Serializable {
      * Constructor for the Codex class.
      */
     public Codex() {
+        listenersHandler = new ListenersHandler();
         this.codex = new Side[81][81];
         this.counterCodex = new int[8];
         for (int i = 0; i < 8; i++) {
@@ -89,7 +90,6 @@ public class Codex implements Serializable {
         this.minColumn = 0;
         this.maxColumn = 81;
         this.cardStarterInserted = false;
-        listenersHandler = new ListenersHandler();
     }
 
 

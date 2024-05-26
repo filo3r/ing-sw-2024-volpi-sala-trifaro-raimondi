@@ -65,8 +65,8 @@ public class MainController implements MainControllerInterface, Serializable {
         // add the controller to the list of controllers
         gameControllers.add(controller);
         // add the player to the newly created game and add his listener to every component and vice versa
+        //controller.addListener(gameListener, controller.getGame().getPlayers().getFirst());
         joinSpecificGame(gameListener, firstPlayerNickname, controller.getGame().getIdGame());
-        controller.addListener(gameListener, controller.getGame().getPlayers().getFirst());
         return controller;
     }
 

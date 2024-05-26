@@ -60,17 +60,17 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(210, 30);
+                ui = new Tui(221, 72);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
         }
         switch(connectionSelection){
             case OptionSelection.RMI->{
-                new RmiClient(serverIpAddress, port, this);
+                clientActions = new RmiClient(serverIpAddress, port, this);
             }
             case OptionSelection.SOCKET ->{
-                new SocketClient(serverIpAddress, port, this);
+                clientActions = new SocketClient(serverIpAddress, port, this);
             }
         }
         new Thread(this).start();
@@ -83,7 +83,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         Event event;
         events.add(null, APP_MENU);
         ui.show_GameTitle();
-        ui.show_menuOptions();
 
         while (!Thread.interrupted()) {
             if (events.isJoined()) {
@@ -301,6 +300,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @return ture if the player has selected a game, false otherwise
      */
     private boolean askSelectGame() throws Exception {
+        askNickname();
         String optionChoose;
         ended = false;
         ui.show_menuOptions();
@@ -312,12 +312,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
         }
         if (optionChoose.equals("."))
             System.exit(1);
-        askNickname();
+
 
         switch (optionChoose) {
             case "c" -> {
                 createGame(nickname);
-                askGameSize(events.pop().getModel());
+                System.out.println(events.size());
+                askGameSize(null);
             }
             case "j" -> joinFirstAvailableGame(nickname);
             case "js" -> {
@@ -332,7 +333,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -586,7 +586,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param size
      */
     public void gameSizeUpdated(int size) throws Exception {
-        ui.show_sizeSetted();
+        ui.show_sizeSetted(size);
         try{
             clientActions.gameSizeUpdated(size);
         } catch (RemoteException e) {
@@ -723,7 +723,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void playerJoined(GameImmutable gameModel) {
-        //shared.setLastModelReceived(gameModel);
         events.add(gameModel, PLAYER_JOINED);
 
         //Print also here because: If a player is in askReadyToStart is blocked and cannot showPlayerJoined by watching the events

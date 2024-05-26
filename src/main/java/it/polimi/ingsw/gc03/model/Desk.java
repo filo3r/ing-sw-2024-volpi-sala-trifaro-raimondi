@@ -139,13 +139,13 @@ public class Desk implements Serializable{
      * Constructor of the Desk class.
      */
     public Desk(Game game) throws RemoteException {
+        listenersHandler = new ListenersHandler();
         // Create decks of cards
         if (!createDeckStarter() || !createDeckResource() || !createDeckGold() || !createDeckObjective())
             System.exit(1);
         // Initialize visible cards
         initializeDisplayedCard();
         this.game = game;
-        listenersHandler = new ListenersHandler();
     }
 
 

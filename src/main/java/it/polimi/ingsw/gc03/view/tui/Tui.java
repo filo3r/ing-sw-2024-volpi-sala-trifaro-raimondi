@@ -440,57 +440,80 @@ public class Tui extends UI {
     @Override
     protected void show_menuOptions() {
         generateTextOnScreen("Please choose an option", CharColor.WHITE, 1093, 364);
+        generateTextOnScreen("c -> Create a game", CharColor.WHITE, 1093, 365);
+        generateTextOnScreen("j -> Join a random game", CharColor.WHITE, 1093, 366);
+        generateTextOnScreen("js -> Join a specific game", CharColor.WHITE, 1093, 367);
+        generateTextOnScreen("js -> Reconnect to a game", CharColor.WHITE, 1093, 368);
         refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_creatingNewGameMsg(String nickname) {
+        generateTextOnScreen("Creating a new game...", CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
+    }
 
+    @Override
+     public void showAskSize(GameImmutable gameImmutable){
+        generateTextOnScreen("Please choose the game size (2,3,4)", CharColor.WHITE, 1093, 364);
+        refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_joiningFirstAvailableMsg(String nickname) {
-
+        generateTextOnScreen("Joining the first available game...", CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_joiningToGameIdMsg(int idGame, String nickname) {
-
+        generateTextOnScreen("Joining the game with id "+idGame, CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_inputGameIdMsg() {
-
+        generateTextOnScreen("Please write the game id", CharColor.WHITE, 1093, 364);
+        refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_insertNicknameMsg() {
+        generateTextOnScreen("Please choose your nickname", CharColor.WHITE, 1093, 364);
+        refreshScreen(1093, 364);
 
     }
 
     @Override
     protected void show_chosenNickname(String nickname) {
+        generateTextOnScreen(nickname+" accepted", CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
 
     }
 
     @Override
     protected void show_gameStarted(GameImmutable model) {
+        generateTextOnScreen("The game has started", CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
 
     }
 
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
+        generateTextOnScreen("No available games to join", CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
 
     }
 
     @Override
     protected void show_gameEnded(GameImmutable model) {
-
+        generateTextOnScreen("The game has ended", CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_playerJoined(GameImmutable gameModel, String nick) {
-
+        showNotification(nick+" joined the game");
     }
 
     @Override
@@ -505,22 +528,23 @@ public class Tui extends UI {
 
     @Override
     protected void show_sentMessage(GameImmutable model, String nickname) {
-
+        showNotification("message sent.");
     }
 
     @Override
     protected void show_NaNMsg() {
+        showNotification("NaN");
 
     }
 
     @Override
     protected void show_returnToMenuMsg() {
-
+        showNotification("return to menu.");
     }
 
     @Override
     public void addImportantEvent(String input) {
-
+        showNotification(input);
     }
 
     @Override
@@ -539,7 +563,14 @@ public class Tui extends UI {
     }
 
     @Override
-    protected void show_noConnectionError() {
+    public void show_sizeSetted(int size){
+        generateTextOnScreen("Game size updated to "+size, CharColor.GOLD, 1093, 364);
+        refreshScreen(1093, 364);
+    }
 
+    @Override
+    protected void show_noConnectionError() {
+        generateTextOnScreen("No connection.", CharColor.RED, 1093, 364);
+        refreshScreen(1093, 364);
     }
 }

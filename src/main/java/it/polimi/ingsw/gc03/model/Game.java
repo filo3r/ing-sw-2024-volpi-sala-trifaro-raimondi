@@ -84,6 +84,7 @@ public class Game {
      * @param idGame The game's ID.
      */
     public Game(int idGame) throws RemoteException {
+        listenersHandler = new ListenersHandler();
         this.idGame = idGame;
         this.size = 1;
         this.status = GameStatus.WAITING;
@@ -93,7 +94,6 @@ public class Game {
         this.currPlayer = 0;
         this.chat = new ArrayList<>();
         this.winner = new ArrayList<>(MAX_NUM_PLAYERS);
-        listenersHandler = new ListenersHandler();
     }
 
 
@@ -145,6 +145,7 @@ public class Game {
             this.players.removeIf(player1 -> player1.equals(player.get(0)));
             this.numPlayer--;
             listenersHandler.notifyPlayerLeft(this, player.get(0).getNickname());
+            System.out.println("DOVREI AVER NOTIFICATO TUTTI.");
             return true;
         }
         return false;

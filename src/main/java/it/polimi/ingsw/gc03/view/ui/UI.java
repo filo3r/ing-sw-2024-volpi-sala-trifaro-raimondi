@@ -209,7 +209,7 @@ public abstract class UI {
     public void showAskSize(GameImmutable model) {
     }
 
-    public void show_sizeSetted() {
+    public void show_sizeSetted(int size) {
     }
 
     public void showCardAddedToHand(GameImmutable model, Card card) {

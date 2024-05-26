@@ -124,6 +124,8 @@ public class Player implements Serializable {
      * @param desk The game desk.
      */
     public Player(String nickname, int number, Desk desk, Game game, GameListener gameListener) throws RemoteException {
+        listenersHandler = new ListenersHandler();
+        selfListener = gameListener;
         this.nickname = nickname;
         this.number = number;
         this.color = createColorArrayList().get(number - 1);
@@ -148,8 +150,6 @@ public class Player implements Serializable {
         this.online = true;
         this.skipTurn = false;
         this.action = PlayerAction.FIRSTMOVES;
-        listenersHandler = new ListenersHandler();
-        selfListener = gameListener;
     }
 
 
