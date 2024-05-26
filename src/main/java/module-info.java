@@ -4,6 +4,7 @@ module it.polimi.ingsw.gc03 {
     requires com.google.gson;
     requires java.logging;
     requires java.rmi;
+    requires java.desktop;
 
 
     exports it.polimi.ingsw.gc03.model.exceptions;

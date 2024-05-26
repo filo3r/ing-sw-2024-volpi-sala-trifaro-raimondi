@@ -67,8 +67,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     public GameController() throws RemoteException {
         game = new Game(random.nextInt(2147483647));
-        new Thread(this).start();
         startPingThread();
+        new Thread(this).start();
     }
 
 
@@ -141,6 +141,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 throw new DeskIsFullException();
             } catch (PlayerAlreadyJoinedException e) {
                 throw new PlayerAlreadyJoinedException();
+            } catch (Exception e){
+                System.out.println(e);
             }
             // If enough players joined the game, initialize the game
             if (game.getPlayers().size() == game.getSize() && game.getNumPlayer() != 1) {

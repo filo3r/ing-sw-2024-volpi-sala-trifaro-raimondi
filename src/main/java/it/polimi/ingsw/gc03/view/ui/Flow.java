@@ -60,7 +60,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(221, 72);
+                ui = new Tui(100, 10);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -172,8 +172,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
         //If the event is that I joined then I wait until the user inputs 'y'
         switch (event.getType()) {
             case PLAYER_JOINED -> {
-                if (nickLastPlayer.equals(nickname)) {
-                    ui.show_playerJoined(event.getModel(), nickname);
+                if (!nickLastPlayer.equals(nickname)) {
+                    ui.show_playerJoined(event.getModel(), nickLastPlayer);
                 }
             }
             case SENT_MESSAGE -> {
@@ -317,7 +317,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (optionChoose) {
             case "c" -> {
                 createGame(nickname);
-                System.out.println(events.size());
                 askGameSize(null);
             }
             case "j" -> joinFirstAvailableGame(nickname);
@@ -724,7 +723,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void playerJoined(GameImmutable gameModel) {
         events.add(gameModel, PLAYER_JOINED);
-
         //Print also here because: If a player is in askReadyToStart is blocked and cannot showPlayerJoined by watching the events
         ui.show_playerJoined(gameModel, nickname);
 

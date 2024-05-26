@@ -2,6 +2,7 @@ package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
@@ -51,6 +52,18 @@ public class MainController implements MainControllerInterface, Serializable {
         return instance;
     }
 
+    // METHOD TO ADD EVERYWHERE ELSE
+    public synchronized boolean checkNicknameAvaiable(String nickname) {
+        for(GameController gameController : gameControllers) {
+            for(Player player: gameController.getGame().getPlayers()){
+                if(player.getNickname().equals(nickname)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Creates a new game and attempts to add the first player to it.
@@ -60,14 +73,18 @@ public class MainController implements MainControllerInterface, Serializable {
      * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized GameController createGame(GameListener gameListener, String firstPlayerNickname) throws RemoteException {
-        // Creates a new GameController, which will create an empty Game.
+        try{
+            // Creates a new GameController, which will create an empty Game.
         GameController controller = new GameController();
         // add the controller to the list of controllers
         gameControllers.add(controller);
         // add the player to the newly created game and add his listener to every component and vice versa
-        //controller.addListener(gameListener, controller.getGame().getPlayers().getFirst());
         joinSpecificGame(gameListener, firstPlayerNickname, controller.getGame().getIdGame());
         return controller;
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
 
@@ -80,9 +97,15 @@ public class MainController implements MainControllerInterface, Serializable {
      * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized GameController joinFirstAvailableGame(GameListener listener, String playerNickname) throws RemoteException {
-        // joinGame will try to make the player join the first available game, if none exists, it will create a new game
-        List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
-        return addPlayerToGame(playerNickname, listener, GCs);
+        try{
+            // joinGame will try to make the player join the first available game, if none exists, it will create a new game
+            List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
+            System.out.println("Adding player to "+GCs.getFirst().getGame().getIdGame());
+            return addPlayerToGame(playerNickname, listener, GCs);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
 
@@ -95,8 +118,14 @@ public class MainController implements MainControllerInterface, Serializable {
      * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized GameController joinSpecificGame(  GameListener listener, String playerNickname, int id) throws RemoteException {
-        List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == id)).toList();
-        return addPlayerToGame(playerNickname, listener, GCs);
+        try{
+            List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getIdGame() == id)).toList();
+            System.out.println("Adding player to "+GCs.getFirst().getGame().getIdGame());
+            return addPlayerToGame(playerNickname, listener, GCs);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
 
@@ -112,7 +141,6 @@ public class MainController implements MainControllerInterface, Serializable {
         if(!GCs.isEmpty()) {
             try {
                 GCs.getFirst().addPlayerToGame(playerNickname, listener);
-                GCs.getFirst().addListener(listener, GCs.getFirst().getGame().getPlayers().stream().filter(x->x.getNickname().equals(playerNickname)).findFirst().get());
                 return gameControllers.get(0);
             } catch (Exception e) {}
         } else {

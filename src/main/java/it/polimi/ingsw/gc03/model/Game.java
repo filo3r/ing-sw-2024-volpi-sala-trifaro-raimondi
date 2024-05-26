@@ -7,6 +7,7 @@ import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * This class represents a game.
  */
-public class Game {
+public class Game implements Serializable {
 
     /**
      * Game's ID.
@@ -110,12 +111,6 @@ public class Game {
                 listenersHandler.notifyJoinUnableGameFull(this, player);
                 throw new DeskIsFullException();
             } else {
-                // Check that the nickname is different from other players who have already entered
-                for (Player player1 : this.players) {
-                    if (nickname.equals(player1.getNickname()))
-                        listenersHandler.notifyJoinUnableNicknameAlreadyInUse(player);
-                    throw new PlayerAlreadyJoinedException();
-                }
                 // The player can be added
                 this.numPlayer++;
                 this.players.add(player);
@@ -125,12 +120,11 @@ public class Game {
                 addListener(listener);
                 listenersHandler.notifyPlayerJoined(this);
                 return true;
-            }
+                }
         } else {
-            listenersHandler.notifyGameStarted(this);
+            listenersHandler.notifyJoinUnableGameFull(this, player);
             throw new CannotJoinGameException();
         }
-
     }
 
 
@@ -145,7 +139,6 @@ public class Game {
             this.players.removeIf(player1 -> player1.equals(player.get(0)));
             this.numPlayer--;
             listenersHandler.notifyPlayerLeft(this, player.get(0).getNickname());
-            System.out.println("DOVREI AVER NOTIFICATO TUTTI.");
             return true;
         }
         return false;
@@ -302,6 +295,21 @@ public class Game {
      * @param status The status of the game.
      */
     public void setStatus(GameStatus status) {
+        if(this.status.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
+            listenersHandler.notifyGameStarted(this);
+        }
+        if(this.status.equals(GameStatus.STARTING) && status.equals(GameStatus.RUNNING)){
+            listenersHandler.notifyGameStarted(this);
+        }
+        if(this.status.equals(GameStatus.RUNNING) && status.equals(GameStatus.LASTROUND)){
+         listenersHandler.notifyEndConditionReached(this);
+        }
+        if(this.status.equals(GameStatus.LASTROUND) && status.equals(GameStatus.ENDING)) {
+            listenersHandler.notifyEndConditionReached(this);
+        }
+        if(this.status.equals(GameStatus.ENDING) && status.equals(GameStatus.ENDED)) {
+            listenersHandler.notifyGameEnded(this);
+        }
         this.status = status;
     }
 

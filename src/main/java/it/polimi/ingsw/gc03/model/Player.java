@@ -127,7 +127,7 @@ public class Player implements Serializable {
         listenersHandler = new ListenersHandler();
         selfListener = gameListener;
         this.nickname = nickname;
-        this.number = number;
+        this.number = number++;
         this.color = createColorArrayList().get(number - 1);
         // Assignment of the Starter card
         this.cardStarter = (CardStarter) desk.drawCardDeck(desk.getDeckStarter());

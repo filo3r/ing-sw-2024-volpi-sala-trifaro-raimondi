@@ -105,7 +105,6 @@ public class ClientHandler implements Runnable {
             GameController controller = message.execute(this.gameListenerHandlerServer, MainController.getInstance());
             // Assigns the controller and updates the nickname
             updateGameControllerAndNickname(controller, message);
-            System.out.println(nicknameClient);
         } catch (RemoteException e) {
             AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error processing message for MainController: " + e.getMessage());
         }
@@ -117,6 +116,7 @@ public class ClientHandler implements Runnable {
      */
     private void runGameLogic() {
         // Process messages from the queue
+
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 SocketClientGenericMessage message = this.messagesQueue.take();
