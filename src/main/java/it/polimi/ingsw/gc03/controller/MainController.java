@@ -52,7 +52,6 @@ public class MainController implements MainControllerInterface, Serializable {
         return instance;
     }
 
-    // METHOD TO ADD EVERYWHERE ELSE
     public synchronized boolean checkNicknameAvaiable(String nickname) {
         for(GameController gameController : gameControllers) {
             for(Player player: gameController.getGame().getPlayers()){

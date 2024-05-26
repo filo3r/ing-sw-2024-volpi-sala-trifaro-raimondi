@@ -486,7 +486,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_chosenNickname(String nickname) {
-        generateTextOnScreen(nickname+" accepted", CharColor.GOLD, 1093, 364);
+        generateTextOnScreen("Hi, "+nickname, CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
 
     }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.main.MainClient;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
@@ -15,7 +14,6 @@ import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.Gui;
-import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.ui.events.EventType;
@@ -27,7 +25,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static it.polimi.ingsw.gc03.view.ui.events.EventType.*;
 
@@ -98,7 +95,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                                 throw new RuntimeException(e);
                             }
                         }
-                        case RUNNING, LASTROUND -> {
+                        case STARTING, RUNNING, LASTROUND -> {
                             try {
                                 statusRunning(event);
                             } catch (Exception e) {

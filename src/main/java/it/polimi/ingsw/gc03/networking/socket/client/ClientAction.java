@@ -137,5 +137,4 @@ public interface ClientAction {
      */
     void gameSizeUpdated(int size) throws RemoteException, Exception;
 
-
 }

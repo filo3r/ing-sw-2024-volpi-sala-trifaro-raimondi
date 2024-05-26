@@ -51,5 +51,4 @@ public interface MainControllerInterface extends Remote {
      */
     GameController reconnectToGame(GameListener gameListener, String nickname) throws RemoteException;
 
-
 }

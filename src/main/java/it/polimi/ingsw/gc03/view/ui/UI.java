@@ -257,4 +257,6 @@ public abstract class UI {
 
     public void show_GameTitle(){
     }
+
+    public void showInvalidNickname(String nickname) {}
 }

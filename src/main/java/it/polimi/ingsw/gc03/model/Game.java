@@ -295,24 +295,24 @@ public class Game implements Serializable {
      * @param status The status of the game.
      */
     public void setStatus(GameStatus status) {
-        if(this.status.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
+        GameStatus oldStatus = this.status;
+        this.status = status;
+        if(oldStatus.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
             listenersHandler.notifyGameStarted(this);
         }
-        if(this.status.equals(GameStatus.STARTING) && status.equals(GameStatus.RUNNING)){
+        if(oldStatus.equals(GameStatus.STARTING) && status.equals(GameStatus.RUNNING)){
             listenersHandler.notifyGameStarted(this);
         }
-        if(this.status.equals(GameStatus.RUNNING) && status.equals(GameStatus.LASTROUND)){
+        if(oldStatus.equals(GameStatus.RUNNING) && status.equals(GameStatus.LASTROUND)){
          listenersHandler.notifyEndConditionReached(this);
         }
-        if(this.status.equals(GameStatus.LASTROUND) && status.equals(GameStatus.ENDING)) {
+        if(oldStatus.equals(GameStatus.LASTROUND) && status.equals(GameStatus.ENDING)) {
             listenersHandler.notifyEndConditionReached(this);
         }
-        if(this.status.equals(GameStatus.ENDING) && status.equals(GameStatus.ENDED)) {
+        if(oldStatus.equals(GameStatus.ENDING) && status.equals(GameStatus.ENDED)) {
             listenersHandler.notifyGameEnded(this);
         }
-        this.status = status;
     }
-
 
     /**
      * Method to get the desk of the game.
