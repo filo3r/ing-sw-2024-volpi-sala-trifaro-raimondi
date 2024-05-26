@@ -160,9 +160,8 @@ public class RmiClient implements ClientAction {
     @Override
     public void createGame(String nickname) throws RemoteException, NotBoundException {
         connectToGameServer();
-        System.out.println("QUI");
-        this.gameController = this.mainController.createGame(this.gameListener, this.nicknameClient);
         this.nicknameClient = nickname;
+        this.gameController = this.mainController.createGame(this.gameListener, this.nicknameClient);
     }
 
 
@@ -175,8 +174,8 @@ public class RmiClient implements ClientAction {
     @Override
     public void joinFirstAvailableGame(String nickname) throws RemoteException, NotBoundException {
         connectToGameServer();
-        this.gameController = this.mainController.joinFirstAvailableGame(this.gameListener, nickname);
         this.nicknameClient = nickname;
+        this.gameController = this.mainController.joinFirstAvailableGame(this.gameListener, nickname);
     }
 
 
@@ -190,8 +189,8 @@ public class RmiClient implements ClientAction {
     @Override
     public void joinSpecificGame(String nickname, int idGame) throws RemoteException, NotBoundException {
         connectToGameServer();
-        this.gameController = this.mainController.joinSpecificGame(this.gameListener, nickname, idGame);
         this.nicknameClient = nickname;
+        this.gameController = this.mainController.joinSpecificGame(this.gameListener, nickname, idGame);
     }
 
 
@@ -204,8 +203,8 @@ public class RmiClient implements ClientAction {
     @Override
     public void reconnectToGame(String nickname) throws RemoteException, NotBoundException {
         connectToGameServer();
-        this.gameController = this.mainController.reconnectToGame(this.gameListener, nickname);
         this.nicknameClient = nickname;
+        this.gameController = this.mainController.reconnectToGame(this.gameListener, nickname);
     }
 
 
