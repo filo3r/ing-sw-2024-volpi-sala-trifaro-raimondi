@@ -6,7 +6,7 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 
 import java.util.ArrayList;
 import java.util.List;

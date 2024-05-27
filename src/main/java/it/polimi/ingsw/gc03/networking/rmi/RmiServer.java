@@ -1,9 +1,8 @@
 package it.polimi.ingsw.gc03.networking.rmi;
 
-import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.networking.AsyncLogger;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

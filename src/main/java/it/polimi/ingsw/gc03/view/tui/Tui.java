@@ -13,16 +13,10 @@ import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
-import java.rmi.RemoteException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
-import static it.polimi.ingsw.gc03.view.tui.AsyncPrint.*;
+import static it.polimi.ingsw.gc03.view.tui.print.AsyncPrint.*;
 
 public class Tui extends UI {
 

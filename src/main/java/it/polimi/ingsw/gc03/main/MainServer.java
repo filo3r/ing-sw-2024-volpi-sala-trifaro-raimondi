@@ -1,9 +1,9 @@
 package it.polimi.ingsw.gc03.main;
 
-import it.polimi.ingsw.gc03.networking.AsyncLogger;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.rmi.RmiServer;
 import it.polimi.ingsw.gc03.networking.socket.server.SocketServer;
-import it.polimi.ingsw.gc03.view.tui.AsyncPrint;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;

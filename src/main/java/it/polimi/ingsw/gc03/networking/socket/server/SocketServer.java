@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.networking.socket.server;
 
-import it.polimi.ingsw.gc03.networking.AsyncLogger;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

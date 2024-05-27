@@ -7,7 +7,7 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-import it.polimi.ingsw.gc03.networking.AsyncLogger;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
