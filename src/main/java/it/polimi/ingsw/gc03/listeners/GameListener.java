@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.listeners;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -251,13 +252,12 @@ public interface GameListener extends Remote {
     void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException;
 
     /**
-     * This method is used to inform the client which players won the game.
+     * This method is used to inform the client of the game size change.
      * @param gameImmutable The immutable game model.
      * @param size The new game size.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException;
-
 
     // Additional methods may be necessary
     // For other methods you have to create the respective message in serverToClientMessages package and method in ListenersHandler

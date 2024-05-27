@@ -603,5 +603,4 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
 }

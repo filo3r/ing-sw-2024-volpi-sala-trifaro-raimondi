@@ -114,9 +114,6 @@ public class Game implements Serializable {
                 // The player can be added
                 this.numPlayer++;
                 this.players.add(player);
-                this.players.forEach(player1->player1.addListener(listener));
-                this.players.forEach(player1->player1.getCodex().addListener(listener));
-                this.getDesk().addListener(listener);
                 addListener(listener);
                 listenersHandler.notifyPlayerJoined(this);
                 return true;
@@ -189,41 +186,43 @@ public class Game implements Serializable {
      * Method for determining who won the game.
      */
     private void decideWinner() throws RemoteException {
-        int maxScore = 0;
-        // Determine which score is the highest
-        for (Player player : this.players) {
-            if (player.getScore() > maxScore)
-                maxScore = player.getScore();
-        }
-        // Add all players with maximum score to the temporary winners array
-        ArrayList<Player> tempWinners = new ArrayList<>(MAX_NUM_PLAYERS);
-        for (Player player : this.players) {
-            if (player.getScore() == maxScore)
-                tempWinners.add(player);
-        }
-        // If there are multiple players with the same score, compare the points obtained from the Objective cards
-        if (tempWinners.size() > 1) {
-            int maxPointObjective = 0;
-            // Determine which pointObjective is the highest
-            for (Player tempWinner : tempWinners) {
-                if (tempWinner.getPointObjective() > maxPointObjective)
-                    maxPointObjective = tempWinner.getPointObjective();
+        if(this.getStatus().equals(GameStatus.LASTROUND)){
+            int maxScore = 0;
+            // Determine which score is the highest
+            for (Player player : this.players) {
+                if (player.getScore() > maxScore)
+                    maxScore = player.getScore();
             }
-            // Add all players with maximum pointObjective to the final winners array
-            ArrayList<Player> winners = new ArrayList<>(MAX_NUM_PLAYERS);
-            for (Player tempWinner : tempWinners) {
-                if (tempWinner.getPointObjective() == maxPointObjective)
-                    winners.add(tempWinner);
+            // Add all players with maximum score to the temporary winners array
+            ArrayList<Player> tempWinners = new ArrayList<>(MAX_NUM_PLAYERS);
+            for (Player player : this.players) {
+                if (player.getScore() == maxScore)
+                    tempWinners.add(player);
             }
-            this.winner.addAll(winners);
-        } else {
-            this.winner.addAll(tempWinners);
+            // If there are multiple players with the same score, compare the points obtained from the Objective cards
+            if (tempWinners.size() > 1) {
+                int maxPointObjective = 0;
+                // Determine which pointObjective is the highest
+                for (Player tempWinner : tempWinners) {
+                    if (tempWinner.getPointObjective() > maxPointObjective)
+                        maxPointObjective = tempWinner.getPointObjective();
+                }
+                // Add all players with maximum pointObjective to the final winners array
+                ArrayList<Player> winners = new ArrayList<>(MAX_NUM_PLAYERS);
+                for (Player tempWinner : tempWinners) {
+                    if (tempWinner.getPointObjective() == maxPointObjective)
+                        winners.add(tempWinner);
+                }
+                this.winner.addAll(winners);
+            } else {
+                this.winner.addAll(tempWinners);
+            }
+            ArrayList<String> winnerNicknames = new ArrayList<String>();
+            for (Player player : this.winner) {
+                winnerNicknames.add(player.getNickname());
+            }
+            listenersHandler.notifyWinnerDeclared(this, winnerNicknames);
         }
-        ArrayList<String> winnerNicknames = new ArrayList<String>();
-        for (Player player : this.winner) {
-            winnerNicknames.add(player.getNickname());
-        }
-        listenersHandler.notifyWinnerDeclared(this, winnerNicknames);
     }
 
 
@@ -299,9 +298,10 @@ public class Game implements Serializable {
         this.status = status;
         if(oldStatus.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
             listenersHandler.notifyGameStarted(this);
+            listenersHandler.notifyObjectiveCardNotChosen(this);
         }
         if(oldStatus.equals(GameStatus.STARTING) && status.equals(GameStatus.RUNNING)){
-            listenersHandler.notifyGameStarted(this);
+            //SHOULD NOTIFY THAT EVERYONE HAS CHOSEN THEIR OBJECTIVE CARDS AND PLACED THEIR STARTER
         }
         if(oldStatus.equals(GameStatus.RUNNING) && status.equals(GameStatus.LASTROUND)){
          listenersHandler.notifyEndConditionReached(this);
@@ -439,6 +439,13 @@ public class Game implements Serializable {
      */
     public void removeListener(GameListener lis) {
         listenersHandler.removeListener(lis);
+    }
+
+    /**
+     * @return the list of listeners
+     */
+    public ListenersHandler getListener() {
+        return listenersHandler;
     }
 
     /**

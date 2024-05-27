@@ -573,4 +573,39 @@ public class Tui extends UI {
         generateTextOnScreen("No connection.", CharColor.RED, 1093, 364);
         refreshScreen(1093, 364);
     }
+
+    @Override
+    public void showObjectiveNotChosen(GameImmutable model, String nickname) {
+        String text = "Private Objectives:";
+        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364-5);
+        Player player = model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
+        CardObjective firstPrivateObjective = player.getCardObjective().getFirst();
+        CardObjective secondPrivateObjective = player.getCardObjective().getLast();
+
+        if(firstPrivateObjective.getObjective().length()/2>=screenWidth-1){
+            text = firstPrivateObjective.getObjective();
+            generateTextOnScreen(firstPrivateObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-4);
+            generateTextOnScreen(firstPrivateObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-3);
+        } else{
+            text = firstPrivateObjective.getObjective();
+            generateTextOnScreen(firstPrivateObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, 364-4);
+        }
+
+        if(secondPrivateObjective.getObjective().length()/2>=screenWidth-1){
+            text = secondPrivateObjective.getObjective();
+            generateTextOnScreen(secondPrivateObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-1);
+            generateTextOnScreen(secondPrivateObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-0);
+        } else{
+            text = secondPrivateObjective.getObjective();
+            generateTextOnScreen(secondPrivateObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, 364-1);
+        }
+
+        refreshScreen(1093, 364);
+    }
+
+    @Override
+    public void showObjectiveChosen(Game game, Card card){
+
+    }
+
 }

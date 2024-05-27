@@ -67,18 +67,12 @@ public class Codex implements Serializable {
      */
     private boolean cardStarterInserted;
 
-    /**
-     * Listeners handler
-     */
-    private transient ListenersHandler listenersHandler;
-
 
 
     /**
      * Constructor for the Codex class.
      */
     public Codex() {
-        listenersHandler = new ListenersHandler();
         this.codex = new Side[81][81];
         this.counterCodex = new int[8];
         for (int i = 0; i < 8; i++) {
@@ -446,7 +440,7 @@ public class Codex implements Serializable {
         this.maxRow = 40;
         this.minColumn = 40;
         this.maxColumn = 40;
-        listenersHandler.notifyPositionedStarterCardIntoCodex(game);
+        game.getListener().notifyPositionedStarterCardIntoCodex(game);
         // Update counter for values in the codex
         updateCounterCodex(side);
     }
@@ -491,7 +485,7 @@ public class Codex implements Serializable {
                 updateCounterCodex(side);
                 calculatePointCodex(side);
                 this.counterCodex[7] = 0;
-                listenersHandler.notifyPositionedCardIntoCodex(game, row, column);
+                game.getListener().notifyPositionedCardIntoCodex(game, row, column);
                 return true;
             }
         } catch (Exception e) {
@@ -675,25 +669,4 @@ public class Codex implements Serializable {
         this.cardStarterInserted = cardStarterInserted;
     }
 
-
-    /**
-     * @param lis adds the listener to the list
-     */
-    public void addListener(GameListener lis) {
-        listenersHandler.addListener(lis);
-    }
-
-    /**
-     * @param lis remove the listener from the list
-     */
-    public void removeListener(GameListener lis) {
-        listenersHandler.removeListener(lis);
-    }
-
-    /**
-     * @return the list of listeners
-     */
-    public ArrayList<GameListener> getListeners() {
-        return listenersHandler.getGameListeners();
-    }
 }

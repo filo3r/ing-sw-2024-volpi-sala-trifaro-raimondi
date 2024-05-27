@@ -22,7 +22,7 @@ public class InputProcessor extends Thread{
     /**
      * The player
      */
-    private String p;
+    private Player p;
     /**
      * The game id
      */
@@ -61,7 +61,7 @@ public class InputProcessor extends Thread{
                 LocalTime localTime = LocalTime.now();
                 String receiver = txt.substring(0,txt.indexOf(" "));
                 String message = txt.substring(receiver.length() + 1);
-                flow.sendChatMessage(new ChatMessage(receiver,p,message,localTime));
+                flow.sendChatMessage(new ChatMessage(receiver,p.getNickname(),message,localTime));
             }
 
             if (p != null && txt.startsWith("/chat")) {
@@ -69,7 +69,7 @@ public class InputProcessor extends Thread{
                 LocalTime localtime = LocalTime.now();
                 String receiver = "everyone";
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                flow.sendChatMessage(new ChatMessage(receiver,p, txt, localtime));
+                flow.sendChatMessage(new ChatMessage(receiver,p.getNickname(), txt, localtime));
 
             } else {
                 dataToProcess.addData(txt);
@@ -91,7 +91,7 @@ public class InputProcessor extends Thread{
      *
      * @param p player to set
      */
-    public void setPlayer(String p) {
+    public void setPlayer(Player p) {
         this.p = p;
     }
 

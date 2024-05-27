@@ -108,11 +108,6 @@ public class Player implements Serializable {
     public static final int FINAL_CARD_OBJECTIVE = 1;
 
     /**
-     * Listeners handler
-     */
-    private transient ListenersHandler listenersHandler;
-
-    /**
      * Player's game listener.
      */
     private transient GameListener selfListener;
@@ -124,7 +119,6 @@ public class Player implements Serializable {
      * @param desk The game desk.
      */
     public Player(String nickname, int number, Desk desk, Game game, GameListener gameListener) throws RemoteException {
-        listenersHandler = new ListenersHandler();
         selfListener = gameListener;
         this.nickname = nickname;
         this.number = number++;
@@ -170,7 +164,7 @@ public class Player implements Serializable {
             }
             this.cardObjective.clear();
             this.cardObjective.addAll(newCardObjective);
-            listenersHandler.notifyObjectiveCardChosen(game, this.cardObjective.getLast());
+            game.getListener().notifyObjectiveCardChosen(game, this.cardObjective.getLast());
             return true;
         }
     }
@@ -409,13 +403,11 @@ public class Player implements Serializable {
      */
     public void setOnline(Game game, boolean online, GameController gameController) {
         if(this.online && !online){
-            listenersHandler.notifyPlayerDisconnected(game, this.getNickname());
-            gameController.removeListener(selfListener, this);
+            game.getListener().notifyPlayerDisconnected(game, this.getNickname());
 
         }
         if(!this.online && online){
-            listenersHandler.notifyPlayerReconnected(game, this.getNickname());
-            gameController.addListener(selfListener, this);
+            game.getListener().notifyPlayerReconnected(game, this.getNickname());
         }
         this.online = online;
     }
@@ -472,27 +464,6 @@ public class Player implements Serializable {
      */
     public void removeCardFromHand(int CardPositionInHand){
         this.hand.remove(CardPositionInHand);
-    }
-
-    /**
-     * @param lis adds the listener to the list
-     */
-    public void addListener(GameListener lis) {
-        listenersHandler.addListener(lis);
-    }
-
-    /**
-     * @param lis remove the listener from the list
-     */
-    public void removeListener(GameListener lis) {
-        listenersHandler.removeListener(lis);
-    }
-
-    /**
-     * @return the list of listeners
-     */
-    public ArrayList<GameListener> getListeners() {
-        return listenersHandler.getGameListeners();
     }
 
     /**

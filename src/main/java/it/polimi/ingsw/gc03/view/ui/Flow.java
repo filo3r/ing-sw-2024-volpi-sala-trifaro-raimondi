@@ -57,7 +57,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(100, 10);
+                ui = new Tui(180, 15);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -80,7 +80,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         Event event;
         events.add(null, APP_MENU);
         ui.show_GameTitle();
-
         while (!Thread.interrupted()) {
             if (events.isJoined()) {
                 //Get one event
@@ -166,11 +165,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
     private void statusWait(Event event) throws IOException, InterruptedException {
         String nickLastPlayer = event.getModel().getPlayers().getLast().getNickname();
-        //If the event is that I joined then I wait until the user inputs 'y'
         switch (event.getType()) {
             case PLAYER_JOINED -> {
-                if (!nickLastPlayer.equals(nickname)) {
-                    ui.show_playerJoined(event.getModel(), nickLastPlayer);
+                if (nickLastPlayer.equals(nickname)) {
+                    //ui.show_playerJoined(event.getModel(), nickname);
                 }
             }
             case SENT_MESSAGE -> {
@@ -184,7 +182,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
-                this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getNickname());
+                this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
                 this.inputProcessor.setIdGame(event.getModel().getIdGame());
             }
             case PLACE_STARTER_ON_CODEX -> {
@@ -195,8 +193,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 ui.showCommonCards(event.getModel());
             }
             case CHOOSE_OBJECTIVE_CARD->{
-                ui.showCardObjectiveToChoose(event.getModel());
-                askToChooseACardObjective(event.getModel());
+                askToChooseACardObjective(event.getModel(), nickname);
             }
             case SENT_MESSAGE -> {
                 ui.show_sentMessage(event.getModel(), nickname);
@@ -205,7 +202,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case NEXT_TURN, PLAYER_RECONNECTED -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
                 if (event.getType().equals(PLAYER_RECONNECTED) && lastPlayerReconnected.equals(nickname)) {
-                    this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getNickname());
+                    this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
                     this.inputProcessor.setIdGame(event.getModel().getIdGame());
                 }
 
@@ -279,7 +276,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     /**
-     * Aks to choose a Nickname
+     * Ask to choose a Nickname
      */
     private void askNickname() {
         ui.show_insertNicknameMsg();
@@ -433,8 +430,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param model
      * @throws Exception
      */
-    public void askToChooseACardObjective(GameImmutable model) throws Exception {
-        ui.show_askChooseACardObjective(model);
+    public void askToChooseACardObjective(GameImmutable model, String nickname) throws Exception {
+        ui.showObjectiveNotChosen(model, nickname);
         boolean wrongIndex = true;
         do{
             int index;
@@ -720,8 +717,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void playerJoined(GameImmutable gameModel) {
         events.add(gameModel, PLAYER_JOINED);
-        //Print also here because: If a player is in askReadyToStart is blocked and cannot showPlayerJoined by watching the events
-        ui.show_playerJoined(gameModel, nickname);
+        ui.show_playerJoined(gameModel, gameModel.getPlayers().getLast().getNickname());
 
     }
 
@@ -900,7 +896,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void objectiveCardNotChosen(GameImmutable model) throws RemoteException {
-        ui.showObjectiveNotChosen(model);
         events.add(model,CHOOSE_OBJECTIVE_CARD);
     }
 //

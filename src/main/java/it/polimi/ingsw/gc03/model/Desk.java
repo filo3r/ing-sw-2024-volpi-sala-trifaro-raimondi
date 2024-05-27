@@ -63,12 +63,6 @@ public class Desk implements Serializable{
      */
     private ArrayList<CardObjective> displayedObjective;
 
-    /**
-     * Listeners handler
-     */
-    private transient ListenersHandler listenersHandler;
-
-
 
     /**
      * File with information about Starter cards.
@@ -133,13 +127,12 @@ public class Desk implements Serializable{
     private static final Logger logger = Logger.getLogger(Desk.class.getName());
 
 
-    Game game;
+    private Game game;
 
     /**
      * Constructor of the Desk class.
      */
     public Desk(Game game) throws RemoteException {
-        listenersHandler = new ListenersHandler();
         // Create decks of cards
         if (!createDeckStarter() || !createDeckResource() || !createDeckGold() || !createDeckObjective())
             System.exit(1);
@@ -309,7 +302,9 @@ public class Desk implements Serializable{
             return null;
         } else{
             Card drawnCard =  deck.removeFirst();
-            listenersHandler.notifyCardAddedToHand(this.game, drawnCard);
+            if(game != null && game.getPlayers().size()>=1){
+                game.getListener().notifyCardAddedToHand(this.game, drawnCard);
+            }
             return drawnCard;
         }
     }
@@ -330,7 +325,9 @@ public class Desk implements Serializable{
         else {
             Card card = displayed.remove(index);
             checkDisplayed();
-            listenersHandler.notifyCardAddedToHand(this.game, card);
+            if(game != null && game.getPlayers().size()>=1){
+                game.getListener().notifyCardAddedToHand(this.game, card);
+            }
             return card;
         }
     }
@@ -488,24 +485,4 @@ public class Desk implements Serializable{
         this.displayedObjective = displayedObjective;
     }
 
-    /**
-     * @param lis adds the listener to the list
-     */
-    public void addListener(GameListener lis) {
-        listenersHandler.addListener(lis);
-    }
-
-    /**
-     * @param lis remove the listener to the list
-     */
-    public void removeListener(GameListener lis) {
-        listenersHandler.removeListener(lis);
-    }
-
-    /**
-     * @return the list of listeners
-     */
-    public ArrayList<GameListener> getListeners() {
-        return listenersHandler.getGameListeners();
-    }
 }

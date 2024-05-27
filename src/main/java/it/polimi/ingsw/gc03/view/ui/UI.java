@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
@@ -194,7 +195,7 @@ public abstract class UI {
     public void show_askSide(GameImmutable model) {
     }
 
-    public void show_askChooseACardObjective(GameImmutable model) {
+    public void show_askChooseACardObjective(GameImmutable model, String nickname) {
     }
 
     public void showCardObjectiveToChoose(GameImmutable model) {
@@ -249,7 +250,7 @@ public abstract class UI {
     public void showObjectiveChosen(GameImmutable model, CardObjective cardObjective) {
     }
 
-    public void showObjectiveNotChosen(GameImmutable model) {
+    public void showObjectiveNotChosen(GameImmutable model, String nickname) {
     }
 
     public void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
@@ -259,4 +260,6 @@ public abstract class UI {
     }
 
     public void showInvalidNickname(String nickname) {}
+
+    public void showObjectiveChosen(Game game, Card card){}
 }
