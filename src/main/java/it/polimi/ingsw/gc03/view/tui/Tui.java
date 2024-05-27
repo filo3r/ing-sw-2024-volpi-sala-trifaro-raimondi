@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class Tui extends UI {
     private CharSpecial[][] screenSim;
     private int screenWidth;
     private int screenHeight;
+
+    private String nickname;
 
     private int screenSimY = 364;
     private int screenSimX = 1093;
@@ -403,6 +407,7 @@ public class Tui extends UI {
     }
 
     public void showChat(Game game, Player player){
+        clearScreen(' ');
         ArrayList<ChatMessage> personalChat = new ArrayList<ChatMessage>();
         for(ChatMessage msg: game.getChat()){
             if(msg.getReceiver().equals(player.getNickname()) || msg.getReceiver().equals("everyone") || msg.getSender().equals(player.getNickname())){
@@ -433,6 +438,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_menuOptions() {
+        clearScreen(' ');
         generateTextOnScreen("Please choose an option", CharColor.WHITE, 1093, 364);
         generateTextOnScreen("c -> Create a game", CharColor.WHITE, 1093, 365);
         generateTextOnScreen("j -> Join a random game", CharColor.WHITE, 1093, 366);
@@ -443,36 +449,42 @@ public class Tui extends UI {
 
     @Override
     protected void show_creatingNewGameMsg(String nickname) {
+        clearScreen(' ');
         generateTextOnScreen("Creating a new game...", CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
      public void showAskSize(GameImmutable gameImmutable){
+        clearScreen(' ');
         generateTextOnScreen("Please choose the game size (2,3,4)", CharColor.WHITE, 1093, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_joiningFirstAvailableMsg(String nickname) {
+        clearScreen(' ');
         generateTextOnScreen("Joining the first available game...", CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_joiningToGameIdMsg(int idGame, String nickname) {
+        clearScreen(' ');
         generateTextOnScreen("Joining the game with id "+idGame, CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_inputGameIdMsg() {
+        clearScreen(' ');
         generateTextOnScreen("Please write the game id", CharColor.WHITE, 1093, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_insertNicknameMsg() {
+        clearScreen(' ');
         generateTextOnScreen("Please choose your nickname", CharColor.WHITE, 1093, 364);
         refreshScreen(1093, 364);
 
@@ -480,6 +492,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_chosenNickname(String nickname) {
+        clearScreen(' ');
         generateTextOnScreen("Hi, "+nickname, CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
 
@@ -501,6 +514,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_gameEnded(GameImmutable model) {
+        clearScreen(' ');
         generateTextOnScreen("The game has ended", CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
     }
@@ -558,30 +572,36 @@ public class Tui extends UI {
 
     @Override
     public void show_sizeSetted(int size){
-        generateTextOnScreen("Game size updated to "+size, CharColor.GOLD, 1093, 364);
+        clearScreen(' ');
+        String text = "Game size updated to "+size+", waiting for players to join";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
     protected void show_noConnectionError() {
-        generateTextOnScreen("No connection.", CharColor.RED, 1093, 364);
+        clearScreen(' ');
+        String text = "No connection.";
+        generateTextOnScreen(text, CharColor.RED, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
     }
 
     @Override
     public void showObjectiveNotChosen(GameImmutable model, String nickname) {
-        String text = "Private Objectives:";
-        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364-5);
+        clearScreen(' ');
+        this.nickname = nickname;
+        String text = "Choose your personal objective:";
+        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364-6);
         Player player = model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
         CardObjective firstPrivateObjective = player.getCardObjective().getFirst();
         CardObjective secondPrivateObjective = player.getCardObjective().getLast();
 
         if(firstPrivateObjective.getObjective().length()/2>=screenWidth-1){
-            text = firstPrivateObjective.getObjective();
+            text = "0:"+firstPrivateObjective.getObjective();
             generateTextOnScreen(firstPrivateObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-4);
             generateTextOnScreen(firstPrivateObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-3);
         } else{
-            text = firstPrivateObjective.getObjective();
+            text = "1"+firstPrivateObjective.getObjective();
             generateTextOnScreen(firstPrivateObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, 364-4);
         }
 
@@ -599,7 +619,29 @@ public class Tui extends UI {
 
     @Override
     public void showObjectiveChosen(Game game, Card card){
+        clearScreen(' ');
+        String text = "You have selected successfully your personal objective, good luck!";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        refreshScreen(1093, 364);
+    }
 
+    @Override
+    public void show_askSide(Game game) {
+
+    }
+
+    @Override
+    public void show_askSideStarter(GameImmutable game){
+        clearScreen(' ');
+        String text = "Please choose a side of the starter card (f: front, b: back)";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        Player player = game.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
+        CardStarter cardStarter = player.getCardStarter();
+        FrontStarter frontStarter = cardStarter.getFrontStarter();
+        BackStarter backStarter = cardStarter.getBackStarter();
+        showSide(frontStarter, 364+1, 1093-28);
+        showSide(frontStarter, 364+1, 1093);
+        refreshScreen(1093, 364);
     }
 
 }

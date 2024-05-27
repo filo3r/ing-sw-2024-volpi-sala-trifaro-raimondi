@@ -262,4 +262,7 @@ public abstract class UI {
     public void showInvalidNickname(String nickname) {}
 
     public void showObjectiveChosen(Game game, Card card){}
+
+    public abstract void show_askSide(Game game);
+    public abstract void show_askSideStarter(GameImmutable game);
 }

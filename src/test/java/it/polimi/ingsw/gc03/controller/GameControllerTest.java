@@ -7,8 +7,7 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.networking.rmi.old.RmiClientOld;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualViewOld;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

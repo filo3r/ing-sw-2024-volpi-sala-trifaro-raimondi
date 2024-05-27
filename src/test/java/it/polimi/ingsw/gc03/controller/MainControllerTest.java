@@ -10,8 +10,7 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
-import it.polimi.ingsw.gc03.networking.rmi.old.RmiClientOld;
-import it.polimi.ingsw.gc03.networking.rmi.old.VirtualViewOld;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

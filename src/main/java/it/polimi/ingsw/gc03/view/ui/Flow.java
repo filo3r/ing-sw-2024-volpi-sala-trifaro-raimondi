@@ -57,7 +57,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(180, 15);
+                ui = new Tui(180, 30);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -435,7 +435,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         boolean wrongIndex = true;
         do{
             int index;
-            ui.showAskIndex(model);
             index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
             if(index==1 || index==0) {
                 selectCardObjective(model.getPlayers().get(model.getCurrPlayer()), index);
@@ -475,7 +474,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws InterruptedException
      */
     public Side askSideStarter(GameImmutable model) throws InterruptedException {
-        ui.show_askSide(model);
+        ui.show_askSideStarter(model);
         String choice;
         choice= this.inputProcessor.getDataToProcess().popData();
         Side side = null;
@@ -892,6 +891,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void objectiveCardChosen(GameImmutable model, CardObjective cardObjective) throws RemoteException {
         ui.showObjectiveChosen(model,cardObjective);
+        events.add(model, PLACE_STARTER_ON_CODEX);
     }
 
     @Override

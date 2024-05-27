@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.view.gui;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
@@ -113,6 +114,16 @@ public class Gui extends UI {
 
     @Override
     protected void show_noConnectionError() {
+
+    }
+
+    @Override
+    public void show_askSide(Game game) {
+
+    }
+
+    @Override
+    public void show_askSideStarter(GameImmutable game) {
 
     }
 }
