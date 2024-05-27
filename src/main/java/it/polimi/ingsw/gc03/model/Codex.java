@@ -432,7 +432,7 @@ public class Codex implements Serializable {
      * Method for inserting the Starter card into the codex.
      * @param side The side of the card to insert.
      */
-    public void insertStarterIntoCodex(Side side, Game game) throws RemoteException {
+    public void insertStarterIntoCodex(Side side, Game game, String nickname) throws RemoteException {
         this.codex[40][40] = side;
         this.cardStarterInserted = true;
         // Update minimums and maximums of rows and columns
@@ -440,7 +440,17 @@ public class Codex implements Serializable {
         this.maxRow = 40;
         this.minColumn = 40;
         this.maxColumn = 40;
-        game.getListener().notifyPositionedStarterCardIntoCodex(game);
+        game.getListener().notifyPositionedStarterCardIntoCodex(game, nickname);
+        // Check if everybody has already placed their starter card, in case notify everybody to choose their personal objective
+        boolean everybodyPlacedTheirStarter = true;
+        for(Player p: game.getPlayers()){
+            if(!p.getCodex().getCardStarterInserted()){
+                everybodyPlacedTheirStarter = false;
+            }
+        }
+        if(everybodyPlacedTheirStarter){
+            game.getListener().notifyObjectiveCardNotChosen(game);
+        }
         // Update counter for values in the codex
         updateCounterCodex(side);
     }

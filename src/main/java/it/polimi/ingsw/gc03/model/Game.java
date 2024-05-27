@@ -298,7 +298,6 @@ public class Game implements Serializable {
         this.status = status;
         if(oldStatus.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
             listenersHandler.notifyGameStarted(this);
-            listenersHandler.notifyObjectiveCardNotChosen(this);
         }
         if(oldStatus.equals(GameStatus.STARTING) && status.equals(GameStatus.RUNNING)){
             //SHOULD NOTIFY THAT EVERYONE HAS CHOSEN THEIR OBJECTIVE CARDS AND PLACED THEIR STARTER

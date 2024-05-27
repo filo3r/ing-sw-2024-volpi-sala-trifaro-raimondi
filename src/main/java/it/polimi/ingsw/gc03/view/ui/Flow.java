@@ -2,6 +2,7 @@ package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -25,6 +26,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.gc03.view.ui.events.EventType.*;
 
@@ -34,6 +36,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     private final EventList events = new EventList();
 
+    private GameImmutable game;
     private ClientAction clientActions;
     private String lastPlayerReconnected;
     private int row;
@@ -184,16 +187,17 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 ui.show_gameStarted(event.getModel());
                 this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
                 this.inputProcessor.setIdGame(event.getModel().getIdGame());
+                askToPlaceStarterOnCodex(event.getModel());
             }
             case PLACE_STARTER_ON_CODEX -> {
                 askToPlaceStarterOnCodex(event.getModel());
-                ui.showPlaceStarterCardOnCodex(event.getModel());
+                ui.showCodex(event.getModel());
             }
             case COMMON_CARDS_EXTRACTED -> {
                 ui.showCommonCards(event.getModel());
             }
             case CHOOSE_OBJECTIVE_CARD->{
-                askToChooseACardObjective(event.getModel(), nickname);
+                askToChooseACardObjective(event.getModel());
             }
             case SENT_MESSAGE -> {
                 ui.show_sentMessage(event.getModel(), nickname);
@@ -430,8 +434,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param model
      * @throws Exception
      */
-    public void askToChooseACardObjective(GameImmutable model, String nickname) throws Exception {
-        ui.showObjectiveNotChosen(model, nickname);
+    public void askToChooseACardObjective(GameImmutable model) throws Exception {
+
+        ui.showObjectiveNotChosen(model);
         boolean wrongIndex = true;
         do{
             int index;
@@ -474,7 +479,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws InterruptedException
      */
     public Side askSideStarter(GameImmutable model) throws InterruptedException {
-        ui.show_askSideStarter(model);
+        ui.show_askSideStarter(model, nickname);
         String choice;
         choice= this.inputProcessor.getDataToProcess().popData();
         Side side = null;
@@ -502,8 +507,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
         do {
             side = askSideStarter(model);
         }while(side==null);
-        placeStarterOnCodex(model.getPlayers().get(model.getCurrPlayer()),side);
-        ui.showCodex(model);
+        Player player = model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).findFirst().get();
+        placeStarterOnCodex(player,side);
 
     }
 
@@ -861,12 +866,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void positionedCardIntoCodex(GameImmutable model, int row, int column) throws RemoteException {
-        ui.addImportantEvent(model.getPlayers().get(model.getCurrPlayer()).getNickname() + " positioned a card on his Codex");
+        ui.addImportantEvent(model.getPlayers().get(model.getCurrPlayer()).getNickname() + " has placed a card on his Codex");
     }
 
     @Override
-    public void positionedStarterCardIntoCodex(GameImmutable model) throws RemoteException {
-        ui.addImportantEvent(model.getPlayers().get(model.getCurrPlayer()).getNickname() + "positioned the Starter Card on his Codex");
+    public void positionedStarterCardIntoCodex(GameImmutable model, String nickname) throws RemoteException {
+        ui.addImportantEvent(nickname+" placed his starter card on the codex.");
     }
 
 //    @Override
@@ -885,13 +890,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void addedPoint(GameImmutable model, Player player, int point) throws RemoteException {
-        ui.addImportantEvent(player.getNickname() + " gained " + point + "placing his Card");
+        ui.addImportantEvent(player.getNickname() + " gained " + point + " placing his Card");
     }
 
     @Override
-    public void objectiveCardChosen(GameImmutable model, CardObjective cardObjective) throws RemoteException {
+    public void objectiveCardChosen(GameImmutable model, CardObjective cardObjective, String nickname) throws RemoteException {
         ui.showObjectiveChosen(model,cardObjective);
-        events.add(model, PLACE_STARTER_ON_CODEX);
     }
 
     @Override

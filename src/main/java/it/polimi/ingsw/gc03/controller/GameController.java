@@ -262,7 +262,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("The player has already placed his starter card");
         }
         // Proceed with inserting the starting card into the player's Codex
-        player.getCodex().insertStarterIntoCodex(side, this.game);
+        Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
+        playerFromController.getCodex().insertStarterIntoCodex(side, this.game, player.getNickname());
         // Check if the objective cards are in the correct number
         if (player.getCardObjective().size() == Player.FINAL_CARD_OBJECTIVE) {
             // The player's action is updated to WAIT
@@ -301,9 +302,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("The player has already chosen his personal objective");
         }
         // The player can choose his Objective card
-        player.selectObjectiveCard(cardObjective, this.game);
-        if (player.getCodex().getCardStarterInserted()) {
-            player.setAction((PlayerAction.WAIT));
+        Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
+        playerFromController.selectObjectiveCard(cardObjective, this.game);
+        if (playerFromController.getCodex().getCardStarterInserted()) {
+            playerFromController.setAction((PlayerAction.WAIT));
             List<Player> firstMovers = game.getPlayers().stream().
                     filter(x->(x.getAction().equals(PlayerAction.FIRSTMOVES)))
                     .toList();
@@ -359,9 +361,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     public synchronized void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws Exception {
         // Check that the player is authorized to draw
-        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
-            player.addCardToHand(game.getDesk().drawCardDeck(deck));
-            checkFinalAction(player);
+        Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
+
+        if (playerFromController.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
+            playerFromController.addCardToHand(game.getDesk().drawCardDeck(deck));
+            checkFinalAction(playerFromController);
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
         } else {
             throw new Exception("Player's action is not draw.");
@@ -381,9 +385,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
         // Check that the player is authorized to draw
-        if (player.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
-            player.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
-            checkFinalAction(player);
+        Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
+
+        if (playerFromController.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
+            playerFromController.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
+            checkFinalAction(playerFromController);
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
         } else {
             throw new Exception("Player's action is not draw.");
@@ -465,14 +471,15 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      *                   is an error in placing the card in the Codex.
      */
     public synchronized void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws Exception {
+        Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
         if (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING) || game.getStatus().equals(GameStatus.LASTROUND)) {
-            if (player.getAction().equals(PlayerAction.PLACE)) {
-                Side side = getSide(player, index, frontCard);
-                if (player.getCodex().insertIntoCodex(this.game, side, row, col)) {
-                    player.removeCardFromHand(index);
+            if (playerFromController.getAction().equals(PlayerAction.PLACE)) {
+                Side side = getSide(playerFromController, index, frontCard);
+                if (playerFromController.getCodex().insertIntoCodex(this.game, side, row, col)) {
+                    playerFromController.removeCardFromHand(index);
                     updateCurrPlayer();
                     if (game.getStatus().equals(GameStatus.LASTROUND)) {
-                        player.setAction(PlayerAction.ENDED);
+                        playerFromController.setAction(PlayerAction.ENDED);
                         boolean allPlayersEnded = game.getPlayers().stream()
                                 .filter(x->(!x.getAction().equals(PlayerAction.ENDED)))
                                 .toList()

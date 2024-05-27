@@ -164,7 +164,7 @@ public class Player implements Serializable {
             }
             this.cardObjective.clear();
             this.cardObjective.addAll(newCardObjective);
-            game.getListener().notifyObjectiveCardChosen(game, this.cardObjective.getLast());
+            game.getListener().notifyObjectiveCardChosen(game, this.cardObjective.getLast(), this.getNickname());
             return true;
         }
     }

@@ -202,8 +202,8 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.positionedStarterCardIntoCodex(gameImmutable);
+    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        this.flow.positionedStarterCardIntoCodex(gameImmutable, nickname);
     }
 
 
@@ -252,8 +252,8 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective) throws RemoteException {
-        this.flow.objectiveCardChosen(gameImmutable, cardObjective);
+    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException {
+        this.flow.objectiveCardChosen(gameImmutable, cardObjective, nickname);
     }
 
 

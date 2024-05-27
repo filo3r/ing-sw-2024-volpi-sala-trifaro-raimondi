@@ -46,7 +46,8 @@ public class Tui extends UI {
         clearScreen(' ');
     }
 
-    public void displayCodex(Codex codex){
+    protected void showCodex(GameImmutable gameImmutable){
+        Codex codex = gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getCodex();
         translateCodexToScreenSim(codex);
         generateAvailablePositions(codex);
         refreshScreen(screenSimX, screenSimY);
@@ -261,7 +262,7 @@ public class Tui extends UI {
         return ansiCode;
     }
 
-    public void showDesk(Desk desk, Player player) {
+    protected void showDesk(Desk desk, Player player) {
         // Clear the main screen
         clearScreen(' ');
 
@@ -381,7 +382,7 @@ public class Tui extends UI {
         refreshScreen(1093, 364);
     }
 
-    public void show_GameTitle() {
+    protected void show_GameTitle() {
         StringBuilder sb = new StringBuilder(
                 "      ...                         ..                               ..   \n" +
                         "   xH88\"`~ .x8X                 dF                       .H88x.  :~)88: \n" +
@@ -401,12 +402,25 @@ public class Tui extends UI {
     asyncPrint(sb);
     }
 
+    @Override
+    protected void showInvalidNickname(String nickname) {
+
+    }
+
+    @Override
+    protected void showObjectiveChosen(Game game, Card card) {
+        clearScreen(' ');
+        String text = "You have selected successfully your personal objective, good luck!";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        refreshScreen(1093, 364);
+    }
+
     public void showNotification(String message){
         StringBuilder sb = new StringBuilder(message);
         asyncPrint(sb);
     }
 
-    public void showChat(Game game, Player player){
+    protected void showChat(Game game, Player player){
         clearScreen(' ');
         ArrayList<ChatMessage> personalChat = new ArrayList<ChatMessage>();
         for(ChatMessage msg: game.getChat()){
@@ -455,7 +469,7 @@ public class Tui extends UI {
     }
 
     @Override
-     public void showAskSize(GameImmutable gameImmutable){
+    protected void showAskSize(GameImmutable gameImmutable){
         clearScreen(' ');
         generateTextOnScreen("Please choose the game size (2,3,4)", CharColor.WHITE, 1093, 364);
         refreshScreen(1093, 364);
@@ -571,11 +585,66 @@ public class Tui extends UI {
     }
 
     @Override
-    public void show_sizeSetted(int size){
+    protected void show_sizeSetted(int size){
         clearScreen(' ');
         String text = "Game size updated to "+size+", waiting for players to join";
         generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
+    }
+
+    @Override
+    protected void showCardAddedToHand(GameImmutable model, Card card) {
+
+    }
+
+    @Override
+    protected void showWinner(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showAskUI() {
+
+    }
+
+    @Override
+    protected void showAskConnection() {
+
+    }
+
+    @Override
+    protected void showAskNickname() {
+
+    }
+
+    @Override
+    protected void showAskGameID() {
+
+    }
+
+    @Override
+    protected void showAskJoin() {
+
+    }
+
+    @Override
+    protected void showCardHasBeenDrawn(GameImmutable gameModel) {
+
+    }
+
+    @Override
+    protected void showAskReconnectGameID() {
+
+    }
+
+    @Override
+    protected void showCardNotAddedHand(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective) {
+
     }
 
     @Override
@@ -587,21 +656,95 @@ public class Tui extends UI {
     }
 
     @Override
-    public void showObjectiveNotChosen(GameImmutable model, String nickname) {
+    protected void showAskIndex(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void show_wrongSelectionHandMsg() {
+
+    }
+
+    @Override
+    protected void showAskCoordinatesCol(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showAskCoordinatesRow(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showDisplayedResource(GameImmutable gameModel) {
+
+    }
+
+    @Override
+    protected void showDisplayedGold(GameImmutable gameModel) {
+
+    }
+
+    @Override
+    protected void showAskToChooseADeck() {
+
+    }
+
+    @Override
+    protected void showCardCannotBePlaced(GameImmutable model, String nickname) {
+
+    }
+
+    @Override
+    protected void showDrawnCard(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showPlaceStarterCardOnCodex(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showInvalidInput() {
+
+    }
+
+    @Override
+    protected void show_askSide(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void show_askChooseACardObjective(GameImmutable model, String nickname) {
+
+    }
+
+    @Override
+    protected void showCardObjectiveToChoose(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showCommonCards(GameImmutable model) {
+
+    }
+
+    @Override
+    protected void showObjectiveNotChosen(GameImmutable model) {
         clearScreen(' ');
-        this.nickname = nickname;
-        String text = "Choose your personal objective:";
+        String text = "Choose your personal objective (0: the first one, 1: the second one)";
         generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364-6);
         Player player = model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
         CardObjective firstPrivateObjective = player.getCardObjective().getFirst();
         CardObjective secondPrivateObjective = player.getCardObjective().getLast();
 
         if(firstPrivateObjective.getObjective().length()/2>=screenWidth-1){
-            text = "0:"+firstPrivateObjective.getObjective();
+            text = firstPrivateObjective.getObjective();
             generateTextOnScreen(firstPrivateObjective.getObjective().substring(0,text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-4);
             generateTextOnScreen(firstPrivateObjective.getObjective().substring(text.length()/2), CharColor.WHITE, 1093-text.length()/2, 364-3);
         } else{
-            text = "1"+firstPrivateObjective.getObjective();
+            text = firstPrivateObjective.getObjective();
             generateTextOnScreen(firstPrivateObjective.getObjective(), CharColor.WHITE, 1093-text.length()/2, 364-4);
         }
 
@@ -618,30 +761,30 @@ public class Tui extends UI {
     }
 
     @Override
-    public void showObjectiveChosen(Game game, Card card){
-        clearScreen(' ');
-        String text = "You have selected successfully your personal objective, good luck!";
-        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
-        refreshScreen(1093, 364);
-    }
-
-    @Override
-    public void show_askSide(Game game) {
+    protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
 
     }
 
     @Override
-    public void show_askSideStarter(GameImmutable game){
+    protected void show_askSide(Game game) {
+
+    }
+
+    @Override
+    protected void show_askSideStarter(GameImmutable game, String nickname){
         clearScreen(' ');
+        this.nickname = nickname;
         String text = "Please choose a side of the starter card (f: front, b: back)";
-        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364-5);
         Player player = game.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
         CardStarter cardStarter = player.getCardStarter();
         FrontStarter frontStarter = cardStarter.getFrontStarter();
         BackStarter backStarter = cardStarter.getBackStarter();
-        showSide(frontStarter, 364+1, 1093-28);
-        showSide(frontStarter, 364+1, 1093);
+        showSide(frontStarter, 364+1-5, 1093-28);
+        showSide(backStarter, 364+1-5, 1093);
         refreshScreen(1093, 364);
     }
+
+
 
 }

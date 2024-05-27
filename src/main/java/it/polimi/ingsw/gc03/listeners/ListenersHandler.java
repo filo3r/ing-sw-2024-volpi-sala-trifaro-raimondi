@@ -336,12 +336,12 @@ public class ListenersHandler {
      * Notifies that the Starter card was placed into the Codex.
      * @param game The current game.
      */
-    public synchronized void notifyPositionedStarterCardIntoCodex(Game game) {
+    public synchronized void notifyPositionedStarterCardIntoCodex(Game game, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
                 GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.positionedStarterCardIntoCodex(gameImmutable);
+                gameListener.positionedStarterCardIntoCodex(gameImmutable, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -416,14 +416,15 @@ public class ListenersHandler {
     /**
      * Notifies that the Objective card was chosen correctly.
      * @param game The current game.
+     *
      * @param cardObjective The chosen Objective card.
      */
-    public synchronized void notifyObjectiveCardChosen(Game game, CardObjective cardObjective) {
+    public synchronized void notifyObjectiveCardChosen(Game game, CardObjective cardObjective, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
                 GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.objectiveCardChosen(gameImmutable, cardObjective);
+                gameListener.objectiveCardChosen(gameImmutable, cardObjective, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);

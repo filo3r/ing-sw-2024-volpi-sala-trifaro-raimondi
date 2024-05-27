@@ -5,8 +5,10 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackGold;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
+import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 
 
 /**
@@ -27,7 +29,11 @@ public class SideView {
      */
     public CharSpecial[][] getSideView(Side side) {
         Kingdom kingdom = side.getKingdom();
-        generateAndPutBox(getColorFromKingdom(kingdom), 0,0, 27,9, '╔', '╗', '╚', '╝');
+        CharColor color = getColorFromKingdom(kingdom);
+        if(side instanceof BackStarter || side instanceof FrontStarter) {
+            color = CharColor.GOLD;
+        }
+        generateAndPutBox(color, 0,0, 27,9, '╔', '╗', '╚', '╝');
         putCornersOnFrame(side);
         return sideView;
     }
@@ -361,10 +367,7 @@ public class SideView {
      */
     private static CharColor getColorFromSide(Side side) {
         CharColor color = getColorFromKingdom(side.getKingdom());
-        if(side instanceof FrontGold){
-            return CharColor.GOLD;
-        }
-        if(side instanceof BackGold){
+        if(side instanceof BackGold || side instanceof BackStarter || side instanceof FrontGold || side instanceof FrontStarter){
             return CharColor.GOLD;
         }
         return color;

@@ -21,15 +21,20 @@ public class SocketServerMessageObjectiveCardChosen extends SocketServerGenericM
      */
     private CardObjective cardObjective;
 
+    /**
+     * The nickname of the player who chose the card objective.
+     */
+    private String nickname;
 
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
      * @param cardObjective The chosen Objective card.
      */
-    public SocketServerMessageObjectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective) {
+    public SocketServerMessageObjectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) {
         this.gameImmutable = gameImmutable;
         this.cardObjective = cardObjective;
+        this.nickname = nickname;
     }
 
 
@@ -41,7 +46,7 @@ public class SocketServerMessageObjectiveCardChosen extends SocketServerGenericM
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.objectiveCardChosen(this.gameImmutable, this.cardObjective);
+        gameListener.objectiveCardChosen(this.gameImmutable, this.cardObjective, this.nickname);
     }
 
 

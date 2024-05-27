@@ -33,7 +33,7 @@ public class SocketClientMessagePing extends SocketClientGenericMessage {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public GameController execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException {
+    public GameControllerInterface execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException {
         return null;
     }
 

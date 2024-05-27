@@ -16,13 +16,18 @@ public class SocketServerMessagePositionedStarterCardIntoCodex extends SocketSer
      */
     private GameImmutable gameImmutable;
 
+    /**
+     * The nickname of the player who positioned the starter card
+     */
+    private String nickname;
 
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
      */
-    public SocketServerMessagePositionedStarterCardIntoCodex(GameImmutable gameImmutable) {
+    public SocketServerMessagePositionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) {
         this.gameImmutable = gameImmutable;
+        this.nickname = nickname;
     }
 
 
@@ -34,7 +39,7 @@ public class SocketServerMessagePositionedStarterCardIntoCodex extends SocketSer
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.positionedStarterCardIntoCodex(this.gameImmutable);
+        gameListener.positionedStarterCardIntoCodex(this.gameImmutable, this.nickname);
     }
 
 

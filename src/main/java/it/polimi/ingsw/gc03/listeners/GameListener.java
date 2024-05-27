@@ -140,9 +140,10 @@ public interface GameListener extends Remote {
     /**
      * This method is used to inform the client that the Starter card was placed into the Codex.
      * @param gameImmutable The immutable game model.
+     * @param nickname The player who placed the starter.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    void positionedStarterCardIntoCodex(GameImmutable gameImmutable) throws RemoteException;
+    void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException;
 
 
     /**
@@ -178,9 +179,10 @@ public interface GameListener extends Remote {
      * This method is used to inform the client that the Objective card was chosen correctly.
      * @param gameImmutable The immutable game model.
      * @param cardObjective The chosen Objective card.
+     * @param nickname The player who chose the card objective.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective) throws RemoteException;
+    void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException;
 
 
     /**

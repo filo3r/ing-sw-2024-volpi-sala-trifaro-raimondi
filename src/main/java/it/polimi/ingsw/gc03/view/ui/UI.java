@@ -17,7 +17,7 @@ public abstract class UI {
     /**
      * Initialises GUI or TUI
      */
-    public abstract void init();
+    protected abstract void init();
 
     /**
      * Shows menu options
@@ -135,7 +135,7 @@ public abstract class UI {
      * Shows message on important event added
      * @param input the string of the important event to add
      */
-    public abstract void addImportantEvent(String input);
+    protected abstract void addImportantEvent(String input);
 
     /**
      * @param model the model in which search for the longest message
@@ -159,110 +159,75 @@ public abstract class UI {
      */
     protected abstract void show_noConnectionError();
 
-    public void showAskIndex(GameImmutable model) {
-    }
+    protected abstract void showAskIndex(GameImmutable model);
 
-    public void show_wrongSelectionHandMsg() {
-    }
+    protected abstract void show_wrongSelectionHandMsg();
 
-    public void showAskCoordinatesCol(GameImmutable model) {
-    }
+    protected abstract void showAskCoordinatesCol(GameImmutable model);
 
-    public void showAskCoordinatesRow(GameImmutable model) {
-    }
+    protected abstract void showAskCoordinatesRow(GameImmutable model);
 
-    public void showDisplayedResource(GameImmutable gameModel) {
-    }
+    protected abstract void showDisplayedResource(GameImmutable gameModel);
 
-    public void showDisplayedGold(GameImmutable gameModel) {
-    }
+    protected abstract void showDisplayedGold(GameImmutable gameModel);
 
-    public void showAskToChooseADeck() {
-    }
+    protected abstract void showAskToChooseADeck();
 
-    public void showCardCannotBePlaced(GameImmutable model, String nickname) {
-    }
+    protected abstract void showCardCannotBePlaced(GameImmutable model, String nickname);
 
-    public void showDrawnCard(GameImmutable model) {
-    }
+    protected abstract void showDrawnCard(GameImmutable model);
 
-    public void showPlaceStarterCardOnCodex(GameImmutable model) {
-    }
+    protected abstract void showPlaceStarterCardOnCodex(GameImmutable model);
 
-    public void showInvalidInput() {
-    }
+    protected abstract void showInvalidInput();
 
-    public void show_askSide(GameImmutable model) {
-    }
+    protected abstract void show_askSide(GameImmutable model);
 
-    public void show_askChooseACardObjective(GameImmutable model, String nickname) {
-    }
+    protected abstract void show_askChooseACardObjective(GameImmutable model, String nickname);
 
-    public void showCardObjectiveToChoose(GameImmutable model) {
-    }
+    protected abstract void showCardObjectiveToChoose(GameImmutable model);
 
-    public void showCommonCards(GameImmutable model) {
-    }
+    protected abstract void showCommonCards(GameImmutable model);
 
-    public void showCodex(GameImmutable model) {
-    }
+    protected abstract void showCodex(GameImmutable model);
 
-    public void showAskSize(GameImmutable model) {
-    }
+    protected abstract void showAskSize(GameImmutable model);
 
-    public void show_sizeSetted(int size) {
-    }
+    protected abstract void show_sizeSetted(int size);
 
-    public void showCardAddedToHand(GameImmutable model, Card card) {
-    }
+    protected abstract void showCardAddedToHand(GameImmutable model, Card card);
 
-    public void showWinner(GameImmutable model) {
-    }
+    protected abstract void showWinner(GameImmutable model);
 
-    public void showAskUI() {
-        AsyncPrint.asyncPrint(new StringBuilder("\nCHOOSE WHICH TYPE OF UI YOU WANT TO USE:\n" +
-                " t) TUI            g)GUI\n" +
-                "(Write the letter and press Enter to make a choice)\n"));
-    }
+    protected abstract void showAskUI();
 
-    public void showAskConnection() {
+    protected abstract void showAskConnection();
 
-    }
+    protected abstract void showAskNickname();
 
-    public void showAskNickname() {
-    }
+    protected abstract void showAskGameID();
 
-    public void showAskGameID() {
-    }
+    protected abstract void showAskJoin();
 
-    public void showAskJoin() {
-    }
+    protected abstract void showCardHasBeenDrawn(GameImmutable gameModel);
 
-    public void showCardHasBeenDrawn(GameImmutable gameModel) {
-    }
+    protected abstract void showAskReconnectGameID();
 
-    public void showAskReconnectGameID() {
-    }
+    protected abstract void showCardNotAddedHand(GameImmutable model);
 
-    public void showCardNotAddedHand(GameImmutable model) {
-    }
+    protected abstract void showObjectiveChosen(GameImmutable model, CardObjective cardObjective);
 
-    public void showObjectiveChosen(GameImmutable model, CardObjective cardObjective) {
-    }
+    protected abstract void showObjectiveNotChosen(GameImmutable model);
 
-    public void showObjectiveNotChosen(GameImmutable model, String nickname) {
-    }
+    protected abstract void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement);
 
-    public void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
-    }
+    protected abstract void show_GameTitle();
 
-    public void show_GameTitle(){
-    }
+    protected abstract void showInvalidNickname(String nickname);
 
-    public void showInvalidNickname(String nickname) {}
+    protected abstract void showObjectiveChosen(Game game, Card card);
 
-    public void showObjectiveChosen(Game game, Card card){}
+    protected abstract void show_askSide(Game game);
 
-    public abstract void show_askSide(Game game);
-    public abstract void show_askSideStarter(GameImmutable game);
+    protected abstract void show_askSideStarter(GameImmutable game, String nickname);
 }

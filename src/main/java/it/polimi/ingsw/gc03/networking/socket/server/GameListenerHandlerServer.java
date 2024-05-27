@@ -272,9 +272,9 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable) throws RemoteException {
+    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException {
         try {
-            SocketServerMessagePositionedStarterCardIntoCodex message = new SocketServerMessagePositionedStarterCardIntoCodex(gameImmutable);
+            SocketServerMessagePositionedStarterCardIntoCodex message = new SocketServerMessagePositionedStarterCardIntoCodex(gameImmutable, nickname);
             this.outputStream.writeObject(message);
             completeTransmission();
         } catch (IOException e) {}
@@ -339,9 +339,9 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective) throws RemoteException {
+    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException {
         try {
-            SocketServerMessageObjectiveCardChosen message = new SocketServerMessageObjectiveCardChosen(gameImmutable, cardObjective);
+            SocketServerMessageObjectiveCardChosen message = new SocketServerMessageObjectiveCardChosen(gameImmutable, cardObjective, nickname);
             this.outputStream.writeObject(message);
             completeTransmission();
         } catch (IOException e) {}
