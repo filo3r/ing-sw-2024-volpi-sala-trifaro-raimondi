@@ -77,6 +77,7 @@ public class SocketClient implements ClientAction {
         this.messageActionHandler = new GameListenerHandlerClient(flow);
         this.executorService = Executors.newSingleThreadExecutor();
         this.pingExecutor = Executors.newSingleThreadScheduledExecutor();
+        this.flow = flow;
         startConnection(ip, port);
     }
 
