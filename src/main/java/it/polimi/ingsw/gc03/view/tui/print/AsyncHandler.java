@@ -14,7 +14,7 @@ public class AsyncHandler {
     /**
      * The executor service for managing asynchronous tasks.
      */
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(20);
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
 
     /**
