@@ -16,36 +16,14 @@ public class AsyncHandler {
      */
     private static final ExecutorService executorService = Executors.newFixedThreadPool(20);
 
-    /**
-     * The queue for storing tasks.
-     */
-    private static final LinkedBlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
-
-
-    /*
-     * Initializes the executor service to process tasks from the queue.
-     * The executor service runs in a separate thread that continuously takes tasks from the queue and executes them.
-     */
-    static {
-        executorService.submit(() -> {
-            try {
-                while (!Thread.currentThread().isInterrupted()) {
-                    Runnable task = queue.take();
-                    task.run();
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        });
-    }
-
 
     /**
-     * Returns the shared queue for submitting tasks.
-     * @return the queue for submitting tasks.
+     * Submits a Runnable task for execution by the executor service.
+     * This method is used to perform tasks asynchronously using the threads managed by the executor service.
+     * @param task The Runnable task to be executed asynchronously.
      */
-    public static LinkedBlockingQueue<Runnable> getQueue() {
-        return queue;
+    public static void executeAsync(Runnable task) {
+        executorService.execute(task);
     }
 
 

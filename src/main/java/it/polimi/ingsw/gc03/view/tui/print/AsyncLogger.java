@@ -34,7 +34,7 @@ public class AsyncLogger {
      * @param message The log message
      */
     public static void log(Level level, String message) {
-        AsyncHandler.getQueue().offer(() -> LOGGER.log(level, message));
+        AsyncHandler.executeAsync(() -> LOGGER.log(level, message));
     }
 
 

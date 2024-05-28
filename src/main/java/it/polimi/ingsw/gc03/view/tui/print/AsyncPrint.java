@@ -11,7 +11,7 @@ public class AsyncPrint {
      * @param text The text to print.
      */
     public static void asyncPrint(StringBuilder text) {
-        AsyncHandler.getQueue().offer(() -> System.out.print(text + "\n"));
+        AsyncHandler.executeAsync(() -> System.out.print(text + "\n"));
     }
 
 
@@ -22,7 +22,7 @@ public class AsyncPrint {
      * @param col  The column position to start printing.
      */
     public static void asyncPrint(StringBuilder text, int row, int col) {
-        AsyncHandler.getQueue().offer(() -> System.out.print("\033[" + row + ";" + col + "H" + text));
+        AsyncHandler.executeAsync(() -> System.out.print("\033[" + row + ";" + col + "H" + text));
     }
 
 
@@ -31,7 +31,7 @@ public class AsyncPrint {
      * @param text The text to print.
      */
     public static void asyncPrint(String text) {
-        AsyncHandler.getQueue().offer(() -> System.out.print(text));
+        AsyncHandler.executeAsync(() -> System.out.print(text));
     }
 
 

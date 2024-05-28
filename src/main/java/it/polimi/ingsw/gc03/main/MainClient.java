@@ -27,11 +27,6 @@ public class MainClient {
     private static String serverIpAddress;
 
     /**
-     * The client IP address.
-     */
-    private static String clientIpAddress;
-
-    /**
      * Port for the Socket server.
      */
     private final static int SOCKET_PORT = 49160;
@@ -57,22 +52,7 @@ public class MainClient {
         disableJavaFXLogging();
         // Set the server IP address
         AsyncLogger.log(Level.INFO, "[CLIENT] Trying to connect to the server...");
-        serverIpAddress = getUserInputIpAddress("ipServer");
-        // Set the client IP address
-        List<String> ipAddresses = getLocalIpAddress();
-        if (!ipAddresses.isEmpty()) {
-            clientIpAddress = ipAddresses.get(0);
-            AsyncLogger.log(Level.INFO, "[CLIENT] Client IP address automatically found: " + clientIpAddress);
-        } else {
-            AsyncLogger.log(Level.WARNING, "[CLIENT] Unable to automatically determine your IP address.");
-            clientIpAddress = getUserInputIpAddress("ipClient");
-        }
-        // Clear console
-        try {
-            clearConsole();
-        } catch (IOException | InterruptedException e) {
-
-        }
+        serverIpAddress = getUserInputIpAddress();
         // Get the user selection for connection type and interface type
         int userChoice = getUserChoice();
         // Clear console
@@ -83,6 +63,12 @@ public class MainClient {
         }
         // Connect to the server using the specified connection type and interface type
         connectToServer(userChoice);
+        // Clear console
+        try {
+            clearConsole();
+        } catch (IOException | InterruptedException e) {
+
+        }
     }
 
     /**
@@ -130,18 +116,13 @@ public class MainClient {
 
     /**
      * Prompts the user to enter an IP address.
-     * @param ipType A string indicating which IP address is required ("ipServer" for the server's IP address,
-     *               otherwise for the client's IP address).
      * @return The valid IP address entered by the user.
      */
-    private static String getUserInputIpAddress(String ipType) {
+    private static String getUserInputIpAddress() {
         String input;
         Scanner scanner = new Scanner(System.in);
         do {
-            if ("ipServer".equals(ipType))
-                AsyncPrint.asyncPrint("[CLIENT] Enter the server's private IP address: ");
-            else
-                AsyncPrint.asyncPrint("[CLIENT] Enter your private IP address: ");
+            AsyncPrint.asyncPrint("[CLIENT] Enter the server's private IP address: ");
             input = scanner.nextLine();
             if (!isValidIPv4(input))
                 AsyncLogger.log(Level.WARNING, "[CLIENT] Invalid IP address.");

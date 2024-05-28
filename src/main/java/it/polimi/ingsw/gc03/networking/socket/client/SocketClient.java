@@ -89,7 +89,7 @@ public class SocketClient implements ClientAction {
      */
     public void startConnection(String ip, int port) {
         try {
-            AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Trying to connect to " + ip + ":" + port);
+            AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Trying to connect to " + ip + ": " + port);
             this.socketClient = new Socket(ip, port);
             AsyncLogger.log(Level.INFO, "[CLIENT SOCKET] Socket created.");
             this.outputStream = new ObjectOutputStream(this.socketClient.getOutputStream());
