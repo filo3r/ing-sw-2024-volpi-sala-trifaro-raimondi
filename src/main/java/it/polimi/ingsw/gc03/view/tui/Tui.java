@@ -441,7 +441,6 @@ public class Tui extends UI {
             generateTextOnScreen(msg.getText(), CharColor.WHITE, xPos+msg.getReceiver().length()+1, yPos);
             yPos += 1;
         }
-        clearScreen(' ');
         refreshScreen(1093, 364);
     }
 
@@ -458,7 +457,7 @@ public class Tui extends UI {
         generateTextOnScreen("c -> Create a game", CharColor.WHITE, 1093, 365);
         generateTextOnScreen("j -> Join a random game", CharColor.WHITE, 1093, 366);
         generateTextOnScreen("js -> Join a specific game", CharColor.WHITE, 1093, 367);
-        generateTextOnScreen("js -> Reconnect to a game", CharColor.WHITE, 1093, 368);
+        generateTextOnScreen("r -> Reconnect to a game", CharColor.WHITE, 1093, 368);
         refreshScreen(1093, 364);
     }
 
@@ -515,6 +514,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_gameStarted(GameImmutable model) {
+        clearScreen(' ');
         generateTextOnScreen("The game has started", CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
 
@@ -522,6 +522,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
+        clearScreen(' ');
         generateTextOnScreen("No available games to join", CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
 
@@ -548,17 +549,17 @@ public class Tui extends UI {
     protected void show_playerHand(GameImmutable gameModel, String nickname) {
         clearScreen(' ');
         List<Card> playerHand = gameModel.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getHand();
-        int posX = 1093-27;
+        int posX = 1093-27-13;
         for(Card card : playerHand) {
             if(card instanceof CardResource){
-                showSide(((CardResource) card).getFrontResource(), posX, 364);
-                showSide(((CardResource) card).getBackResource(), posX, 374);
+                showSide(((CardResource) card).getFrontResource(), 360, posX);
+                showSide(((CardResource) card).getBackResource(), 369, posX);
             }
             if(card instanceof CardGold){
-                showSide(((CardGold) card).getFrontGold(), posX, 364);
-                showSide(((CardGold) card).getBackGold(), posX, 374);
+                showSide(((CardGold) card).getFrontGold(), 360, posX);
+                showSide(((CardGold) card).getBackGold(), 369, posX);
             }
-        posX += 27;
+        posX += 28;
         }
         refreshScreen(1093, 364);
     }
@@ -659,7 +660,7 @@ public class Tui extends UI {
 
     @Override
     protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {
-        showNotification(nickname+ " choose his personal objective");
+        showNotification(nickname+ " chose his personal objective");
     }
 
     @Override
@@ -672,7 +673,23 @@ public class Tui extends UI {
 
     @Override
     protected void showAskIndex(GameImmutable model) {
-
+        clearScreen(' ');
+        List<Card> playerHand = model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getHand();
+        int posX = 1093-27-13;
+        for(Card card : playerHand) {
+            if(card instanceof CardResource){
+                showSide(((CardResource) card).getFrontResource(), 360, posX);
+                showSide(((CardResource) card).getBackResource(), 369, posX);
+            }
+            if(card instanceof CardGold){
+                showSide(((CardGold) card).getFrontGold(), 360, posX);
+                showSide(((CardGold) card).getBackGold(), 369, posX);
+            }
+            posX += 28;
+        }
+        String text = "Please choose the card to place from your hand (0: first card, 1: second card, 2: third card), you'll choose the side later";
+        generateTextOnScreen(text,CharColor.WHITE, 1093-text.length()/2, 358);
+        refreshScreen(1093, 364);
     }
 
     @Override
@@ -682,12 +699,18 @@ public class Tui extends UI {
 
     @Override
     protected void showAskCoordinatesCol(GameImmutable model) {
-
+        clearScreen(' ');
+        showCodex(model);
+        showNotification("Please choose the y coordinate where to place the card: ");
+        refreshScreen(1093, 364);
     }
 
     @Override
     protected void showAskCoordinatesRow(GameImmutable model) {
-
+        clearScreen(' ');
+        showCodex(model);
+        showNotification("Please choose the x coordinate where to place the card: ");
+        refreshScreen(1093, 364);
     }
 
     @Override
@@ -727,6 +750,23 @@ public class Tui extends UI {
 
     @Override
     protected void show_askSide(GameImmutable model) {
+        clearScreen(' ');
+        List<Card> playerHand = model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getHand();
+        int posX = 1093-27-13;
+        for(Card card : playerHand) {
+            if(card instanceof CardResource){
+                showSide(((CardResource) card).getFrontResource(), 360, posX);
+                showSide(((CardResource) card).getBackResource(), 369, posX);
+            }
+            if(card instanceof CardGold){
+                showSide(((CardGold) card).getFrontGold(), 360, posX);
+                showSide(((CardGold) card).getBackGold(), 369, posX);
+            }
+            posX += 28;
+        }
+        String text = "Choose the side you will place (f: front, b: back)";
+        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 358);
+        refreshScreen(1093, 364);
 
     }
 
@@ -782,7 +822,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_askSide(Game game) {
-
+        //NULL
     }
 
     @Override
@@ -800,6 +840,8 @@ public class Tui extends UI {
         refreshScreen(1093, 364);
     }
 
-
-
+    @Override
+    protected void setNickname(String nickname){
+        this.nickname = nickname;
+    }
 }

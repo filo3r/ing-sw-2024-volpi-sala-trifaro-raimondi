@@ -230,4 +230,6 @@ public abstract class UI {
     protected abstract void show_askSide(Game game);
 
     protected abstract void show_askSideStarter(GameImmutable game, String nickname);
+
+    protected abstract void setNickname(String nickname);
 }

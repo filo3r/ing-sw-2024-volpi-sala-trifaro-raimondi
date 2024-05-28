@@ -90,7 +90,7 @@ public class RmiClient implements ClientAction {
         this.gameController = null;
         this.gameListenerHandlerClient = new GameListenerHandlerClient(flow);
         this.flow = flow;
-        pingExecutor.scheduleAtFixedRate(() -> sendPing(null), 0, 2, TimeUnit.SECONDS);
+        pingExecutor.scheduleAtFixedRate(() -> sendPing(nicknameClient), 0, 2, TimeUnit.SECONDS);
         connectToServer();
         this.ip = ip;
         this.port = port;
@@ -305,7 +305,6 @@ public class RmiClient implements ClientAction {
         } catch (RemoteException e) {
             System.err.println("Error pinging server: " + e.getMessage());
             stopPingThread();
-            // STILL HAVE TO HANDLE THE DISCONNECTION FROM THE SERVER, BY NOTIFYING THE GUI AND TUI.
         }
     }
 

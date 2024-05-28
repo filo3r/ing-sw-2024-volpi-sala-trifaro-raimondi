@@ -64,8 +64,6 @@ public class SocketClient implements ClientAction {
 
     private final ScheduledExecutorService pingExecutor;
 
-    private static final long PING_INTERVAL = 2; // Ping interval in seconds
-
 
     /**
      * Constructor for SocketClient.
@@ -349,7 +347,6 @@ public class SocketClient implements ClientAction {
                 }
             } catch (IOException e) {
                 AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Connection to server lost.");
-                // STILL HAVE TO HANDLE THE DISCONNECTION FROM THE SERVER, BY NOTIFYING THE GUI AND TUI.
             }
         }
     }

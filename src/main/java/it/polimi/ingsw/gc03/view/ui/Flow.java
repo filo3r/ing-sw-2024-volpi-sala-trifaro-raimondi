@@ -89,6 +89,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 event = events.pop();
                 if (event != null) {
                     //if something happened
+                    if(event.getType().equals(PLAYER_RECONNECTED)){
+                        //HANDLE PLAYER RECONNECTION IN GAMEFLOW
+                    }
                     switch (event.getModel().getStatus()) {
                         case WAITING,HALTED -> {
                             try {
@@ -185,6 +188,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
+                ui.setNickname(nickname);
                 this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
                 this.inputProcessor.setIdGame(event.getModel().getIdGame());
                 askToPlaceStarterOnCodex(event.getModel());
@@ -203,29 +207,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 ui.show_sentMessage(event.getModel(), nickname);
             }
 
-            case NEXT_TURN, PLAYER_RECONNECTED -> {
+            case NEXT_TURN -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
                 // if this is my turn
-                if(event.getType().equals(NEXT_TURN) && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)){
+                if(event.getModel()!=null && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)){
                     events.add(event.getModel(), PLACE_CARD_ON_CODEX);
-                }
-                if (event.getType().equals(PLAYER_RECONNECTED) && lastPlayerReconnected.equals(nickname)) {
-                    this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
-                    this.inputProcessor.setIdGame(event.getModel().getIdGame());
-                }
-
-                if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
-
-                    if (event.getType().equals(PLAYER_RECONNECTED)) {
-
-                        if (nickname.equals(lastPlayerReconnected)) {
-                            askToPlaceCardOnCodex(event.getModel());
-                            if (ended) return;
-                        }
-                        //else the player who has just reconnected is not me, and so I do nothing
-                    } else {
-                        if (ended) return;
-                    }
+                } else{
+                    ui.showCodex(event.getModel());
                 }
             }
 
@@ -458,20 +446,18 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param model game model {@link GameImmutable}
      */
     public void askToPlaceCardOnCodex(GameImmutable model) throws Exception {
-        ui.show_playerHand(model, this.nickname);
         Integer indexHand;
         do {
             ui.showAskIndex(model);
             indexHand = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
-            ui.show_playerHand(model, this.nickname);
             if (ended) return;
             if (indexHand < 0 || indexHand >= model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getHand().size()) {
                 ui.show_wrongSelectionHandMsg();
                 indexHand = null;
             }
         } while (indexHand == null);
-        askCoordinates(model);
         askSide(model);
+        askCoordinates(model);
         placeCardOnCodex(model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst(),indexHand,frontCard,row,col);
         ui.showCodex(model);
     }
@@ -634,7 +620,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void reconnectToGame(String nick) {
-        //System.out.println("> You have selected to join to Game with id: '" + idGame + "', trying to reconnect");
             ui.show_joiningToGameIdMsg(0, nick);
             try {
                 clientActions.reconnectToGame(nickname);

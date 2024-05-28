@@ -1,6 +1,8 @@
 package it.polimi.ingsw.gc03.networking.socket.server;
 
+import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
+import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
@@ -183,8 +185,7 @@ public class ClientHandler implements Runnable {
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] The socket connection between the server " +
-                    "and the client was interrupted due to a communication failure: " + e.getMessage());
+            AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] The socket connection between the server and the client was interrupted due to a communication failure: " + e.getMessage());
             return;
         } finally {
             shutdownGameLogicExecutor();

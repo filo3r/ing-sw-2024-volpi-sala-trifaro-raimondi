@@ -100,8 +100,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     private void handlePlayerTimeout(Player player) {
         if(player.getOnline()){
-            player.setOnline(this.getGame(), false, this);
-            // ALSO REMOVE THE PLAYER LISTENER
+            player.setOnline(this.getGame(), false, this, null);
         }
     }
 
@@ -201,7 +200,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
         if (!result.isEmpty()) {
             // The found player is set to online
-            result.getFirst().setOnline(this. getGame(), true, this);
+            result.getFirst().setOnline(this.getGame(), true, this, gameListener);
             // If the game was halted, it is set to running
             if (game.getStatus().equals(GameStatus.HALTED)) {
                 stopTimer();
@@ -295,7 +294,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      *                   or if the player's current action is not set to DRAW.
      */
     public synchronized void selectCardObjective(Player player, int cardObjective) throws Exception {
-        System.out.println("STO PER "+player.getNickname());
         if (!game.getStatus().equals(GameStatus.STARTING)) {
             throw new Exception("The current game is not in the starting phase.");
         }
@@ -303,10 +301,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("The player has already chosen his personal objective");
         }
         // The player can choose his Objective card
-        System.out.println("STO PER 2"+player.getNickname());
         Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
         playerFromController.selectObjectiveCard(cardObjective, this.game);
-        System.out.println("FATTO PER "+player.getNickname());
         if (playerFromController.getCodex().getCardStarterInserted()) {
             playerFromController.setAction(PlayerAction.WAIT, this.game);
             List<Player> firstMovers = game.getPlayers().stream().

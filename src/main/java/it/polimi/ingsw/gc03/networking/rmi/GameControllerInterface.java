@@ -92,5 +92,4 @@ public interface GameControllerInterface extends Remote {
      * @throws Exception If the game size is not valid.
      */
     void updateGameSize(int size) throws Exception;
-
 }
