@@ -17,6 +17,7 @@ import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static it.polimi.ingsw.gc03.view.tui.print.AsyncPrint.*;
 
@@ -544,8 +545,22 @@ public class Tui extends UI {
     }
 
     @Override
-    protected void show_playerHand(GameImmutable gameModel) {
-
+    protected void show_playerHand(GameImmutable gameModel, String nickname) {
+        clearScreen(' ');
+        List<Card> playerHand = gameModel.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getHand();
+        int posX = 1093-27;
+        for(Card card : playerHand) {
+            if(card instanceof CardResource){
+                showSide(((CardResource) card).getFrontResource(), posX, 364);
+                showSide(((CardResource) card).getBackResource(), posX, 374);
+            }
+            if(card instanceof CardGold){
+                showSide(((CardGold) card).getFrontGold(), posX, 364);
+                showSide(((CardGold) card).getBackGold(), posX, 374);
+            }
+        posX += 27;
+        }
+        refreshScreen(1093, 364);
     }
 
     @Override
@@ -585,9 +600,9 @@ public class Tui extends UI {
     }
 
     @Override
-    protected void show_sizeSetted(int size){
+    protected void show_sizeSetted(int size, GameImmutable gameImmutable){
         clearScreen(' ');
-        String text = "Game size updated to "+size+", waiting for players to join";
+        String text = "Game size updated to "+size+", game's id: "+gameImmutable.getIdGame();
         generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
     }
@@ -643,8 +658,8 @@ public class Tui extends UI {
     }
 
     @Override
-    protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective) {
-
+    protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {
+        showNotification(nickname+ " choose his personal objective");
     }
 
     @Override

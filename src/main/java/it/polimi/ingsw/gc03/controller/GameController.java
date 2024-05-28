@@ -219,9 +219,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     private synchronized void updateCurrPlayer() throws Exception {
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW);
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW, this.game);
         } else {
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT);
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
         }
         game.updateCurrPlayer();
         Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
@@ -231,15 +231,15 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception(e);
         }
         if(currPlayer.getSkipTurn()){
-            currPlayer.setAction(PlayerAction.ENDED);
+            currPlayer.setAction(PlayerAction.ENDED, this.game);
             updateCurrPlayer();
         }
         if(!currPlayer.getOnline()){
-            currPlayer.setAction(PlayerAction.DISCONNECTED);
+            currPlayer.setAction(PlayerAction.DISCONNECTED, this.game);
             updateCurrPlayer();
         }
         if(currPlayer.getAction().equals(PlayerAction.WAIT)){
-            currPlayer.setAction(PlayerAction.PLACE);
+            currPlayer.setAction(PlayerAction.PLACE, this.game);
         }
     }
 
@@ -267,7 +267,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // Check if the objective cards are in the correct number
         if (player.getCardObjective().size() == Player.FINAL_CARD_OBJECTIVE) {
             // The player's action is updated to WAIT
-            player.setAction(PlayerAction.WAIT);
+            player.setAction(PlayerAction.WAIT, this.game);
             // Check whether all players have completed their initial moves
             List<Player> firstMovers = game.getPlayers().stream()
                     .filter(x -> x.getAction().equals(PlayerAction.FIRSTMOVES))
@@ -277,7 +277,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 // The game switches to RUNNING state
                 game.setStatus(GameStatus.RUNNING);
                 // The current player's action is set to PLACE
-                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
             }
         }
     }
@@ -295,6 +295,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      *                   or if the player's current action is not set to DRAW.
      */
     public synchronized void selectCardObjective(Player player, int cardObjective) throws Exception {
+        System.out.println("STO PER "+player.getNickname());
         if (!game.getStatus().equals(GameStatus.STARTING)) {
             throw new Exception("The current game is not in the starting phase.");
         }
@@ -302,17 +303,19 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("The player has already chosen his personal objective");
         }
         // The player can choose his Objective card
+        System.out.println("STO PER 2"+player.getNickname());
         Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
         playerFromController.selectObjectiveCard(cardObjective, this.game);
+        System.out.println("FATTO PER "+player.getNickname());
         if (playerFromController.getCodex().getCardStarterInserted()) {
-            playerFromController.setAction((PlayerAction.WAIT));
+            playerFromController.setAction(PlayerAction.WAIT, this.game);
             List<Player> firstMovers = game.getPlayers().stream().
                     filter(x->(x.getAction().equals(PlayerAction.FIRSTMOVES)))
                     .toList();
 
             if(firstMovers.isEmpty()){
                 game.setStatus(GameStatus.RUNNING);
-                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
             }
         }
     }
@@ -345,7 +348,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
         if(!player.getAction().equals(PlayerAction.ENDED)){
-            player.setAction(PlayerAction.WAIT);
+            player.setAction(PlayerAction.WAIT, this.game);
         }
     }
 
@@ -366,7 +369,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (playerFromController.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             playerFromController.addCardToHand(game.getDesk().drawCardDeck(deck));
             checkFinalAction(playerFromController);
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
         } else {
             throw new Exception("Player's action is not draw.");
         }
@@ -390,7 +393,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (playerFromController.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             playerFromController.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
             checkFinalAction(playerFromController);
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE);
+            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
         } else {
             throw new Exception("Player's action is not draw.");
         }
@@ -479,7 +482,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                     playerFromController.removeCardFromHand(index);
                     updateCurrPlayer();
                     if (game.getStatus().equals(GameStatus.LASTROUND)) {
-                        playerFromController.setAction(PlayerAction.ENDED);
+                        playerFromController.setAction(PlayerAction.ENDED, this.game);
                         boolean allPlayersEnded = game.getPlayers().stream()
                                 .filter(x->(!x.getAction().equals(PlayerAction.ENDED)))
                                 .toList()

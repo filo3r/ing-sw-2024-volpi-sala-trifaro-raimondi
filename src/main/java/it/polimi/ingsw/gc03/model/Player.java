@@ -165,6 +165,15 @@ public class Player implements Serializable {
             this.cardObjective.clear();
             this.cardObjective.addAll(newCardObjective);
             game.getListener().notifyObjectiveCardChosen(game, this.cardObjective.getLast(), this.getNickname());
+            boolean everybodyChoseTheirObjective = true;
+            for(Player p: game.getPlayers()){
+                if(!(p.getCardObjective().size()==1)){
+                    everybodyChoseTheirObjective = false;
+                }
+            }
+            if(everybodyChoseTheirObjective){
+                game.getListener().notifyNextTurn(game);
+            }
             return true;
         }
     }
@@ -444,8 +453,12 @@ public class Player implements Serializable {
      * Method to set the player's action.
      * @param action The player's action.
      */
-    public void setAction(PlayerAction action) {
+    public void setAction(PlayerAction action, Game game) {
+        PlayerAction oldAction = this.action;
         this.action = action;
+        if(oldAction.equals(PlayerAction.WAIT) && this.action.equals(PlayerAction.PLACE)){
+            game.getListener().notifyNextTurn(game);
+        }
     }
 
 

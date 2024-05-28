@@ -60,7 +60,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(180, 30);
+                ui = new Tui(205, 58);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -205,6 +205,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
             case NEXT_TURN, PLAYER_RECONNECTED -> {
                 ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
+                // if this is my turn
+                if(event.getType().equals(NEXT_TURN) && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)){
+                    events.add(event.getModel(), PLACE_CARD_ON_CODEX);
+                }
                 if (event.getType().equals(PLAYER_RECONNECTED) && lastPlayerReconnected.equals(nickname)) {
                     this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
                     this.inputProcessor.setIdGame(event.getModel().getIdGame());
@@ -441,8 +445,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
         do{
             int index;
             index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+            Player player = model.getPlayers().stream().filter(p->p.getNickname().equals(this.nickname)).toList().getFirst();
             if(index==1 || index==0) {
-                selectCardObjective(model.getPlayers().get(model.getCurrPlayer()), index);
+                selectCardObjective(player, index);
                 wrongIndex = false;
             }
         }while(wrongIndex);
@@ -453,13 +458,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param model game model {@link GameImmutable}
      */
     public void askToPlaceCardOnCodex(GameImmutable model) throws Exception {
-
-        ui.show_playerHand(model);
+        ui.show_playerHand(model, this.nickname);
         Integer indexHand;
         do {
             ui.showAskIndex(model);
             indexHand = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
-            ui.show_playerHand(model);
+            ui.show_playerHand(model, this.nickname);
             if (ended) return;
             if (indexHand < 0 || indexHand >= model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getHand().size()) {
                 ui.show_wrongSelectionHandMsg();
@@ -583,7 +587,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param size
      */
     public void gameSizeUpdated(int size) throws Exception {
-        ui.show_sizeSetted(size);
         try{
             clientActions.gameSizeUpdated(size);
         } catch (RemoteException e) {
@@ -819,7 +822,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void nextTurn(GameImmutable gameModel) {
         events.add(gameModel, EventType.NEXT_TURN);
-
         //I remove all the input that the user sends when It is not his turn
         this.inputProcessor.getDataToProcess().popAllData();
     }
@@ -895,7 +897,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void objectiveCardChosen(GameImmutable model, CardObjective cardObjective, String nickname) throws RemoteException {
-        ui.showObjectiveChosen(model,cardObjective);
+        ui.showObjectiveChosen(model,cardObjective, nickname);
     }
 
     @Override
@@ -974,6 +976,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
-
+        ui.show_sizeSetted(size, gameImmutable);
     }
 }

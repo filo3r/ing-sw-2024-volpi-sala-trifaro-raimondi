@@ -105,7 +105,7 @@ public abstract class UI {
      *
      * @param gameModel the model that has the player hand that needs to be shown
      */
-    protected abstract void show_playerHand(GameImmutable gameModel);
+    protected abstract void show_playerHand(GameImmutable gameModel, String nickname);
 
     /**
      * Shows the message that has been sent
@@ -193,7 +193,7 @@ public abstract class UI {
 
     protected abstract void showAskSize(GameImmutable model);
 
-    protected abstract void show_sizeSetted(int size);
+    protected abstract void show_sizeSetted(int size, GameImmutable gameImmutable);
 
     protected abstract void showCardAddedToHand(GameImmutable model, Card card);
 
@@ -215,7 +215,7 @@ public abstract class UI {
 
     protected abstract void showCardNotAddedHand(GameImmutable model);
 
-    protected abstract void showObjectiveChosen(GameImmutable model, CardObjective cardObjective);
+    protected abstract void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname);
 
     protected abstract void showObjectiveNotChosen(GameImmutable model);
 

@@ -78,7 +78,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_playerHand(GameImmutable gameModel) {
+    protected void show_playerHand(GameImmutable gameModel, String nickname) {
 
     }
 
@@ -208,7 +208,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_sizeSetted(int size) {
+    protected void show_sizeSetted(int size, GameImmutable gameImmutable) {
 
     }
 
@@ -263,7 +263,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective) {
+    protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {
 
     }
 
