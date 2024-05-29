@@ -9,6 +9,7 @@ import it.polimi.ingsw.gc03.view.ui.UI;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Gui extends UI {
@@ -23,18 +24,21 @@ public class Gui extends UI {
     protected Image getFrontCardImage(Card card) throws IOException {
         String idCard = card.getIdCard();
         String imagePath ="/it.polimi.ingsw.gc03/images/cards_front/"+ idCard +".jpg";
-        return new Image(Gui.class.getResource(imagePath).openStream());
+        InputStream inputStream = getClass().getResourceAsStream(imagePath);
+        return new Image(inputStream);
     }
 
     protected Image getBackCardImage(Card card) throws IOException{
         String idCard = card.getIdCard();
         String imagePath = "/it.polimi.ingsw.gc03/images/cards_back/"+ idCard +".jpg";
-        return new Image(Gui.class.getResource(imagePath).openStream());
+        InputStream inputStream = getClass().getResourceAsStream(imagePath);
+        return new Image(inputStream);
     }
 
     protected Image getPlateauScore() throws IOException {
         String imagePath = "/it.polimi.ingsw.gc03/images/plateau_score.jpg";
-        return new Image(Gui.class.getResource(imagePath).openStream());
+        InputStream inputStream = getClass().getResourceAsStream(imagePath);
+        return new Image(inputStream);
     }
 
     @Override
