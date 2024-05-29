@@ -1,8 +1,6 @@
 package it.polimi.ingsw.gc03.view.ui;
 
-import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
@@ -98,7 +96,7 @@ public abstract class UI {
      * @param model    model where events happen
      * @param nickname nick of reconnected player (or of the player that is now in turn)
      */
-    protected abstract void show_nextTurnOrPlayerReconnected(GameImmutable model, String nickname);
+    protected abstract void showNextTurn(GameImmutable model, String nickname);
 
     /**
      * Message that shows the player's hand
@@ -181,8 +179,6 @@ public abstract class UI {
 
     protected abstract void showInvalidInput();
 
-    protected abstract void show_askSide(GameImmutable model);
-
     protected abstract void show_askChooseACardObjective(GameImmutable model, String nickname);
 
     protected abstract void showCardObjectiveToChoose(GameImmutable model);
@@ -227,9 +223,11 @@ public abstract class UI {
 
     protected abstract void showObjectiveChosen(Game game, Card card);
 
-    protected abstract void show_askSide(Game game);
+    protected abstract void showAskSide(GameImmutable game, Card card);
 
     protected abstract void show_askSideStarter(GameImmutable game, String nickname);
 
     protected abstract void setNickname(String nickname);
-}
+
+    protected abstract void showDesk(GameImmutable gameImmutable, String nickname);
+    }

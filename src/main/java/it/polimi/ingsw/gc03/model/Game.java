@@ -163,7 +163,6 @@ public class Game implements Serializable {
             this.currPlayer++;
         else
             this.currPlayer = 0;
-        listenersHandler.notifyNextTurn(this);
     }
 
 

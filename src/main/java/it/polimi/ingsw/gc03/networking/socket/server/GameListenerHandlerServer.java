@@ -488,4 +488,14 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
+    @Override
+    public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        try {
+            SocketServerMessageDrawCard message = new SocketServerMessageDrawCard(gameImmutable, nickname);
+            this.outputStream.writeObject(message);
+            completeTransmission();
+        } catch (IOException e) {}
+    }
+
+
 }

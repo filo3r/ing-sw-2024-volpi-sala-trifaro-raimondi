@@ -217,29 +217,35 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @throws Exception If there is an error during the transition.
      */
     private synchronized void updateCurrPlayer() throws Exception {
+        System.out.println("game status: "+game.getStatus().toString()+ "\ncurr player: "+game.getPlayers().get(game.getCurrPlayer()).getNickname()+", action: "+game.getPlayers().get(game.getCurrPlayer()).getAction().toString());
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW, this.game);
+            if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.PLACE)){
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW, this.game);
+            }
+            if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.DRAW)){
+                game.updateCurrPlayer();
+                Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
+                try{
+                    currPlayer.checkSkipTurn();
+                } catch (Exception e){
+                    throw new Exception(e);
+                }
+                if(currPlayer.getSkipTurn()){
+                    currPlayer.setAction(PlayerAction.ENDED, this.game);
+                    updateCurrPlayer();
+                }
+                if(!currPlayer.getOnline()){
+                    currPlayer.setAction(PlayerAction.DISCONNECTED, this.game);
+                    updateCurrPlayer();
+                }
+                if(currPlayer.getAction().equals(PlayerAction.WAIT)){
+                    currPlayer.setAction(PlayerAction.PLACE, this.game);
+                }
+            }
         } else {
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
         }
-        game.updateCurrPlayer();
-        Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
-        try{
-            currPlayer.checkSkipTurn();
-        } catch (Exception e){
-            throw new Exception(e);
-        }
-        if(currPlayer.getSkipTurn()){
-            currPlayer.setAction(PlayerAction.ENDED, this.game);
-            updateCurrPlayer();
-        }
-        if(!currPlayer.getOnline()){
-            currPlayer.setAction(PlayerAction.DISCONNECTED, this.game);
-            updateCurrPlayer();
-        }
-        if(currPlayer.getAction().equals(PlayerAction.WAIT)){
-            currPlayer.setAction(PlayerAction.PLACE, this.game);
-        }
+
     }
 
 
@@ -369,6 +375,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         } else {
             throw new Exception("Player's action is not draw.");
         }
+        updateCurrPlayer();
     }
 
 
@@ -393,6 +400,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         } else {
             throw new Exception("Player's action is not draw.");
         }
+        updateCurrPlayer();
     }
 
 

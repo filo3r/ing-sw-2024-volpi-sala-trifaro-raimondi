@@ -360,5 +360,9 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.gameSizeUpdated(gameImmutable, size);
     }
 
+    @Override
+    public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        this.flow.drawCard(gameImmutable, nickname);
+    }
 
 }

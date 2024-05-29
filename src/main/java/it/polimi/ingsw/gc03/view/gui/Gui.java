@@ -1,8 +1,6 @@
 package it.polimi.ingsw.gc03.view.gui;
 
-import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
@@ -73,7 +71,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_nextTurnOrPlayerReconnected(GameImmutable model, String nickname) {
+    protected void showNextTurn(GameImmutable model, String nickname) {
 
     }
 
@@ -174,11 +172,6 @@ public class Gui extends UI {
 
     @Override
     protected void showInvalidInput() {
-
-    }
-
-    @Override
-    protected void show_askSide(GameImmutable model) {
 
     }
 
@@ -293,7 +286,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_askSide(Game game) {
+    protected void showAskSide(GameImmutable game, Card card) {
 
     }
 
@@ -306,4 +299,10 @@ public class Gui extends UI {
     protected void setNickname(String nickname) {
 
     }
-}
+
+    @Override
+    protected void showDesk(GameImmutable gameImmutable, String player) {
+
+    }
+
+    }

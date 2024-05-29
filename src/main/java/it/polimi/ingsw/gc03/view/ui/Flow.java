@@ -15,6 +15,7 @@ import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.Gui;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.ui.events.EventType;
@@ -60,7 +61,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(205, 58);
+                //ui = new Tui(205, 58);
+                ui = new Tui(150, 30);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -169,6 +171,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
         }
     }
+
     private void statusWait(Event event) throws IOException, InterruptedException {
         String nickLastPlayer = event.getModel().getPlayers().getLast().getNickname();
         switch (event.getType()) {
@@ -185,6 +188,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     private void statusRunning(Event event) throws Exception {
+        String currPlayer = event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname();
+        AsyncPrint.asyncPrint(event.getType().toString()+", currPlayer:"+currPlayer+"\n");
+
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
@@ -208,12 +214,14 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case NEXT_TURN -> {
-                ui.show_nextTurnOrPlayerReconnected(event.getModel(), nickname);
+                String nextTurnPlayer = event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname();
                 // if this is my turn
-                if(event.getModel()!=null && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)){
+                if(event.getModel()!=null && nextTurnPlayer.equals(nickname)){
+                    ui.showNextTurn(event.getModel(), nextTurnPlayer);
                     events.add(event.getModel(), PLACE_CARD_ON_CODEX);
                 } else{
                     ui.showCodex(event.getModel());
+                    ui.showNextTurn(event.getModel(), nextTurnPlayer);
                 }
             }
 
@@ -378,7 +386,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param gameModel game model
      */
     public void askToChooseADeck(GameImmutable gameModel) throws Exception {
-        ui.showAskToChooseADeck();
+        ui.showDesk(gameModel, nickname);
         String choice;
         choice = this.inputProcessor.getDataToProcess().popData();
         switch(choice){
@@ -456,7 +464,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 indexHand = null;
             }
         } while (indexHand == null);
-        askSide(model);
+        askSide(model, model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getHand().get(indexHand));
         askCoordinates(model);
         placeCardOnCodex(model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst(),indexHand,frontCard,row,col);
         ui.showCodex(model);
@@ -520,11 +528,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param model model
      * @throws InterruptedException exception
      */
-    public void askSide(GameImmutable model) throws InterruptedException {
-        ui.show_askSide(model);
-        String side;
-        side = this.inputProcessor.getDataToProcess().popData();
-        switch(side){
+    public void askSide(GameImmutable model, Card card) throws InterruptedException {
+        ui.showAskSide(model, card);
+        String sideChosen;
+        sideChosen = this.inputProcessor.getDataToProcess().popData();
+        switch(sideChosen){
             case "f"->{
                 frontCard = true;
             }
@@ -533,14 +541,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
             default->{
                 ui.showInvalidInput();
-                askSide(model);
+                askSide(model, card);
             }
         }
 
     }
-
-
-
 
 
     /*============ Methods that the client can request to the server ============*/
@@ -696,8 +701,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
             noConnectionError();
         }
     }
-
-
 
 
     /*============ Server event received ============*/
@@ -962,5 +965,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
         ui.show_sizeSetted(size, gameImmutable);
+    }
+
+    @Override
+    public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
+        events.add(gameImmutable, DRAW_CARD);
     }
 }

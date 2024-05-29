@@ -604,4 +604,18 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
+    public synchronized void notifyDrawCard(Game game, String nickname) {
+        ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
+        for (GameListener gameListener : this.gameListeners) {
+            try {
+                GameImmutable gameImmutable = new GameImmutable(game);
+                gameListener.drawCard(gameImmutable, nickname);
+            } catch (RemoteException e) {
+                AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
+                gameListenersToRemove.add(gameListener);
+            }
+        }
+        this.gameListeners.removeAll(gameListenersToRemove);
+    }
+
 }

@@ -165,15 +165,6 @@ public class Player implements Serializable {
             this.cardObjective.clear();
             this.cardObjective.addAll(newCardObjective);
             game.getListener().notifyObjectiveCardChosen(game, this.cardObjective.getLast(), this.getNickname());
-            boolean everybodyChoseTheirObjective = true;
-            for(Player p: game.getPlayers()){
-                if(!(p.getCardObjective().size()==1)){
-                    everybodyChoseTheirObjective = false;
-                }
-            }
-            if(everybodyChoseTheirObjective){
-                game.getListener().notifyNextTurn(game);
-            }
             return true;
         }
     }
@@ -461,6 +452,9 @@ public class Player implements Serializable {
         this.action = action;
         if(oldAction.equals(PlayerAction.WAIT) && this.action.equals(PlayerAction.PLACE)){
             game.getListener().notifyNextTurn(game);
+        }
+        if(oldAction.equals(PlayerAction.PLACE) && this.action.equals(PlayerAction.DRAW)){
+            game.getListener().notifyDrawCard(game, this.getNickname());
         }
     }
 
