@@ -2,17 +2,39 @@ package it.polimi.ingsw.gc03.view.gui;
 
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.view.ui.UI;
+import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Gui extends UI {
 
+    boolean front;
+
     @Override
     protected void init() {
 
+    }
+
+    protected Image getFrontCardImage(Card card) throws IOException {
+        String idCard = card.getIdCard();
+        String imagePath ="/it.polimi.ingsw.gc03/images/cards_front/"+ idCard +".jpg";
+        return new Image(Gui.class.getResource(imagePath).openStream());
+    }
+
+    protected Image getBackCardImage(Card card) throws IOException{
+        String idCard = card.getIdCard();
+        String imagePath = "/it.polimi.ingsw.gc03/images/cards_back/"+ idCard +".jpg";
+        return new Image(Gui.class.getResource(imagePath).openStream());
+    }
+
+    protected Image getPlateauScore() throws IOException {
+        String imagePath = "/it.polimi.ingsw.gc03/images/plateau_score.jpg";
+        return new Image(Gui.class.getResource(imagePath).openStream());
     }
 
     @Override
@@ -212,16 +234,6 @@ public class Gui extends UI {
 
     @Override
     protected void showWinner(GameImmutable model) {
-
-    }
-
-    @Override
-    protected void showAskUI() {
-
-    }
-
-    @Override
-    protected void showAskConnection() {
 
     }
 

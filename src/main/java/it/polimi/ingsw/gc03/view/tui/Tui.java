@@ -387,7 +387,7 @@ public class Tui extends UI {
     }
 
     protected void show_GameTitle() {
-        StringBuilder sb = new StringBuilder(
+        StringBuilder sb = new StringBuilder("\n\n"+
                 "      ...                         ..                               ..   \n" +
                         "   xH88\"`~ .x8X                 dF                       .H88x.  :~)88: \n" +
                         " :8888   .f\"8888Hf        u.   '88bu.                   x888888X ~:8888 \n" +
@@ -620,17 +620,6 @@ public class Tui extends UI {
     protected void showWinner(GameImmutable model) {
 
     }
-
-    @Override
-    protected void showAskUI() {
-
-    }
-
-    @Override
-    protected void showAskConnection() {
-
-    }
-
     @Override
     protected void showAskNickname() {
 

@@ -194,11 +194,6 @@ public abstract class UI {
     protected abstract void showCardAddedToHand(GameImmutable model, Card card);
 
     protected abstract void showWinner(GameImmutable model);
-
-    protected abstract void showAskUI();
-
-    protected abstract void showAskConnection();
-
     protected abstract void showAskNickname();
 
     protected abstract void showAskGameID();
