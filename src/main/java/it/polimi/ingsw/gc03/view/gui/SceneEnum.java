@@ -29,7 +29,7 @@ public enum SceneEnum {
     /**
      *
      */
-    GAME(),
+    GAME_RUNNING(),
 
 
 
