@@ -613,7 +613,7 @@ public class Tui extends UI {
 
     @Override
     protected void showCardAddedToHand(GameImmutable model, Card card) {
-
+        showNotification("You have drawn a card");
     }
 
     @Override
@@ -698,7 +698,7 @@ public class Tui extends UI {
     @Override
     protected void showAskCoordinatesRow(GameImmutable model) {
         showCodex(model);
-        showNotification("Please choose the x coordinate where to place the card: ");
+        showNotification("Please, choose the x coordinate where to place the card: ");
     }
 
     @Override
@@ -713,7 +713,7 @@ public class Tui extends UI {
 
     @Override
     protected void showAskToChooseADeck() {
-
+        showNotification("Please, choose a deck from the following: rD: Deck Resource, gD: Deck Gold\ng1: the first gold displayed card, g2: the second gold displayed card\nr1: the first resource displayed card, r2: the second resource displayed card:\n");
     }
 
     @Override

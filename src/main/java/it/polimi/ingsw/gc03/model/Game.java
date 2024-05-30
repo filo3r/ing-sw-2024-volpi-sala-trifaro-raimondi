@@ -110,7 +110,10 @@ public class Game implements Serializable {
             if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
                 listenersHandler.notifyJoinUnableGameFull(this, player);
                 throw new DeskIsFullException();
-            } else {
+            } else if(this.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).findAny().isPresent()){
+                listenersHandler.notifyJoinUnableNicknameAlreadyInUse(player);
+                throw new PlayerAlreadyJoinedException();
+            } else{
                 // The player can be added
                 this.numPlayer++;
                 this.players.add(player);

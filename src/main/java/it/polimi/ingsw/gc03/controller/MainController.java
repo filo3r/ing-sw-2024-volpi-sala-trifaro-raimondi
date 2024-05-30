@@ -90,11 +90,9 @@ public class MainController implements MainControllerInterface, Serializable {
             if(!GCs.get(0).getGame().getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().get(0).getOnline()){
                 try {
                     GCs.get(0).reconnectPlayer(playerNickname, gameListener);
-                    GCs.get(0).getGame().getListener().addListener(gameListener);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                gameListener.playerReconnected(new GameImmutable(GCs.get(0).getGame()), playerNickname);
                 return GCs.get(0);
             }
         }

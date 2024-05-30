@@ -8,6 +8,7 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
@@ -62,7 +63,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
             case OptionSelection.TUI ->{
                 //ui = new Tui(205, 58);
-                ui = new Tui(150, 30);
+                ui = new Tui(150, 58);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -228,7 +229,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case DRAW_CARD ->{
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
                    askToChooseADeck(event.getModel());
-                   ui.showDrawnCard(event.getModel());
+                   ui.showCodex(event.getModel());
                 }
             }
             case PLACE_CARD_ON_CODEX -> {
@@ -387,41 +388,29 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     public void askToChooseADeck(GameImmutable gameModel) throws Exception {
         ui.showDesk(gameModel, nickname);
+        ui.showAskToChooseADeck();
         String choice;
         choice = this.inputProcessor.getDataToProcess().popData();
         switch(choice){
             case "gD" ->{
                 drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()),gameModel.getDesk().getDeckGold());
             }
-            case "g" ->{
-                ui.showDisplayedGold(gameModel);
-                boolean wrongIndex = true;
-                do {
-                    int index;
-                    ui.showAskIndex(gameModel);
-                    index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
-                    if(index==1 || index==0) {
-                        drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), index);
-                        wrongIndex = false;
-                    }
-                }while(wrongIndex);
+            case "g1" -> {
+                drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), 0);
+            }
+            case "g2" -> {
+                drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), 1);
+            }
+            case "r1" -> {
+                drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), 0);
+            }
+            case "r2" -> {
+                drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), 1);
             }
             case "rD" ->{
                 drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()),gameModel.getDesk().getDeckResource());
             }
-            case "r" ->{
-                ui.showDisplayedResource(gameModel);
-                boolean wrongIndex = true;
-                do {
-                    int index;
-                    ui.showAskIndex(gameModel);
-                    index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
-                        if(index==1 || index==0) {
-                            drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), index);
-                            wrongIndex = false;
-                        }
-                }while(wrongIndex);
-            }
+
             default->{
                 ui.showInvalidInput();
                 askToChooseADeck(gameModel);
@@ -746,7 +735,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         lastPlayerReconnected = nickPlayerReconnected;
         events.add(gameModel, PLAYER_RECONNECTED);
         ui.addImportantEvent("[EVENT]: Player reconnected!");
-        //events.add(gameModel, EventType.PLAYER_JOINED);
     }
 
     /**
@@ -822,11 +810,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void playerDisconnected(GameImmutable gameModel, String nick) {
         ui.addImportantEvent("Player " + nick + " has just disconnected");
-
-        //Print also here because: If a player is in askReadyToStart is blocked and cannot showPlayerJoined by watching the events
-        if (gameModel.getStatus().equals(GameStatus.WAITING)) {
-            ui.show_playerJoined(gameModel, nickname);
-        }
     }
     /**
      * Only one player is connected

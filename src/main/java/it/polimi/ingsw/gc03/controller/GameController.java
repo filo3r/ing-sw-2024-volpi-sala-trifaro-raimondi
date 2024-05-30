@@ -217,12 +217,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @throws Exception If there is an error during the transition.
      */
     private synchronized void updateCurrPlayer() throws Exception {
-        System.out.println("game status: "+game.getStatus().toString()+ "\ncurr player: "+game.getPlayers().get(game.getCurrPlayer()).getNickname()+", action: "+game.getPlayers().get(game.getCurrPlayer()).getAction().toString());
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
             if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.PLACE)){
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW, this.game);
-            }
-            if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.DRAW)){
+            } else if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.DRAW)){
+                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
                 game.updateCurrPlayer();
                 Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
                 try{
@@ -233,16 +232,16 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 if(currPlayer.getSkipTurn()){
                     currPlayer.setAction(PlayerAction.ENDED, this.game);
                     updateCurrPlayer();
-                }
-                if(!currPlayer.getOnline()){
+                } else if(!currPlayer.getOnline()) {
                     currPlayer.setAction(PlayerAction.DISCONNECTED, this.game);
                     updateCurrPlayer();
-                }
-                if(currPlayer.getAction().equals(PlayerAction.WAIT)){
+                } else {
+                    System.out.println("I'm triggering next turn event");
                     currPlayer.setAction(PlayerAction.PLACE, this.game);
                 }
             }
         } else {
+            System.out.println("It's the last round");
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
         }
 
@@ -349,9 +348,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 game.setStatus(GameStatus.LASTROUND);
             }
         }
-        if(!player.getAction().equals(PlayerAction.ENDED)){
-            player.setAction(PlayerAction.WAIT, this.game);
-        }
     }
 
 
@@ -371,11 +367,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (playerFromController.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             playerFromController.addCardToHand(game.getDesk().drawCardDeck(deck));
             checkFinalAction(playerFromController);
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
+            updateCurrPlayer();
         } else {
             throw new Exception("Player's action is not draw.");
         }
-        updateCurrPlayer();
     }
 
 
@@ -396,11 +391,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (playerFromController.getAction().equals(PlayerAction.DRAW) && (game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.ENDING))) {
             playerFromController.addCardToHand(game.getDesk().drawCardDisplayed(deck, index));
             checkFinalAction(playerFromController);
-            game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
+            updateCurrPlayer();
         } else {
             throw new Exception("Player's action is not draw.");
         }
-        updateCurrPlayer();
     }
 
 
