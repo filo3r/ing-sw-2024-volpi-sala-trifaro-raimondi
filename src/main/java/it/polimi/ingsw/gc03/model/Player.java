@@ -451,12 +451,7 @@ public class Player implements Serializable {
     public void setAction(PlayerAction action, Game game) {
         PlayerAction oldAction = this.action;
         this.action = action;
-        System.out.println("\n"+this.getNickname());
-        System.out.println(oldAction.toString());
-        System.out.println(action.toString());
-        System.out.println("\n");
         if(oldAction.equals(PlayerAction.WAIT) && this.action.equals(PlayerAction.PLACE)){
-            System.out.println("NEXT TURN CALLED, WAIT->PLACE, NOTIFYING...");
             game.getListener().notifyNextTurn(game);
         }
         if(oldAction.equals(PlayerAction.PLACE) && this.action.equals(PlayerAction.DRAW)){

@@ -236,12 +236,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                     currPlayer.setAction(PlayerAction.DISCONNECTED, this.game);
                     updateCurrPlayer();
                 } else {
-                    System.out.println("I'm triggering next turn event");
                     currPlayer.setAction(PlayerAction.PLACE, this.game);
                 }
             }
         } else {
-            System.out.println("It's the last round");
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
         }
 
