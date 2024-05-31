@@ -301,9 +301,6 @@ public class Game implements Serializable {
         if(oldStatus.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
             listenersHandler.notifyGameStarted(this);
         }
-        if(oldStatus.equals(GameStatus.STARTING) && status.equals(GameStatus.RUNNING)){
-            //SHOULD NOTIFY THAT EVERYONE HAS CHOSEN THEIR OBJECTIVE CARDS AND PLACED THEIR STARTER
-        }
         if(oldStatus.equals(GameStatus.RUNNING) && status.equals(GameStatus.LASTROUND)){
          listenersHandler.notifyEndConditionReached(this);
         }

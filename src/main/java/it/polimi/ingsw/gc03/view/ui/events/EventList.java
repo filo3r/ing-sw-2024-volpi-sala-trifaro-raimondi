@@ -25,7 +25,7 @@ public class EventList {
     public synchronized void add(GameImmutable model, EventType type) {
         lists.add(new Event(model, type));
 
-        if (type.equals(EventType.PLAYER_JOINED) || (model != null && (model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.LASTROUND)) ))
+        if (type.equals(EventType.PLAYER_JOINED) || type.equals(EventType.PLAYER_RECONNECTED) || (model != null && (model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.LASTROUND)) ))
             joined = true;
 
         if(type.equals(EventType.APP_MENU))

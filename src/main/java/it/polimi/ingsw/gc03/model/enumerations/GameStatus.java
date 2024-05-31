@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public enum GameStatus implements Serializable {
     /**
-     * Game's waiting for the first player to set the Game size and players to join .
+     * Game's waiting for the first player to set the Game size and players to join.
      */
     WAITING,
 

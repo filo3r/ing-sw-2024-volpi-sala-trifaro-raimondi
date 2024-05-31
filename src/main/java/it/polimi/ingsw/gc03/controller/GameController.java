@@ -58,8 +58,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     /**
      * Timeout period for player pings.
      */
-    private static final long TIMEOUT_MILLIS = 5000; // Timeout period
+    private static final long TIMEOUT_MILLIS = 3000; // Timeout period
 
+    /**
+     * Last game's status before going to "halted" status
+     */
+    private GameStatus lastStatus;
 
     /**
      * Constructor of the GameController class.
@@ -146,6 +150,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             // If enough players joined the game, initialize the game
             if (game.getPlayers().size() == game.getSize() && game.getNumPlayer() != 1) {
                 game.setStatus(GameStatus.STARTING);
+                lastStatus = GameStatus.STARTING;
                 // Randomly choose the player who starts the game with the first turn
                 game.setCurrPlayer(random.nextInt(game.getSize()));
             }
@@ -199,13 +204,14 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // Check if there is any game with a player with "playerNickname" as nickname.
         List<Player> result = game.getPlayers().stream().filter(x -> (x.getNickname().equals(playerNickname))).toList();
         if (!result.isEmpty()) {
-            // The found player is set to online
-            result.getFirst().setOnline(this.getGame(), true, this, gameListener);
             // If the game was halted, it is set to running
             if (game.getStatus().equals(GameStatus.HALTED)) {
                 stopTimer();
-                game.setStatus(GameStatus.RUNNING);
+                game.setStatus(lastStatus);
+                playerPingTimestamps.put(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst(), System.currentTimeMillis());
             }
+            // The found player is set to online
+            result.getFirst().setOnline(this.getGame(), true, this, gameListener);
         } else {
             throw new Exception("No previous game to reconnect with that username");
         }
@@ -278,6 +284,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             if (firstMovers.isEmpty()) {
                 // The game switches to RUNNING state
                 game.setStatus(GameStatus.RUNNING);
+                lastStatus = GameStatus.RUNNING;
                 // The current player's action is set to PLACE
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
             }
@@ -314,6 +321,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
             if(firstMovers.isEmpty()){
                 game.setStatus(GameStatus.RUNNING);
+                lastStatus = GameStatus.RUNNING;
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
             }
         }
@@ -332,18 +340,21 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (player.getScore() >= Game.STOP_POINT_GAME) {
             if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                 game.setStatus(GameStatus.ENDING);
+                lastStatus = GameStatus.ENDING;
             }
         }
         if(game.getDesk().getDeckResource().isEmpty()) {
             if (game.getDesk().getDeckGold().isEmpty()){
                 if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                     game.setStatus(GameStatus.ENDING);
+                    lastStatus = GameStatus.ENDING;
                 }
             }
         }
         if(game.getStatus().equals(GameStatus.ENDING)){
             if(game.getPlayers().indexOf(player)==game.getSize()-1){
                 game.setStatus(GameStatus.LASTROUND);
+                lastStatus = GameStatus.LASTROUND;
             }
         }
     }
@@ -486,6 +497,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                         if (allPlayersEnded) {
                             game.getWinner();
                             game.setStatus(GameStatus.ENDED);
+                            lastStatus = GameStatus.ENDED;
                         }
                     }
                 }

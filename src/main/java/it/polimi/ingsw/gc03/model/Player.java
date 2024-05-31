@@ -406,13 +406,13 @@ public class Player implements Serializable {
         boolean oldOnline = this.online;
         this.online = online;
         if(oldOnline && !this.online){
-            game.getListener().notifyPlayerDisconnected(game, this.getNickname());
             game.getListener().removeListener(selfListener);
+            game.getListener().notifyPlayerDisconnected(game, this.getNickname());
 
         }
         if(!oldOnline && this.online){
-            game.getListener().notifyPlayerReconnected(game, this.getNickname());
             game.getListener().addListener(gameListener);
+            game.getListener().notifyPlayerReconnected(game, this.getNickname());
         }
     }
 

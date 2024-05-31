@@ -28,6 +28,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SequencedSet;
 import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.gc03.view.ui.events.EventType.*;
@@ -63,7 +64,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
             case OptionSelection.TUI ->{
                 //ui = new Tui(205, 58);
-                ui = new Tui(150, 58);
+                ui = new Tui(150, 35);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -93,7 +94,17 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 if (event != null) {
                     //if something happened
                     if(event.getType().equals(PLAYER_RECONNECTED)){
-                        //HANDLE PLAYER RECONNECTION IN GAMEFLOW
+                        // check if I'm the player who has reconnected
+                        if(nickname.equals(lastPlayerReconnected)){
+                            try {
+                                handlePlayerReconnection(event);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            // it's not me
+                            // ...
+                        }
                     }
                     switch (event.getModel().getStatus()) {
                         case WAITING,HALTED -> {
@@ -137,6 +148,45 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void handlePlayerReconnection(Event event) throws Exception {
+        // check the game status
+        GameImmutable gameImmutable = event.getModel();
+        Player player = gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
+        ui.setNickname(player.getNickname());
+        switch (event.getModel().getStatus()) {
+            case STARTING -> {
+                switch (player.getAction()) {
+                    case FIRSTMOVES -> {
+                        // check if I placed the starter card
+                        if (player.getCodex().getCardStarterInserted()) {
+                            // have to select personal objective
+                            askToChooseACardObjective(gameImmutable);
+                        } else {
+                            // have to select the starter card
+                            askToPlaceStarterOnCodex(gameImmutable);
+                        }
+                    }
+                    case WAIT -> {
+                        ui.showCodex(gameImmutable);
+                    }
+                }
+            }
+            case RUNNING, LASTROUND, ENDING -> {
+                switch (player.getAction()) {
+                    case PLACE -> {
+                        askToPlaceCardOnCodex(gameImmutable);
+                    }
+                    case WAIT -> {
+                        ui.showCodex(gameImmutable);
+                    }
+                    case DRAW -> {
+                        askToChooseADeck(gameImmutable);
+                    }
+                }
             }
         }
     }
@@ -620,7 +670,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
             } catch (Exception e) {
                 noConnectionError();
             }
-            events.add(null, APP_MENU);
         }
 
     @Override
@@ -734,7 +783,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void playerReconnected(GameImmutable gameModel, String nickPlayerReconnected) {
         lastPlayerReconnected = nickPlayerReconnected;
         events.add(gameModel, PLAYER_RECONNECTED);
-        ui.addImportantEvent("[EVENT]: Player reconnected!");
+        ui.addImportantEvent(lastPlayerReconnected+" has reconnected!");
     }
 
     /**
@@ -809,7 +858,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void playerDisconnected(GameImmutable gameModel, String nick) {
-        ui.addImportantEvent("Player " + nick + " has just disconnected");
+        ui.addImportantEvent(nick + " has just disconnected");
     }
     /**
      * Only one player is connected
