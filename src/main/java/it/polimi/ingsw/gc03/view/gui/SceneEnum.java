@@ -31,6 +31,11 @@ public enum SceneEnum {
      */
     GAME_RUNNING(),
 
+    /**
+     *
+     */
+    WINNERS(),
+
 
 
 }
