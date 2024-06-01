@@ -31,7 +31,7 @@ public class ApplicationGui extends Application {
     private Stage stage,popUpStage;
 
     private StackPane root;
-    private ArrayList<SceneInfo> scenes;
+    private ArrayList<Scenes> scenes;
 
     public ApplicationGui(Flow flow){
         this.flow = flow;
@@ -61,7 +61,7 @@ public class ApplicationGui extends Application {
         button.setScaleY(500);
         button.setOpacity(0);
         button.setOnMouseClicked(e->{
-            controller.handleButtonAction();
+            //controller.handleButtonAction();
             //passa al menu
         });
         AnchorPane.setTopAnchor(button,450.0);
