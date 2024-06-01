@@ -48,7 +48,7 @@ public class ErrorController extends GenericController {
      * @param error The error message to display.
      * @param isFatalError True if the error is fatal, false otherwise.
      */
-    public void setErrorTextArea(String error, boolean isFatalError) {
+    public void setErrorText(String error, boolean isFatalError) {
         this.errorText.setText(error);
         this.isFatalError = isFatalError;
     }

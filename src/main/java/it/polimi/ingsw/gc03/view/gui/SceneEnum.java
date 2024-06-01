@@ -24,7 +24,37 @@ public enum SceneEnum {
     /**
      *
      */
-    LOBBY(),
+    LOBBY2(),
+
+    /**
+     *
+     */
+    LOBBY3(),
+
+    /**
+     *
+     */
+    LOBBY4(),
+
+    /**
+     *
+     */
+    LOBBY_PLAYER1(),
+
+    /**
+     *
+     */
+    LOBBY_PLAYER2(),
+
+    /**
+     *
+     */
+    LOBBY_PLAYER3(),
+
+    /**
+     *
+     */
+    LOBBY_PLAYER4(),
 
     /**
      *
