@@ -16,6 +16,7 @@ import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.Gui;
+import it.polimi.ingsw.gc03.view.gui.ApplicationGui;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
@@ -57,8 +58,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public Flow(OptionSelection uiSelection, OptionSelection connectionSelection, String serverIpAddress, int port) throws InterruptedException {
         switch(uiSelection){
             case OptionSelection.GUI ->{
-                ui = new Gui();
+                ApplicationGui applicationGui = new ApplicationGui(this);
                 this.inputReader = new InputReaderGUI();
+                ui = new Gui(applicationGui, (InputReaderGUI) inputReader);
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
 

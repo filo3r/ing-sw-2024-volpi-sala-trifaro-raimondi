@@ -2,11 +2,12 @@ package it.polimi.ingsw.gc03.view.gui;
 
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
-import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.UI;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,12 +15,22 @@ import java.util.ArrayList;
 
 public class Gui extends UI {
 
-    boolean front;
+    private ApplicationGui applicationGui;
+    private InputReaderGUI inputReaderGUI;
+    private String nickname;
+
+    public Gui(ApplicationGui applicationGui, InputReaderGUI inputReaderGUI){
+        this.applicationGui = applicationGui;
+        this.inputReaderGUI = inputReaderGUI;
+        nickname = null;
+        init();
+    }
 
     @Override
     protected void init() {
-
+        importantEvents = new ArrayList<>();
     }
+
 
     protected Image getFrontCardImage(Card card) throws IOException {
         String idCard = card.getIdCard();
@@ -43,7 +54,6 @@ public class Gui extends UI {
 
     @Override
     protected void show_menuOptions() {
-
     }
 
     @Override
