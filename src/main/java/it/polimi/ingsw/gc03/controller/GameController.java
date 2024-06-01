@@ -217,6 +217,19 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
+    /**
+     * The method handle the player leaving the game
+     * @param playerNickname The nickname of the player who left.
+     */
+    public synchronized void leaveGame(String playerNickname) throws RemoteException {
+        // check if the player is actually in the game
+        if(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().size()>0){
+            GameListener gameListener = game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getSelfListener();
+            game.removePlayer(playerNickname);
+            game.removeListener(gameListener);
+        }
+    }
+
 
     /**
      * The method handles the transition and updating of player actions in the game.
@@ -531,7 +544,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     public void run() {
         while (!Thread.interrupted()){
             if (game.getStatus().equals(GameStatus.STARTING) || game.getStatus().equals(GameStatus.RUNNING) ||
-                    game.getStatus().equals(GameStatus.ENDING ) || game.getStatus().equals(GameStatus.HALTED)) {
+                    game.getStatus().equals(GameStatus.ENDING ) || game.getStatus().equals(GameStatus.HALTED) || game.getStatus().equals(GameStatus.LASTROUND)) {
                 List<Player> onlinePlayers = game.getOnlinePlayers();
                 // If there are no players online, delete the game
                 if (onlinePlayers.isEmpty()) {
@@ -541,7 +554,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                         throw new RuntimeException(e);
                     }
                 } else {
-                    if (onlinePlayers.size() == 1) {
+                    if (onlinePlayers.size() == 1 && game.getPlayers().size()>1) {
                         // If there is only one player and the status isn't WAITING
                         // then a timer start and if nobody reconnect before the timer's end
                         // the only player left is the winner

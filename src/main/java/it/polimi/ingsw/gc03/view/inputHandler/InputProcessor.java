@@ -22,7 +22,7 @@ public class InputProcessor extends Thread{
     /**
      * The player
      */
-    private Player p;
+    private String nickname;
     /**
      * The game id
      */
@@ -38,7 +38,7 @@ public class InputProcessor extends Thread{
         this.inputQueue = inputQueue;
         dataToProcess = new InputQueue();
         this.flow = flow;
-        this.p = null;
+        this.nickname = null;
         this.gameId = null;
         this.start();
     }
@@ -47,30 +47,27 @@ public class InputProcessor extends Thread{
      * Parses the data contained in the buffer
      */
     public void run() {
-        String txt;
+        String txt = null;
         while (!this.isInterrupted()) {
 
-            //I keep popping data from the buffer sync
-            //(so I wait myself if no data is available on the buffer)
+            // Popping data from the buffer sync
             try {
                 txt = inputQueue.popData();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            if (p!= null && txt.startsWith("/pchat")){
-                LocalTime localTime = LocalTime.now();
-                String receiver = txt.substring(0,txt.indexOf(" "));
-                String message = txt.substring(receiver.length() + 1);
-                flow.sendChatMessage(new ChatMessage(receiver,p.getNickname(),message,localTime));
+
             }
 
-            if (p != null && txt.startsWith("/chat")) {
-                //I send a message
+            if (nickname != null && txt.startsWith("/pchat")) {
+                LocalTime localTime = LocalTime.now();
+                String receiver = txt.substring(0, txt.indexOf(" "));
+                String message = txt.substring(receiver.length() + 1);
+                flow.sendChatMessage(new ChatMessage(receiver, nickname, message, localTime));
+            } else if (nickname != null && txt.startsWith("/chat")) {
+                // I send a message
                 LocalTime localtime = LocalTime.now();
                 String receiver = "everyone";
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                flow.sendChatMessage(new ChatMessage(receiver,p.getNickname(), txt, localtime));
-
+                flow.sendChatMessage(new ChatMessage(receiver, nickname, txt, localtime));
             } else {
                 dataToProcess.addData(txt);
             }
@@ -89,10 +86,10 @@ public class InputProcessor extends Thread{
     /**
      * Sets the player
      *
-     * @param p player to set
+     * @param nickname The player's nickname.
      */
-    public void setPlayer(Player p) {
-        this.p = p;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     /**

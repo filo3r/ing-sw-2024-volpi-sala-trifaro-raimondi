@@ -1,8 +1,6 @@
 package it.polimi.ingsw.gc03.view.ui.events;
 
 import it.polimi.ingsw.gc03.model.GameImmutable;
-import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
-
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -25,11 +23,11 @@ public class EventList {
     public synchronized void add(GameImmutable model, EventType type) {
         lists.add(new Event(model, type));
 
-        if (type.equals(EventType.PLAYER_JOINED) || type.equals(EventType.PLAYER_RECONNECTED) || (model != null && (model.getStatus().equals(GameStatus.RUNNING) || model.getStatus().equals(GameStatus.LASTROUND)) ))
+        if (type.equals(EventType.APP_MENU)) {
+            joined = false;
+        } else {
             joined = true;
-
-        if(type.equals(EventType.APP_MENU))
-            joined=false;
+        }
     }
 
     /**
@@ -37,7 +35,11 @@ public class EventList {
      * @return an element from the queue(FIFO)
      */
     public synchronized Event pop() {
-        return lists.poll();
+        Event event = lists.poll();
+        if (event != null) {
+        } else {
+        }
+        return event;
     }
 
     /**
@@ -55,5 +57,4 @@ public class EventList {
     public synchronized boolean isJoined() {
         return joined;
     }
-
 }

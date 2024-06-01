@@ -534,7 +534,8 @@ public class Tui extends UI {
     @Override
     protected void show_gameEnded(GameImmutable model) {
         clearScreen(' ');
-        generateTextOnScreen("The game has ended", CharColor.GOLD, 1093, 364);
+        String text = "The game has ended";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -618,7 +619,10 @@ public class Tui extends UI {
 
     @Override
     protected void showWinner(GameImmutable model) {
-
+        clearScreen(' ');
+        String text = model.getWinner().getFirst().getNickname()+" has won the game!";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        refreshScreen(1093, 364);
     }
     @Override
     protected void showAskNickname() {

@@ -212,22 +212,18 @@ public class SocketClient implements ClientAction {
     }
 
 
-    /*
     /**
      * This method is used to write on the output stream the message that the client wants to leave a game in progress.
      * @param nickname The nickname of the client.
-     * @param idGame The id of the game.
      * @throws IOException If an input or output exception occurs during action processing.
-
+     */
     @Override
-    public void leaveGame(String nickname, int idGame) throws IOException {
+    public void leaveGame(String nickname) throws IOException {
         this.nicknameClient = nickname;
-        SocketClientMessageLeaveGame message = new SocketClientMessageLeaveGame(nickname, idGame);
+        SocketClientMessageLeaveGame message = new SocketClientMessageLeaveGame(nickname);
         this.outputStream.writeObject(message);
         completeTransmission();
     }
-    */
-
 
     /**
      * This method is used to write on the output stream the message that the client wants to reconnect to an ongoing game.

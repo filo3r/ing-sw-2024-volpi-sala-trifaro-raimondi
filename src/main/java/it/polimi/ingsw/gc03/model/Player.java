@@ -8,10 +8,7 @@ import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
-import it.polimi.ingsw.gc03.model.enumerations.Color;
-import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
-import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
-import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.enumerations.*;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 
 import java.io.Serializable;
@@ -408,6 +405,10 @@ public class Player implements Serializable {
         if(oldOnline && !this.online){
             game.getListener().removeListener(selfListener);
             game.getListener().notifyPlayerDisconnected(game, this.getNickname());
+            // if someone disconnects when the game is starting, end the game
+            if(game.getStatus().equals(GameStatus.STARTING) && game.getSize()>2){
+                game.setStatus(GameStatus.ENDED);
+            }
 
         }
         if(!oldOnline && this.online){

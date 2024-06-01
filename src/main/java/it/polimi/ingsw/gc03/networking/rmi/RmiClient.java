@@ -9,6 +9,8 @@ import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.GameListenerHandlerClient;
 import it.polimi.ingsw.gc03.view.ui.Flow;
+
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -188,6 +190,11 @@ public class RmiClient implements ClientAction {
         connectToGameServer();
         this.nicknameClient = nickname;
         this.gameController = this.mainController.joinSpecificGame(this.gameListener, nickname, idGame);
+    }
+
+    @Override
+    public void leaveGame(String nickname) throws IOException {
+        this.gameController.leaveGame(nickname);
     }
 
 

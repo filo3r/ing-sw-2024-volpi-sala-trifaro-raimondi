@@ -22,6 +22,7 @@ import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.ui.events.EventType;
 import it.polimi.ingsw.gc03.view.inputHandler.*;
 import it.polimi.ingsw.gc03.view.tui.Tui;
+import javafx.scene.SubScene;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -39,7 +40,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     private final EventList events = new EventList();
 
-    private GameImmutable game;
     private ClientAction clientActions;
     private String lastPlayerReconnected;
     private int row;
@@ -101,35 +101,39 @@ public class Flow implements Runnable, ClientAction, GameListener {
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
-                        } else {
-                            // it's not me
-                            // ...
                         }
-                    }
-                    switch (event.getModel().getStatus()) {
-                        case WAITING,HALTED -> {
-                            try {
-                                statusWait(event);
-                            } catch (IOException | InterruptedException e) {
-                                throw new RuntimeException(e);
+                    } else if(event.getModel() == null){
+                        try {
+                            statusNotInAGame(event);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        switch (event.getModel().getStatus()) {
+                            case WAITING,HALTED -> {
+                                try {
+                                    statusWait(event);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
-                        }
-                        case STARTING, RUNNING, LASTROUND -> {
-                            try {
-                                statusRunning(event);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
+                            case STARTING, RUNNING, LASTROUND -> {
+                                try {
+                                    statusRunning(event);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
-                        }
-                        case ENDED -> {
-                            try {
-                                statusEnded(event);
-                            } catch (NotBoundException e) {
-                                throw new RuntimeException(e);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
+                            case ENDED -> {
+                                try {
+                                    statusEnded(event);
+                                } catch (NotBoundException e) {
+                                    throw new RuntimeException(e);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
@@ -165,9 +169,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
                         if (player.getCodex().getCardStarterInserted()) {
                             // have to select personal objective
                             askToChooseACardObjective(gameImmutable);
+                            if (ended)
+                                return;
                         } else {
                             // have to select the starter card
                             askToPlaceStarterOnCodex(gameImmutable);
+                            if (ended)
+                                return;
                         }
                     }
                     case WAIT -> {
@@ -179,12 +187,16 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 switch (player.getAction()) {
                     case PLACE -> {
                         askToPlaceCardOnCodex(gameImmutable);
+                        if (ended)
+                            return;
                     }
                     case WAIT -> {
                         ui.showCodex(gameImmutable);
                     }
                     case DRAW -> {
                         askToChooseADeck(gameImmutable);
+                        if (ended)
+                            return;
                     }
                 }
             }
@@ -223,9 +235,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
         }
     }
 
-    private void statusWait(Event event) throws IOException, InterruptedException {
+    private void statusWait(Event event) throws Exception {
         String nickLastPlayer = event.getModel().getPlayers().getLast().getNickname();
         switch (event.getType()) {
+
             case PLAYER_JOINED -> {
                 if (nickLastPlayer.equals(nickname)) {
                     //ui.show_playerJoined(event.getModel(), nickname);
@@ -246,7 +259,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());
                 ui.setNickname(nickname);
-                this.inputProcessor.setPlayer(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst());
+                this.inputProcessor.setNickname(event.getModel().getPlayers().stream().filter(x->x.getNickname().equals(nickname)).toList().getFirst().getNickname());
                 this.inputProcessor.setIdGame(event.getModel().getIdGame());
                 askToPlaceStarterOnCodex(event.getModel());
             }
@@ -298,12 +311,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
         }
 
     }
+
+
     private void statusEnded(Event event) throws NotBoundException, IOException, InterruptedException {
         switch (event.getType()) {
             case GAMEENDED -> {
                 ui.showWinner(event.getModel());
                 ui.show_returnToMenuMsg();
-                //new Scanner(System.in).nextLine();
                 this.inputProcessor.getDataToProcess().popAllData();
                 try {
                     this.inputProcessor.getDataToProcess().popData();
@@ -319,8 +333,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ended = true;
         ui.resetImportantEvents();
         events.add(null, APP_MENU);
-
-        this.inputProcessor.setPlayer(null);
+        this.inputProcessor.setNickname(null);
         this.inputProcessor.setIdGame(null);
     }
     public boolean isEnded() {
@@ -479,7 +492,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
         boolean wrongIndex = true;
         do{
             int index;
-            index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+            try{
+                index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+                if (ended) return;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             Player player = model.getPlayers().stream().filter(p->p.getNickname().equals(this.nickname)).toList().getFirst();
             if(index==1 || index==0) {
                 selectCardObjective(player, index);
@@ -527,6 +545,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case "b"->{
                 side = model.getPlayers().get(model.getCurrPlayer()).getCardStarter().getBackStarter();
             }
+            case "l" -> {
+                leaveGame(nickname);
+            }
             default->{
                 ui.showInvalidInput();
             }
@@ -542,7 +563,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void askToPlaceStarterOnCodex(GameImmutable model) throws Exception {
         Side side;
         do {
-            side = askSideStarter(model);
+            try{
+                side = askSideStarter(model);
+                if (ended) return;
+            }catch(InterruptedException e){
+                throw new RuntimeException(e);
+            }
         }while(side==null);
         Player player = model.getPlayers().stream().filter(x->x.getNickname().equals(nickname)).findFirst().get();
         placeStarterOnCodex(player,side);
@@ -740,6 +766,15 @@ public class Flow implements Runnable, ClientAction, GameListener {
         }
     }
 
+    @Override
+    public void leaveGame(String nickname) {
+        try{
+            clientActions.leaveGame(nickname);
+        } catch (Exception e){
+            noConnectionError();
+        }
+    }
+
 
     /*============ Server event received ============*/
 
@@ -751,7 +786,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void playerJoined(GameImmutable gameModel) {
         events.add(gameModel, PLAYER_JOINED);
         ui.show_playerJoined(gameModel, gameModel.getPlayers().getLast().getNickname());
-
     }
 
     /**
@@ -762,12 +796,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void playerLeft(GameImmutable model, String nick) throws RemoteException {
-        if (model.getStatus().equals(GameStatus.WAITING)) {
-            ui.show_playerJoined(model, nickname);
-        } else {
-            ui.addImportantEvent("[EVENT]: Player " + nick + " left the game!");
+        if(nick.equals(nickname)){
+            ui.addImportantEvent("You have left the game");
+            this.youLeft();
+        } else{
+            ui.addImportantEvent(nick + " has left the game!");
         }
-
     }
 
     @Override
@@ -828,6 +862,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ended = true;
         events.add(gameModel, EventType.GAMEENDED);
         ui.show_gameEnded(gameModel);
+        inputProcessor.interrupt();
     }
 
 //
@@ -971,8 +1006,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void winnerDeclared(GameImmutable model, ArrayList<String> nickname) throws RemoteException {
-        ui.addImportantEvent("And the Winner is..." + nickname);
-   }
+        ui.addImportantEvent(nickname.getFirst() + " has won the game");
+    }
 
     @Override
     public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
@@ -1003,4 +1038,5 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
         events.add(gameImmutable, DRAW_CARD);
     }
+
 }

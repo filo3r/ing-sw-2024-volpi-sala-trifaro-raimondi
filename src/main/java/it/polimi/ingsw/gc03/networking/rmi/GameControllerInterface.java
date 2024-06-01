@@ -92,4 +92,10 @@ public interface GameControllerInterface extends Remote {
      * @throws Exception If the game size is not valid.
      */
     void updateGameSize(int size) throws Exception;
-}
+
+    /**
+     * The method handle the player leaving the game
+     * @param playerNickname The nickname of the player who left.
+     */
+    void leaveGame(String playerNickname) throws RemoteException;
+    }

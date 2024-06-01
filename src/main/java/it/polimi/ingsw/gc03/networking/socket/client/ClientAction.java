@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.networking.socket.client;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -44,6 +45,13 @@ public interface ClientAction {
      * @throws NotBoundException If a name in the registry was not found.
      */
     void joinSpecificGame(String nickname, int idGame) throws IOException, InterruptedException, NotBoundException;
+
+    /**
+     * The client leave the game.
+     * @param nickname The nickname of the client.
+     * @throws IOException If an input or output exception occurs during action processing.
+     */
+    void leaveGame(String nickname) throws IOException;
 
     /**
      * The client can reconnect to an ongoing game.
