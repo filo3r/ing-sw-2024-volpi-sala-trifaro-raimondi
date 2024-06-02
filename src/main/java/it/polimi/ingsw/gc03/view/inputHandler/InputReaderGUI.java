@@ -28,7 +28,6 @@ public class InputReaderGUI implements InputReader{
         return null;
     }
 
-
     /**
      * Adds text to the input queue.
      * @param txt Text to add to the buffer.

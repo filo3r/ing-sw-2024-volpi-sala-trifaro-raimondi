@@ -225,4 +225,6 @@ public abstract class UI {
     protected abstract void setNickname(String nickname);
 
     protected abstract void showDesk(GameImmutable gameImmutable, String nickname);
+
+    protected abstract void showYouLeft();
     }

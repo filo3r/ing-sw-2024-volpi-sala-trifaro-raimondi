@@ -54,7 +54,7 @@ public class InputProcessor extends Thread{
             try {
                 txt = inputQueue.popData();
             } catch (InterruptedException e) {
-
+                throw new RuntimeException(e);
             }
 
             if (nickname != null && txt.startsWith("/pchat")) {

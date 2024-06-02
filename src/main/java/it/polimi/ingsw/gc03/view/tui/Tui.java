@@ -386,6 +386,7 @@ public class Tui extends UI {
         refreshScreen(1093, 364);
     }
 
+
     protected void show_GameTitle() {
         StringBuilder sb = new StringBuilder("\n\n"+
                 "      ...                         ..                               ..   \n" +
@@ -536,6 +537,8 @@ public class Tui extends UI {
         clearScreen(' ');
         String text = "The game has ended";
         generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        text = "press enter to to continue";
+        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364+6);
         refreshScreen(1093, 364);
     }
 
@@ -622,6 +625,8 @@ public class Tui extends UI {
         clearScreen(' ');
         String text = model.getWinner().getFirst().getNickname()+" has won the game!";
         generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        text = "press enter to back to the menù";
+        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364+6);
         refreshScreen(1093, 364);
     }
     @Override
@@ -820,6 +825,17 @@ public class Tui extends UI {
         BackStarter backStarter = cardStarter.getBackStarter();
         showSide(frontStarter, 364+1-5, 1093-28);
         showSide(backStarter, 364+1-5, 1093);
+        refreshScreen(1093, 364);
+    }
+
+
+    @Override
+    protected void showYouLeft() {
+        clearScreen(' ');
+        String text = "You left the game.";
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
+        text = "press enter to back to the menù";
+        generateTextOnScreen(text, CharColor.WHITE, 1093-text.length()/2, 364+6);
         refreshScreen(1093, 364);
     }
 

@@ -82,79 +82,43 @@ public class Flow implements Runnable, ClientAction, GameListener {
         new Thread(this).start();
     }
 
-
-    @SuppressWarnings("BusyWait")
     @Override
     public void run() {
-        Event event;
         events.add(null, APP_MENU);
         ui.show_GameTitle();
         while (!Thread.interrupted()) {
-            if (events.isJoined()) {
-                //Get one event
-                event = events.pop();
-                if (event != null) {
-                    //if something happened
-                    if(event.getType().equals(PLAYER_RECONNECTED)){
-                        // check if I'm the player who has reconnected
-                        if(nickname.equals(lastPlayerReconnected)){
-                            try {
-                                handlePlayerReconnection(event);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    } else if(event.getModel() == null){
-                        try {
-                            statusNotInAGame(event);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else {
-                        switch (event.getModel().getStatus()) {
-                            case WAITING,HALTED -> {
-                                try {
-                                    statusWait(event);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                            case STARTING, RUNNING, LASTROUND -> {
-                                try {
-                                    statusRunning(event);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                            case ENDED -> {
-                                try {
-                                    statusEnded(event);
-                                } catch (NotBoundException e) {
-                                    throw new RuntimeException(e);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                event = events.pop();
-                if (event != null) {
-                    try {
-                        statusNotInAGame(event);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
             try {
+                Event event = events.pop();
+                if (event != null) {
+                    processEvent(event);
+                }
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
+                return;
+            } catch (Exception e) {
+                System.err.println(e);
             }
+        }
+    }
+
+    private void processEvent(Event event) throws Exception {
+        if (event.getType() == PLAYER_RECONNECTED && nickname.equals(lastPlayerReconnected)) {
+            handlePlayerReconnection(event);
+        } else if (event.getModel() != null) {
+            updateGameStateBasedOnModel(event);
+        } else {
+            statusNotInAGame(event);
+        }
+    }
+
+    private void updateGameStateBasedOnModel(Event event) throws Exception {
+        GameStatus status = event.getModel().getStatus();
+        switch (status) {
+            case WAITING, HALTED -> statusWait(event);
+            case STARTING, RUNNING, LASTROUND -> statusRunning(event);
+            case ENDED -> statusEnded(event);
+            default -> throw new IllegalStateException("Unexpected value: " + status);
         }
     }
 
@@ -319,14 +283,15 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case GAMEENDED -> {
                 ui.showWinner(event.getModel());
-                ui.show_returnToMenuMsg();
+                String text = "ENDED: "+event.getModel().getIdGame();
+                ui.addImportantEvent(text);
                 this.inputProcessor.getDataToProcess().popAllData();
                 try {
                     this.inputProcessor.getDataToProcess().popData();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                this.youLeft();
+                this.leaveGame(nickname);
             }
         }
     }
@@ -337,6 +302,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         events.add(null, APP_MENU);
         this.inputProcessor.setNickname(null);
         this.inputProcessor.setIdGame(null);
+
     }
     public boolean isEnded() {
         return ended;
@@ -796,7 +762,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void playerLeft(GameImmutable model, String nick) throws RemoteException {
         if(nick.equals(nickname)){
-            ui.addImportantEvent("You have left the game");
+            ui.showYouLeft();
             this.youLeft();
         } else{
             ui.addImportantEvent(nick + " has left the game!");
@@ -861,7 +827,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ended = true;
         events.add(gameModel, EventType.GAMEENDED);
         ui.show_gameEnded(gameModel);
-        inputProcessor.interrupt();
     }
 
 //

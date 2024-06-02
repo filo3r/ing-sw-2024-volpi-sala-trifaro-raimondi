@@ -225,8 +225,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // check if the player is actually in the game
         if(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().size()>0){
             GameListener gameListener = game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getSelfListener();
-            game.removePlayer(playerNickname);
+            gameListener.playerLeft(new GameImmutable(this.game), playerNickname);
             game.removeListener(gameListener);
+            game.removePlayer(playerNickname);
         }
     }
 

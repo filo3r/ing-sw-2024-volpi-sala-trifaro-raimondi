@@ -12,5 +12,4 @@ public interface InputReader {
      */
     InputQueue getQueue();
 
-
 }

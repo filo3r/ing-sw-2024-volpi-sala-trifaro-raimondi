@@ -57,4 +57,10 @@ public class EventList {
     public synchronized boolean isJoined() {
         return joined;
     }
+
+    public void clearEventQueue() {
+        while (!lists.isEmpty()) {
+            lists.poll();
+        }
+    }
 }

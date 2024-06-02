@@ -331,4 +331,9 @@ public class Gui extends UI {
 
     }
 
+    @Override
+    protected void showYouLeft() {
+
     }
+
+}
