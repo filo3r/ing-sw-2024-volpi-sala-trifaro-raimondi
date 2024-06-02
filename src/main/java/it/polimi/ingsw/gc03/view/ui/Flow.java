@@ -547,9 +547,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case "b"->{
                 side = model.getPlayers().get(model.getCurrPlayer()).getCardStarter().getBackStarter();
             }
-            case "l" -> {
-                leaveGame(nickname);
-            }
             default->{
                 ui.showInvalidInput();
             }
@@ -1040,5 +1037,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
         events.add(gameImmutable, DRAW_CARD);
     }
+
+    @Override
+    public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        events.add(null, APP_MENU);
+        ui.addImportantEvent("There are no available games you can reconnect to");
+    }
+
 
 }

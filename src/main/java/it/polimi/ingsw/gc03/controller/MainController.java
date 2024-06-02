@@ -95,6 +95,8 @@ public class MainController implements MainControllerInterface, Serializable {
                 }
                 return GCs.get(0);
             }
+        } else {
+            gameListener.noGameToReconnect(null, playerNickname);
         }
         return null;
     }

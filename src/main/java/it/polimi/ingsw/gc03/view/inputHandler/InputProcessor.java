@@ -68,7 +68,9 @@ public class InputProcessor extends Thread{
                 String receiver = "everyone";
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
                 flow.sendChatMessage(new ChatMessage(receiver, nickname, txt, localtime));
-            } else {
+            } else if (nickname != null && txt.equals("l")){
+                flow.leaveGame(nickname);
+            } else{
                 dataToProcess.addData(txt);
             }
         }

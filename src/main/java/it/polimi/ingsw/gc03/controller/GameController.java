@@ -171,10 +171,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             timerTask = new TimerTask() {
                 @Override
                 public void run() {
-
+                    game.setStatus(GameStatus.ENDED);
                 }
             };
-            timer.schedule(timerTask, 90 * 1000);
+            timer.schedule(timerTask, 1000*60);
             return true; // Nobody reconnected in time, the player left in the game won.
         }
     return false; // Someone reconnected in time, the game resumes.

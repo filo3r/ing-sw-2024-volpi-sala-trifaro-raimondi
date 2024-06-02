@@ -498,5 +498,12 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
+    @Override
+    public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        try {
+            SocketServerMessageNoGameToReconnect message = new SocketServerMessageNoGameToReconnect(gameImmutable, nickname);
+            this.outputStream.writeObject(message);
+            completeTransmission();
+        } catch (IOException e) {}
+    }
 }
