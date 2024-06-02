@@ -65,8 +65,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                //ui = new Tui(205, 58);
-                ui = new Tui(150, 35);
+                ui = new Tui(205, 58);
+                //ui = new Tui(150, 35);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -666,7 +666,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void placeCardOnCodex(Player player,int index, boolean frontCard, int row,int col) throws Exception {
         try {
-            clientActions.placeCardOnCodex(player,index,frontCard,row,col);
+            clientActions.placeCardOnCodex(player,index,frontCard,col,row);
         } catch (IOException e) {
             noConnectionError();
         }
