@@ -110,12 +110,13 @@ public class Game implements Serializable {
         // The game is full
         if(this.getStatus().equals(GameStatus.WAITING)){
             if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
-                listenersHandler.notifyJoinUnableGameFull(this, player);
+                player.getSelfListener().joinUnableGameFull(new GameImmutable(this), player);
                 throw new DeskIsFullException();
-            } else if(this.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).findAny().isPresent()){
-                listenersHandler.notifyJoinUnableNicknameAlreadyInUse(player);
+            } else if(!this.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().isEmpty()){
+                System.out.println("ECCE");
+                player.getSelfListener().joinUnableNicknameAlreadyInUse(player);
                 throw new PlayerAlreadyJoinedException();
-            } else{
+            } else {
                 // The player can be added
                 this.numPlayer++;
                 this.players.add(player);
@@ -124,7 +125,7 @@ public class Game implements Serializable {
                 return true;
                 }
         } else {
-            listenersHandler.notifyJoinUnableGameFull(this, player);
+            player.getSelfListener().joinUnableGameFull(new GameImmutable(this), player);
             throw new CannotJoinGameException();
         }
     }

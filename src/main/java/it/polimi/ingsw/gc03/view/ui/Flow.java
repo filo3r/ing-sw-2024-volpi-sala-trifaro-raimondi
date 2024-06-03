@@ -65,8 +65,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case OptionSelection.TUI ->{
-                ui = new Tui(205, 58);
-                //ui = new Tui(150, 35);
+                //ui = new Tui(205, 58);
+                ui = new Tui(150, 35);
                 this.inputReader = new InputReaderTUI();
                 this.inputProcessor = new InputProcessor(this.inputReader.getQueue(),this);
             }
@@ -222,9 +222,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     private void statusRunning(Event event) throws Exception {
-        String currPlayer = event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname();
-        AsyncPrint.asyncPrint(event.getType().toString()+", currPlayer:"+currPlayer+"\n");
-
         switch (event.getType()) {
             case GAMESTARTED -> {
                 ui.show_gameStarted(event.getModel());

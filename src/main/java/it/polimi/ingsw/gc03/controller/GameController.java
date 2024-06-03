@@ -138,15 +138,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // When the game is in WAITING status, the players.size < game.size, so
         // new players can join.
         if (game.getStatus().equals(GameStatus.WAITING)) {
-            try {
-                game.addPlayer(playerNickname, listener);
-            } catch (DeskIsFullException e) {
-                throw new DeskIsFullException();
-            } catch (PlayerAlreadyJoinedException e) {
-                throw new PlayerAlreadyJoinedException();
-            } catch (Exception e){
-                System.out.println(e);
-            }
+            game.addPlayer(playerNickname, listener);
+
             // If enough players joined the game, initialize the game
             if (game.getPlayers().size() == game.getSize() && game.getNumPlayer() != 1) {
                 game.setStatus(GameStatus.STARTING);
@@ -223,7 +216,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     public synchronized void leaveGame(String playerNickname) throws RemoteException {
         // check if the player is actually in the game
-        if(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().size()>0){
+        if(!game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().isEmpty()){
             GameListener gameListener = game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getSelfListener();
             gameListener.playerLeft(new GameImmutable(this.game), playerNickname);
             game.removeListener(gameListener);

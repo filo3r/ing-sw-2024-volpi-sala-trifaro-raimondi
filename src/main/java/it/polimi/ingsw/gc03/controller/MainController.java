@@ -49,7 +49,7 @@ public class MainController implements MainControllerInterface, Serializable {
 
     public synchronized GameControllerInterface joinFirstAvailableGame(GameListener listener, String playerNickname) throws RemoteException {
         try{
-            List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING))).toList();
+            List<GameController> GCs = gameControllers.stream().filter(x -> (x.getGame().getStatus().equals(GameStatus.WAITING) && x.getGame().getPlayers().size()<x.getGame().getSize())).toList();
             return addPlayerToGame(playerNickname, listener, GCs);
         } catch (Exception e){
             System.out.println(e);

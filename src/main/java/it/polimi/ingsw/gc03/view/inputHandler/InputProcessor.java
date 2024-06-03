@@ -57,7 +57,7 @@ public class InputProcessor extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
+            System.out.println(txt);
             if (nickname != null && txt.startsWith("/pchat")) {
                 LocalTime localTime = LocalTime.now();
                 String receiver = txt.substring(0, txt.indexOf(" "));
@@ -69,7 +69,7 @@ public class InputProcessor extends Thread{
                 String receiver = "everyone";
                 txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
                 flow.sendChatMessage(new ChatMessage(receiver, nickname, txt, localtime));
-            } else if (nickname != null && txt.equals("l")){
+            } else if (nickname != null && txt.equals("leave")){
                 flow.leaveGame(nickname);
             } else if (txt.startsWith("resize")) {
                 String dimensions = txt.substring(txt.indexOf(" ") + 1);
