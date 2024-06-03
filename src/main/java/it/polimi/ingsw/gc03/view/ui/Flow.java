@@ -97,7 +97,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 Thread.currentThread().interrupt();
                 return;
             } catch (Exception e) {
-                System.err.println(e);
+                throw new RuntimeException(e);
             }
         }
     }
@@ -113,12 +113,16 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     private void updateGameStateBasedOnModel(Event event) throws Exception {
-        GameStatus status = event.getModel().getStatus();
-        switch (status) {
-            case WAITING, HALTED -> statusWait(event);
-            case STARTING, RUNNING, LASTROUND -> statusRunning(event);
-            case ENDED -> statusEnded(event);
-            default -> throw new IllegalStateException("Unexpected value: " + status);
+        switch (event.getType()){
+            case GAMECREATED -> askGameSize(null);
+            default -> {
+                switch (event.getModel().getStatus()) {
+                    case WAITING, HALTED -> statusWait(event);
+                    case STARTING, RUNNING, LASTROUND -> statusRunning(event);
+                    case ENDED -> statusEnded(event);
+                    default -> throw new IllegalStateException("Unexpected value: " + event.getModel().getStatus());
+                }
+            }
         }
     }
 
@@ -347,6 +351,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ended = false;
         ui.show_menuOptions();
 
+
+
         try {
             optionChoose = this.inputProcessor.getDataToProcess().popData();
         } catch (InterruptedException e) {
@@ -359,7 +365,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (optionChoose) {
             case "c" -> {
                 createGame(nickname);
-                askGameSize(null);
             }
             case "j" -> joinFirstAvailableGame(nickname);
             case "js" -> {
@@ -1021,5 +1026,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.addImportantEvent("There are no available games you can reconnect to");
     }
 
+    @Override
+    public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
+        events.add(gameImmutable, EventType.GAMECREATED);
+        ui.addImportantEvent("New game created");
+    }
 
 }

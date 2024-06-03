@@ -368,4 +368,9 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException{
         this.flow.noGameToReconnect(gameImmutable, nickname);
     }
+
+    @Override
+    public void gameCreated(GameImmutable gameImmutable) throws RemoteException{
+        this.flow.gameCreated(gameImmutable);
+    }
 }

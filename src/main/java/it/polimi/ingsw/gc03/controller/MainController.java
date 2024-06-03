@@ -38,6 +38,7 @@ public class MainController implements MainControllerInterface, Serializable {
         try{
             GameController controller = new GameController();
             gameControllers.add(controller);
+            gameListener.gameCreated(new GameImmutable(controller.getGame()));
             joinSpecificGame(gameListener, firstPlayerNickname, controller.getGame().getIdGame());
             return controller;
         } catch (Exception e){

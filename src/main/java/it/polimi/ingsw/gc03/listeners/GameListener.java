@@ -268,6 +268,8 @@ public interface GameListener extends Remote {
     void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException;
 
 
+    void gameCreated(GameImmutable gameImmutable) throws RemoteException;
+
     // Additional methods may be necessary
     // For other methods you have to create the respective message in serverToClientMessages package and method in ListenersHandler
 

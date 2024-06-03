@@ -506,4 +506,15 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
+
+    @Override
+    public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
+        try {
+            SocketServerMessageGameCreated message = new SocketServerMessageGameCreated(gameImmutable);
+            this.outputStream.writeObject(message);
+            completeTransmission();
+        } catch (IOException e) {}
+    }
+
+
 }
