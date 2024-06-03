@@ -57,7 +57,6 @@ public class InputProcessor extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(txt);
             if (nickname != null && txt.startsWith("/pchat")) {
                 LocalTime localTime = LocalTime.now();
                 String receiver = txt.substring(0, txt.indexOf(" "));
