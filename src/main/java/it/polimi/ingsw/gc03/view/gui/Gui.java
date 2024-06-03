@@ -57,7 +57,7 @@ public class Gui extends UI {
     }
 
     protected Image getPlateauScore() throws IOException {
-        String imagePath = "/it.polimi.ingsw.gc03/images/plateau_score.jpg";
+        String imagePath = "/it.polimi.ingsw.gc03/images/plateau_score.png";
         InputStream inputStream = getClass().getResourceAsStream(imagePath);
         return new Image(inputStream);
     }
