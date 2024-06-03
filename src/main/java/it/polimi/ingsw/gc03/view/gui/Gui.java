@@ -44,14 +44,14 @@ public class Gui extends UI {
 
     protected Image getFrontCardImage(Card card) throws IOException {
         String idCard = card.getIdCard();
-        String imagePath ="/it.polimi.ingsw.gc03/images/cards_front/"+ idCard +".jpg";
+        String imagePath ="/it.polimi.ingsw.gc03/images/cards_front/"+ idCard +".png";
         InputStream inputStream = getClass().getResourceAsStream(imagePath);
         return new Image(inputStream);
     }
 
     protected Image getBackCardImage(Card card) throws IOException{
         String idCard = card.getIdCard();
-        String imagePath = "/it.polimi.ingsw.gc03/images/cards_back/"+ idCard +".jpg";
+        String imagePath = "/it.polimi.ingsw.gc03/images/cards_back/"+ idCard +".png";
         InputStream inputStream = getClass().getResourceAsStream(imagePath);
         return new Image(inputStream);
     }
