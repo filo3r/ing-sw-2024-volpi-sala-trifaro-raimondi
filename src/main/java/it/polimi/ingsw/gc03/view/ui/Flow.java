@@ -311,13 +311,25 @@ public class Flow implements Runnable, ClientAction, GameListener {
         this.ended = ended;
     }
 
+    public void resizeScreen(int x, int y){
+        if(x>0 && y>0){
+            ui.resizeScreenView(x,y);
+        }
+    }
+
+    public void moveScreen(int x, int y){
+        ui.moveScreenView(x,y);
+    }
+
     /**
      * Ask to choose a Nickname
      */
     private void askNickname() {
         ui.show_insertNicknameMsg();
         try {
-            nickname = this.inputProcessor.getDataToProcess().popData();
+            do{
+                nickname = this.inputProcessor.getDataToProcess().popData();
+            } while(!nickname.matches("^[a-zA-Z0-9]+$"));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

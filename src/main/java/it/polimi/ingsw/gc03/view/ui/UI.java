@@ -17,6 +17,9 @@ public abstract class UI {
      */
     protected abstract void init();
 
+    protected abstract void moveScreenView(int x, int y);
+
+    protected abstract void resizeScreenView(int x, int y);
     /**
      * Shows menu options
      */

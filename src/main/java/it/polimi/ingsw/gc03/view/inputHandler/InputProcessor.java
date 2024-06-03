@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.view.inputHandler;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.ui.Flow;
+import javafx.scene.SubScene;
 
 import java.time.LocalTime;
 
@@ -70,7 +71,18 @@ public class InputProcessor extends Thread{
                 flow.sendChatMessage(new ChatMessage(receiver, nickname, txt, localtime));
             } else if (nickname != null && txt.equals("l")){
                 flow.leaveGame(nickname);
-            } else{
+            } else if (txt.startsWith("resize")) {
+                String dimensions = txt.substring(txt.indexOf(" ") + 1);
+                int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
+                int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
+                flow.resizeScreen(x, y);
+            } else if (txt.startsWith("move")){
+                String dimensions = txt.substring(txt.indexOf(" ") + 1);
+                int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
+                int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
+                flow.moveScreen(x, y);
+            }
+            else {
                 dataToProcess.addData(txt);
             }
         }

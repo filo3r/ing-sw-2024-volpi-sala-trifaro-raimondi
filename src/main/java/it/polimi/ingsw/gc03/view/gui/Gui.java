@@ -31,6 +31,16 @@ public class Gui extends UI {
         importantEvents = new ArrayList<>();
     }
 
+    @Override
+    protected void moveScreenView(int x, int y) {
+
+    }
+
+    @Override
+    protected void resizeScreenView(int x, int y) {
+
+    }
+
 
     protected Image getFrontCardImage(Card card) throws IOException {
         String idCard = card.getIdCard();

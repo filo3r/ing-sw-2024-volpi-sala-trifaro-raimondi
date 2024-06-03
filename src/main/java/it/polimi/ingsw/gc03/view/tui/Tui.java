@@ -45,6 +45,7 @@ public class Tui extends UI {
         middleScreen = new CharSpecial[height][width];
         screenToPrint = new String[height][width*3];
         clearScreen(' ');
+        refreshScreen(screenSimX,screenSimY);
     }
 
     protected void showCodex(GameImmutable gameImmutable){
@@ -58,32 +59,40 @@ public class Tui extends UI {
     public void moveScreenView(int x, int y){
         screenSimX-=x;
         screenSimY-=y;
+        refreshScreen(screenSimX, screenSimY);
     }
 
     public void resizeScreenView(int width, int height){
-        screenWidth=width;
-        screenHeight=height;
-        middleScreen = new CharSpecial[screenHeight][screenWidth];
-        screenToPrint = new String[screenHeight][screenWidth*3];
-        for (int i = 0; i < screenHeight; i++) {
-            for (int j = 0; j < screenWidth * 3; j++) {
-                screenToPrint[i][j] = "";
+        this.screenHeight = height;
+        this.screenWidth = width;
+        middleScreen = new CharSpecial[height][width];
+        screenToPrint = new String[height][width*3];
+        CharSpecial[][] screenSeemCopy = new CharSpecial[729][2187];
+        for(int i = 0; i<729; i++){
+            for(int j = 0; j<2187; j++){
+                screenSeemCopy[i][j] = screenSim[i][j];
             }
         }
         clearScreen(' ');
+        for(int i = 0; i<729; i++){
+            for(int j = 0; j<2187; j++){
+                screenSim[i][j] = screenSeemCopy[i][j];
+            }
+        }
+        refreshScreen(screenSimX,screenSimY);
+
     }
 
     public void refreshScreen(int centerX, int centerY) {
         getScreenToPrint(centerX, centerY);
         StringBuilder screenText = new StringBuilder();
-        for (int i = 0; i < screenHeight; i++) {
-            for (int j = 0; j < screenWidth; j++) {
-                screenText.append(screenToPrint[i][j * 3]).append(screenToPrint[i][j * 3 + 1]).append(screenToPrint[i][j * 3 + 2]);
+        for (int i = 0; i < this.screenHeight; i++) {
+            for (int j = 0; j < this.screenWidth; j++) {
+                screenText.append(this.screenToPrint[i][j * 3]).append(this.screenToPrint[i][j * 3 + 1]).append(this.screenToPrint[i][j * 3 + 2]);
             }
             screenText.append("\n");
         }
         asyncPrint(screenText);
-        clearScreen(' ');
     }
 
     public void clearScreen(char fillChar) {
@@ -128,7 +137,6 @@ public class Tui extends UI {
 
     public void showSide(Side side, int row, int col){
         CharSpecial[][] sideArray = new SideView().getSideView(side);
-
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 27; j++) {
                 int rowIndex = row + i;
