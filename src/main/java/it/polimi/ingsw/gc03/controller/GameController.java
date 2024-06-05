@@ -161,19 +161,22 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
 
     private boolean startTimer() {
-        if (game.getStatus() == GameStatus.HALTED && game.getOnlinePlayers().size() == 1) {
-            timer = new Timer();
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    game.setStatus(GameStatus.ENDED);
-                }
-            };
-            timer.schedule(timerTask, 1000*60);
+        if (game.getStatus() == GameStatus.HALTED) {
+            if (timer == null && timerTask == null) { // Check if a timer is already running
+                timer = new Timer();
+                timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        game.setStatus(GameStatus.ENDED);
+                    }
+                };
+                timer.schedule(timerTask, 60*1000); // 60 seconds
+            }
             return true; // Nobody reconnected in time, the player left in the game won.
         }
-    return false; // Someone reconnected in time, the game resumes.
+        return false; // Someone reconnected in time, the game resumes.
     }
+
 
 
     /**
@@ -184,6 +187,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (timer != null) {
             timer.cancel();
             timer = null;
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
             timerTask = null;
         }
     }
