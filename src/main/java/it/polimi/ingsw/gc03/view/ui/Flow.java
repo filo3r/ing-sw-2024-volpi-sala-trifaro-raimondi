@@ -297,11 +297,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     public void showChat() {
-        ui.showChat(gameImmutable);
-        try {
-            processEvent(lastEvent);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if(lastEvent.getModel().getStatus() != GameStatus.STARTING && lastEvent.getModel().getStatus() != GameStatus.WAITING){
+            ui.showChat(gameImmutable);
+            try {
+                processEvent(lastEvent);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
