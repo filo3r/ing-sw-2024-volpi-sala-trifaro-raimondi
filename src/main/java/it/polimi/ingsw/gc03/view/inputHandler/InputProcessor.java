@@ -57,17 +57,22 @@ public class InputProcessor extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if (nickname != null && txt.startsWith("/pchat")) {
+            if (nickname != null && txt.startsWith("pm ")) {
                 LocalTime localTime = LocalTime.now();
-                String receiver = txt.substring(0, txt.indexOf(" "));
-                String message = txt.substring(receiver.length() + 1);
-                flow.sendChatMessage(new ChatMessage(receiver, nickname, message, localTime));
-            } else if (nickname != null && txt.startsWith("/chat")) {
-                // I send a message
-                LocalTime localtime = LocalTime.now();
-                String receiver = "everyone";
-                txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                flow.sendChatMessage(new ChatMessage(receiver, nickname, txt, localtime));
+                String[] parts = txt.split(" ", 3);
+                if (parts.length >= 3) {
+                    String receiver = parts[1];
+                    String message = parts[2];
+                    flow.sendChatMessage(new ChatMessage(receiver, nickname, message, localTime));
+                }
+        } else if (nickname != null && txt.startsWith("m")) {
+                LocalTime localTime = LocalTime.now();
+                String[] parts = txt.split(" ", 2);
+                if (parts.length >= 2) {
+                    String receiver = "everyone";
+                    String message = parts[1];
+                    flow.sendChatMessage(new ChatMessage(receiver, nickname, message, localTime));
+                }
             } else if (nickname != null && txt.equals("leave")){
                 flow.leaveGame(nickname);
             } else if (txt.startsWith("resize")) {
@@ -80,6 +85,8 @@ public class InputProcessor extends Thread{
                 int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
                 int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
                 flow.moveScreen(x, y);
+            } else if(txt.equals("chat")){
+                flow.showChat();
             }
             else {
                 dataToProcess.addData(txt);

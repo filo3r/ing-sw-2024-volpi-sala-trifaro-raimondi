@@ -55,6 +55,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
     protected List<String> importantEvents;
     private boolean ended = false;
 
+    Event lastEvent = null;
+    private GameImmutable gameImmutable = null;
+
     public Flow(OptionSelection uiSelection, OptionSelection connectionSelection, String serverIpAddress, int port) throws InterruptedException {
         switch(uiSelection){
             case OptionSelection.GUI ->{
@@ -90,7 +93,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
             try {
                 Event event = events.pop();
                 if (event != null) {
+                    lastEvent = event;
                     processEvent(event);
+                    if(event.getModel() != null){
+                        this.gameImmutable = event.getModel();
+                    }
                 }
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -284,9 +291,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case GAMEENDED -> {
                 ui.showWinner(event.getModel());
-                String text = "ENDED: "+event.getModel().getIdGame();
-                ui.addImportantEvent(text);
-                this.inputProcessor.getDataToProcess().popAllData();
                 try {
                     this.inputProcessor.getDataToProcess().popData();
                 } catch (InterruptedException e) {
@@ -320,6 +324,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     public void moveScreen(int x, int y){
         ui.moveScreenView(x,y);
+    }
+
+    public void showChat(){
+        ui.showChat(gameImmutable);
+        inputProcessor.getDataToProcess().popAllData();
     }
 
     /**
@@ -475,8 +484,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
         do{
             int index;
             try{
-                index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
-                if (ended) return;
+                do{
+                    index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+                    if (ended) return;
+                } while(index != 1 && index != 0);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -734,6 +745,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         } catch (RemoteException e) {
             noConnectionError();
         }
+        System.out.println("✓");
     }
 
     @Override
@@ -806,11 +818,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void sentChatMessage(GameImmutable gameModel, ChatMessage msg) {
-        //Show the message only if is for everyone or is for me (or I sent it)
-
         ui.addMessage(msg, gameModel);
-        events.add(gameModel, SENT_MESSAGE);
-        //msg.setText("[PRIVATE]: " + msg.getText());
+        //events.add(gameModel, SENT_MESSAGE);
     }
 
     /**

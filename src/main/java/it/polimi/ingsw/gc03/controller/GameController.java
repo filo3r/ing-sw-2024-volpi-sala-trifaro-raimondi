@@ -11,9 +11,11 @@ import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -421,7 +423,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     @Override
     public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
-        this.game.getChat().add(chatMessage);
+        this.game.addMessage(chatMessage);
     }
 
 
@@ -542,11 +544,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 List<Player> onlinePlayers = game.getOnlinePlayers();
                 // If there are no players online, delete the game
                 if (onlinePlayers.isEmpty()) {
-                    try {
-                        MainController.getInstance().deleteGame(getGame().getIdGame());
-                    } catch (NoSuchGameException e) {
-                        throw new RuntimeException(e);
-                    }
+                        game.setStatus(GameStatus.ENDED);
                 } else {
                     if (onlinePlayers.size() == 1 && game.getPlayers().size()>1) {
                         // If there is only one player and the status isn't WAITING

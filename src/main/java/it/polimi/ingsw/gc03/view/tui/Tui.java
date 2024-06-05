@@ -13,6 +13,8 @@ import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages.SocketServerMessageJoinUnableNicknameAlreadyInUse;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ public class Tui extends UI {
     private ArrayList<Coords> occupiedPositions = new ArrayList<Coords>();
     private CharSpecial[][] middleScreen;
     private String[][] screenToPrint;
+
+    private ArrayList<ChatMessage> personalChat = new ArrayList<>();
 
     public Tui(int width, int height){
         screenWidth = width;
@@ -93,6 +97,7 @@ public class Tui extends UI {
             screenText.append("\n");
         }
         asyncPrint(screenText);
+        clearScreen(' ');
     }
 
     public void clearScreen(char fillChar) {
@@ -433,27 +438,32 @@ public class Tui extends UI {
         asyncPrint(sb);
     }
 
-    protected void showChat(Game game, Player player){
-        clearScreen(' ');
-        ArrayList<ChatMessage> personalChat = new ArrayList<ChatMessage>();
-        for(ChatMessage msg: game.getChat()){
-            if(msg.getReceiver().equals(player.getNickname()) || msg.getReceiver().equals("everyone") || msg.getSender().equals(player.getNickname())){
-                personalChat.add(msg);
+    public void showChat(GameImmutable game){
+        CharSpecial[][] screenSimBackup = new CharSpecial[729][2187];
+        for(int i = 0; i<729; i++){
+            for(int j = 0; j<2187; j++){
+                screenSimBackup[i][j] = screenSim[i][j];
             }
         }
-
-        int yPos = 364-screenHeight+2;
+        clearScreen(' ');
+        int yPos = 364-screenHeight/2+2;
         int xPos = 1093-screenWidth/2+2;
-        for(ChatMessage msg: personalChat){
+        for(ChatMessage msg: personalChat) {
             generateTextOnScreen(msg.getSender(), CharColor.WHITE, xPos, yPos);
-            generateTextOnScreen(" -> ", CharColor.WHITE, xPos+msg.getSender().length()+1, yPos);
+            generateTextOnScreen("→", CharColor.WHITE, xPos+msg.getSender().length()+1, yPos);
             xPos += msg.getSender().length()+1;
-            generateTextOnScreen(msg.getReceiver(), CharColor.WHITE, xPos+4, yPos);
-            xPos += 4;
+            generateTextOnScreen(msg.getReceiver(), CharColor.WHITE, xPos+2, yPos);
+            xPos += 2;
             generateTextOnScreen(msg.getText(), CharColor.WHITE, xPos+msg.getReceiver().length()+1, yPos);
             yPos += 1;
         }
+
         refreshScreen(1093, 364);
+        for(int i = 0; i<729; i++){
+            for(int j = 0; j<2187; j++){
+                screenSim[i][j] = screenSimBackup[i][j];
+            }
+        }
     }
 
 
@@ -581,7 +591,7 @@ public class Tui extends UI {
 
     @Override
     protected void show_sentMessage(GameImmutable model, String nickname) {
-        showNotification("message sent.");
+        showNotification(model.getChat().getLast().getText());
     }
 
     @Override
@@ -607,7 +617,10 @@ public class Tui extends UI {
 
     @Override
     protected void addMessage(ChatMessage msg, GameImmutable model) {
-
+        if (msg.getReceiver().equals(nickname) || msg.getReceiver().equals("everyone")) {
+            personalChat.add(msg);
+            showNotification("[CHAT] "+msg.getSender()+"→"+msg.getReceiver()+": "+msg.getText());
+        }
     }
 
     @Override
@@ -625,7 +638,7 @@ public class Tui extends UI {
 
     @Override
     protected void showCardAddedToHand(GameImmutable model, Card card) {
-        showNotification("You have drawn a card");
+        showNotification("");
     }
 
     @Override

@@ -321,6 +321,15 @@ public class Game implements Serializable {
     }
 
     /**
+     * Method to add a message to the chat
+     * @param chatMessage The new message to add
+     */
+    public void addMessage(ChatMessage chatMessage){
+        this.chat.add(chatMessage);
+        listenersHandler.notifySentChatMessage(this, chatMessage);
+    }
+
+    /**
      * Method to get the desk of the game.
      * @return The desk of the game.
      */

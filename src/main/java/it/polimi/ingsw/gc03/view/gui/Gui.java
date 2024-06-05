@@ -346,4 +346,9 @@ public class Gui extends UI {
 
     }
 
+    @Override
+    public void showChat(GameImmutable gameImmutable) {
+
+    }
+
 }

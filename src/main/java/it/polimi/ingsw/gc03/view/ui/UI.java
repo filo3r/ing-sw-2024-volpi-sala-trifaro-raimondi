@@ -230,4 +230,6 @@ public abstract class UI {
     protected abstract void showDesk(GameImmutable gameImmutable, String nickname);
 
     protected abstract void showYouLeft();
-    }
+
+    public abstract void showChat(GameImmutable gameImmutable);
+}
