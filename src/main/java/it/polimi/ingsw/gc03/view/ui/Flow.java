@@ -789,22 +789,30 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     @Override
     public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
-        // Implement error handling if needed
+        if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
+        ui.showCardCannotBePlaced(gameImmutable, nickname);
+        }
     }
 
     @Override
     public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
-        // Implement error handling if needed
+        if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
+            ui.showReqNotRespected(gameImmutable, requirementsPlacement);
+        }
     }
 
     @Override
     public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
-        // Implement error handling if needed
+        if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
+            ui.addImportantEvent("Index is not valid");
+        }
     }
 
     @Override
     public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
-        // Implement error handling if needed
+        if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
+            ui.addImportantEvent("Card not added to hand");
+        }
     }
 
     @Override
