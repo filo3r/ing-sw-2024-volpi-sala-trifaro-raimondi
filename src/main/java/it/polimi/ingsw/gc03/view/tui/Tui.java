@@ -53,7 +53,7 @@ public class Tui extends UI {
     }
 
     protected void showCodex(GameImmutable gameImmutable){
-        System.out.println("Showing the codex of: "+nickname);
+        clearScreen(' ');
         Codex codex = gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getCodex();
         translateCodexToScreenSim(codex);
         generateAvailablePositions(codex);
@@ -98,7 +98,6 @@ public class Tui extends UI {
             screenText.append("\n");
         }
         asyncPrint(screenText);
-        clearScreen(' ');
     }
 
     public void clearScreen(char fillChar) {
@@ -201,23 +200,24 @@ public class Tui extends UI {
                 }
                 // put free space coords on top-right position
                 if(codex.simulateInsertIntoCodex(test, current.y-1, current.x+1)){
-                    int actualX = current.x+1;
                     int actualY = current.y-1;
+                    int actualX = current.x+1;
                     generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1+27, y1-1);
                 }
                 // put free space coords on bottom-left position
                 if(codex.simulateInsertIntoCodex(test, current.y+1, current.x-1)){
-                    int actualX = current.x-1;
                     int actualY = current.y+1;
+                    int actualX = current.x-1;
                     generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1-5, y1+9);
                 }
                 // put free space coords on bottom-right position
                 if(codex.simulateInsertIntoCodex(test, current.y+1, current.x+1)){
-                    int actualX = current.x+1;
                     int actualY = current.y+1;
+                    int actualX = current.x+1;
                     generateTextOnScreen(actualX+" "+actualY, CharColor.WHITE, x1+27, y1+9);
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                System.err.println(e);
             }
         }
         occupiedPositions.clear();
@@ -423,7 +423,7 @@ public class Tui extends UI {
 
     @Override
     protected void showInvalidNickname(String nickname) {
-
+        showNotification("Invalid nickname");
     }
 
     @Override
@@ -722,6 +722,7 @@ public class Tui extends UI {
 
     @Override
     protected void showAskCoordinates(GameImmutable model) {
+        clearScreen(' ');
         showCodex(model);
         showNotification("Please choose the coordinates where to place the card (x y): ");
     }
@@ -787,11 +788,6 @@ public class Tui extends UI {
 
     @Override
     protected void showCardObjectiveToChoose(GameImmutable model) {
-
-    }
-
-    @Override
-    protected void showCommonCards(GameImmutable model) {
 
     }
 

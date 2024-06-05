@@ -184,8 +184,6 @@ public abstract class UI {
 
     protected abstract void showCardObjectiveToChoose(GameImmutable model);
 
-    protected abstract void showCommonCards(GameImmutable model);
-
     protected abstract void showCodex(GameImmutable model);
 
     protected abstract void showAskSize(GameImmutable model);

@@ -56,16 +56,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     Event lastEvent = null;
     private GameImmutable gameImmutable = null;
 
-    private OptionSelection uiSelection;
-    private OptionSelection connectionSelection;
-    private String serverIpAddress;
-    private int port;
-
     public Flow(OptionSelection uiSelection, OptionSelection connectionSelection, String serverIpAddress, int port) throws InterruptedException {
-        this.uiSelection = uiSelection;
-        this.connectionSelection = connectionSelection;
-        this.serverIpAddress = serverIpAddress;
-        this.port = port;
         switch(uiSelection){
             case GUI -> {
                 ApplicationGui applicationGui = new ApplicationGui(this);
@@ -184,6 +175,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
 
             case JOIN_UNABLE_NICKNAME_ALREADY_IN_USE -> {
+                ui.showInvalidNickname(nickname);
                 nickname = null;
                 events.add(null, APP_MENU);
                 ui.addImportantEvent("WARNING> Nickname already used!");
@@ -231,7 +223,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 askToPlaceStarterOnCodex(event.getModel());
                 ui.showCodex(event.getModel());
             }
-            case COMMON_CARDS_EXTRACTED -> ui.showCommonCards(event.getModel());
             case CHOOSE_OBJECTIVE_CARD -> askToChooseACardObjective(event.getModel());
             case SENT_MESSAGE -> ui.show_sentMessage(event.getModel(), nickname);
             case NEXT_TURN -> {
@@ -257,8 +248,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 }
             }
             case CARD_CANNOT_BE_PLACED -> {
-                ui.showCardCannotBePlaced(event.getModel(), nickname);
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
+                    ui.showCardCannotBePlaced(event.getModel(), nickname);
                     events.add(event.getModel(), PLACE_CARD_ON_CODEX);
                 }
             }
@@ -307,7 +298,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     public void showChat() {
         ui.showChat(gameImmutable);
-        inputProcessor.getDataToProcess().popAllData();
+        try {
+            processEvent(lastEvent);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void askNickname() {
@@ -486,7 +481,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         } while (side == null);
         Player player = model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).findFirst().get();
         placeStarterOnCodex(player, side);
-        System.out.println(player.getNickname()+" placed his starter "+side.getTopLeftCorner().toString());
     }
 
     public void askCoordinates(GameImmutable model) throws InterruptedException {

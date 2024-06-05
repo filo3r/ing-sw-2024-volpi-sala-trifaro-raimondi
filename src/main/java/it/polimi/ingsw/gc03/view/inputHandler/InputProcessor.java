@@ -65,7 +65,7 @@ public class InputProcessor extends Thread{
                     String message = parts[2];
                     flow.sendChatMessage(new ChatMessage(receiver, nickname, message, localTime));
                 }
-        } else if (nickname != null && txt.startsWith("m")) {
+        } else if (nickname != null && txt.startsWith("m ")) {
                 LocalTime localTime = LocalTime.now();
                 String[] parts = txt.split(" ", 2);
                 if (parts.length >= 2) {
@@ -75,12 +75,12 @@ public class InputProcessor extends Thread{
                 }
             } else if (nickname != null && txt.equals("leave")){
                 flow.leaveGame(nickname);
-            } else if (txt.startsWith("resize")) {
+            } else if (txt.startsWith("resize ")) {
                 String dimensions = txt.substring(txt.indexOf(" ") + 1);
                 int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
                 int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
                 flow.resizeScreen(x, y);
-            } else if (txt.startsWith("move")){
+            } else if (txt.startsWith("move ")){
                 String dimensions = txt.substring(txt.indexOf(" ") + 1);
                 int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
                 int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));

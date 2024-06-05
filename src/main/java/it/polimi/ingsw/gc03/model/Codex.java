@@ -95,12 +95,12 @@ public class Codex implements Serializable {
      * @param column The insertion column.
      * @return A boolean indicating whether the card can be inserted.
      */
-    private boolean checkPreviousCardConnection(int row, int column) throws Exception {
+    private boolean checkPreviousCardConnection(int row, int column) {
         if (checkTopLeftConnection(row, column) || checkTopRightConnection(row, column) ||
                 checkBottomLeftConnection(row, column) || checkBottomRightConnection(row, column)){
             return true;
         } else {
-            throw new Exception("Card cannot be connected with the previous card");
+            return false;
         }
     }
 
@@ -108,7 +108,7 @@ public class Codex implements Serializable {
         if(row == 0 || column == 0){
             return false;
         }
-        if(this.codex[row-1][column-1]!= null){
+        if(this.codex[row-1][column-1] != null){
             return true;
         }
         return false;
@@ -118,7 +118,7 @@ public class Codex implements Serializable {
         if(row == 0 || column == 81-1){
             return false;
         }
-        if(this.codex[row-1][column+1]!= null){
+        if(this.codex[row-1][column+1] != null){
             return true;
         }
         return false;
@@ -154,23 +154,27 @@ public class Codex implements Serializable {
         try {
             if (checkTopLeftConnection(row, column)) {
                 Side topLeft = this.codex[row - 1][column - 1];
-                if (topLeft.getBottomRightCorner() == Value.NULL)
-                    throw new IllegalStateException("Top left corner contains NULL value.");
+                if (topLeft.getBottomRightCorner() == Value.NULL) {
+                    return false;
+                }
             }
             if (checkBottomLeftConnection(row, column)) {
                 Side bottomLeft = this.codex[row + 1][column - 1];
-                if (bottomLeft.getTopRightCorner() == Value.NULL)
-                    throw new IllegalStateException("Bottom left corner contains NULL value.");
+                if (bottomLeft.getTopRightCorner() == Value.NULL) {
+                    return false;
+                }
             }
             if (checkTopRightConnection(row, column)) {
                 Side topRight = this.codex[row - 1][column + 1];
-                if (topRight.getBottomLeftCorner() == Value.NULL)
-                    throw new IllegalStateException("Top right corner contains NULL value.");
+                if (topRight.getBottomLeftCorner() == Value.NULL){
+                    return false;
+                }
             }
             if (checkBottomRightConnection(row, column)) {
                 Side bottomRight = this.codex[row + 1][column + 1];
-                if (bottomRight.getTopLeftCorner() == Value.NULL)
-                    throw new IllegalStateException("Bottom right corner contains NULL value.");
+                if (bottomRight.getTopLeftCorner() == Value.NULL){
+                    return false;
+                }
             }
             return true;
         } catch (ArrayIndexOutOfBoundsException e) {

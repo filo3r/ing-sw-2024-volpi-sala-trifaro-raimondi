@@ -229,11 +229,6 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showCommonCards(GameImmutable model) {
-
-    }
-
-    @Override
     protected void showCodex(GameImmutable model) {
 
     }
