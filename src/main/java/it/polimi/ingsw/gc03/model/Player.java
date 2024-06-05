@@ -415,6 +415,9 @@ public class Player implements Serializable {
             game.getListener().addListener(gameListener);
             game.getListener().notifyPlayerReconnected(game, this.getNickname());
         }
+        if(game.getStatus().equals(GameStatus.WAITING) && game.getPlayers().size() == 1) {
+            game.setStatus(GameStatus.ENDED);
+        }
     }
 
 

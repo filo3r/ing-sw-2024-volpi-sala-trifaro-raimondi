@@ -113,7 +113,6 @@ public class Game implements Serializable {
                 player.getSelfListener().joinUnableGameFull(new GameImmutable(this), player);
                 throw new DeskIsFullException();
             } else if(!this.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().isEmpty()){
-                System.out.println("ECCE");
                 player.getSelfListener().joinUnableNicknameAlreadyInUse(player);
                 throw new PlayerAlreadyJoinedException();
             } else {

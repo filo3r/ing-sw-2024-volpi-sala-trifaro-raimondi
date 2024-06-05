@@ -176,13 +176,10 @@ public class Gui extends UI {
 
     }
 
-    @Override
-    protected void showAskCoordinatesCol(GameImmutable model) {
 
-    }
 
     @Override
-    protected void showAskCoordinatesRow(GameImmutable model) {
+    protected void showAskCoordinates(GameImmutable model) {
 
     }
 

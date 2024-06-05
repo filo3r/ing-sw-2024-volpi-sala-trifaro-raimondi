@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.model.side.back.BackGold;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
@@ -468,26 +469,36 @@ public class Codex implements Serializable {
         try {
             // Check the row and column and whether the Starter card has already been inserted
             if (row < 0 || row >= 81 || column < 0 || column >= 81 || !this.cardStarterInserted) {
+                game.getListener().notifyInvalidCoordinates(game, row, column);
                 throw new IllegalArgumentException("Invalid row or column or Starter card not inserted.");
             }
             // Check if the coordinates are valid
             else if (((row % 2) == 0 && (column % 2) != 0) || ((row % 2) != 0 && (column % 2) == 0)) {
+                game.getListener().notifyInvalidCoordinates(game, row, column);
                 throw new IllegalArgumentException("Invalid coordinates.");
             }
             // Check if the coordinates are free
             else if (this.codex[row][column] != null) {
+                game.getListener().notifyInvalidCoordinates(game, row, column);
                 throw new IllegalArgumentException("Coordinates already occupied.");
             }
             // Check the connection with some previous card
             else if (!checkPreviousCardConnection(row, column)) {
+                game.getListener().notifyInvalidCoordinates(game, row, column);
                 throw new IllegalStateException("Previous card connection failed.");
             }
             // Check for NULL values in previous cards
             else if (!checkPreviousCardNULL(row, column)) {
+                game.getListener().notifyInvalidCoordinates(game, row, column);
                 throw new IllegalStateException("Previous card contains NULL values.");
             }
             // Check that the placement requirements for Gold cards are verified
             else if (!checkRequirementPlacement(side)) {
+                if(side instanceof FrontGold){
+                    game.getListener().notifyRequirementsPlacementNotRespected(game, ((FrontGold) side).getRequirementPlacement());
+                } else {
+                    game.getListener().notifyRequirementsPlacementNotRespected(game, null);
+                }
                 throw new IllegalStateException("Placement requirements for Gold cards not met.");
             } else {
                 // Proceed with the insertion

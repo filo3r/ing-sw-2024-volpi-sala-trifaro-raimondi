@@ -164,9 +164,7 @@ public abstract class UI {
 
     protected abstract void show_wrongSelectionHandMsg();
 
-    protected abstract void showAskCoordinatesCol(GameImmutable model);
-
-    protected abstract void showAskCoordinatesRow(GameImmutable model);
+    protected abstract void showAskCoordinates(GameImmutable model);
 
     protected abstract void showDisplayedResource(GameImmutable gameModel);
 

@@ -53,6 +53,7 @@ public class Tui extends UI {
     }
 
     protected void showCodex(GameImmutable gameImmutable){
+        System.out.println("Showing the codex of: "+nickname);
         Codex codex = gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getCodex();
         translateCodexToScreenSim(codex);
         generateAvailablePositions(codex);
@@ -189,7 +190,7 @@ public class Tui extends UI {
         BackStarter test = new BackStarter(Kingdom.NULL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY, new ArrayList<>());
         while(occupiedPositionsIterator.hasNext()){
             Coords current = occupiedPositionsIterator.next();
-            int y1 =current.y*9+(40-current.y)*3;
+            int y1 = current.y*9+(40-current.y)*3;
             int x1 = current.x*27+(40-current.x)*5;
             try {
                 // put free space coords on top-left position
@@ -283,8 +284,8 @@ public class Tui extends UI {
 
         Player player = gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst();
         Desk desk = gameImmutable.getDesk();
-        Side topCardGold = desk.getDeckGold().getFirst().getFrontGold();
-        Side topCardResource = desk.getDeckResource().getFirst().getFrontResource();
+        Side topCardGold = desk.getDeckGold().getFirst().getBackGold();
+        Side topCardResource = desk.getDeckResource().getFirst().getBackResource();
         ArrayList<Card> displayedResource = desk.getDisplayedResource();
         ArrayList<Card> displayedGold = desk.getDisplayedGold();
         ArrayList<CardObjective> publicObjectives = desk.getDisplayedObjective();
@@ -716,20 +717,15 @@ public class Tui extends UI {
 
     @Override
     protected void show_wrongSelectionHandMsg() {
-
+        showNotification("Wrong selection!");
     }
 
     @Override
-    protected void showAskCoordinatesCol(GameImmutable model) {
+    protected void showAskCoordinates(GameImmutable model) {
         showCodex(model);
-        showNotification("Please choose the y coordinate where to place the card: ");
+        showNotification("Please choose the coordinates where to place the card (x y): ");
     }
 
-    @Override
-    protected void showAskCoordinatesRow(GameImmutable model) {
-        showCodex(model);
-        showNotification("Please, choose the x coordinate where to place the card: ");
-    }
 
     @Override
     protected void showDisplayedResource(GameImmutable gameModel) {
@@ -748,7 +744,7 @@ public class Tui extends UI {
 
     @Override
     protected void showCardCannotBePlaced(GameImmutable model, String nickname) {
-
+        showNotification("This position is not available!");
     }
 
     @Override
@@ -763,7 +759,7 @@ public class Tui extends UI {
 
     @Override
     protected void showInvalidInput() {
-
+        showNotification("Invalid input!");
     }
 
     @Override

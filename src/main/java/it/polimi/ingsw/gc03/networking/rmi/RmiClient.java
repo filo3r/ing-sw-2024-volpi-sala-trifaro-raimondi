@@ -310,14 +310,9 @@ public class RmiClient implements ClientAction {
                 this.gameController.ping(player);
             }
         } catch (RemoteException e) {
-            System.err.println("Error pinging server: " + e.getMessage());
-            stopPingThread();
+            //System.err.println("Error pinging server: " + e.getMessage());
+            pingExecutor.shutdown();
+            flow.noConnectionError();
         }
     }
-
-    public void stopPingThread() {
-        pingExecutor.shutdown();
-    }
-
-
 }

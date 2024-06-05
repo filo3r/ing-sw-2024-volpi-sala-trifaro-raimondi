@@ -550,7 +550,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 List<Player> onlinePlayers = game.getOnlinePlayers();
                 // If there are no players online, delete the game
                 if (onlinePlayers.isEmpty()) {
-                        game.setStatus(GameStatus.ENDED);
+                    game.setStatus(GameStatus.ENDED);
                 } else {
                     if (onlinePlayers.size() == 1 && game.getPlayers().size()>1) {
                         // If there is only one player and the status isn't WAITING

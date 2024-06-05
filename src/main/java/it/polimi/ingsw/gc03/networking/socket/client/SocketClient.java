@@ -151,6 +151,7 @@ public class SocketClient implements ClientAction {
      * Shutdown the client socket and exits the program. This method is called upon severe errors.
      */
     private void shutdownAndExit() {
+        flow.noConnectionError();
         stopConnection();
         System.exit(-1);
     }
@@ -343,6 +344,7 @@ public class SocketClient implements ClientAction {
                 }
             } catch (IOException e) {
                 AsyncLogger.log(Level.SEVERE, "[CLIENT SOCKET] Connection to server lost.");
+                flow.noConnectionError();
             }
         }
     }
