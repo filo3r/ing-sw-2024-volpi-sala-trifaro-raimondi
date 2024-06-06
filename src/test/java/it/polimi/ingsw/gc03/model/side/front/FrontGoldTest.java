@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.model.side.front;
 
 import it.polimi.ingsw.gc03.model.Desk;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +21,7 @@ class FrontGoldTest {
 
     @BeforeEach
     void setUp() throws RemoteException {
-        desk = new Desk();
+        desk = new Desk(new Game(15444949));
         Card card= desk.drawCardDeck(desk.getDeckGold());
         CardGold cardGold = (CardGold) card;
         frontGold = cardGold.getFrontGold();
@@ -28,6 +29,8 @@ class FrontGoldTest {
 
     @AfterEach
     void tearDown() {
+        desk = null;
+
     }
 
     @Test

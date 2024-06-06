@@ -24,21 +24,24 @@ class CodexTest {
             Value.PLANT,
             Value.EMPTY);
 
+    private Game game;
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         codex= new Codex();
+        game = new Game(15484);
     }
 
     @AfterEach
     void tearDown() {
         codex=null;
+        game = null;
     }
     /**
      * Check if insertStarterIntoCodex inserts correctly the starter card into the codex
      */
     @Test
     void insertStarterIntoCodex() throws RemoteException {
-        codex.insertStarterIntoCodex(side);
+        codex.insertStarterIntoCodex(side,game,"TestName");
         assertEquals(side, codex.getCodex()[40][40]);
         assertTrue(codex.getCardStarterInserted());
         assertEquals(40, codex.getMinRow());
@@ -52,17 +55,17 @@ class CodexTest {
      */
     @Test
     void insertIntoCodex() throws RemoteException {
-        codex.insertStarterIntoCodex(side);
-        assertFalse(codex.insertIntoCodex(side, -1, 0));
-        assertFalse(codex.insertIntoCodex(side, 0, -1));
-        assertFalse(codex.insertIntoCodex(side, 81, 0));
-        assertFalse(codex.insertIntoCodex(side, 0, 81));
-        assertFalse(codex.insertIntoCodex(side, 40, 40));
-        assertFalse(codex.insertIntoCodex(side, 1, 1));
-        assertFalse(codex.insertIntoCodex(side, 2, 2));
-        assertFalse(codex.insertIntoCodex(side, 40, 40));
-        assertFalse(codex.insertIntoCodex(side, 40, 41));
-        assertTrue(codex.insertIntoCodex(side,41,41));
+        codex.insertStarterIntoCodex(side,game,"TestName");
+        assertFalse(codex.insertIntoCodex(game,side, -1, 0));
+        assertFalse(codex.insertIntoCodex(game,side, 0, -1));
+        assertFalse(codex.insertIntoCodex(game,side, 81, 0));
+        assertFalse(codex.insertIntoCodex(game,side, 0, 81));
+        assertFalse(codex.insertIntoCodex(game,side, 40, 40));
+        assertFalse(codex.insertIntoCodex(game,side, 1, 1));
+        assertFalse(codex.insertIntoCodex(game,side, 2, 2));
+        assertFalse(codex.insertIntoCodex(game,side, 40, 40));
+        assertFalse(codex.insertIntoCodex(game,side, 40, 41));
+        assertTrue(codex.insertIntoCodex(game,side,41,41));
     }
 
 

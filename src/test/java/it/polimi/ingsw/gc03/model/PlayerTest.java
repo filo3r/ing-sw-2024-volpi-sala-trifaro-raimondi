@@ -1,11 +1,17 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.view.OptionSelection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.concurrent.Flow;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,12 +21,17 @@ class PlayerTest {
 
     private Desk desk;
 
+    private Game game;
+    private GameListener gameListener;
+
 
 
     @BeforeEach
     void setUp() throws RemoteException {
-        desk = new Desk();
-        player= new Player("Testname",1,desk);
+        game = new Game(554544551);
+        desk = new Desk(game);
+        String serverId = "TestIpServer";
+        player= new Player("Testname",1,desk,game,gameListener);
     }
 
     @AfterEach
@@ -34,7 +45,7 @@ class PlayerTest {
     @Test
     void selectObjectiveCardFalseOver() {
         int index = 3;
-        assertFalse(player.selectObjectiveCard(index));
+        assertFalse(player.selectObjectiveCard(index,game));
     }
 
     /**
@@ -43,7 +54,7 @@ class PlayerTest {
     @Test
     void selectObjectiveCardFalseUnder() {
         int index = -1;
-        assertFalse(player.selectObjectiveCard(index));
+        assertFalse(player.selectObjectiveCard(index,game));
     }
     /**
      * Check if selectObjectiveCard returns true when the index is correct
@@ -51,7 +62,7 @@ class PlayerTest {
     @Test
     void selectObjectiveCardTrue() {
         int index = 1;
-        assertTrue(player.selectObjectiveCard(index));
+        assertTrue(player.selectObjectiveCard(index,game));
     }
     //Bisogna trovare combinazione di carte per bloccare il gioco
     @Test

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.controller;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -30,7 +31,7 @@ class GameControllerTest {
     @DisplayName("Players added to the game")
     void addPlayerToGame() throws CannotJoinGameException, PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         // A player is added to the game
-        VirtualViewOld listener = new RmiClientOld(null);
+        GameListener listener= null; ;
         gameController.addPlayerToGame("Player1", listener);
         // A player tries to join before the game's size is changed.
         assertThrows(DeskIsFullException.class, () -> gameController.addPlayerToGame("Player4", listener));
@@ -52,7 +53,7 @@ class GameControllerTest {
     @Test
     @DisplayName("Placing cards on Codex and simple game")
     void placingCards() throws Exception {
-        VirtualViewOld listener = new RmiClientOld(null);
+        GameListener listener= null;
         gameController.addPlayerToGame("Player1", listener);
         gameController.getGame().setSize(2);
         gameController.addPlayerToGame("Player2", listener);
@@ -120,18 +121,18 @@ class GameControllerTest {
     }
 
     @Test
-    public void testReconnectPlayer() throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
+    public void testReconnectPlayer() throws Exception {
         Game game = gameController.getGame();
-        VirtualViewOld listener = new RmiClientOld(null);
+        GameListener listener = null;
         gameController.addPlayerToGame("Player1", listener);
         game.setSize(2);
         gameController.addPlayerToGame("Player2", listener);
         Player player1 = game.getPlayers().get(0);
         Player player2 = game.getPlayers().get(1);
 
-        player1.setOnline(false);
+        player1.setOnline(game,false,listener);
         game.setStatus(GameStatus.HALTED);
-        gameController.reconnectPlayer("Player1");
+        gameController.reconnectPlayer("Player1",listener);
 
 
         assertTrue(player1.getOnline());
@@ -140,9 +141,9 @@ class GameControllerTest {
 
     @Test
     void checkFinalActionTestCall() throws Exception {
-        VirtualViewOld listener = new RmiClientOld(null);
+        GameListener listener = new Listener
         gameController.addPlayerToGame("Player1", listener);
-        gameController.updateSize(2);
+        gameController.updateGameSize(2);
         gameController.addPlayerToGame("Player2", listener);
         Game game = gameController.getGame();
         game.setStatus(GameStatus.RUNNING);
@@ -160,7 +161,7 @@ class GameControllerTest {
         while(!game.getDesk().getDeckGold().isEmpty()){
             card =game.getDesk().drawCardDeck(game.getDesk().getDeckGold());
         }
-        game.getPlayers().getFirst().setAction(PlayerAction.DRAW);
+        game.getPlayers().getFirst().setAction(PlayerAction.DRAW,game);
 
         gameController.drawCardFromDeck(game.getPlayers().getFirst(),game.getDesk().getDeckGold());
         assertEquals(game.getStatus(),GameStatus.ENDING);

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import it.polimi.ingsw.gc03.model.Codex;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
@@ -17,8 +18,9 @@ class SecondaryDiagonalStrategyTest {
 
     private Codex codex;
     CardObjective cardObjective;
+    private Game game;
     @BeforeEach
-    void setUp() {
+    void setUp() throws RemoteException {
         this.codex = new Codex();
         CalculateScoreStrategy scoreStrategy = new SecondaryDiagonalStrategy();
         this.cardObjective = new CardObjective("OBJ089",
@@ -27,6 +29,7 @@ class SecondaryDiagonalStrategyTest {
                 new ArrayList<Value>() {{add(Value.ANIMAL); {add(Value.ANIMAL); {add(Value.ANIMAL);}}}},
                 scoreStrategy
         );
+        game = new Game(544844);
     }
 
     @Test
@@ -35,10 +38,10 @@ class SecondaryDiagonalStrategyTest {
         Side topSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side middleSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side bottomSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
-        codex.insertStarterIntoCodex(middleSide);
+        codex.insertStarterIntoCodex(middleSide,game,"TestName");
 
-        codex.insertIntoCodex(topSide, 39, 41);
-        codex.insertIntoCodex(bottomSide, 41, 39);
+        codex.insertIntoCodex(game,topSide, 39, 41);
+        codex.insertIntoCodex(game,bottomSide, 41, 39);
         codex.setPointCodex(cardObjective.calculateScore(codex,
                 2,
                 new ArrayList<Value>() {
@@ -57,11 +60,11 @@ class SecondaryDiagonalStrategyTest {
         Side middleSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side bottomSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side additionalSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
-        codex.insertStarterIntoCodex(middleSide);
+        codex.insertStarterIntoCodex(middleSide,game,"TestName");
 
-        codex.insertIntoCodex(topSide, 39, 41);
-        codex.insertIntoCodex(bottomSide, 41, 39);
-        codex.insertIntoCodex(additionalSide, 42, 38);
+        codex.insertIntoCodex(game,topSide, 39, 41);
+        codex.insertIntoCodex(game,bottomSide, 41, 39);
+        codex.insertIntoCodex(game,additionalSide, 42, 38);
         codex.setPointCodex(cardObjective.calculateScore(codex,
                 2,
                 new ArrayList<Value>() {
@@ -82,13 +85,13 @@ class SecondaryDiagonalStrategyTest {
         Side topSide2 = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side middleSide2 = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side bottomSide2 = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
-        codex.insertStarterIntoCodex(middleSide);
+        codex.insertStarterIntoCodex(middleSide,game,"TestName");
 
-        codex.insertIntoCodex(topSide, 39, 41);
-        codex.insertIntoCodex(bottomSide, 41, 39);
-        codex.insertIntoCodex(topSide2, 42, 38);
-        codex.insertIntoCodex(middleSide2, 43, 37);
-        codex.insertIntoCodex(bottomSide2, 44, 36);
+        codex.insertIntoCodex(game,topSide, 39, 41);
+        codex.insertIntoCodex(game,bottomSide, 41, 39);
+        codex.insertIntoCodex(game,topSide2, 42, 38);
+        codex.insertIntoCodex(game,middleSide2, 43, 37);
+        codex.insertIntoCodex(game,bottomSide2, 44, 36);
         codex.setPointCodex(cardObjective.calculateScore(codex,
                 2,
                 new ArrayList<Value>() {

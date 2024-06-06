@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.model;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,14 +22,18 @@ class ChatMessageTest {
 
     private Desk desk, desk1;
 
+    private Game game;
+    private GameListener gameListener;
+
 
     @BeforeEach
     void setUp() throws RemoteException {
         text ="Hello";
-        desk = new Desk();
-        sender = new Player("TestName",1,desk);
+        game = new Game(5686686);
+        desk = new Desk(game);
+        sender = new Player("TestName",1,desk,game,gameListener);
         timestamp = LocalTime.of(12,0,0);
-        chatMessage = new ChatMessage(sender,text,timestamp);
+        chatMessage = new ChatMessage("everyone","TestName",text,timestamp);
     }
 
     @AfterEach
@@ -70,16 +75,26 @@ class ChatMessageTest {
 
     @Test
     void getSender() {
-        assertEquals(sender, chatMessage.getSender());
+        assertEquals(sender.getNickname(), chatMessage.getSender());
     }
 
     @Test
     void setSender() throws RemoteException {
-        desk1 = new Desk();
-        Player newSender = new Player("TestName2",4,desk1);
-        Player oldSender = chatMessage.getSender();
+        Game game1 = new Game(15749449);
+        desk1 = new Desk(game1);
+        String newSender = "TestName2";
+        String oldSender = chatMessage.getSender();
         chatMessage.setSender(newSender);
         assertEquals(newSender, chatMessage.getSender());
         assertNotEquals(oldSender,newSender);
+    }
+
+    @Test
+    void setReceiver(){
+        String newReceiver = "NewReceiver";
+        String oldReceiver = chatMessage.getReceiver();
+        chatMessage.setReceiver(newReceiver);
+        assertEquals(chatMessage.getReceiver(),newReceiver);
+        assertNotEquals(chatMessage.getReceiver(),oldReceiver);
     }
 }

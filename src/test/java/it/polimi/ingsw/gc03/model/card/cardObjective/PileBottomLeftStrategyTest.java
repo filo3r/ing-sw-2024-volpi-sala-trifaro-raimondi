@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import it.polimi.ingsw.gc03.model.Codex;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
@@ -16,9 +17,10 @@ class PileBottomLeftStrategyTest {
     private Codex codex;
 
     CardObjective cardObjective;
+    private Game game;
 
     @BeforeEach
-    void setup(){
+    void setup() throws RemoteException {
         this.codex = new Codex();
         CalculateScoreStrategy scoreStrategy = new PileBottomLeftStrategy();
         this.cardObjective = new CardObjective("OBJ093",
@@ -31,6 +33,7 @@ class PileBottomLeftStrategyTest {
                         }}},
                 scoreStrategy
         );
+        game = new Game(545454);
     }
 
     @Test
@@ -41,10 +44,10 @@ class PileBottomLeftStrategyTest {
         Side bottomSide = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side helperSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
 
-        codex.insertStarterIntoCodex(midSide);
-        codex.insertIntoCodex(topSide, 39,41);
-        codex.insertIntoCodex(helperSide, 41, 39);
-        codex.insertIntoCodex(bottomSide, 42,40);
+        codex.insertStarterIntoCodex(midSide,game,"TestName");
+        codex.insertIntoCodex(game,topSide, 39,41);
+        codex.insertIntoCodex(game,helperSide, 41, 39);
+        codex.insertIntoCodex(game,bottomSide, 42,40);
 
         codex.setPointCodex(cardObjective.calculateScore(codex,
                 3,
@@ -68,14 +71,14 @@ class PileBottomLeftStrategyTest {
         Side bottomSide2 = new Side(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
         Side helperSide = new Side(Kingdom.PLANT, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY);
 
-        codex.insertStarterIntoCodex(midSide);
-        codex.insertIntoCodex(topSide, 39,41);
-        codex.insertIntoCodex(topSide2, 41, 39);
-        codex.insertIntoCodex(bottomSide, 42,40);
+        codex.insertStarterIntoCodex(midSide,game,"TestName");
+        codex.insertIntoCodex(game,topSide, 39,41);
+        codex.insertIntoCodex(game,topSide2, 41, 39);
+        codex.insertIntoCodex(game,bottomSide, 42,40);
 
-        codex.insertIntoCodex(midSide2, 42, 38);
-        codex.insertIntoCodex(helperSide, 43, 39);
-        codex.insertIntoCodex(bottomSide2, 44, 38);
+        codex.insertIntoCodex(game,midSide2, 42, 38);
+        codex.insertIntoCodex(game,helperSide, 43, 39);
+        codex.insertIntoCodex(game,bottomSide2, 44, 38);
 
 
         codex.setPointCodex(cardObjective.calculateScore(codex,

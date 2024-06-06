@@ -11,7 +11,6 @@ import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -106,7 +105,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      */
     private void handlePlayerTimeout(Player player) {
         if(player.getOnline()){
-            player.setOnline(this.getGame(), false, this, null);
+            player.setOnline(this.getGame(), false, null);
         }
     }
 
@@ -212,7 +211,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 playerPingTimestamps.put(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst(), System.currentTimeMillis());
             }
             // The found player is set to online
-            result.getFirst().setOnline(this.getGame(), true, this, gameListener);
+            result.getFirst().setOnline(this.getGame(), true, gameListener);
         } else {
             throw new Exception("No previous game to reconnect with that username");
         }

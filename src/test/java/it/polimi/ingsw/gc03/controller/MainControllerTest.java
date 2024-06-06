@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.controller;
 
+import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
+import it.polimi.ingsw.gc03.model.side.back.BackResource;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 
@@ -29,7 +31,7 @@ class MainControllerTest {
 
     private Card makeCard(){
         FrontResource front = new FrontResource(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY,Value.EMPTY, 0);
-        BackSide back = new BackSide(Kingdom.ANIMAL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY, new ArrayList<>() {{add(Value.ANIMAL);}});
+        BackResource back = new BackResource(Kingdom.ANIMAL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY, new ArrayList<>() {{add(Value.ANIMAL);}});
         return new CardResource("TEST", Kingdom.ANIMAL, front, back);
     }
 
@@ -53,8 +55,8 @@ class MainControllerTest {
     @Test
     @DisplayName("Simulate a player trying to join when there are no active games")
     void joinAndCreateGame() throws NoSuchGameException, RemoteException {
-        VirtualViewOld listener = new RmiClientOld(null);
-        mainController.joinFirstAvailableGame("Player1", listener);
+        GameListener listener = null;
+        mainController.joinFirstAvailableGame(listener,"Player1");
         assertEquals(1, mainController.getGameControllers().size());
         GameController gc = mainController.getGameControllers().get(0);
         // The first player tries to place a card
@@ -64,20 +66,20 @@ class MainControllerTest {
         assertThrows(Exception.class,() -> gc.placeStarterOnCodex(p1, p1.getCardStarter().getBackStarter()));
         // A new player tries join while the first player hasn't decided
         // yet the game's size
-        assertThrows(Exception.class, () -> mainController.joinFirstAvailableGame("Player2", listener));
+        assertThrows(Exception.class, () -> mainController.joinFirstAvailableGame(listener,"Player2"));
         // The first player sets the game's size
         gc.getGame().setSize(2);
         //Player already joined
-        assertThrows(RuntimeException.class,()->mainController.joinFirstAvailableGame("Player1", listener));
-        mainController.joinFirstAvailableGame("Player2", listener);
+        assertThrows(RuntimeException.class,()->mainController.joinFirstAvailableGame(listener,"Player1"));
+        mainController.joinFirstAvailableGame(listener,"Player2");
         Player p2 = gc.getGame().getPlayers().getLast();
         assertEquals(GameStatus.STARTING, gc.getGame().getStatus());
     }
     @Test
     @DisplayName("Game ending and winner")
     void gameEnd() throws Exception {
-        VirtualViewOld listener = new RmiClientOld(null);
-        mainController.joinFirstAvailableGame("Player1", listener);
+        GameListener listener = null;
+        mainController.joinFirstAvailableGame(listener,"Player1");
         GameController gameController= mainController.getGameControllers().getFirst();
         Game game = gameController.getGame();
         game.setSize(2);
@@ -130,8 +132,8 @@ class MainControllerTest {
 
     @Test
     void deleteNotExistentGame() throws NoSuchGameException, RemoteException {
-        VirtualViewOld listener = new RmiClientOld(null);
-        mainController.joinFirstAvailableGame("Player", listener);
+        GameListener listener = null;
+        mainController.joinFirstAvailableGame(listener,"Player");
         int idGame = mainController.getGameControllers().getFirst().getGame().getIdGame();
         mainController.deleteGame(idGame);
         assertThrows(NoSuchGameException.class,()->mainController.deleteGame(idGame));

@@ -2,6 +2,7 @@ package it.polimi.ingsw.gc03.model.card;
 
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.side.back.BackResource;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import org.junit.jupiter.api.AfterEach;
@@ -20,7 +21,7 @@ class CardResourceTest {
 
     private FrontResource front;
 
-    private BackSide back;
+    private BackResource back;
 
     private ArrayList<Value> center;
 
@@ -30,7 +31,7 @@ class CardResourceTest {
         center = new ArrayList<>();
         center.add(Value.FUNGI);
         front = new FrontResource(Kingdom.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY, Value.FUNGI,0);
-        back = new BackSide(Kingdom.FUNGI, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY,center);
+        back = new BackResource(Kingdom.FUNGI, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY,center);
         cardResource = new CardResource("idCard", Kingdom.FUNGI,front,back);
     }
 
@@ -76,8 +77,8 @@ class CardResourceTest {
 
     @Test
     void setBackResource() {
-        BackSide newBack = new BackSide(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY,center);
-        BackSide oldBack = cardResource.getBackResource();
+        BackResource newBack = new BackResource(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY, Value.EMPTY,center);
+        BackResource oldBack = cardResource.getBackResource();
         cardResource.setBackResource(newBack);
         assertEquals(newBack,cardResource.getBackResource());
         assertNotEquals(oldBack,cardResource.getBackResource());

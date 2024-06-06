@@ -2,6 +2,7 @@ package it.polimi.ingsw.gc03.model.card;
 
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.side.back.BackGold;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +24,7 @@ class CardGoldTest {
 
     private FrontGold front;
 
-    private BackSide back;
+    private BackGold back;
 
     private ArrayList<Value> center,center1;
 
@@ -36,7 +37,7 @@ class CardGoldTest {
         center.add(Value.FUNGI);
         center.add(Value.FUNGI);
         front = new FrontGold(Kingdom.FUNGI, Value.FUNGI,Value.FUNGI,Value.FUNGI,Value.FUNGI,2,Value.INKWELL,center);
-        back = new BackSide(Kingdom.FUNGI,Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,center1);
+        back = new BackGold(Kingdom.FUNGI,Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,center1);
         cardGold = new CardGold("idCard", Kingdom.FUNGI,front,back);
     }
 
@@ -82,8 +83,8 @@ class CardGoldTest {
 
     @Test
     void setBackGold() {
-        BackSide oldBack = cardGold.getBackGold();
-        BackSide newBack =  new BackSide(Kingdom.FUNGI,Value.PLANT,Value.EMPTY,Value.EMPTY,Value.EMPTY,center);
+        BackGold oldBack = cardGold.getBackGold();
+        BackGold newBack =  new BackGold(Kingdom.FUNGI,Value.PLANT,Value.EMPTY,Value.EMPTY,Value.EMPTY,center);
         cardGold.setBackGold(newBack);
         assertEquals(newBack,cardGold.getBackGold());
         assertNotEquals(oldBack,newBack);

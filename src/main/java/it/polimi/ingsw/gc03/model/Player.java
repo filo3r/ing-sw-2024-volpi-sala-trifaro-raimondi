@@ -1,8 +1,6 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -14,7 +12,6 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.SequencedSet;
 
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
@@ -397,9 +394,10 @@ public class Player implements Serializable {
 
     /**
      * Method to set the player's online status.
+     *
      * @param online The player's online status.
      */
-    public void setOnline(Game game, boolean online, GameController gameController, GameListener gameListener) {
+    public void setOnline(Game game, boolean online, GameListener gameListener) {
         boolean oldOnline = this.online;
         this.online = online;
         if(oldOnline && !this.online){

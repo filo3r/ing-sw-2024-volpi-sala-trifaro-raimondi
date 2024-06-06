@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.model.card.cardObjective;
 
 import it.polimi.ingsw.gc03.model.Codex;
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
@@ -18,8 +19,9 @@ class RequirementStrategyTest {
 
     CardObjective cardObjective;
 
+    private Game game;
     @BeforeEach
-    void setup(){
+    void setup() throws RemoteException {
         this.codex = new Codex();
         CalculateScoreStrategy scoreStrategy = new RequirementStrategy();
         this.cardObjective = new CardObjective("OBJ095",
@@ -32,6 +34,7 @@ class RequirementStrategyTest {
                         }}},
                 scoreStrategy
         );
+        game = new Game(445445);
     }
 
     @Test
@@ -43,9 +46,9 @@ class RequirementStrategyTest {
 
 
 
-        codex.insertStarterIntoCodex(side1);
-        codex.insertIntoCodex(side2, 41, 41);
-        codex.insertIntoCodex(side3, 42,42);
+        codex.insertStarterIntoCodex(side1,game,"TestName");
+        codex.insertIntoCodex(game,side2, 41, 41);
+        codex.insertIntoCodex(game,side3, 42,42);
 
         codex.setPointCodex(cardObjective.calculateScore(codex,
                 2,
@@ -64,10 +67,10 @@ class RequirementStrategyTest {
         Side side2 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.FUNGI, Value.EMPTY, Value.EMPTY);
         Side side3 = new Side(Kingdom.FUNGI, Value.FUNGI, Value.FUNGI, Value.FUNGI, Value.EMPTY);
 
-        codex.insertStarterIntoCodex(side1);
+        codex.insertStarterIntoCodex(side1,game,"TestName");
 
-        codex.insertIntoCodex(side2, 41,41);
-        codex.insertIntoCodex(side3, 42,42);
+        codex.insertIntoCodex(game,side2, 41,41);
+        codex.insertIntoCodex(game,side3, 42,42);
 
 
         codex.setPointCodex(cardObjective.calculateScore(codex,

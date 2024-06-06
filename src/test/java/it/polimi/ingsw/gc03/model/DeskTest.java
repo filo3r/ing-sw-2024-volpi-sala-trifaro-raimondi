@@ -18,14 +18,18 @@ class DeskTest {
 
     private Desk desk;
 
+    private Game game;
+
 
     @BeforeEach
     void setUp() throws RemoteException {
-        desk = new Desk();
+        game = new Game(554544551);
+        desk = new Desk(game);
     }
 
     @AfterEach
     void tearDown() {
+        game = null;
         desk = null;
     }
 
@@ -164,7 +168,8 @@ class DeskTest {
 
     @Test
     void setDeckStarter() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<CardStarter> deckStarter = desk.getDeckStarter();
         desk.setDeckStarter(desk1.getDeckStarter());
         assertEquals(desk.getDeckStarter(),desk1.getDeckStarter());
@@ -177,7 +182,8 @@ class DeskTest {
 
     @Test
     void setDeckResource() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<CardResource> deckResource = desk.getDeckResource();
         desk.setDeckResource(desk1.getDeckResource());
         assertEquals(desk.getDeckResource(),desk1.getDeckResource());
@@ -190,7 +196,8 @@ class DeskTest {
 
     @Test
     void setDeckGold() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<CardGold> deckGold = desk.getDeckGold();
         desk.setDeckGold(desk1.getDeckGold());
         assertEquals(desk.getDeckGold(),desk1.getDeckGold());
@@ -203,7 +210,8 @@ class DeskTest {
 
     @Test
     void setDeckObjective() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<CardObjective> deckObjective = desk.getDeckObjective();
         desk.setDeckObjective(desk1.getDeckObjective());
         assertEquals(desk.getDeckObjective(),desk1.getDeckObjective());
@@ -217,7 +225,8 @@ class DeskTest {
 
     @Test
     void setDisplayedResource() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<Card> displayedResource= desk.getDisplayedResource();
         desk.setDisplayedResource(desk1.getDisplayedResource());
         assertEquals(desk.getDisplayedResource(),desk1.getDisplayedResource());
@@ -230,7 +239,8 @@ class DeskTest {
 
     @Test
     void setDisplayedGold() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<Card> displayedGold = desk.getDisplayedGold();
         desk.setDisplayedGold(desk1.getDisplayedGold());
         assertEquals(desk.getDisplayedGold(),desk1.getDisplayedGold());
@@ -243,7 +253,8 @@ class DeskTest {
 
     @Test
     void setDisplayedObjective() throws RemoteException {
-        Desk desk1 = new Desk();
+        Game game1 = new Game(555454454);
+        Desk desk1 = new Desk(game1);
         ArrayList<CardObjective> displayedObjective = desk.getDisplayedObjective();
         desk.setDisplayedObjective(desk1.getDisplayedObjective());
         assertEquals(desk.getDisplayedObjective(),desk1.getDisplayedObjective());
