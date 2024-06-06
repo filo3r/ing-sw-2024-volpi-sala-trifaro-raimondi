@@ -799,6 +799,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
         if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
+            events.add(gameImmutable, PLACE_CARD_ON_CODEX);
             ui.showReqNotRespected(gameImmutable, requirementsPlacement);
         }
     }
@@ -838,5 +839,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         events.add(gameImmutable, EventType.GAMECREATED);
         ui.addImportantEvent("New game created");
     }
+
 
 }
