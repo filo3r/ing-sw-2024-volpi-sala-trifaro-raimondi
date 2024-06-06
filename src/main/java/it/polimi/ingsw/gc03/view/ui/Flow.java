@@ -793,14 +793,15 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
         if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
         ui.showCardCannotBePlaced(gameImmutable, nickname);
+        events.add(gameImmutable, PLACE_CARD_ON_CODEX);
         }
     }
 
     @Override
     public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
         if(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)){
-            events.add(gameImmutable, PLACE_CARD_ON_CODEX);
             ui.showReqNotRespected(gameImmutable, requirementsPlacement);
+            events.add(gameImmutable, PLACE_CARD_ON_CODEX);
         }
     }
 

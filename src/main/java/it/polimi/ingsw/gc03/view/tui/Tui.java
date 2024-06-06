@@ -823,7 +823,9 @@ public class Tui extends UI {
 
     @Override
     protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
-
+        clearScreen(' ');
+        String text = "Requirements not respected try to place another Card.";
+        generateTextOnScreen(text,CharColor.RED,1093-text.length()/2, 364-5);
     }
 
     @Override
