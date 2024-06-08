@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 /**
  * This class represents the game board.
  */
-public class Desk implements Serializable{
+public class Desk implements Serializable {
 
     /**
      * Deck of Starter cards.
@@ -97,6 +97,22 @@ public class Desk implements Serializable{
             "fileCardObjective.json";
 
     /**
+     * Path to the front images folder.
+     */
+    private static final String IMAGE_PATH_FRONT = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "images" + File.separator +
+            "cards" + File.separator + "frontSide" + File.separator;
+
+    /**
+     * Path to the back images folder.
+     */
+    private static final String IMAGE_PATH_BACK = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "images" + File.separator +
+            "cards" + File.separator + "backSide" + File.separator;
+
+    /**
      * Number of Starter cards.
      */
     private static final int NUM_CARD_STARTER = 6;
@@ -158,7 +174,12 @@ public class Desk implements Serializable{
             ArrayList<CardStarter> starterCards = gson.fromJson(inputStreamReader, starterCardType);
             this.deckStarter.addAll(starterCards);
             inputStream.close();
-            // shuffle the deck
+            // Associate the images with the sides of the card
+            for (CardStarter cardStarter : this.deckStarter) {
+                cardStarter.getFrontStarter().setImage(IMAGE_PATH_FRONT + cardStarter.getIdCard() + "_front.png");
+                cardStarter.getBackStarter().setImage(IMAGE_PATH_BACK + cardStarter.getIdCard() + "_back.png");
+            }
+            // Shuffle the deck
             Collections.shuffle(this.deckStarter);
             return true;
         } catch (FileNotFoundException e) {
@@ -188,7 +209,12 @@ public class Desk implements Serializable{
             ArrayList<CardResource> resourceCards = gson.fromJson(inputStreamReader, resourceCardType);
             this.deckResource.addAll(resourceCards);
             inputStream.close();
-            // shuffle the deck
+            // Associate the images with the sides of the card
+            for (CardResource cardResource : this.deckResource) {
+                cardResource.getFrontResource().setImage(IMAGE_PATH_FRONT + cardResource.getIdCard() + "_front.png");
+                cardResource.getBackResource().setImage(IMAGE_PATH_BACK + cardResource.getIdCard() + "_back.png");
+            }
+            // Shuffle the deck
             Collections.shuffle(this.deckResource);
             return true;
         } catch (FileNotFoundException e) {
@@ -218,7 +244,12 @@ public class Desk implements Serializable{
             ArrayList<CardGold> goldCards = gson.fromJson(inputStreamReader, goldCardType);
             this.deckGold.addAll(goldCards);
             inputStream.close();
-            // shuffle the deck
+            // Associate the images with the sides of the card
+            for (CardGold cardGold : this.deckGold) {
+                cardGold.getFrontGold().setImage(IMAGE_PATH_FRONT + cardGold.getIdCard() + "_front.png");
+                cardGold.getBackGold().setImage(IMAGE_PATH_BACK + cardGold.getIdCard() + "_back.png");
+            }
+            // Shuffle the deck
             Collections.shuffle(this.deckGold);
             return true;
         } catch (FileNotFoundException e) {
@@ -251,7 +282,8 @@ public class Desk implements Serializable{
             ArrayList<CardObjective> objectiveCards = gson.fromJson(inputStreamReader, objectiveCardType);
             this.deckObjective.addAll(objectiveCards);
             inputStream.close();
-            // shuffle the deck
+            // (for Objective cards the association with your image occurs in the class constructor)
+            // Shuffle the deck
             Collections.shuffle(this.deckObjective);
             return true;
         } catch (FileNotFoundException e) {
@@ -484,5 +516,6 @@ public class Desk implements Serializable{
     public void setDisplayedObjective(ArrayList<CardObjective> displayedObjective) {
         this.displayedObjective = displayedObjective;
     }
+
 
 }

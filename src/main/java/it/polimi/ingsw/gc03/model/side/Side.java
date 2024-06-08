@@ -35,6 +35,11 @@ public class Side implements Serializable {
      */
     private Value bottomRightCorner;
 
+    /**
+     * Image associated with the side.
+     */
+    private String image;
+
 
     /**
      * Constructor of the class Side.
@@ -51,6 +56,7 @@ public class Side implements Serializable {
         this.bottomLeftCorner = bottomLeftCorner;
         this.topRightCorner = topRightCorner;
         this.bottomRightCorner = bottomRightCorner;
+        this.image = null;
     }
 
 
@@ -141,6 +147,24 @@ public class Side implements Serializable {
      */
     public void setBottomRightCorner(Value bottomRightCorner) {
         this.bottomRightCorner = bottomRightCorner;
+    }
+
+
+    /**
+     * Getter method to retrieve the image of the side.
+     * @return The image of the side.
+     */
+    public String getImage() {
+        return image;
+    }
+
+
+    /**
+     * Setter method to set the image of the side.
+     * @param image The image to be set for the side.
+     */
+    public void setImage(String image) {
+        this.image = image;
     }
 
 
