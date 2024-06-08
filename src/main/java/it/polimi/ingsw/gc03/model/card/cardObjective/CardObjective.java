@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -37,6 +38,19 @@ public class CardObjective extends Card implements Serializable {
      */
     private CalculateScoreStrategy scoreStrategy;
 
+    /**
+     * Image of the card.
+     */
+    private String image;
+
+    /**
+     * Path to the image folder.
+     */
+    private static final String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "images" + File.separator +
+            "cards" + File.separator + "frontSide" + File.separator;
+
 
     /**
      * Constructor for the CardObjective class.
@@ -53,6 +67,7 @@ public class CardObjective extends Card implements Serializable {
         this.point = point;
         this.parameters = new ArrayList<>(parameters);
         this.scoreStrategy = scoreStrategy;
+        this.image = IMAGE_PATH + idCard + "_front.png";
     }
 
 
@@ -141,17 +156,21 @@ public class CardObjective extends Card implements Serializable {
 
 
     /**
-     * Method for printing all the information on a Objective card.
-     * @param cardObjective The Objective card you want to print.
+     * Getter method to retrieve the image of the card.
+     * @return The image of the card.
      */
-   /* public void printCardObjective(CardObjective cardObjective) {
-        System.out.println("OBJECTIVE CARD:");
-        System.out.println("Card ID: " + getIdCard());
-        System.out.println("Points: " + getPoint());
-        System.out.println("Objective: " + getObjective());
+    public String getImage() {
+        return image;
     }
 
-    */
+
+    /**
+     * Setter method to set the image of the card.
+     * @param image The image to be set for the card.
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
 
 
 }
