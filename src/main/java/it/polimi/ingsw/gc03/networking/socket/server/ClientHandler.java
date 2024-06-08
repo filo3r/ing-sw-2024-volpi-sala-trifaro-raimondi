@@ -1,8 +1,6 @@
 package it.polimi.ingsw.gc03.networking.socket.server;
 
-import it.polimi.ingsw.gc03.controller.GameController;
 import it.polimi.ingsw.gc03.controller.MainController;
-import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
@@ -117,14 +115,13 @@ public class ClientHandler implements Runnable {
      */
     private void runGameLogic() {
         // Process messages from the queue
-
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 SocketClientGenericMessage message = this.messagesQueue.take();
                 // Execute game actions based on message type
                 if (message.getMessageType() == MessageType.MAIN_CONTROLLER)
                     processMessageForMainController(message);
-                else if (message.getMessageType() != MessageType.PING)
+                else if (message.getMessageType() == MessageType.GAME_CONTROLLER)
                     message.execute(this.gameController);
             }
         } catch (RemoteException e) {
@@ -174,7 +171,7 @@ public class ClientHandler implements Runnable {
                 try {
                     message = (SocketClientGenericMessage) this.inputStream.readObject();
                     // Process ping and other messages
-                    if (message.getMessageType() == MessageType.PING && message.getMessageType() != MessageType.MAIN_CONTROLLER) {
+                    if (message.getMessageType() == MessageType.PING) {
                         if (this.gameController != null)
                             this.gameController.ping(message.getNicknameClient());
                     } else {
