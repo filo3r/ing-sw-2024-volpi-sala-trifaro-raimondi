@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-
 /**
  * The SocketServer class handles incoming network request and spawns a ClientHandler to manage each client connection.
  * It communicates using the Socket Network protocol.
@@ -26,12 +25,10 @@ public class SocketServer extends Thread {
      */
     private final ExecutorService clientHandlerPool = Executors.newCachedThreadPool();
 
-
     /**
      * Class constructor.
      */
     public SocketServer() {}
-
 
     /**
      * Initializes and starts the server socket on the specified port.
@@ -49,7 +46,6 @@ public class SocketServer extends Thread {
         }
     }
 
-
     /**
      * Closes the server socket.
      */
@@ -62,7 +58,6 @@ public class SocketServer extends Thread {
             AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error closing server socket: " + e.getMessage());
         }
     }
-
 
     /**
      * Shuts down the client handler thread pool.
@@ -79,7 +74,6 @@ public class SocketServer extends Thread {
         }
     }
 
-
     /**
      * Stops the server socket and terminates the thread pool.
      */
@@ -89,7 +83,6 @@ public class SocketServer extends Thread {
         shutdownClientHandlerPool();
         AsyncLogger.log(Level.INFO, "[SERVER SOCKET] Server socket closed and connections dropped.");
     }
-
 
     /**
      * Listens for incoming connections and spawns ClientHandler instances to manage them.

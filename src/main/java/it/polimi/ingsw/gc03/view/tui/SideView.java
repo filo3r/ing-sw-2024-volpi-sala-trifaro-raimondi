@@ -10,7 +10,6 @@ import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 
-
 /**
  * Class responsible for generating a visual representation of a side of a card.
  */
@@ -20,7 +19,6 @@ public class SideView {
      * 2D array representing the visual appearance of a side of a card.
      */
     private CharSpecial[][] sideView = new CharSpecial[9][27];
-
 
     /**
      * Generates the visual representation of a given side.
@@ -37,7 +35,6 @@ public class SideView {
         putCornersOnFrame(side);
         return sideView;
     }
-
 
     /**
      * Puts the top-left value of the side on the frame.
@@ -79,7 +76,6 @@ public class SideView {
             }
         }
     }
-
 
     /**
      * Puts the top-right value of the side on the frame.
@@ -123,7 +119,6 @@ public class SideView {
         }
     }
 
-
     /**
      * Puts the bottom-left value of the side on the frame.
      * @param side The side of the card.
@@ -165,7 +160,6 @@ public class SideView {
         }
     }
 
-
     /**
      * Puts the bottom-right value of the side on the frame.
      * @param side The side of the card.
@@ -206,7 +200,6 @@ public class SideView {
             }
         }
     }
-
 
     /**
      * Puts the central boxes on the side.
@@ -253,7 +246,6 @@ public class SideView {
         }
     }
 
-
     /**
      * Puts the corner values on the frame.
      * @param side The side of the card.
@@ -265,7 +257,6 @@ public class SideView {
         putBottomRightValue(side);
         putCentralBoxes(side);
     }
-
 
     /**
      * Generates and puts a box on the side view.
@@ -306,7 +297,6 @@ public class SideView {
         }
     }
 
-
     /**
      * Converts a Value enum to its corresponding character representation.
      * @param value The value to convert.
@@ -338,7 +328,6 @@ public class SideView {
         }
     }
 
-
     /**
      * Converts a Kingdom enum to its corresponding character representation.
      * @param kingdom The kingdom to convert.
@@ -359,7 +348,6 @@ public class SideView {
         }
     }
 
-
     /**
      * Gets the color corresponding to a side.
      * @param side The side to get the color for.
@@ -372,7 +360,6 @@ public class SideView {
         }
         return color;
     }
-
 
     /**
      * Gets the color corresponding to a kingdom.
@@ -401,6 +388,4 @@ public class SideView {
         }
         return color;
     }
-
-
 }

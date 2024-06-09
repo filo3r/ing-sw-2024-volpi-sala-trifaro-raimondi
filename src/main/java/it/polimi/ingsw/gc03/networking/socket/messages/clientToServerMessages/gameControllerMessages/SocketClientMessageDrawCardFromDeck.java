@@ -1,8 +1,5 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages;
 
-import com.sun.tools.javac.Main;
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -12,7 +9,6 @@ import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
 
 /**
  * This class is used to send a message from the client to the server to indicate the intent to draw a card from a
@@ -30,7 +26,6 @@ public class SocketClientMessageDrawCardFromDeck extends SocketClientGenericMess
      */
     private ArrayList<Card> deck;
 
-
     /**
      * Constructs a new message that requires drawing a card from the deck of cards.
      * This message is flagged to be processed by the game controller of the application.
@@ -45,7 +40,6 @@ public class SocketClientMessageDrawCardFromDeck extends SocketClientGenericMess
         this.deck.addAll(deck);
     }
 
-
     /**
      * Executes the message.
      * @param gameListener The game listener to be notified about game events.
@@ -58,7 +52,6 @@ public class SocketClientMessageDrawCardFromDeck extends SocketClientGenericMess
         return null;
     }
 
-
     /**
      * Executes the message.
      * @param gameController The game controller.
@@ -69,6 +62,4 @@ public class SocketClientMessageDrawCardFromDeck extends SocketClientGenericMess
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.drawCardFromDeck(this.player, this.deck);
     }
-
-
 }

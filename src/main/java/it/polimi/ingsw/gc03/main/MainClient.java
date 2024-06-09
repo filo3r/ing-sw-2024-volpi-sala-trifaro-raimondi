@@ -226,7 +226,6 @@ public class MainClient {
         disableChildJavaFxLoggers(logManager, "javafx");
     }
 
-
     /**
      * Disables logging for all child loggers of a specified parent logger by setting their logging levels to OFF.
      * @param logManager The global LogManager that manages the loggers.
@@ -251,6 +250,4 @@ public class MainClient {
             }
         }
     }
-
-
 }

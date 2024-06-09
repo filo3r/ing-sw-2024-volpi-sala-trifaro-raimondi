@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class UI {
-    protected List<String> importantEvents; //events that needs to be showed always in screen
+
+    /**
+     * List of the important events.
+     */
+    protected List<String> importantEvents;
 
     /**
      * Initialises GUI or TUI
@@ -174,15 +178,7 @@ public abstract class UI {
 
     protected abstract void showCardCannotBePlaced(GameImmutable model, String nickname);
 
-    protected abstract void showDrawnCard(GameImmutable model);
-
-    protected abstract void showPlaceStarterCardOnCodex(GameImmutable model);
-
     protected abstract void showInvalidInput();
-
-    protected abstract void show_askChooseACardObjective(GameImmutable model, String nickname);
-
-    protected abstract void showCardObjectiveToChoose(GameImmutable model);
 
     protected abstract void showCodex(GameImmutable model);
 
@@ -201,9 +197,6 @@ public abstract class UI {
 
     protected abstract void showCardHasBeenDrawn(GameImmutable gameModel);
 
-    protected abstract void showAskReconnectGameID();
-
-    protected abstract void showCardNotAddedHand(GameImmutable model);
 
     protected abstract void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname);
 

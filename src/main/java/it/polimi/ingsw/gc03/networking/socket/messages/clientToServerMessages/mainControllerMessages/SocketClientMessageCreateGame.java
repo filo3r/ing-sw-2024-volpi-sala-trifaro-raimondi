@@ -1,14 +1,11 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.mainControllerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
-
 
 /**
  * This class is used to send a message from the client to the server to indicate the intention to create a new game.
@@ -25,7 +22,6 @@ public class SocketClientMessageCreateGame extends SocketClientGenericMessage {
         this.messageType = MessageType.MAIN_CONTROLLER;
     }
 
-
     /**
      * Executes the message by requesting the creation of a new game from the main controller,
      * using the provided game listener and client's nickname.
@@ -39,7 +35,6 @@ public class SocketClientMessageCreateGame extends SocketClientGenericMessage {
         return mainController.createGame(gameListener, this.nicknameClient);
     }
 
-
     /**
      * Executes the message by requesting the creation of a new game from the main controller,
      * using the provided game listener and client's nickname.
@@ -48,6 +43,4 @@ public class SocketClientMessageCreateGame extends SocketClientGenericMessage {
      */
     @Override
     public void execute(GameControllerInterface gameController) throws RemoteException {}
-
-
 }

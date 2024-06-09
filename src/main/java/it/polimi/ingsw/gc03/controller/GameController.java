@@ -20,7 +20,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * This class controls the gameplay flow of a match, from start to finish.
  */
@@ -76,14 +75,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         new Thread(this).start();
     }
 
-
     /**
      * Starts a thread to periodically check player pings.
      */
     private void startPingThread() {
         pingExecutor.scheduleAtFixedRate(this::checkPings, 0, 2, TimeUnit.SECONDS);
     }
-
 
     /**
      * Checks player ping timestamps and handles timeouts.
@@ -98,7 +95,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
      * Handles player timeout by setting the player to offline and removing their listener.
      * @param player The player who timed out.
@@ -109,10 +105,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
      * Updates the ping timestamp for a player.
      * @param player The player who sent the ping.
+     * @throws RemoteException This exception is thrown when there is an issue with remote communication.
      */
     public void ping(String player) throws RemoteException {
         List<Player> playerWhoPinged = this.getGame().getPlayers().stream().filter(p->p.getNickname().equals(player)).toList();
@@ -120,7 +116,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             playerPingTimestamps.put(playerWhoPinged.getFirst(), System.currentTimeMillis());
         }
     }
-
 
     /**
      * Method for adding a player to the game.
@@ -132,7 +127,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      *                             already reached the maximum number of players allowed.
      * @throws PlayerAlreadyJoinedException This exception is thrown to prevent duplicate addition of a player in the
      *                                      same game.
-     * @throws RemoteException If there is an issue with remote communication.
+     * @throws RemoteException This exception is thrown when there is an issue with remote communication.
      */
     public void addPlayerToGame(String playerNickname, GameListener listener) throws CannotJoinGameException, DeskIsFullException, PlayerAlreadyJoinedException, RemoteException {
         // It's possible to add new players only if the game's status is WAITING
@@ -156,9 +151,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
     /**
      * The method handles a specific scenario where the game is stopped and only one player remains online.
-     * @return True if the game cannot continue or False if the game can resume.
+     * @return True if someone reconnected in time, false if no one reconnected in time.
      */
-
     private boolean startTimer() {
         if (game.getStatus() == GameStatus.HALTED) {
             if (timer == null && timerTask == null) { // Check if a timer is already running
@@ -177,11 +171,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     }
 
 
-
     /**
      * Method for stopping the previously started timer and canceling any associated tasks.
      */
-
     private void stopTimer() {
         if (timer != null) {
             timer.cancel();
@@ -192,7 +184,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             timerTask = null;
         }
     }
-
 
     /**
      * Method for managing a player's reconnection to the game.
@@ -218,8 +209,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     }
 
     /**
-     * The method handle the player leaving the game
-     * @param playerNickname The nickname of the player who left.
+     * The method handle the player leaving the game.
+     * @param playerNickname The nickname of the player who leave the game.
+     * @throws RemoteException This exception is thrown when there is an issue with remote communication.
      */
     public synchronized void leaveGame(String playerNickname) throws RemoteException {
         // check if the player is actually in the game
@@ -230,7 +222,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             game.removePlayer(playerNickname);
         }
     }
-
 
     /**
      * The method handles the transition and updating of player actions in the game.
@@ -265,9 +256,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
     }
 
-
     /**
-     * Places the starter card on the Codex of the given player at the beginning of the game.
+     * The method handles the placing of the starter card on the Codex of the given player at the beginning of the game.
      * This method ensures that the game is in the correct phase and the player is eligible to place the starter card.
      * It also updates the game state and player's action based on the completion of this initial move.
      * @param player The player who is placing the starter card. This player should be currently set to FIRSTMOVES action.
@@ -305,9 +295,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
-     * Selects a personal objective card for a player at the start of the game.
+     * The method handles the selection of a personal objective card for a player at the start of the game.
      * This method is called during the game's starting phase where players choose their personal objective cards.
      * It ensures that the player is in the correct state to make a selection and updates the game state accordingly.
      * If the player successfully selects a card and all players have finished their initial moves, the game transitions
@@ -341,9 +330,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
-     * Checks and updates the action of the given player based on the current game status.
+     * The method checks and updates the action of the given player based on the current game status.
      * If the game is in the ENDING state, it sets the player's action to ENDED and checks if all players have ended
      * their actions.
      * If all players have finished their actions, it declares the game ended and determines the winner.
@@ -373,7 +361,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
      * Allows a player to draw a card from a specified deck if the player's action is set to DRAW and the game is in the
      * RUNNING or ENDING state.
@@ -395,7 +382,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             throw new Exception("Player's action is not draw.");
         }
     }
-
 
     /**
      * Allows a player to draw a specific card from a displayed deck, given the player's action is set to DRAW and the
@@ -420,7 +406,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
      * Allows a player to send a message to the chat.
      * @param chatMessage The message for the chat.
@@ -430,7 +415,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     public void sendChatMessage(ChatMessage chatMessage) throws RemoteException {
         this.game.addMessage(chatMessage);
     }
-
 
     /**
      * Method that retrieves a specific side of a card from a player's hand based on the index provided.
@@ -462,7 +446,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         return side;
     }
 
-
     /**
      * Updates the size of the game.
      * @param size The new size of the game.
@@ -475,7 +458,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             game.setSize(size);
         }
     }
-
 
     /**
      * Places a card from the player's hand onto a specified position in their Codex.
@@ -523,7 +505,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
      * Retrieves the current game instance associated with this object.
      * @return The current instance of Game associated with this class.
@@ -531,8 +512,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     public Game getGame(){
         return game;
     }
-
-
 
     /**
      * The main game loop that handles different game statuses and manages online player interactions.
@@ -577,6 +556,4 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
     }
-
-
 }

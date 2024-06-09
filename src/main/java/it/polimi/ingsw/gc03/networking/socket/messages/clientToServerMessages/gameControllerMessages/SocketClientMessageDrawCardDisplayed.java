@@ -1,7 +1,5 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -51,7 +49,6 @@ public class SocketClientMessageDrawCardDisplayed extends SocketClientGenericMes
         this.index = index;
     }
 
-
     /**
      * Executes the message.
      * @param gameListener The game listener to be notified about game events.
@@ -64,7 +61,6 @@ public class SocketClientMessageDrawCardDisplayed extends SocketClientGenericMes
         return null;
     }
 
-
     /**
      * Executes the message.
      * @param gameController The game controller.
@@ -75,6 +71,4 @@ public class SocketClientMessageDrawCardDisplayed extends SocketClientGenericMes
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.drawCardDisplayed(this.player, this.deck, this.index);
     }
-
-
 }

@@ -1,14 +1,11 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-
 
 /**
  * Abstract class representing a generic message sent from the client to the server.
@@ -26,7 +23,6 @@ public abstract class SocketClientGenericMessage implements Serializable {
      */
     protected MessageType messageType;
 
-
     /**
      * Executes the specified actions associated with the message within the context of the main controller.
      * @param gameListener The game listener to interact with.
@@ -36,7 +32,6 @@ public abstract class SocketClientGenericMessage implements Serializable {
      */
     public abstract GameControllerInterface execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException;
 
-
     /**
      * Executes the specified actions associated with the message within the context of game control.
      * @param gameController The game controller to interact with.
@@ -44,7 +39,6 @@ public abstract class SocketClientGenericMessage implements Serializable {
      * @throws Exception If an exception occurs.
      */
     public abstract void execute(GameControllerInterface gameController) throws RemoteException, Exception;
-
 
     /**
      * Get the client nickname associated with the message.
@@ -54,7 +48,6 @@ public abstract class SocketClientGenericMessage implements Serializable {
         return this.nicknameClient;
     }
 
-
     /**
      * Set the client nickname associated with the message.
      * @param nicknameClient The nickname of the client sending the message.
@@ -62,7 +55,6 @@ public abstract class SocketClientGenericMessage implements Serializable {
     public void setNicknameClient(String nicknameClient) {
         this.nicknameClient = nicknameClient;
     }
-
 
     /**
      * Get the type of the message.
@@ -72,7 +64,6 @@ public abstract class SocketClientGenericMessage implements Serializable {
         return this.messageType;
     }
 
-
     /**
      * Set the type of the message.
      * @param messageType The type of the message to set.
@@ -80,6 +71,4 @@ public abstract class SocketClientGenericMessage implements Serializable {
     public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
     }
-
-
 }

@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-
 /**
  * This class facilitates communication of GameListener events to the client over a socket connection.
  */
@@ -26,7 +25,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
      */
     private final ObjectOutputStream outputStream;
 
-
     /**
      * Constructs a handler for transmitting GameListener events.
      * @param outputStream The ObjectOutputStream used for data transmission.
@@ -34,7 +32,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
     public GameListenerHandlerServer(ObjectOutputStream outputStream) {
         this.outputStream = outputStream;
     }
-
 
     /**
      * Flushes and resets the ObjectOutputStream. This ensures that all buffered data is sent
@@ -47,7 +44,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         // Clean the stream to prepare it for the next transmission
         this.outputStream.reset();
     }
-
 
     /**
      * This method is used to write on the output stream the message that a player has joined the game.
@@ -62,7 +58,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that a player has left the game.
@@ -79,7 +74,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that a player tried to join a full game.
      * @param gameImmutable The immutable game model.
@@ -94,7 +88,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that a player has reconnected to the game.
@@ -111,7 +104,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that a player has disconnected.
      * @param gameImmutable The immutable game model.
@@ -126,7 +118,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that only one player is connected.
@@ -143,7 +134,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that a player tried to use a nickname that is already in use.
      * @param player The player that tried to use the nickname.
@@ -157,7 +147,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that the game id doesn't exist.
@@ -173,7 +162,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the game has started.
      * @param gameImmutable The immutable game model.
@@ -188,7 +176,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the game has ended.
      * @param gameImmutable The immutable game model.
@@ -202,7 +189,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that a message has been sent.
@@ -219,7 +205,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the next turn triggered.
      * @param gameImmutable The immutable game model.
@@ -234,7 +219,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the last circle has started.
      * @param gameImmutable The immutable game model.
@@ -248,7 +232,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that the card was placed into the Codex.
@@ -266,7 +249,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the Starter card was placed into the Codex.
      * @param gameImmutable The immutable game model.
@@ -280,7 +262,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that the coordinates where he wants to insert
@@ -299,7 +280,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the positioning requirements are not respected.
      * @param gameImmutable The immutable game model.
@@ -314,7 +294,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that the points have been added.
@@ -332,7 +311,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the Objective card was chosen correctly.
      * @param gameImmutable The immutable game model.
@@ -348,7 +326,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the Objective card was not chosen correctly.
      * @param gameImmutable The immutable game model.
@@ -362,7 +339,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that the index is invalid.
@@ -379,7 +355,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that a deck has no cards.
      * @param gameImmutable The immutable game model.
@@ -394,7 +369,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that a card has been successfully added to his hand.
@@ -411,7 +385,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that a card was not added to his hand.
      * @param gameImmutable The immutable game model.
@@ -426,7 +399,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
-
     /**
      * This method is used to write on the output stream the message that the conditions to end the game have been reached.
      * @param gameImmutable The immutable game model.
@@ -440,7 +412,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write on the output stream the message that the points obtained with the Objective cards
@@ -457,7 +428,6 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
     /**
      * This method is used to write the message indicating which players won the game to the output stream.
@@ -489,6 +459,12 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
+    /**
+     * This method is used to write the message indicating that a player has drawn a card.
+     * @param gameImmutable The immutable game model.
+     * @param nickname The player that has drawn a card.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
         try {
@@ -498,6 +474,12 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
+    /**
+     * This method is used to write the message indicating that a player tried to reconnect to a game but wasn't in any game.
+     * @param gameImmutable The immutable game model.
+     * @param nickname The player that tried to reconnect.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException {
         try {
@@ -507,6 +489,11 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
         } catch (IOException e) {}
     }
 
+    /**
+     * This method is used to write the message indicating that a game has been created.
+     * @param gameImmutable The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
         try {
@@ -515,6 +502,4 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
-
 }

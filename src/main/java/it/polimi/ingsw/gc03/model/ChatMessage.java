@@ -1,9 +1,7 @@
 package it.polimi.ingsw.gc03.model;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 /**
  * This class represents a message in the chat.
@@ -42,7 +40,6 @@ public class ChatMessage implements Serializable {
         this.sender = sender;
         this.receiver = receiver;
     }
-
 
     /**
      * Getter method for retrieving the text of the message.
@@ -92,10 +89,18 @@ public class ChatMessage implements Serializable {
         this.sender = sender;
     }
 
+    /**
+     * Getter method for getting the receiver of the message.
+     * @return The receiver of the message.
+     */
     public String getReceiver() {
         return receiver;
     }
 
+    /**
+     * Setter method for setting the receiver of the message.
+     * @param receiver The sender of the message to set.
+     */
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }

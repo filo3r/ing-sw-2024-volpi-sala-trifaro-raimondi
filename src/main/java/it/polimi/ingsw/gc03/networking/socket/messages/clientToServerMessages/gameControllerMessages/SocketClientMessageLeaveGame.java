@@ -1,14 +1,11 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
-import it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages.SocketServerGenericMessage;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class SocketClientMessageLeaveGame extends SocketClientGenericMessage {
@@ -17,8 +14,6 @@ public class SocketClientMessageLeaveGame extends SocketClientGenericMessage {
      * The nickname of the player who disconnected.
      */
     private String nickname;
-
-
 
     /**
      * Constructs a new message that requires the change of the size of the game.
@@ -29,7 +24,6 @@ public class SocketClientMessageLeaveGame extends SocketClientGenericMessage {
         this.messageType = MessageType.GAME_CONTROLLER;
         this.nickname = nickname;
     }
-
 
     /**
      * Executes the message.
@@ -42,7 +36,6 @@ public class SocketClientMessageLeaveGame extends SocketClientGenericMessage {
     public GameControllerInterface execute(GameListener gameListener, MainControllerInterface mainController) throws RemoteException {
         return null;
     }
-
 
     /**
      * Executes the message.

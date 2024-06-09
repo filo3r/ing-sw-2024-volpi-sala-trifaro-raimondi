@@ -5,7 +5,15 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class EventList {
+
+    /**
+     * FIFO queue of events.
+     */
     private Queue<Event> lists;
+
+    /**
+     * If the player has joined a game.
+     */
     private boolean joined = false;
 
     /**

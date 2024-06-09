@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.view.tui.print;
 
 import java.util.logging.*;
 
-
 /**
  * An asynchronous logger that logs messages to the console using a shared queue.
  */
@@ -14,7 +13,7 @@ public class AsyncLogger {
     private static final Logger LOGGER = Logger.getLogger(AsyncLogger.class.getName());
 
 
-    /*
+    /**
      * Initializes the logger with a custom formatter and a console handler.
      * The logger is configured to use a custom formatter that colorizes log messages based on their logging level.
      */
@@ -27,7 +26,6 @@ public class AsyncLogger {
         LOGGER.setLevel(Level.ALL);
     }
 
-
     /**
      * Logs a message at the specified logging level.
      * @param level The logging level
@@ -36,7 +34,6 @@ public class AsyncLogger {
     public static void log(Level level, String message) {
         AsyncHandler.executeAsync(() -> LOGGER.log(level, message));
     }
-
 
     /**
      * Custom formatter to colorize log messages based on their logging level.
@@ -84,6 +81,4 @@ public class AsyncLogger {
             return levelColor + record.getLevel() + ": " + formatMessage(record) + ANSI_RESET + System.lineSeparator();
         }
     }
-
-
 }

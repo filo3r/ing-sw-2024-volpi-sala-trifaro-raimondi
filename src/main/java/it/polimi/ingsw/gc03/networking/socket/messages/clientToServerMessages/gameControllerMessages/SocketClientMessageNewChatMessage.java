@@ -1,7 +1,5 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
@@ -9,7 +7,6 @@ import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
-
 
 /**
  * This class is used to send a message from the client to the server to indicate the intention to send a
@@ -22,7 +19,6 @@ public class SocketClientMessageNewChatMessage extends SocketClientGenericMessag
      */
     private ChatMessage chatMessage;
 
-
     /**
      * Constructs a new message that prompts to send a message in the chat.
      * This message is flagged to be processed by the game controller of the application.
@@ -33,7 +29,6 @@ public class SocketClientMessageNewChatMessage extends SocketClientGenericMessag
         this.messageType = MessageType.GAME_CONTROLLER;
         this.chatMessage = chatMessage;
     }
-
 
     /**
      * Executes the message.
@@ -47,7 +42,6 @@ public class SocketClientMessageNewChatMessage extends SocketClientGenericMessag
         return null;
     }
 
-
     /**
      * Executes the message.
      * @param gameController The game controller.
@@ -58,6 +52,4 @@ public class SocketClientMessageNewChatMessage extends SocketClientGenericMessag
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.sendChatMessage(this.chatMessage);
     }
-
-
 }

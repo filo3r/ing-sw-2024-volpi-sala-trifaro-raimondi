@@ -77,7 +77,6 @@ public class GameImmutable implements Serializable {
         this.winner = Collections.unmodifiableList(new ArrayList<>(game.getWinner()));
     }
 
-
     /**
      * Method to get the ID of the game.
      * @return The ID of the game.
@@ -85,7 +84,6 @@ public class GameImmutable implements Serializable {
     public int getIdGame() {
         return idGame;
     }
-
 
     /**
      * Method to get the size of the game.
@@ -95,7 +93,6 @@ public class GameImmutable implements Serializable {
         return size;
     }
 
-
     /**
      * Method to get the status of the game.
      * @return The status of the game.
@@ -103,7 +100,6 @@ public class GameImmutable implements Serializable {
     public GameStatus getStatus() {
         return status;
     }
-
 
     /**
      * Method to get the desk of the game.
@@ -113,7 +109,6 @@ public class GameImmutable implements Serializable {
         return desk;
     }
 
-
     /**
      * Method to get the number of players in the game.
      * @return The number of players in the game.
@@ -121,7 +116,6 @@ public class GameImmutable implements Serializable {
     public int getNumPlayer() {
         return numPlayer;
     }
-
 
     /**
      * Method to get the list of players in the game.
@@ -131,7 +125,6 @@ public class GameImmutable implements Serializable {
         return players;
     }
 
-
     /**
      * Method to get the current player in the game.
      * @return The current player in the game.
@@ -139,7 +132,6 @@ public class GameImmutable implements Serializable {
     public int getCurrPlayer() {
         return currPlayer;
     }
-
 
     /**
      * Method to get the chat messages in the game.
@@ -149,7 +141,6 @@ public class GameImmutable implements Serializable {
         return chat;
     }
 
-
     /**
      * Method to get the winner of the game.
      * @return The winner or the winners of the game.
@@ -157,6 +148,4 @@ public class GameImmutable implements Serializable {
     public List<Player> getWinner() {
         return winner;
     }
-
-
 }

@@ -22,7 +22,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-
 /**
  * The RmiClient class handles the connection to the RMI server and allows
  * clients to interact with the game through remote method invocations.
@@ -79,7 +78,6 @@ public class RmiClient implements ClientAction {
      */
     private int port;
 
-
     /**
      * Class constructor.
      * Creates, starts, and connects an RMI Client to the server.
@@ -98,7 +96,6 @@ public class RmiClient implements ClientAction {
         this.port = port;
     }
 
-
     /**
      * Setups the connection to the RMI server.
      * @throws RemoteException   If an error occurs in remote communication.
@@ -109,7 +106,6 @@ public class RmiClient implements ClientAction {
         this.mainController = (MainControllerInterface) this.rmiRegistry.lookup("RMIServer");
         gameListener = (GameListener) UnicastRemoteObject.exportObject(gameListenerHandlerClient, 0);
     }
-
 
     /**
      * Connects the client to the RMI server.
@@ -122,7 +118,6 @@ public class RmiClient implements ClientAction {
             AsyncLogger.log(Level.SEVERE, "[CLIENT RMI] Failed to connect to server: " + e.getMessage());
         }
     }
-
 
     /**
      * Disconnects the client from the RMI server.
@@ -138,7 +133,6 @@ public class RmiClient implements ClientAction {
         }
     }
 
-
     /**
      * Connects to the game server.
      * @throws RemoteException   If an error occurs in remote communication.
@@ -149,9 +143,8 @@ public class RmiClient implements ClientAction {
         this.mainController = (MainControllerInterface) this.rmiRegistry.lookup("RMIServer");
     }
 
-
     /**
-     * The client can create a new game.
+     * The client creates a new game.
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws NotBoundException If a name in the registry was not found.
@@ -163,9 +156,8 @@ public class RmiClient implements ClientAction {
         this.gameController = this.mainController.createGame(this.gameListener, this.nicknameClient);
     }
 
-
     /**
-     * The client can join the first available game.
+     * The client joins the first available game.
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws NotBoundException If a name in the registry was not found.
@@ -177,9 +169,8 @@ public class RmiClient implements ClientAction {
         this.gameController = this.mainController.joinFirstAvailableGame(this.gameListener, nickname);
     }
 
-
     /**
-     * The client can participate in a specific game.
+     * The client joins a specific game.
      * @param nickname The nickname of the client.
      * @param idGame The id of the game.
      * @throws RemoteException If an error occurs in remote communication.
@@ -192,14 +183,18 @@ public class RmiClient implements ClientAction {
         this.gameController = this.mainController.joinSpecificGame(this.gameListener, nickname, idGame);
     }
 
+    /**
+     * The client leaves the game.
+     * @param nickname The nickname of the client.
+     * @throws IOException If an I/O error occurs.
+     */
     @Override
     public void leaveGame(String nickname) throws IOException {
         this.gameController.leaveGame(nickname);
     }
 
-
     /**
-     * The client can reconnect to an ongoing game.
+     * The client reconnects to an ongoing game.
      * @param nickname The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws NotBoundException If a name in the registry was not found.
@@ -211,9 +206,8 @@ public class RmiClient implements ClientAction {
         this.gameController = this.mainController.reconnectToGame(this.gameListener, nickname);
     }
 
-
     /**
-     * The client can place the Starter card in the Codex.
+     * The client places the Starter card in the Codex.
      * @param player The player representing the client.
      * @param side The side of the Starter card to be placed into the Codex.
      * @throws RemoteException If an error occurs in remote communication.
@@ -224,9 +218,8 @@ public class RmiClient implements ClientAction {
         this.gameController.placeStarterOnCodex(player, side);
     }
 
-
     /**
-     * The client can place a card in the Codex.
+     * The client places a card in the Codex.
      * @param player The player representing the client.
      * @param index The index of the card in the player's hand to be placed.
      * @param frontCard A boolean indicating whether to place the front (true) or back (false) side of the card.
@@ -240,9 +233,8 @@ public class RmiClient implements ClientAction {
         this.gameController.placeCardOnCodex(player, index, frontCard, row, col);
     }
 
-
     /**
-     * The client can select his personal Objective card.
+     * The client selects his personal Objective card.
      * @param player The player representing the client.
      * @param cardObjective The index of the card in the player's list of Objective cards that the player wishes to select.
      * @throws RemoteException If an error occurs in remote communication.
@@ -253,9 +245,8 @@ public class RmiClient implements ClientAction {
         this.gameController.selectCardObjective(player, cardObjective);
     }
 
-
     /**
-     * The client can draw a card from the deck of cards.
+     * The client draws a card from the deck of cards.
      * @param player The player representing the client.
      * @param deck The deck from which the card is drawn.
      * @throws RemoteException If an error occurs in remote communication.
@@ -266,9 +257,8 @@ public class RmiClient implements ClientAction {
         this.gameController.drawCardFromDeck(player, deck);
     }
 
-
     /**
-     * The client can draw a card from the visible cards.
+     * The client draws a card from the visible cards.
      * @param player The player representing the client.
      * @param deck The visible deck from which the card is drawn.
      * @param index The index of the card in the displayed deck that the player wishes to draw.
@@ -280,9 +270,8 @@ public class RmiClient implements ClientAction {
         this.gameController.drawCardDisplayed(player, deck, index);
     }
 
-
     /**
-     * The client can send a message in chat.
+     * The client sends a message in chat.
      * @param chatMessage The message for the chat.
      * @throws RemoteException If an error occurs in remote communication.
      */
@@ -291,9 +280,8 @@ public class RmiClient implements ClientAction {
         this.gameController.sendChatMessage(chatMessage);
     }
 
-
     /**
-     * The client can choose the number of players participating in the game.
+     * The client chooses the number of players participating in the game.
      * @param size The number of players participating in the game.
      * @throws RemoteException If an error occurs in remote communication.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
@@ -303,6 +291,11 @@ public class RmiClient implements ClientAction {
         this.gameController.updateGameSize(size);
     }
 
+    /**
+     * Periodical ping from the client to ther server.
+     * @param player The nickname of the client.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void sendPing(String player) {
         try {

@@ -26,7 +26,6 @@ public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMes
         this.nickname = nickname;
     }
 
-
     /**
      * Executes the appropriate action based on the content of the message.
      * @param gameListener The game listener to which this message's actions are directed.

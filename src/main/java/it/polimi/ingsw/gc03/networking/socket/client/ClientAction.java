@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.networking.socket.client;
 
-import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -9,7 +8,6 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
 
 /**
  * This class represents the actions that a client can perform within the game.
@@ -25,7 +23,6 @@ public interface ClientAction {
      */
     void createGame(String nickname) throws IOException, InterruptedException, NotBoundException;
 
-
     /**
      * The client can join the first available game.
      * @param nickname The nickname of the client.
@@ -34,7 +31,6 @@ public interface ClientAction {
      * @throws NotBoundException If a name in the registry was not found.
      */
     void joinFirstAvailableGame(String nickname) throws IOException, InterruptedException, NotBoundException;
-
 
     /**
      * The client can participate in a specific game.
@@ -62,7 +58,6 @@ public interface ClientAction {
      */
     void reconnectToGame(String nickname) throws IOException, InterruptedException, NotBoundException;
 
-
     /**
      * The client can place the Starter card in the Codex.
      * @param player The player representing the client.
@@ -72,7 +67,6 @@ public interface ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     void placeStarterOnCodex(Player player, Side side) throws IOException, InterruptedException, Exception;
-
 
     /**
      * The client can place a card in the Codex.
@@ -87,7 +81,6 @@ public interface ClientAction {
      */
     void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws IOException, InterruptedException, Exception;
 
-
     /**
      * The client can select his personal Objective card.
      * @param player The player representing the client.
@@ -98,7 +91,6 @@ public interface ClientAction {
      */
     void selectCardObjective(Player player, int cardObjective) throws IOException, InterruptedException, Exception;
 
-
     /**
      * The client can draw a card from the deck of cards.
      * @param player The player representing the client.
@@ -108,7 +100,6 @@ public interface ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws IOException, InterruptedException, Exception;
-
 
     /**
      * The client can draw a card from the visible cards.
@@ -121,7 +112,6 @@ public interface ClientAction {
      */
     void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws IOException, InterruptedException, Exception;
 
-
     /**
      * The client can send a message in chat.
      * @param chatMessage The message for the chat.
@@ -129,13 +119,11 @@ public interface ClientAction {
      */
     void sendChatMessage(ChatMessage chatMessage) throws RemoteException;
 
-
     /**
      * The client sends a ping message.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void sendPing(String player) throws RemoteException;
-
 
     /**
      * The client can choose the number of players participating in the game.
@@ -144,5 +132,4 @@ public interface ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     void gameSizeUpdated(int size) throws RemoteException, Exception;
-
 }

@@ -33,7 +33,6 @@ public enum Kingdom implements Serializable {
      */
     NULL;
 
-
     /**
      * Method for converting a Value value to a Kingdom value.
      * @param value The value to convert.
@@ -53,6 +52,4 @@ public enum Kingdom implements Serializable {
                 return NULL;
         }
     }
-
-
 }

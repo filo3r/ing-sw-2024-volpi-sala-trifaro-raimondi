@@ -3,8 +3,6 @@ package it.polimi.ingsw.gc03.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
@@ -18,10 +16,8 @@ import java.lang.reflect.Type;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  * This class represents the game board.
@@ -62,7 +58,6 @@ public class Desk implements Serializable {
      * Visible Objective cards.
      */
     private ArrayList<CardObjective> displayedObjective;
-
 
     /**
      * File with information about Starter cards.
@@ -142,7 +137,9 @@ public class Desk implements Serializable {
      */
     private static final Logger logger = Logger.getLogger(Desk.class.getName());
 
-
+    /**
+     * The game object of the desk.
+     */
     private Game game;
 
     /**
@@ -156,7 +153,6 @@ public class Desk implements Serializable {
         initializeDisplayedCard();
         this.game = game;
     }
-
 
     /**
      * Method for creating the Starter card deck.
@@ -192,7 +188,6 @@ public class Desk implements Serializable {
         return false;
     }
 
-
     /**
      * Method for creating the Resource card deck.
      * @return A boolean indicating whether the operation was successful or not.
@@ -226,7 +221,6 @@ public class Desk implements Serializable {
         }
         return false;
     }
-
 
     /**
      * Method for creating the Gold card deck.
@@ -262,7 +256,6 @@ public class Desk implements Serializable {
         return false;
     }
 
-
     /**
      * Method for creating the Objective card deck.
      * @return A boolean indicating whether the operation was successful or not.
@@ -296,7 +289,6 @@ public class Desk implements Serializable {
         return false;
     }
 
-
     /**
      * Method for initializing visible cards.
      */
@@ -321,7 +313,6 @@ public class Desk implements Serializable {
         }
     }
 
-
     /**
      * Method for drawing a card.
      * @param deck The deck from which you want to draw a card.
@@ -340,7 +331,6 @@ public class Desk implements Serializable {
             return drawnCard;
         }
     }
-
 
     /**
      * Method for drawing a card from those visible.
@@ -363,7 +353,6 @@ public class Desk implements Serializable {
             return card;
         }
     }
-
 
     /**
      * Method for checking that the visible cards are always in the correct number.
@@ -391,7 +380,6 @@ public class Desk implements Serializable {
         }
     }
 
-
     /**
      * Method for obtaining the Starter card deck.
      * @return The Starter card deck.
@@ -399,7 +387,6 @@ public class Desk implements Serializable {
     public ArrayList<CardStarter> getDeckStarter() {
         return deckStarter;
     }
-
 
     /**
      * Method for setting the Starter card deck.
@@ -409,7 +396,6 @@ public class Desk implements Serializable {
         this.deckStarter = deckStarter;
     }
 
-
     /**
      * Method for obtaining the Resource card deck.
      * @return The Resource card deck.
@@ -417,7 +403,6 @@ public class Desk implements Serializable {
     public ArrayList<CardResource> getDeckResource() {
         return deckResource;
     }
-
 
     /**
      * Method for setting the Resource card deck.
@@ -427,7 +412,6 @@ public class Desk implements Serializable {
         this.deckResource = deckResource;
     }
 
-
     /**
      * Method for obtaining the Gold card deck.
      * @return The Gold card deck.
@@ -435,7 +419,6 @@ public class Desk implements Serializable {
     public ArrayList<CardGold> getDeckGold() {
         return deckGold;
     }
-
 
     /**
      * Method for setting the Gold card deck.
@@ -445,7 +428,6 @@ public class Desk implements Serializable {
         this.deckGold = deckGold;
     }
 
-
     /**
      * Method for obtaining the Objective card deck.
      * @return The Objective card deck.
@@ -453,7 +435,6 @@ public class Desk implements Serializable {
     public ArrayList<CardObjective> getDeckObjective() {
         return deckObjective;
     }
-
 
     /**
      * Method for setting the Objective card deck.
@@ -463,7 +444,6 @@ public class Desk implements Serializable {
         this.deckObjective = deckObjective;
     }
 
-
     /**
      * Method for obtaining the displayed Resource cards.
      * @return The displayed Resource cards.
@@ -471,7 +451,6 @@ public class Desk implements Serializable {
     public ArrayList<Card> getDisplayedResource() {
         return displayedResource;
     }
-
 
     /**
      * Method for setting the displayed Resource cards.
@@ -481,7 +460,6 @@ public class Desk implements Serializable {
         this.displayedResource = displayedResource;
     }
 
-
     /**
      * Method for obtaining the displayed Gold cards.
      * @return The Gold cards.
@@ -489,7 +467,6 @@ public class Desk implements Serializable {
     public ArrayList<Card> getDisplayedGold() {
         return displayedGold;
     }
-
 
     /**
      * Method for setting the displayed Gold cards.
@@ -499,7 +476,6 @@ public class Desk implements Serializable {
         this.displayedGold = displayedGold;
     }
 
-
     /**
      * Method for obtaining the Objective cards.
      * @return The Objective cards.
@@ -508,7 +484,6 @@ public class Desk implements Serializable {
         return displayedObjective;
     }
 
-
     /**
      * Method for setting the displayed Objective cards.
      * @param displayedObjective The displayed Objective cards.
@@ -516,6 +491,4 @@ public class Desk implements Serializable {
     public void setDisplayedObjective(ArrayList<CardObjective> displayedObjective) {
         this.displayedObjective = displayedObjective;
     }
-
-
 }

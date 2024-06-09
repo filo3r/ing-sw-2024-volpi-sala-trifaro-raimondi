@@ -62,6 +62,4 @@ public class Card implements Serializable {
     public void setPlayable(boolean playable) {
         this.playable = playable;
     }
-
-
 }

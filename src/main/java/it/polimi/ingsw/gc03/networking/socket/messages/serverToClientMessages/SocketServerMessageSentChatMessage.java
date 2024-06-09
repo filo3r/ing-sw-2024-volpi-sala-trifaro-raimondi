@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that a message has been sent.
  */
@@ -32,7 +31,6 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
         this.chatMessage = chatMessage;
     }
 
-
     /**
      * Executes the appropriate action based on the content of the message.
      * @param gameListener The game listener to which this message's actions are directed.
@@ -43,6 +41,4 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.sentChatMessage(this.gameImmutable, this.chatMessage);
     }
-
-
 }

@@ -35,6 +35,4 @@ public class InputReaderGUI implements InputReader{
     public synchronized void addTxt(String txt){
         inputQueue.addData(txt);
     }
-
-
 }

@@ -16,7 +16,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-
 /**
  * The ClientHandler class processes incoming requests from clients to perform actions like creating, joining, leaving,
  * or reconnecting to a game.
@@ -79,7 +78,6 @@ public class ClientHandler implements Runnable {
         this.gameListenerHandlerServer = new GameListenerHandlerServer(this.outputStream);
     }
 
-
     /**
      * Updates the GameController and the client's nickname based on the provided controller.
      * If the controller is non-null, it retrieves the nickname from the controller. If the controller is null,
@@ -91,7 +89,6 @@ public class ClientHandler implements Runnable {
         this.gameController = controller;
         this.nicknameClient = controller != null ? message.getNicknameClient() : null;
     }
-
 
     /**
      * Processes a message that is intended for the MainController. This method extracts the game controller
@@ -108,7 +105,6 @@ public class ClientHandler implements Runnable {
             AsyncLogger.log(Level.SEVERE, "[SERVER SOCKET] Error processing message for MainController: " + e.getMessage());
         }
     }
-
 
     /**
      * Executes the game logic for the client.
@@ -133,7 +129,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
     /**
      * Gracefully shuts down the game logic executor.
      */
@@ -148,7 +143,6 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
     /**
      * Interrupts the client handler thread.
      */
@@ -156,7 +150,6 @@ public class ClientHandler implements Runnable {
         this.gameLogicExecutor.shutdownNow();
         Thread.currentThread().interrupt();
     }
-
 
     /**
      * Processes all actions received from the client, delegating them to the appropriate game controller.
@@ -188,6 +181,4 @@ public class ClientHandler implements Runnable {
             shutdownGameLogicExecutor();
         }
     }
-
-
 }

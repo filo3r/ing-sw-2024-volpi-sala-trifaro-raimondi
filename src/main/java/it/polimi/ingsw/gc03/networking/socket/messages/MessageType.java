@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.networking.socket.messages;
 
-
 /**
  * Enum MessageType defines the types of messages that can be sent from the client to the server.
  * This enumeration provides a type-safe way of handling different message purposes in the networking code.
@@ -24,5 +23,4 @@ public enum MessageType {
      * These are periodic signals sent to ensure that the connection is still active and responsive.
      */
     PING
-
 }

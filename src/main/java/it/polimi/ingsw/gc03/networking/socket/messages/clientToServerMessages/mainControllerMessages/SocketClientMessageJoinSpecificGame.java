@@ -1,14 +1,11 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.mainControllerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
-
 
 /**
  * This class represents a message sent from the client to the server to request joining a specific game.
@@ -19,7 +16,6 @@ public class SocketClientMessageJoinSpecificGame extends SocketClientGenericMess
      * The id of the game the client wants to join.
      */
     protected int idGame;
-
 
     /**
      * Constructs a new message requesting to join a specific game with the specified client nickname and game id.
@@ -32,7 +28,6 @@ public class SocketClientMessageJoinSpecificGame extends SocketClientGenericMess
         this.messageType = MessageType.MAIN_CONTROLLER;
         this.idGame = idGame;
     }
-
 
     /**
      * Executes the request message to join the specific game, using the provided game listener,
@@ -47,7 +42,6 @@ public class SocketClientMessageJoinSpecificGame extends SocketClientGenericMess
         return mainController.joinSpecificGame(gameListener, this.nicknameClient, this.idGame);
     }
 
-
     /**
      * Executes the request message to join the specific game, using the provided game listener,
      * the client nickname and the game id.
@@ -56,6 +50,4 @@ public class SocketClientMessageJoinSpecificGame extends SocketClientGenericMess
      */
     @Override
     public void execute(GameControllerInterface gameController) throws RemoteException {}
-
-
 }

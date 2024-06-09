@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 
-
 /**
  * Main class for starting the server.
  * This class initializes both RMI and Socket servers and sets the server IP address.

@@ -6,7 +6,6 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 
 import java.io.Serializable;
 
-
 /**
  * This class represents the front of a Starter card.
  */
@@ -24,5 +23,4 @@ public class FrontStarter extends Side implements Serializable {
                         Value bottomRightCorner) {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
     }
-
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.model.enumerations;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * This enumeration class represents the colors players can have.
  */
@@ -42,5 +41,4 @@ public enum Color implements Serializable {
         colors.add(Color.YELLOW);
         return colors;
     }
-
 }

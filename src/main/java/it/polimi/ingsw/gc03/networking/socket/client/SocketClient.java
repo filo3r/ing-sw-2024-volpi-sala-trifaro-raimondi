@@ -20,7 +20,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-
 /**
  * The ClientSocket class handles all network communications between the client and the server using sockets.
  * This class uses an ExecutorService to manage threads for asynchronous message processing.
@@ -79,7 +78,6 @@ public class SocketClient implements ClientAction {
         startConnection(ip, port);
     }
 
-
     /**
      * Starts the connection with the server using a specified IP address and port.
      * @param ip The IP address of the server.
@@ -108,8 +106,6 @@ public class SocketClient implements ClientAction {
         }
     }
 
-
-
     /**
      * Continuously processes messages received from the server.
      * This method runs in a separate thread managed by ExecutorService.
@@ -125,7 +121,6 @@ public class SocketClient implements ClientAction {
             shutdownAndExit();
         }
     }
-
 
     /**
      * Stops the connection and releases all resources.
@@ -146,7 +141,6 @@ public class SocketClient implements ClientAction {
         }
     }
 
-
     /**
      * Shutdown the client socket and exits the program. This method is called upon severe errors.
      */
@@ -155,7 +149,6 @@ public class SocketClient implements ClientAction {
         stopConnection();
         System.exit(-1);
     }
-
 
     /**
      * Flushes and resets the ObjectOutputStream. This ensures that all buffered data is sent
@@ -168,7 +161,6 @@ public class SocketClient implements ClientAction {
         // Clean the stream to prepare it for the next transmission
         this.outputStream.reset();
     }
-
 
     /**
      * This method is used to write on the output stream the message that the client wants to create a game.
@@ -183,7 +175,6 @@ public class SocketClient implements ClientAction {
         completeTransmission();
     }
 
-
     /**
      * This method is used to write on the output stream the message that the client wants to join the first available game.
      * @param nickname The nickname of the client.
@@ -196,7 +187,6 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
-
 
     /**
      * This method is used to write on the output stream the message that the client wants to participate in a specific game.
@@ -211,7 +201,6 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
-
 
     /**
      * This method is used to write on the output stream the message that the client wants to leave a game in progress.
@@ -239,7 +228,6 @@ public class SocketClient implements ClientAction {
         completeTransmission();
     }
 
-
     /**
      * This method is used to write on the output stream the message that the client wants to place the Starter card in the Codex.
      * @param player The player representing the client.
@@ -252,7 +240,6 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
-
 
     /**
      * This method is used to write on the output stream the message that the client wants to place a card in the Codex.
@@ -270,7 +257,6 @@ public class SocketClient implements ClientAction {
         completeTransmission();
     }
 
-
     /**
      * This method is used to write on the output stream the message that the client wants to select his personal Objective card.
      * @param player The player representing the client.
@@ -284,7 +270,6 @@ public class SocketClient implements ClientAction {
         completeTransmission();
     }
 
-
     /**
      * This method is used to write on the output stream the message that the client wants to draw a card from the deck of cards.
      * @param player The player representing the client.
@@ -297,7 +282,6 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
-
 
     /**
      * This method is used to write on the output stream the message that the client wants to draw a card from the visible cards.
@@ -313,7 +297,6 @@ public class SocketClient implements ClientAction {
         completeTransmission();
     }
 
-
     /**
      * This method is used to write on the output stream the message that the client wants to send a message in chat.
      * @param chatMessage The message for the chat.
@@ -328,7 +311,6 @@ public class SocketClient implements ClientAction {
             throw new RuntimeException(e);
         }
     }
-
 
     /**
      * This method is used to write the message that the client sends as a ping to the output stream.
@@ -349,7 +331,6 @@ public class SocketClient implements ClientAction {
         }
     }
 
-
     /**
      * This method is used to write on the output stream the message that the client changed the game size.
      * @param size The number of players participating in the game.
@@ -361,6 +342,4 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
-
-
 }

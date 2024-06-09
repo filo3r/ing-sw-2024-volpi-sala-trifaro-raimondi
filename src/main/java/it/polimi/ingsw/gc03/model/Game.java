@@ -11,10 +11,6 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.SequencedSet;
-
 
 /**
  * This class represents a game.
@@ -81,7 +77,6 @@ public class Game implements Serializable {
      */
     private transient ListenersHandler listenersHandler;
 
-
     /**
      * Game class constructor.
      * @param idGame The game's ID.
@@ -99,7 +94,6 @@ public class Game implements Serializable {
         this.winner = new ArrayList<>(MAX_NUM_PLAYERS);
     }
 
-
     /**
      * Method for adding a player to the game.
      * @param nickname The player's nickname.
@@ -108,11 +102,11 @@ public class Game implements Serializable {
     public boolean addPlayer(String nickname, GameListener listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException, CannotJoinGameException {
         Player player = new Player(nickname, this.numPlayer, this.desk, this, listener);
         // The game is full
-        if(this.getStatus().equals(GameStatus.WAITING)){
+        if (this.getStatus().equals(GameStatus.WAITING)) {
             if (this.numPlayer >= this.size || this.numPlayer >= MAX_NUM_PLAYERS) {
                 player.getSelfListener().joinUnableGameFull(new GameImmutable(this), player);
                 throw new DeskIsFullException();
-            } else if(!this.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().isEmpty()){
+            } else if (!this.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().isEmpty()) {
                 player.getSelfListener().joinUnableNicknameAlreadyInUse(player);
                 throw new PlayerAlreadyJoinedException();
             } else {
@@ -122,13 +116,12 @@ public class Game implements Serializable {
                 addListener(listener);
                 listenersHandler.notifyPlayerJoined(this);
                 return true;
-                }
+            }
         } else {
             player.getSelfListener().joinUnableGameFull(new GameImmutable(this), player);
             throw new CannotJoinGameException();
         }
     }
-
 
     /**
      * Method for removing a player from the game.
@@ -149,8 +142,6 @@ public class Game implements Serializable {
         return false;
     }
 
-
-
     /**
      * Method to add a message to the game chat.
      * @param sender The nickname of the player who wrote the message.
@@ -163,7 +154,6 @@ public class Game implements Serializable {
         listenersHandler.notifySentChatMessage(this, chatMessage);
     }
 
-
     /**
      * Method to update the current player.
      */
@@ -173,7 +163,6 @@ public class Game implements Serializable {
         else
             this.currPlayer = 0;
     }
-
 
     /**
      * Method for returning a list of players who are online.
@@ -188,7 +177,6 @@ public class Game implements Serializable {
         }
         return onlinePlayers;
     }
-
 
     /**
      * Method for determining who won the game.
@@ -233,7 +221,6 @@ public class Game implements Serializable {
         }
     }
 
-
     /**
      * Method for stopping the game if the two decks are exhausted or if a player has reached the established points.
      * @return A boolean indicating whether the game must end or not.
@@ -250,7 +237,6 @@ public class Game implements Serializable {
             return false;
     }
 
-
     /**
      * Method to get the ID of the game.
      * @return The ID of the game.
@@ -259,7 +245,6 @@ public class Game implements Serializable {
         return idGame;
     }
 
-
     /**
      * Method to set the ID of the game.
      * @param idGame The ID of the game.
@@ -267,7 +252,6 @@ public class Game implements Serializable {
     public void setIdGame(int idGame) {
         this.idGame = idGame;
     }
-
 
     /**
      * Method to set the size of the game.
@@ -278,7 +262,6 @@ public class Game implements Serializable {
         listenersHandler.notifyGameSizeUpdated(this, size);
     }
 
-
     /**
      * Method to get the size of the game.
      * @return The size of the game.
@@ -287,7 +270,6 @@ public class Game implements Serializable {
         return size;
     }
 
-
     /**
      * Method to get the status of the game.
      * @return The status of the game.
@@ -295,7 +277,6 @@ public class Game implements Serializable {
     public GameStatus getStatus() {
         return status;
     }
-
 
     /**
      * Method to set the status of the game.
@@ -336,7 +317,6 @@ public class Game implements Serializable {
         return desk;
     }
 
-
     /**
      * Method to set the desk of the game.
      * @param desk The desk of the game.
@@ -344,7 +324,6 @@ public class Game implements Serializable {
     public void setDesk(Desk desk) {
         this.desk = desk;
     }
-
 
     /**
      * Method to get the number of players in the game.
@@ -354,7 +333,6 @@ public class Game implements Serializable {
         return numPlayer;
     }
 
-
     /**
      * Method to set the number of players in the game.
      * @param numPlayer The number of players in the game.
@@ -362,7 +340,6 @@ public class Game implements Serializable {
     public void setNumPlayer(int numPlayer) {
         this.numPlayer = numPlayer;
     }
-
 
     /**
      * Method to get the list of players in the game.
@@ -372,7 +349,6 @@ public class Game implements Serializable {
         return players;
     }
 
-
     /**
      * Method to set the list of players in the game.
      * @param players The list of players in the game.
@@ -380,7 +356,6 @@ public class Game implements Serializable {
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
-
 
     /**
      * Method to get the current player in the game.
@@ -390,7 +365,6 @@ public class Game implements Serializable {
         return currPlayer;
     }
 
-
     /**
      * Method to set the current player in the game.
      * @param currPlayer The current player in the game.
@@ -398,7 +372,6 @@ public class Game implements Serializable {
     public void setCurrPlayer(int currPlayer) {
         this.currPlayer = currPlayer;
     }
-
 
     /**
      * Method to get the chat messages in the game.
@@ -408,7 +381,6 @@ public class Game implements Serializable {
         return chat;
     }
 
-
     /**
      * Method to set the chat messages in the game.
      * @param chat The chat messages in the game.
@@ -416,7 +388,6 @@ public class Game implements Serializable {
     public void setChat(ArrayList<ChatMessage> chat) {
         this.chat = chat;
     }
-
 
     /**
      * Method to get the winner of the game.
@@ -431,7 +402,6 @@ public class Game implements Serializable {
             return this.winner;
         }
     }
-
 
     /**
      * Method to set the winner of the game.

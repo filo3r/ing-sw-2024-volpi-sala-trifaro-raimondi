@@ -27,7 +27,6 @@ public class FrontGold extends Side implements Serializable {
      */
     private ArrayList<Value> requirementPlacement;
 
-
     /**
      * Constructor of the class FrontGold.
      * @param kingdom The kingdom of the card.
@@ -47,7 +46,6 @@ public class FrontGold extends Side implements Serializable {
         this.requirementPlacement = new ArrayList<>(requirementPlacement);
     }
 
-
     /**
      * Getter method to retrieve the points on the card.
      * @return The points on the card.
@@ -55,7 +53,6 @@ public class FrontGold extends Side implements Serializable {
     public int getPoint() {
         return point;
     }
-
 
     /**
      * Setter method to set the points on the card.
@@ -65,7 +62,6 @@ public class FrontGold extends Side implements Serializable {
         this.point = point;
     }
 
-
     /**
      * Getter method to retrieve the requirement for the points.
      * @return The requirement for the points.
@@ -73,7 +69,6 @@ public class FrontGold extends Side implements Serializable {
     public Value getRequirementPoint() {
         return requirementPoint;
     }
-
 
     /**
      * Setter method to set the requirement for the points.
@@ -83,7 +78,6 @@ public class FrontGold extends Side implements Serializable {
         this.requirementPoint = requirementPoint;
     }
 
-
     /**
      * Getter method to retrieve the requirements for card placement.
      * @return The requirements for card placement.
@@ -92,7 +86,6 @@ public class FrontGold extends Side implements Serializable {
         return requirementPlacement;
     }
 
-
     /**
      * Setter method to set the requirements for the points.
      * @param requirementPlacement The requirements for card placement.
@@ -100,6 +93,4 @@ public class FrontGold extends Side implements Serializable {
     public void setRequirementPlacement(ArrayList<Value> requirementPlacement) {
         this.requirementPlacement = requirementPlacement;
     }
-
-
 }

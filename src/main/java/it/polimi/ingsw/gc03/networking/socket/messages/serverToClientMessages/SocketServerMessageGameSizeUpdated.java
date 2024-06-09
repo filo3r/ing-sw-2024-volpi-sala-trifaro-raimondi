@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the points obtained with
  * the Objective cards have been calculated.
@@ -21,7 +20,6 @@ public class SocketServerMessageGameSizeUpdated extends SocketServerGenericMessa
      */
     private int size;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -31,7 +29,6 @@ public class SocketServerMessageGameSizeUpdated extends SocketServerGenericMessa
         this.gameImmutable = gameImmutable;
         this.size = gameSize;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.

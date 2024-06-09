@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import java.util.ArrayList;
 
-
 /**
  * This class represents the back of a Resource card.
  */
@@ -22,6 +21,4 @@ public class BackResource extends BackSide {
     public BackResource(Kingdom kingdom, Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner, ArrayList<Value> center) {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner, center);
     }
-
-
 }

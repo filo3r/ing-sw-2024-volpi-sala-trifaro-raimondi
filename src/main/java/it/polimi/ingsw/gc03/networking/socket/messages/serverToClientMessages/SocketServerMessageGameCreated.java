@@ -12,7 +12,6 @@ public class SocketServerMessageGameCreated extends SocketServerGenericMessage {
      */
     private GameImmutable gameImmutable;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -20,7 +19,6 @@ public class SocketServerMessageGameCreated extends SocketServerGenericMessage {
     public SocketServerMessageGameCreated(GameImmutable gameImmutable) {
         this.gameImmutable = gameImmutable;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -32,6 +30,4 @@ public class SocketServerMessageGameCreated extends SocketServerGenericMessage {
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.gameCreated(this.gameImmutable);
     }
-
-
 }

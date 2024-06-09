@@ -4,7 +4,6 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-
 /**
  * This class is used to provide Gson with a custom TypeAdapter to handle the deserialization of classes that implement
  * the CalculateScoreStrategy interface.
@@ -17,6 +16,9 @@ public class CalculateScoreStrategyAdapter implements JsonSerializer<CalculateSc
         return jsonObject;
     }
 
+    /**
+     * Strategy pattern deserializer.
+     */
     @Override
     public CalculateScoreStrategy deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();

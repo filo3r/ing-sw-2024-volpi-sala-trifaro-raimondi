@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * This class represents a Objective card.
  */
@@ -51,7 +50,6 @@ public class CardObjective extends Card implements Serializable {
             + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "images" + File.separator +
             "cards" + File.separator + "frontSide" + File.separator;
 
-
     /**
      * Constructor for the CardObjective class.
      * @param idCard The unique identifier of the card.
@@ -70,7 +68,6 @@ public class CardObjective extends Card implements Serializable {
         this.image = IMAGE_PATH + idCard + "_front.png";
     }
 
-
     /**
      * Method for calculating points.
      * @param codex The codex on which points must be calculated.
@@ -82,7 +79,6 @@ public class CardObjective extends Card implements Serializable {
         return scoreStrategy.calculateScore(codex, point, parameters);
     }
 
-
     /**
      * Method to get the textual description of the card's objective.
      * @return The textual description of the card's objective.
@@ -90,7 +86,6 @@ public class CardObjective extends Card implements Serializable {
     public String getObjective() {
         return this.objective;
     }
-
 
     /**
      * Method to set the textual description of the card's objective.
@@ -100,7 +95,6 @@ public class CardObjective extends Card implements Serializable {
         this.objective = objective;
     }
 
-
     /**
      * Method to get the strategy to apply for calculating the points given by the objective.
      * @return The strategy to apply for calculating the points given by the objective.
@@ -108,7 +102,6 @@ public class CardObjective extends Card implements Serializable {
     public CalculateScoreStrategy getScoreStrategy() {
         return this.scoreStrategy;
     }
-
 
     /**
      * Method to set the strategy to apply for calculating the points given by the objective.
@@ -118,7 +111,6 @@ public class CardObjective extends Card implements Serializable {
         this.scoreStrategy = scoreStrategy;
     }
 
-
     /**
      * Getter method to retrieve the points on the card.
      * @return The points on the card.
@@ -126,7 +118,6 @@ public class CardObjective extends Card implements Serializable {
     public int getPoint() {
         return point;
     }
-
 
     /**
      * Setter method to set the points on the card.
@@ -136,7 +127,6 @@ public class CardObjective extends Card implements Serializable {
         this.point = point;
     }
 
-
     /**
      * Getter method to retrieve the parameters of the card.
      * @return The parameters of the card.
@@ -144,7 +134,6 @@ public class CardObjective extends Card implements Serializable {
     public ArrayList<Value> getParameters() {
         return parameters;
     }
-
 
     /**
      * Setter method to set the parameters of the card.
@@ -154,7 +143,6 @@ public class CardObjective extends Card implements Serializable {
         this.parameters = parameters;
     }
 
-
     /**
      * Getter method to retrieve the image of the card.
      * @return The image of the card.
@@ -163,7 +151,6 @@ public class CardObjective extends Card implements Serializable {
         return image;
     }
 
-
     /**
      * Setter method to set the image of the card.
      * @param image The image to be set for the card.
@@ -171,6 +158,4 @@ public class CardObjective extends Card implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-
-
 }

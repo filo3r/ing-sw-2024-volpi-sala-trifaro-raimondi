@@ -1,7 +1,5 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
@@ -9,7 +7,6 @@ import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
-
 
 /**
  * This class is used to send a message from the client to the server to indicate the intent to select the personal
@@ -27,7 +24,6 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
      */
     private int cardObjective;
 
-
     /**
      * Constructs a new message that requires the selection of the Objective card.
      * This message is flagged to be processed by the game controller of the application.
@@ -41,7 +37,6 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
         this.cardObjective = cardObjective;
     }
 
-
     /**
      * Executes the message.
      * @param gameListener The game listener to be notified about game events.
@@ -54,7 +49,6 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
         return null;
     }
 
-
     /**
      * Executes the message.
      * @param gameController The game controller.
@@ -65,6 +59,4 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.selectCardObjective(this.player, this.cardObjective);
     }
-
-
 }

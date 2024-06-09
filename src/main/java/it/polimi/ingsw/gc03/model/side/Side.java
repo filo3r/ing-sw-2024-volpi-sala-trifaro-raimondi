@@ -40,7 +40,6 @@ public class Side implements Serializable {
      */
     private String image;
 
-
     /**
      * Constructor of the class Side.
      * @param kingdom The kingdom of the card.
@@ -59,7 +58,6 @@ public class Side implements Serializable {
         this.image = null;
     }
 
-
     /**
      * Getter method to retrieve the kingdom of the card.
      * @return The kingdom of the card.
@@ -67,7 +65,6 @@ public class Side implements Serializable {
     public Kingdom getKingdom() {
         return kingdom;
     }
-
 
     /**
      * Setter method to set the kingdom of the card.
@@ -77,7 +74,6 @@ public class Side implements Serializable {
         this.kingdom = kingdom;
     }
 
-
     /**
      * Getter method to retrieve the value contained in the top-left corner.
      * @return The value contained in the top-left corner.
@@ -85,7 +81,6 @@ public class Side implements Serializable {
     public Value getTopLeftCorner() {
         return topLeftCorner;
     }
-
 
     /**
      * Setter method to set the value contained in the top-left corner.
@@ -95,7 +90,6 @@ public class Side implements Serializable {
         this.topLeftCorner = topLeftCorner;
     }
 
-
     /**
      * Getter method to retrieve the value contained in the bottom-left corner.
      * @return The value contained in the bottom-left corner.
@@ -103,7 +97,6 @@ public class Side implements Serializable {
     public Value getBottomLeftCorner() {
         return bottomLeftCorner;
     }
-
 
     /**
      * Setter method to set the value contained in the bottom-left corner.
@@ -113,7 +106,6 @@ public class Side implements Serializable {
         this.bottomLeftCorner = bottomLeftCorner;
     }
 
-
     /**
      * Getter method to retrieve the value contained in the top-right corner.
      * @return The value contained in the top-right corner.
@@ -121,7 +113,6 @@ public class Side implements Serializable {
     public Value getTopRightCorner() {
         return topRightCorner;
     }
-
 
     /**
      * Setter method to set the value contained in the top-right corner.
@@ -131,7 +122,6 @@ public class Side implements Serializable {
         this.topRightCorner = topRightCorner;
     }
 
-
     /**
      * Getter method to retrieve the value contained in the bottom-right corner.
      * @return The value contained in the bottom-right corner.
@@ -139,7 +129,6 @@ public class Side implements Serializable {
     public Value getBottomRightCorner() {
         return bottomRightCorner;
     }
-
 
     /**
      * Setter method to set the value contained in the bottom-right corner.
@@ -149,7 +138,6 @@ public class Side implements Serializable {
         this.bottomRightCorner = bottomRightCorner;
     }
 
-
     /**
      * Getter method to retrieve the image of the side.
      * @return The image of the side.
@@ -158,7 +146,6 @@ public class Side implements Serializable {
         return image;
     }
 
-
     /**
      * Setter method to set the image of the side.
      * @param image The image to be set for the side.
@@ -166,6 +153,4 @@ public class Side implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
-
-
 }

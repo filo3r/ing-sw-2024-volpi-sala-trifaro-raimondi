@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.Card;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that a card has been successfully
  * added to his hand.
@@ -22,7 +21,6 @@ public class SocketServerMessageCardAddedToHand extends SocketServerGenericMessa
      */
     private Card card;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -32,7 +30,6 @@ public class SocketServerMessageCardAddedToHand extends SocketServerGenericMessa
         this.gameImmutable = gameImmutable;
         this.card = card;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -44,6 +41,4 @@ public class SocketServerMessageCardAddedToHand extends SocketServerGenericMessa
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.cardAddedToHand(this.gameImmutable, this.card);
     }
-
-
 }

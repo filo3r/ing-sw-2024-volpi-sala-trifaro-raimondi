@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import java.util.ArrayList;
 
-
 /**
  * This interface defines the method for calculating Objective card points.
  */
@@ -18,5 +17,4 @@ public interface CalculateScoreStrategy {
      * @return The calculated points.
      */
     int calculateScore(Codex codex, int point, ArrayList<Value> parameters);
-
 }

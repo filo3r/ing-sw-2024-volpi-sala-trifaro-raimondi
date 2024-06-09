@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that a player tried to join a full game.
  */
@@ -21,7 +20,6 @@ public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMe
      */
     private Player player;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -31,7 +29,6 @@ public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMe
         this.gameImmutable = gameImmutable;
         this.player = player;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -43,6 +40,4 @@ public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMe
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.joinUnableGameFull(this.gameImmutable, this.player);
     }
-
-
 }

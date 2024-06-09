@@ -27,6 +27,4 @@ public class CharSpecial {
         this.c = c;
 
     }
-
-
 }

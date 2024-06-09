@@ -1,14 +1,11 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages;
 
-import it.polimi.ingsw.gc03.controller.GameController;
-import it.polimi.ingsw.gc03.controller.MainController;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
-
 
 /**
  * This class is used to send a ping message from the client to the server.
@@ -37,7 +34,6 @@ public class SocketClientMessagePing extends SocketClientGenericMessage {
         return null;
     }
 
-
     /**
      * Executes the message.
      * @param gameController The game controller.
@@ -48,6 +44,4 @@ public class SocketClientMessagePing extends SocketClientGenericMessage {
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         return;
     }
-
-
 }

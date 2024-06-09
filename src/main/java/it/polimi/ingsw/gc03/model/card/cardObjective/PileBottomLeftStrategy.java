@@ -9,7 +9,6 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * This class calculates the points of Objective cards that use the pile starting from the bottom left corner of a
  * card.
@@ -64,6 +63,4 @@ public class PileBottomLeftStrategy implements CalculateScoreStrategy, Serializa
         }
         return pointCalculated;
     }
-
-
 }

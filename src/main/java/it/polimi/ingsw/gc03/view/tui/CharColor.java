@@ -40,5 +40,4 @@ public enum CharColor {
      * Black color.
      */
     BLACK
-
 }

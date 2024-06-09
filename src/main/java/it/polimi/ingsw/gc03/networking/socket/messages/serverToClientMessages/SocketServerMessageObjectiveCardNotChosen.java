@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the Objective card was not
  * chosen correctly.
@@ -16,7 +15,6 @@ public class SocketServerMessageObjectiveCardNotChosen extends SocketServerGener
      */
     private GameImmutable gameImmutable;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -24,7 +22,6 @@ public class SocketServerMessageObjectiveCardNotChosen extends SocketServerGener
     public SocketServerMessageObjectiveCardNotChosen(GameImmutable gameImmutable) {
         this.gameImmutable = gameImmutable;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -36,6 +33,4 @@ public class SocketServerMessageObjectiveCardNotChosen extends SocketServerGener
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.objectiveCardNotChosen(this.gameImmutable);
     }
-
-
 }

@@ -1,10 +1,23 @@
 package it.polimi.ingsw.gc03.model.exceptions;
 
-public class CannotJoinGameException extends Exception{
-    public CannotJoinGameException(){
-        super("Error: It's not possible to join this game, because it's status is not WAITING");
+/**
+ * Exception thrown when an attempt to join a game fails because the game's status is not WAITING.
+ */
+public class CannotJoinGameException extends Exception {
+
+    /**
+     * Constructs a CannotJoinGameException with a default error message.
+     */
+    public CannotJoinGameException() {
+        super("Error: It's not possible to join this game, because its status is not WAITING");
     }
-    public CannotJoinGameException(String message){
+
+    /**
+     * Constructs a CannotJoinGameException with a specified error message.
+     *
+     * @param message the detail message
+     */
+    public CannotJoinGameException(String message) {
         super(message);
     }
 }

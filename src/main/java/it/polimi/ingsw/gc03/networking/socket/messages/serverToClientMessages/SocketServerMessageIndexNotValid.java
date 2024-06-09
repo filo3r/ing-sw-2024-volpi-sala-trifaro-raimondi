@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the index is invalid.
  */
@@ -20,7 +19,6 @@ public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage
      */
     private int index;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -30,7 +28,6 @@ public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage
         this.gameImmutable = gameImmutable;
         this.index = index;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -42,6 +39,4 @@ public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.indexNotValid(this.gameImmutable, this.index);
     }
-
-
 }

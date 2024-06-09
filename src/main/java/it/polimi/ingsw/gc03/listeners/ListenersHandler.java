@@ -12,7 +12,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-
 /**
  * This class manages a list of GameListener objects and notifies the view when changes occur int the Game.
  * It provides the updated Game as a GameImmutable instance when notifying events.
@@ -24,14 +23,12 @@ public class ListenersHandler {
      */
     private ArrayList<GameListener> gameListeners;
 
-
     /**
      * Class constructor.
      */
     public ListenersHandler() {
         this.gameListeners = new ArrayList<>();
     }
-
 
     /**
      * Adds a new GameListener to the gameListeners list.
@@ -41,7 +38,6 @@ public class ListenersHandler {
         this.gameListeners.add(gameListener);
     }
 
-
     /**
      * Removes a GameListener from the gameListeners list.
      * @param gameListener The GameListener to remove.
@@ -50,7 +46,6 @@ public class ListenersHandler {
         this.gameListeners.remove(gameListener);
     }
 
-
     /**
      * Get the gameListeners list.
      * @return The list of GameListener.
@@ -58,7 +53,6 @@ public class ListenersHandler {
     public synchronized ArrayList<GameListener> getGameListeners() {
         return this.gameListeners;
     }
-
 
     /**
      * Notifies that a player has joined the game.
@@ -77,7 +71,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that a player has left the game.
@@ -98,7 +91,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that a player tried to join a full game.
      * @param game The current game.
@@ -117,7 +109,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that a player has reconnected to the game.
@@ -138,7 +129,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that a player has disconnected.
      * @param game The current game.
@@ -157,7 +147,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that only one player is connected.
@@ -178,7 +167,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that a player tried to use a nickname that is already in use.
      * @param player The player that tried to use the nickname.
@@ -196,7 +184,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the game id doesn't exist.
      * @param gameId The game id.
@@ -213,7 +200,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the game has started.
@@ -233,7 +219,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the game has ended.
      * @param game The current game.
@@ -251,7 +236,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that a message has been sent.
@@ -272,7 +256,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the next turn triggered.
      * @param game The current game.
@@ -291,7 +274,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the last circle has started.
      * @param game The current game.
@@ -309,7 +291,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the card was placed into the Codex.
@@ -331,7 +312,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the Starter card was placed into the Codex.
      * @param game The current game.
@@ -349,7 +329,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the coordinates where he wants to insert the card are not valid.
@@ -371,7 +350,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the positioning requirements are not respected.
      * @param game The current game.
@@ -390,7 +368,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the points have been added.
@@ -412,7 +389,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the Objective card was chosen correctly.
      * @param game The current game.
@@ -432,7 +408,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the Objective card was not chosen correctly.
@@ -472,7 +447,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that a deck has no cards.
      * @param game The current game.
@@ -491,7 +465,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that a card has been successfully added to his hand.
@@ -512,7 +485,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that a card was not added to his hand.
      * @param game The current game.
@@ -530,7 +502,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the conditions to end the game have been reached.
@@ -590,6 +561,11 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
+    /**
+     * Notifies the new game's size.
+     * @param game The current game.
+     * @param size The new game's size.
+     */
     public synchronized void notifyGameSizeUpdated(Game game, int size) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
@@ -604,6 +580,11 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
+    /**
+     * Notifies that a card has been drawn.
+     * @param game The current game.
+     * @param nickname The player who has drawn a card.
+     */
     public synchronized void notifyDrawCard(Game game, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
@@ -617,5 +598,4 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 }

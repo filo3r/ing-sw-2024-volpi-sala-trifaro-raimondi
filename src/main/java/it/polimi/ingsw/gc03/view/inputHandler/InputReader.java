@@ -11,5 +11,4 @@ public interface InputReader {
      * @return The input queue.
      */
     InputQueue getQueue();
-
 }

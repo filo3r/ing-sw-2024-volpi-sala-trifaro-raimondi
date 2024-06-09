@@ -11,7 +11,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-
 /**
  * This interface is used to inform the client about changes in the game.
  */
@@ -261,13 +260,27 @@ public interface GameListener extends Remote {
      */
     void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException;
 
-
+    /**
+     * This method is used to inform the client that a card has been drawn.
+     * @param gameImmutable The immutable game model.
+     * @param nickname The nickname of the player who has drawn a card.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException;
 
-
+    /**
+     * This method is used to inform the client that there are no games to reconnect to.
+     * @param gameImmutable The immutable game model.
+     * @param nickname The nickname of the player who tried to reconnect to some game.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException;
 
-
+    /**
+     * This method is used to inform the client that a game has been created.
+     * @param gameImmutable The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     void gameCreated(GameImmutable gameImmutable) throws RemoteException;
 
     // Additional methods may be necessary

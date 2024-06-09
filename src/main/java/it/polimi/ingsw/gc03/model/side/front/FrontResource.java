@@ -16,7 +16,6 @@ public class FrontResource extends Side implements Serializable {
      */
     private int point;
 
-
     /**
      * Constructor of the class FrontResource.
      * @param kingdom The kingdom of the card.
@@ -32,7 +31,6 @@ public class FrontResource extends Side implements Serializable {
         this.point = point;
     }
 
-
     /**
      * Getter method to retrieve the points on the card.
      * @return The points on the card.
@@ -41,7 +39,6 @@ public class FrontResource extends Side implements Serializable {
         return point;
     }
 
-
     /**
      * Setter method to set the points on the card.
      * @param point The points to be set for the card.
@@ -49,6 +46,4 @@ public class FrontResource extends Side implements Serializable {
     public void setPoint(int point) {
         this.point = point;
     }
-
-
 }

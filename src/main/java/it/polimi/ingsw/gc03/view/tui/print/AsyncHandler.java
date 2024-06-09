@@ -5,7 +5,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * Provides a shared queue and executor service for asynchronous printing tasks.
  */
@@ -26,7 +25,6 @@ public class AsyncHandler {
         executorService.execute(task);
     }
 
-
     /**
      * Shuts down the executor service gracefully, waiting up to 30 seconds for tasks to complete.
      */
@@ -41,6 +39,4 @@ public class AsyncHandler {
             Thread.currentThread().interrupt();
         }
     }
-
-
 }

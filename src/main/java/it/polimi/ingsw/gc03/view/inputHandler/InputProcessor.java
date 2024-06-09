@@ -1,15 +1,13 @@
 package it.polimi.ingsw.gc03.view.inputHandler;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.Flow;
-import it.polimi.ingsw.gc03.view.ui.events.Event;
-import it.polimi.ingsw.gc03.view.ui.events.EventType;
-import javafx.scene.SubScene;
 
 import java.time.LocalTime;
 
+/**
+ * The InputProcessor class processes input commands and messages, managing the game flow and interactions.
+ */
 public class InputProcessor extends Thread{
     /**
      * The buffer from which I pop the data

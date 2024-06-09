@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-
 /**
  * This class implements the GameListener interface and handles game events by delegating actions to the Flow object.
  */
@@ -24,7 +23,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      */
     private Flow flow;
 
-
     /**
      * Constructs a GameListenersHandlerClient with a given Flow.
      * @param flow The Flow object to handle UI and game flow actions.
@@ -32,7 +30,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public GameListenerHandlerClient(Flow flow) {
         this.flow = flow;
     }
-
 
     /**
      * Handles the event when a player joins the game.
@@ -43,7 +40,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void playerJoined(GameImmutable gameImmutable) throws RemoteException {
         this.flow.playerJoined(gameImmutable);
     }
-
 
     /**
      * Handles the event when a player leaves the game.
@@ -56,7 +52,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.playerLeft(gameImmutable, nickname);
     }
 
-
     /**
      * Handles the event when a player is unable to join a full game.
      * @param gameImmutable The immutable game model.
@@ -67,7 +62,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void joinUnableGameFull(GameImmutable gameImmutable, Player player) throws RemoteException {
         this.flow.joinUnableGameFull(gameImmutable, player);
     }
-
 
     /**
      * Handles the event when a player reconnects to the game.
@@ -80,7 +74,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.playerReconnected(gameImmutable, nickname);
     }
 
-
     /**
      * Handles the event when a player disconnects.
      * @param gameImmutable The immutable game model.
@@ -91,7 +84,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void playerDisconnected(GameImmutable gameImmutable, String nickname) throws RemoteException {
         this.flow.playerDisconnected(gameImmutable, nickname);
     }
-
 
     /**
      * Handles the event when only one player is connected.
@@ -104,7 +96,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.onlyOnePlayerConnected(gameImmutable, timer);
     }
 
-
     /**
      * Handles the event when a player is unable to join due to an already existing nickname.
      * @param player The player that tried to use the nickname.
@@ -114,7 +105,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void joinUnableNicknameAlreadyInUse(Player player) throws RemoteException {
         this.flow.joinUnableNicknameAlreadyInUse(player);
     }
-
 
     /**
      * Handles the event when a game ID does not exist.
@@ -126,7 +116,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.gameIdNotExists(gameId);
     }
 
-
     /**
      * Handles the event when the game starts.
      * @param gameImmutable The immutable game model.
@@ -137,7 +126,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.gameStarted(gameImmutable);
     }
 
-
     /**
      * Handles the event when the game ends.
      * @param gameImmutable The immutable game model.
@@ -147,7 +135,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void gameEnded(GameImmutable gameImmutable) throws RemoteException {
         this.flow.gameEnded(gameImmutable);
     }
-
 
     /**
      * Handles the event when a message is sent.
@@ -160,7 +147,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.sentChatMessage(gameImmutable, chatMessage);
     }
 
-
     /**
      * Handles the event for the next turn.
      * @param gameImmutable The immutable game model.
@@ -171,7 +157,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.nextTurn(gameImmutable);
     }
 
-
     /**
      * Handles the event for the last circle.
      * @param gameImmutable The immutable game model.
@@ -181,7 +166,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void lastCircle(GameImmutable gameImmutable) throws RemoteException {
         this.flow.lastCircle(gameImmutable);
     }
-
 
     /**
      * Handles the event when a card is positioned into the Codex.
@@ -195,7 +179,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.positionedCardIntoCodex(gameImmutable, row, column);
     }
 
-
     /**
      * Handles the event when the Starter card is positioned into the codex.
      * @param gameImmutable The immutable game model.
@@ -205,7 +188,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException {
         this.flow.positionedStarterCardIntoCodex(gameImmutable, nickname);
     }
-
 
     /**
      * Handles the event when invalid coordinates are provided.
@@ -219,7 +201,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.invalidCoordinates(gameImmutable, row, column);
     }
 
-
     /**
      * Handles the event when the requirements for card placement are not respected.
      * @param gameImmutable The immutable game model.
@@ -230,7 +211,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
        this.flow.requirementsPlacementNotRespected(gameImmutable, requirementsPlacement);
     }
-
 
     /**
      * Handles the event when a point is added to a player.
@@ -244,7 +224,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.addedPoint(gameImmutable, player, point);
     }
 
-
     /**
      * Handles the event when the Objective card is chosen.
      * @param gameImmutable The immutable game model.
@@ -256,7 +235,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.objectiveCardChosen(gameImmutable, cardObjective, nickname);
     }
 
-
     /**
      * Handles the event when the Objective card is not chosen.
      * @param gameImmutable The immutable game model.
@@ -266,7 +244,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void objectiveCardNotChosen(GameImmutable gameImmutable) throws RemoteException {
         this.flow.objectiveCardNotChosen(gameImmutable);
     }
-
 
     /**
      * Handles the event when an invalid index is provided.
@@ -279,7 +256,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.indexNotValid(gameImmutable, index);
     }
 
-
     /**
      * Handles the event when a deck has no cards left.
      * @param gameImmutable The immutable game model.
@@ -290,7 +266,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void deckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) throws RemoteException {
         this.flow.deckHasNoCards(gameImmutable, deck);
     }
-
 
     /**
      * Handles the event when a card is added to the player's hand.
@@ -303,7 +278,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.cardAddedToHand(gameImmutable, card);
     }
 
-
     /**
      * Handles the event when a card is not added to the player's hand.
      * @param gameImmutable The immutable game model.
@@ -313,7 +287,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
         this.flow.cardNotAddedToHand(gameImmutable);
     }
-
 
     /**
      * Handles the event when the end game conditions are reached.
@@ -325,7 +298,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         //this.flow.endGameConditionReached(gameImmutable);
     }
 
-
     /**
      * Handles the event when objective points are added.
      * @param gameImmutable The immutable game model.
@@ -336,7 +308,6 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void addedPointObjective(GameImmutable gameImmutable, int objectivePoint) throws RemoteException {
         this.flow.addedPointObjective(gameImmutable, objectivePoint);
     }
-
 
     /**
      * Handles the event when the winners are declared.
@@ -360,15 +331,33 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
         this.flow.gameSizeUpdated(gameImmutable, size);
     }
 
+    /**
+     * Handles the drawing of a card.
+     * @param gameImmutable The immutable game model.
+     * @param nickname The nickname of the player who has drawn a card.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
         this.flow.drawCard(gameImmutable, nickname);
     }
+
+    /**
+     * Handles failure of reconnection.
+     * @param gameImmutable The immutable game model.
+     * @param nickname The nickname of the player who tried to reconnect to a game.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException{
         this.flow.noGameToReconnect(gameImmutable, nickname);
     }
 
+    /**
+     * Handles the creation of a game.
+     * @param gameImmutable The immutable game model.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
     @Override
     public void gameCreated(GameImmutable gameImmutable) throws RemoteException{
         this.flow.gameCreated(gameImmutable);

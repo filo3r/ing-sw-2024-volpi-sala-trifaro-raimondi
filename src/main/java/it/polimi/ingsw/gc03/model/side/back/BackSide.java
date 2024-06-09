@@ -17,7 +17,6 @@ public class BackSide extends Side implements Serializable {
      */
     private ArrayList<Value> center;
 
-
     /**
      * Constructor of the class BackSide.
      * @param kingdom The kingdom of the card.
@@ -32,7 +31,6 @@ public class BackSide extends Side implements Serializable {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
         this.center = new ArrayList<>(center);
     }
-
 
     /**
      * Getter method to retrieve the values contained in the center.
@@ -50,6 +48,4 @@ public class BackSide extends Side implements Serializable {
     public void setCenter(ArrayList<Value> center) {
         this.center = center;
     }
-
-
 }

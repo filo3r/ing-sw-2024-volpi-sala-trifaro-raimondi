@@ -24,5 +24,4 @@ public enum EventType {
     PLAYER_LEFT,
     GAMECREATED,
     SHOW_CHAT
-
 }

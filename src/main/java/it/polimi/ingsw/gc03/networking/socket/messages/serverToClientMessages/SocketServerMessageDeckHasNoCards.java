@@ -6,7 +6,6 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that a deck has no cards.
  */
@@ -33,7 +32,6 @@ public class SocketServerMessageDeckHasNoCards extends SocketServerGenericMessag
         this.deck = deck;
     }
 
-
     /**
      * Executes the appropriate action based on the content of the message.
      * @param gameListener The game listener to which this message's actions are directed.
@@ -44,6 +42,4 @@ public class SocketServerMessageDeckHasNoCards extends SocketServerGenericMessag
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.deckHasNoCards(this.gameImmutable, this.deck);
     }
-
-
 }

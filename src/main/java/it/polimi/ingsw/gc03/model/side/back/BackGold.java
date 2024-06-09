@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import java.util.ArrayList;
 
-
 /**
  * This class represents the back of a Gold card.
  */
@@ -22,6 +21,4 @@ public class BackGold extends BackSide {
     public BackGold(Kingdom kingdom, Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner, ArrayList<Value> center) {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner, center);
     }
-
-
 }

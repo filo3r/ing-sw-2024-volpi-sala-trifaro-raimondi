@@ -14,14 +14,12 @@ public class InputQueue {
      */
     private Queue<String> data;
 
-
     /**
      * Initializes the InputQueue.
      */
     public InputQueue(){
         data = new ArrayDeque<>();
     }
-
 
     /**
      * Adds one element to the queue.
@@ -33,7 +31,6 @@ public class InputQueue {
             this.notifyAll();
         }
     }
-
 
     /**
      * Pops one element from the queue.
@@ -52,7 +49,6 @@ public class InputQueue {
         return "";
     }
 
-
     /**
      * Empties the queue.
      */
@@ -63,6 +59,4 @@ public class InputQueue {
             }
         }
     }
-
-
 }

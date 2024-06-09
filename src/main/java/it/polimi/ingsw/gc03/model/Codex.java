@@ -1,10 +1,7 @@
 package it.polimi.ingsw.gc03.model;
 
-import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.listeners.ListenersHandler;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.model.side.back.BackGold;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
@@ -12,8 +9,6 @@ import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * This class represents a Codex.
@@ -68,8 +63,6 @@ public class Codex implements Serializable {
      */
     private boolean cardStarterInserted;
 
-
-
     /**
      * Constructor for the Codex class.
      */
@@ -87,7 +80,6 @@ public class Codex implements Serializable {
         this.cardStarterInserted = false;
     }
 
-
     /**
      * Method for checking that the card you want to insert is connected to some corner of some previously inserted
      * card.
@@ -104,6 +96,13 @@ public class Codex implements Serializable {
         }
     }
 
+    /**
+     * Method for checking that the card you want to insert is connected to the top left corner.
+     * card.
+     * @param row The insertion row.
+     * @param column The insertion column.
+     * @return A boolean indicating whether the card is connected.
+     */
     private boolean checkTopLeftConnection(int row, int column){
         if(row == 0 || column == 0){
             return false;
@@ -114,6 +113,13 @@ public class Codex implements Serializable {
         return false;
     }
 
+    /**
+     * Method for checking that the card you want to insert is connected to the top right corner.
+     * card.
+     * @param row The insertion row.
+     * @param column The insertion column.
+     * @return A boolean indicating whether the card is connected.
+     */
     private boolean checkTopRightConnection(int row, int column){
         if(row == 0 || column == 81-1){
             return false;
@@ -124,6 +130,13 @@ public class Codex implements Serializable {
         return false;
     }
 
+    /**
+     * Method for checking that the card you want to insert is connected to the bottom left corner.
+     * card.
+     * @param row The insertion row.
+     * @param column The insertion column.
+     * @return A boolean indicating whether the card is connected.
+     */
     private boolean checkBottomLeftConnection(int row, int column){
         if(row == 81-1 || column == 0){
             return false;
@@ -134,6 +147,13 @@ public class Codex implements Serializable {
         return false;
     }
 
+    /**
+     * Method for checking that the card you want to insert is connected to the bottom right corner.
+     * card.
+     * @param row The insertion row.
+     * @param column The insertion column.
+     * @return A boolean indicating whether the card is connected.
+     */
     private boolean checkBottomRightConnection(int row, int column){
         if(row == 81-1 || column == 81-1){
             return false;
@@ -181,8 +201,6 @@ public class Codex implements Serializable {
             throw new IllegalStateException("Invalid row or column.");
         }
     }
-
-
 
     /**
      * Method to verify that a Gold card can be placed.
@@ -243,7 +261,6 @@ public class Codex implements Serializable {
         }
     }
 
-
     /**
      * Method for inserting the card side into the codex.
      * @param side The side of the card that you want to insert into the codex.
@@ -288,7 +305,6 @@ public class Codex implements Serializable {
             this.maxColumn = Math.max(this.maxColumn, column);
     }
 
-
     /**
      * Method to lower the codex counter.
      * @param value The value contained in the corner that is covered.
@@ -326,7 +342,6 @@ public class Codex implements Serializable {
                 break;
         }
     }
-
 
     /**
      * Method to raise the codex counter.
@@ -366,7 +381,6 @@ public class Codex implements Serializable {
         }
     }
 
-
     /**
      * Method for updating the counter of values present in the codex.
      * @param side The side of the inserted card.
@@ -384,12 +398,12 @@ public class Codex implements Serializable {
         }
     }
 
-
     /**
      * Method for updating points made by inserting cards into the codex.
      * @param side The side of the inserted card.
      */
-    private void calculatePointCodex(Side side) {
+    private void calculatePointCodex(Game game, Side side) {
+        int oldPoints = getPointCodex();
         if (side instanceof FrontResource) {
             this.pointCodex = this.pointCodex + ((FrontResource) side).getPoint();
         } else if (side instanceof FrontGold) {
@@ -430,8 +444,10 @@ public class Codex implements Serializable {
                 }
             }
         }
+        if(getPointCodex() > oldPoints) {
+            game.getListener().notifyAddedPoint(game, game.getPlayers().get(game.getCurrPlayer()), getPointCodex()-oldPoints);
+        }
     }
-
 
     /**
      * Method for inserting the Starter card into the codex.
@@ -459,7 +475,6 @@ public class Codex implements Serializable {
         // Update counter for values in the codex
         updateCounterCodex(side);
     }
-
 
     /**
      * Method of inserting one side of a card into the codex.
@@ -508,7 +523,7 @@ public class Codex implements Serializable {
                 // Proceed with the insertion
                 insertSide(side, row, column);
                 updateCounterCodex(side);
-                calculatePointCodex(side);
+                calculatePointCodex(game, side);
                 this.counterCodex[7] = 0;
                 game.getListener().notifyPositionedCardIntoCodex(game, row, column);
                 return true;
@@ -518,8 +533,6 @@ public class Codex implements Serializable {
             return false;
         }
     }
-
-
 
     /**
      * Method to simulate the insertion of a card into the Codex.
@@ -550,7 +563,6 @@ public class Codex implements Serializable {
         }
     }
 
-
     /**
      * Method to retrieve the codex.
      * @return The codex.
@@ -558,7 +570,6 @@ public class Codex implements Serializable {
     public Side[][] getCodex() {
         return this.codex;
     }
-
 
     /**
      * Method to set the codex.
@@ -568,7 +579,6 @@ public class Codex implements Serializable {
         this.codex = codex;
     }
 
-
     /**
      * Method to retrieve the counterCodex.
      * @return The counterCodex.
@@ -576,7 +586,6 @@ public class Codex implements Serializable {
     public int[] getCounterCodex() {
         return this.counterCodex;
     }
-
 
     /**
      * Method to set the counterCodex.
@@ -586,7 +595,6 @@ public class Codex implements Serializable {
         this.counterCodex = counterCodex;
     }
 
-
     /**
      * Method to retrieve the pointCodex.
      * @return The pointCodex.
@@ -594,7 +602,6 @@ public class Codex implements Serializable {
     public int getPointCodex() {
         return this.pointCodex;
     }
-
 
     /**
      * Method to set the pointCodex.
@@ -604,7 +611,6 @@ public class Codex implements Serializable {
         this.pointCodex = pointCodex;
     }
 
-
     /**
      * Method to retrieve the minRow.
      * @return The minRow.
@@ -612,7 +618,6 @@ public class Codex implements Serializable {
     public int getMinRow() {
         return this.minRow;
     }
-
 
     /**
      * Method to set the minRow.
@@ -622,7 +627,6 @@ public class Codex implements Serializable {
         this.minRow = minRow;
     }
 
-
     /**
      * Method to retrieve the maxRow.
      * @return The maxRow.
@@ -630,7 +634,6 @@ public class Codex implements Serializable {
     public int getMaxRow() {
         return this.maxRow;
     }
-
 
     /**
      * Method to set the maxRow.
@@ -640,7 +643,6 @@ public class Codex implements Serializable {
         this.maxRow = maxRow;
     }
 
-
     /**
      * Method to retrieve the minColumn.
      * @return The minColumn.
@@ -648,7 +650,6 @@ public class Codex implements Serializable {
     public int getMinColumn() {
         return this.minColumn;
     }
-
 
     /**
      * Method to set the minColumn.
@@ -658,7 +659,6 @@ public class Codex implements Serializable {
         this.minColumn = minColumn;
     }
 
-
     /**
      * Method to retrieve the maxColumn.
      * @return The maxColumn.
@@ -666,7 +666,6 @@ public class Codex implements Serializable {
     public int getMaxColumn() {
         return this.maxColumn;
     }
-
 
     /**
      * Method to set the maxColumn.
@@ -676,7 +675,6 @@ public class Codex implements Serializable {
         this.maxColumn = maxColumn;
     }
 
-
     /**
      * Method to retrieve the cardStarterInserted.
      * @return The cardStarterInserted.
@@ -685,7 +683,6 @@ public class Codex implements Serializable {
         return this.cardStarterInserted;
     }
 
-
     /**
      * Method to set the cardStarterInserted.
      * @param cardStarterInserted The cardStarterInserted to set.
@@ -693,5 +690,4 @@ public class Codex implements Serializable {
     public void setCardStarterInserted(boolean cardStarterInserted) {
         this.cardStarterInserted = cardStarterInserted;
     }
-
 }

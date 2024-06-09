@@ -9,7 +9,6 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * This class calculates the points of Objective cards that use the secondary diagonal.
  */
@@ -58,6 +57,4 @@ public class SecondaryDiagonalStrategy implements CalculateScoreStrategy, Serial
         }
         return pointCalculated;
     }
-
-
 }

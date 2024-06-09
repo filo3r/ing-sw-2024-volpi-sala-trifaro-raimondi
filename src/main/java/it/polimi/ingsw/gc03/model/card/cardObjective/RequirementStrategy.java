@@ -7,7 +7,6 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * This class calculates the points of Objective cards that use the number of values.
  */
@@ -55,7 +54,6 @@ public class RequirementStrategy implements CalculateScoreStrategy, Serializable
         return pointCalculated;
     }
 
-
     /**
      * Method for calculating the index of a value Value.
      * @param value The value of which you want to obtain the index.
@@ -85,6 +83,4 @@ public class RequirementStrategy implements CalculateScoreStrategy, Serializable
                 return -1;
         }
     }
-
-
 }

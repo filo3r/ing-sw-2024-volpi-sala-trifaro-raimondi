@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.networking.rmi;
 
-import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -8,7 +7,6 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
 
 /**
  * The GameControllerInterface defines the contract for controlling the gameplay flow of a match,
@@ -40,7 +38,6 @@ public interface GameControllerInterface extends Remote {
      */
     void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws RemoteException, Exception;
 
-
     /**
      * This method selects the personal Objective card.
      * @param player The player representing the client.
@@ -50,7 +47,6 @@ public interface GameControllerInterface extends Remote {
      */
     void selectCardObjective(Player player, int cardObjective) throws RemoteException, Exception;
 
-
     /**
      * This method draws a card from the deck of cards.
      * @param player The player representing the client.
@@ -59,7 +55,6 @@ public interface GameControllerInterface extends Remote {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws RemoteException, Exception;
-
 
     /**
      * This method draws a card from the visible cards.
@@ -71,14 +66,12 @@ public interface GameControllerInterface extends Remote {
      */
     void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws RemoteException, Exception;
 
-
     /**
      * This method sends a message in chat.
      * @param chatMessage The message for the chat.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void sendChatMessage(ChatMessage chatMessage) throws RemoteException;
-
 
     /**
      * This method sends a ping message.
@@ -89,6 +82,7 @@ public interface GameControllerInterface extends Remote {
 
     /**
      * This method updates the game's size.
+     * @param size The new game size.
      * @throws Exception If the game size is not valid.
      */
     void updateGameSize(int size) throws Exception;
@@ -96,6 +90,7 @@ public interface GameControllerInterface extends Remote {
     /**
      * The method handle the player leaving the game
      * @param playerNickname The nickname of the player who left.
+     * @throws RemoteException If an error occurs in remote communication.
      */
     void leaveGame(String playerNickname) throws RemoteException;
-    }
+}

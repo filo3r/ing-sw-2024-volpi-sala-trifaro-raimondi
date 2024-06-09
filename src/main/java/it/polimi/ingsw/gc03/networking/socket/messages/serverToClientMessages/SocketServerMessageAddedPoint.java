@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the points have been added.
  */
@@ -26,7 +25,6 @@ public class SocketServerMessageAddedPoint extends SocketServerGenericMessage {
      */
     private int point;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -39,7 +37,6 @@ public class SocketServerMessageAddedPoint extends SocketServerGenericMessage {
         this.point = point;
     }
 
-
     /**
      * Executes the appropriate action based on the content of the message.
      * @param gameListener The game listener to which this message's actions are directed.
@@ -50,6 +47,4 @@ public class SocketServerMessageAddedPoint extends SocketServerGenericMessage {
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.addedPoint(this.gameImmutable, this.player, this.point);
     }
-
-
 }

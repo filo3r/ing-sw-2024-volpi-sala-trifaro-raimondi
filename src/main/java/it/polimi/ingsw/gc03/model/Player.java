@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
-
 /**
  * This class represents a player in the game.
  */
@@ -141,7 +140,6 @@ public class Player implements Serializable {
         this.action = PlayerAction.FIRSTMOVES;
     }
 
-
     /**
      * Method for making the player choose his Objective card.
      * @param index The index of the card the player wants to keep.
@@ -163,7 +161,6 @@ public class Player implements Serializable {
             return true;
         }
     }
-
 
     /**
      * Method to check if the player can no longer place cards in his Codex. If the player can no longer place cards,
@@ -193,7 +190,6 @@ public class Player implements Serializable {
             this.skipTurn = true;
     }
 
-
     /**
      * Method for calculating the points scored by the player with the Objective cards.
      * @param desk The game desk.
@@ -212,14 +208,12 @@ public class Player implements Serializable {
         }
     }
 
-
     /**
      * Method for calculating the total score made by the player.
      */
     public void calculatePlayerScore() {
         this.score = this.score + this.codex.getPointCodex() + this.pointObjective;
     }
-
 
     /**
      * Method to get the player's nickname.
@@ -229,7 +223,6 @@ public class Player implements Serializable {
         return nickname;
     }
 
-
     /**
      * Method to set the player's nickname.
      * @param nickname The nickname to set
@@ -237,7 +230,6 @@ public class Player implements Serializable {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
 
     /**
      * Method to get the player's number.
@@ -247,7 +239,6 @@ public class Player implements Serializable {
         return number;
     }
 
-
     /**
      * Method to set the player's number.
      * @param number The player's number.
@@ -255,7 +246,6 @@ public class Player implements Serializable {
     public void setNumber(int number) {
         this.number = number;
     }
-
 
     /**
      * Method to get the player's color.
@@ -265,7 +255,6 @@ public class Player implements Serializable {
         return color;
     }
 
-
     /**
      * Method to set the player's color.
      * @param color The player's color.
@@ -273,7 +262,6 @@ public class Player implements Serializable {
     public void setColor(Color color) {
         this.color = color;
     }
-
 
     /**
      * Method to get the player's Starter card.
@@ -283,7 +271,6 @@ public class Player implements Serializable {
         return cardStarter;
     }
 
-
     /**
      * Method to set the player's Starter card.
      * @param cardStarter The player's Starter card.
@@ -291,7 +278,6 @@ public class Player implements Serializable {
     public void setCardStarter(CardStarter cardStarter) {
         this.cardStarter = cardStarter;
     }
-
 
     /**
      * Method to get the player's Objective cards.
@@ -301,7 +287,6 @@ public class Player implements Serializable {
         return cardObjective;
     }
 
-
     /**
      * Method to set the player's Objective cards.
      * @param cardObjective The player's Objective cards.
@@ -309,7 +294,6 @@ public class Player implements Serializable {
     public void setCardObjective(ArrayList<CardObjective> cardObjective) {
         this.cardObjective = cardObjective;
     }
-
 
     /**
      * Method to get the player's hand.
@@ -319,7 +303,6 @@ public class Player implements Serializable {
         return hand;
     }
 
-
     /**
      * Method to set the player's hand.
      * @param hand The player's hand.
@@ -327,7 +310,6 @@ public class Player implements Serializable {
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
-
 
     /**
      * Method to get the player's codex.
@@ -337,7 +319,6 @@ public class Player implements Serializable {
         return codex;
     }
 
-
     /**
      * Method to set the player's codex.
      * @param codex The player's codex.
@@ -345,7 +326,6 @@ public class Player implements Serializable {
     public void setCodex(Codex codex) {
         this.codex = codex;
     }
-
 
     /**
      * Method to get player's points obtained with Objective cards.
@@ -355,7 +335,6 @@ public class Player implements Serializable {
         return pointObjective;
     }
 
-
     /**
      * Method to set player's points obtained with Objective cards.
      * @param pointObjective The player's points.
@@ -363,7 +342,6 @@ public class Player implements Serializable {
     public void setPointObjective(int pointObjective) {
         this.pointObjective = pointObjective;
     }
-
 
     /**
      * Method to get the player's score.
@@ -373,7 +351,6 @@ public class Player implements Serializable {
         return score;
     }
 
-
     /**
      * Method to set the player's score.
      * @param score The player's score.
@@ -382,7 +359,6 @@ public class Player implements Serializable {
         this.score = score;
     }
 
-
     /**
      * Method to get the player's online status.
      * @return The player's online status.
@@ -390,7 +366,6 @@ public class Player implements Serializable {
     public boolean getOnline() {
         return online;
     }
-
 
     /**
      * Method to set the player's online status.
@@ -418,7 +393,6 @@ public class Player implements Serializable {
         }
     }
 
-
     /**
      * Method to get if the player skips his turns until the end of the game.
      * @return The player's skipTurn.
@@ -426,7 +400,6 @@ public class Player implements Serializable {
     public boolean getSkipTurn() {
         return skipTurn;
     }
-
 
     /**
      * Method to set if the player skips his turns until the end of the game.
@@ -436,7 +409,6 @@ public class Player implements Serializable {
         this.skipTurn = skipTurn;
     }
 
-
     /**
      * Method to get the player's action.
      * @return The player's action.
@@ -444,7 +416,6 @@ public class Player implements Serializable {
     public PlayerAction getAction() {
         return action;
     }
-
 
     /**
      * Method to set the player's action.
@@ -464,7 +435,6 @@ public class Player implements Serializable {
         }
     }
 
-
     /**
      * Add a card to the player's hand.
      * @param card the card to add to the player's hand.
@@ -472,7 +442,6 @@ public class Player implements Serializable {
     public void addCardToHand(Card card){
         this.hand.add(card);
     }
-
 
     /**
      * Remove a card to the player's hand.
@@ -488,5 +457,4 @@ public class Player implements Serializable {
     public GameListener getSelfListener() {
         return selfListener;
     }
-
 }

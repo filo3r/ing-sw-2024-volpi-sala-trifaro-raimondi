@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import java.io.IOException;
 import java.io.Serializable;
 
-
 /**
  * Abstract class representing a generic message that is sent from the server to the client.
  * This class serves as a base for all server-to-client communication within the networked application,
@@ -19,6 +18,4 @@ public abstract class SocketServerGenericMessage implements Serializable {
      * @throws InterruptedException If the thread running the method is interrupted.
      */
     public abstract void execute(GameListener gameListener) throws IOException, InterruptedException;
-
-
 }

@@ -31,7 +31,13 @@ public enum GameStatus implements Serializable {
      */
     ENDING,
 
+    /**
+     * Game's last round: this is the final round of the game.
+     */
     LASTROUND,
 
+    /**
+     * Game's ended.
+     */
     ENDED
 }

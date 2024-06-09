@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the coordinates where he wants to
  * insert the card are not valid.
@@ -26,7 +25,6 @@ public class SocketServerMessageInvalidCoordinates extends SocketServerGenericMe
      */
     private int column;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -39,7 +37,6 @@ public class SocketServerMessageInvalidCoordinates extends SocketServerGenericMe
         this.column = column;
     }
 
-
     /**
      * Executes the appropriate action based on the content of the message.
      * @param gameListener The game listener to which this message's actions are directed.
@@ -50,6 +47,4 @@ public class SocketServerMessageInvalidCoordinates extends SocketServerGenericMe
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.invalidCoordinates(this.gameImmutable, this.row, this.column);
     }
-
-
 }

@@ -203,30 +203,13 @@ public class Gui extends UI {
 
     }
 
-    @Override
-    protected void showDrawnCard(GameImmutable model) {
 
-    }
-
-    @Override
-    protected void showPlaceStarterCardOnCodex(GameImmutable model) {
-
-    }
 
     @Override
     protected void showInvalidInput() {
 
     }
 
-    @Override
-    protected void show_askChooseACardObjective(GameImmutable model, String nickname) {
-
-    }
-
-    @Override
-    protected void showCardObjectiveToChoose(GameImmutable model) {
-
-    }
 
     @Override
     protected void showCodex(GameImmutable model) {
@@ -273,15 +256,6 @@ public class Gui extends UI {
 
     }
 
-    @Override
-    protected void showAskReconnectGameID() {
-
-    }
-
-    @Override
-    protected void showCardNotAddedHand(GameImmutable model) {
-
-    }
 
     @Override
     protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {

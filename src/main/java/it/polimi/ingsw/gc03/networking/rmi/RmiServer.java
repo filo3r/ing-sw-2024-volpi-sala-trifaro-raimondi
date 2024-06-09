@@ -9,7 +9,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 
-
 /**
  * The RMIServer class handles incoming RMI requests from clients.
  * It communicates using the Java RMI (Remote Method Invocation) protocol,
@@ -48,7 +47,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         this.mainController = MainController.getInstance();
     }
 
-
     /**
      * Starts the RMI server on the specified port.
      * @param port The port on which the RMI server will listen.
@@ -70,7 +68,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
             }
         }
     }
-
 
     /**
      * Shuts down the RMI Server.
@@ -96,7 +93,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         }
     }
 
-
     /**
      * Gets the current RMI server instance.
      * @return The current RmiServer instance.
@@ -104,7 +100,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
     public static synchronized RmiServer getRmiServer() {
         return rmiServer;
     }
-
 
     /**
      * Gets the registry associated with the RMI server.
@@ -114,7 +109,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         return rmiRegistry;
     }
 
-
     /**
      * Checks if the RMI server is running.
      * @return True if the RMI server is running, otherwise false.
@@ -122,7 +116,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
     public static synchronized boolean isRmiServerRunning() {
         return isRmiServerRunning;
     }
-
 
     /**
      * Exports the object if it is not already exported.
@@ -137,7 +130,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         }
     }
 
-
     /**
      * This method creates a new game.
      * @param gameListener The game listener to be notified about game events.
@@ -150,7 +142,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         AsyncLogger.log(Level.INFO, "[SERVER RMI] The client " + nickname + " has created a new game.");
         return gameController;
     }
-
 
     /**
      * This method adds a player to the first available game.
@@ -168,7 +159,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         }
         return gameController;
     }
-
 
     /**
      * This method adds a player to a specific game.
@@ -188,7 +178,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         return gameController;
     }
 
-
     /**
      * This method reconnects a player to the game.
      * @param gameListener The game listener to be notified about game events.
@@ -205,6 +194,4 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         }
         return gameController;
     }
-
-
 }

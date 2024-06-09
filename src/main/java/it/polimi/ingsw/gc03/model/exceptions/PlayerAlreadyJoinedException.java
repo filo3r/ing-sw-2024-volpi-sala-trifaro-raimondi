@@ -1,10 +1,23 @@
 package it.polimi.ingsw.gc03.model.exceptions;
 
-public class PlayerAlreadyJoinedException extends Exception{
-    public PlayerAlreadyJoinedException(){
-        super("This Player is already in the game");
+/**
+ * Exception thrown when an attempt is made to add a player to a game when the player is already part of the game.
+ */
+public class PlayerAlreadyJoinedException extends Exception {
+
+    /**
+     * Constructs a PlayerAlreadyJoinedException with a default error message.
+     */
+    public PlayerAlreadyJoinedException() {
+        super("This player is already in the game");
     }
-    public PlayerAlreadyJoinedException(String message){
+
+    /**
+     * Constructs a PlayerAlreadyJoinedException with a specified error message.
+     *
+     * @param message the detail message
+     */
+    public PlayerAlreadyJoinedException(String message) {
         super(message);
     }
 }

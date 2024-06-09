@@ -7,7 +7,6 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the positioning requirements
  * are not respected.
@@ -24,7 +23,6 @@ public class SocketServerMessageRequirementsPlacementNotRespected extends Socket
      */
     private ArrayList<Value> requirementsPlacement;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -34,7 +32,6 @@ public class SocketServerMessageRequirementsPlacementNotRespected extends Socket
         this.gameImmutable = gameImmutable;
         this.requirementsPlacement = requirementsPlacement;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -46,6 +43,4 @@ public class SocketServerMessageRequirementsPlacementNotRespected extends Socket
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.requirementsPlacementNotRespected(this.gameImmutable, this.requirementsPlacement);
     }
-
-
 }

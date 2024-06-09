@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that the next turn triggered.
  */
@@ -24,7 +23,6 @@ public class SocketServerMessageNextTurn extends SocketServerGenericMessage {
         this.gameImmutable = gameImmutable;
     }
 
-
     /**
      * Executes the appropriate action based on the content of the message.
      * @param gameListener The game listener to which this message's actions are directed.
@@ -35,6 +33,4 @@ public class SocketServerMessageNextTurn extends SocketServerGenericMessage {
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.nextTurn(this.gameImmutable);
     }
-
-
 }

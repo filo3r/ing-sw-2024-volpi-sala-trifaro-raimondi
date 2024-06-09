@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that a player tried to use a nickname
  * that is already in use.
@@ -16,7 +15,6 @@ public class SocketServerMessageJoinUnableNicknameAlreadyInUse extends SocketSer
      */
     private Player player;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param player The player that tried to use the nickname.
@@ -24,7 +22,6 @@ public class SocketServerMessageJoinUnableNicknameAlreadyInUse extends SocketSer
     public SocketServerMessageJoinUnableNicknameAlreadyInUse(Player player) {
         this.player = player;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -36,6 +33,4 @@ public class SocketServerMessageJoinUnableNicknameAlreadyInUse extends SocketSer
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.joinUnableNicknameAlreadyInUse(this.player);
     }
-
-
 }

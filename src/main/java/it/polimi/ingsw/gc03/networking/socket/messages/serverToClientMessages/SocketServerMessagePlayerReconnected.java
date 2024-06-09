@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
-
 /**
  * This class is used to send a message from the server to the client to inform that a player has reconnected to the game.
  */
@@ -20,7 +19,6 @@ public class SocketServerMessagePlayerReconnected extends SocketServerGenericMes
      */
     private String nickname;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game model.
@@ -30,7 +28,6 @@ public class SocketServerMessagePlayerReconnected extends SocketServerGenericMes
         this.gameImmutable = gameImmutable;
         this.nickname = nickname;
     }
-
 
     /**
      * Executes the appropriate action based on the content of the message.
@@ -42,6 +39,4 @@ public class SocketServerMessagePlayerReconnected extends SocketServerGenericMes
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.playerReconnected(this.gameImmutable, this.nickname);
     }
-
-
 }

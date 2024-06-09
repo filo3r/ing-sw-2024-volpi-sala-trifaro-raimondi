@@ -14,7 +14,6 @@ public class AsyncPrint {
         AsyncHandler.executeAsync(() -> System.out.print(text + "\n"));
     }
 
-
     /**
      * Asynchronously prints the provided text to the console at the specified row and column.
      * @param text The text to print.
@@ -25,7 +24,6 @@ public class AsyncPrint {
         AsyncHandler.executeAsync(() -> System.out.print("\033[" + row + ";" + col + "H" + text));
     }
 
-
     /**
      * Asynchronously prints the provided text to the console.
      * @param text The text to print.
@@ -33,6 +31,4 @@ public class AsyncPrint {
     public static void asyncPrint(String text) {
         AsyncHandler.executeAsync(() -> System.out.print(text));
     }
-
-
 }
