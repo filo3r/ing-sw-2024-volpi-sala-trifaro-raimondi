@@ -129,7 +129,7 @@ public class Game implements Serializable {
      * @return A Boolean value indicating whether a player has been removed from the game.
      */
     public boolean removePlayer(String nickname) throws RemoteException {
-        if(this.players.remove(players.stream().filter(p->p.getNickname().equals(nickname)).findAny().get())){
+        if( players.stream().anyMatch(p->p.getNickname().equals(nickname)) && this.players.remove(players.stream().filter(p->p.getNickname().equals(nickname)).findAny().get())){
             this.numPlayer--;
             listenersHandler.notifyPlayerLeft(this, nickname);
 

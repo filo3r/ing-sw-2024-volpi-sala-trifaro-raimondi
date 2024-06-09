@@ -23,12 +23,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class MainControllerTest {
 
     private MainController mainController;
 
-
+    private GameListener listener;
     private Card makeCard(){
         FrontResource front = new FrontResource(Kingdom.ANIMAL, Value.EMPTY, Value.EMPTY, Value.EMPTY,Value.EMPTY, 0);
         BackResource back = new BackResource(Kingdom.ANIMAL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY, new ArrayList<>() {{add(Value.ANIMAL);}});
@@ -46,6 +47,7 @@ class MainControllerTest {
     @BeforeEach
     void setUp() {
         mainController = MainController.getInstance();
+        listener = mock(GameListener.class);
     }
 
     @AfterEach
@@ -55,7 +57,6 @@ class MainControllerTest {
     @Test
     @DisplayName("Simulate a player trying to join when there are no active games")
     void joinAndCreateGame() throws NoSuchGameException, RemoteException {
-        GameListener listener = null;
         mainController.joinFirstAvailableGame(listener,"Player1");
         assertEquals(1, mainController.getGameControllers().size());
         GameController gc = mainController.getGameControllers().get(0);
@@ -78,7 +79,6 @@ class MainControllerTest {
     @Test
     @DisplayName("Game ending and winner")
     void gameEnd() throws Exception {
-        GameListener listener = null;
         mainController.joinFirstAvailableGame(listener,"Player1");
         GameController gameController= mainController.getGameControllers().getFirst();
         Game game = gameController.getGame();
@@ -132,7 +132,6 @@ class MainControllerTest {
 
     @Test
     void deleteNotExistentGame() throws NoSuchGameException, RemoteException {
-        GameListener listener = null;
         mainController.joinFirstAvailableGame(listener,"Player");
         int idGame = mainController.getGameControllers().getFirst().getGame().getIdGame();
         mainController.deleteGame(idGame);

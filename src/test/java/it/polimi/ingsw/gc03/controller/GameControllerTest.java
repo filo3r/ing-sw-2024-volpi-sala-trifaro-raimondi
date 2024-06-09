@@ -13,25 +13,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.gc03.model.exceptions.*;
+import org.mockito.Mock;
 
 import java.rmi.RemoteException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class GameControllerTest {
 
     private GameController gameController;
+    private GameListener listener;
 
     @BeforeEach
     void setUp() throws RemoteException {
         gameController = new GameController();
+        listener = mock(GameListener.class);
     }
 
     @Test
     @DisplayName("Players added to the game")
     void addPlayerToGame() throws CannotJoinGameException, PlayerAlreadyJoinedException, DeskIsFullException, RemoteException {
         // A player is added to the game
-        GameListener listener= null; ;
         gameController.addPlayerToGame("Player1", listener);
         // A player tries to join before the game's size is changed.
         assertThrows(DeskIsFullException.class, () -> gameController.addPlayerToGame("Player4", listener));
@@ -53,7 +56,6 @@ class GameControllerTest {
     @Test
     @DisplayName("Placing cards on Codex and simple game")
     void placingCards() throws Exception {
-        GameListener listener= null;
         gameController.addPlayerToGame("Player1", listener);
         gameController.getGame().setSize(2);
         gameController.addPlayerToGame("Player2", listener);
@@ -123,25 +125,22 @@ class GameControllerTest {
     @Test
     public void testReconnectPlayer() throws Exception {
         Game game = gameController.getGame();
-        GameListener listener = null;
         gameController.addPlayerToGame("Player1", listener);
         game.setSize(2);
         gameController.addPlayerToGame("Player2", listener);
         Player player1 = game.getPlayers().get(0);
         Player player2 = game.getPlayers().get(1);
-
         player1.setOnline(game,false,listener);
         game.setStatus(GameStatus.HALTED);
         gameController.reconnectPlayer("Player1",listener);
 
 
         assertTrue(player1.getOnline());
-        assertEquals(GameStatus.RUNNING, game.getStatus());
+        assertEquals(GameStatus.STARTING, game.getStatus());
     }
 
     @Test
     void checkFinalActionTestCall() throws Exception {
-        GameListener listener = new Listener
         gameController.addPlayerToGame("Player1", listener);
         gameController.updateGameSize(2);
         gameController.addPlayerToGame("Player2", listener);

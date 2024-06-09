@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class GameTest {
 
@@ -28,6 +29,7 @@ class GameTest {
     void setUp() throws RemoteException {
         game = new Game(14547);
         desk = new Desk(game);
+        listener = mock(GameListener.class);
     }
 
     @AfterEach
