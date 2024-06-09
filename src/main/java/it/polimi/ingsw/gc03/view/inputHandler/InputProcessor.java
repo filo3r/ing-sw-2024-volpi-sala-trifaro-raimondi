@@ -2,7 +2,10 @@ package it.polimi.ingsw.gc03.view.inputHandler;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.Flow;
+import it.polimi.ingsw.gc03.view.ui.events.Event;
+import it.polimi.ingsw.gc03.view.ui.events.EventType;
 import javafx.scene.SubScene;
 
 import java.time.LocalTime;
@@ -65,7 +68,7 @@ public class InputProcessor extends Thread{
                     String message = parts[2];
                     flow.sendChatMessage(new ChatMessage(receiver, nickname, message, localTime));
                 }
-        } else if (nickname != null && txt.startsWith("m ")) {
+            } else if (nickname != null && txt.startsWith("m ")) {
                 LocalTime localTime = LocalTime.now();
                 String[] parts = txt.split(" ", 2);
                 if (parts.length >= 2) {
@@ -85,7 +88,7 @@ public class InputProcessor extends Thread{
                 int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
                 int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
                 flow.moveScreen(x, y);
-            } else if(txt.equals("chat")){
+            } else if(nickname != null && txt.equals("chat")){
                 flow.showChat();
             }
             else {

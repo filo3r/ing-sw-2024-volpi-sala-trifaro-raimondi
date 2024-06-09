@@ -41,10 +41,15 @@ public class InputQueue {
      * @throws InterruptedException If the thread is interrupted while waiting.
      */
     public String popData() throws InterruptedException {
-        synchronized (this){
-            while(data.isEmpty()){this.wait();}
-            return data.poll();
+        try{
+            synchronized (this){
+                while(data.isEmpty()){this.wait();}
+                return data.poll();
+            }
+        } catch (InterruptedException e){
+            System.err.println(e);
         }
+        return "";
     }
 
 

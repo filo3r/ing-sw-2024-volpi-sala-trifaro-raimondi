@@ -102,8 +102,16 @@ public class Flow implements Runnable, ClientAction, GameListener {
         }
     }
 
+    public void showChat(){
+        if(lastEvent != null && lastEvent.getModel() != null){
+            ui.showChat(lastEvent.getModel());
+        } else {
+            ui.show_NaNMsg();
+        }
+    }
+
     private void processEvent(Event event) throws Exception {
-        if (event.getType() == PLAYER_RECONNECTED && nickname.equals(lastPlayerReconnected)) {
+        if (event.getType().equals(PLAYER_RECONNECTED) && nickname.equals(lastPlayerReconnected)) {
             handlePlayerReconnection(event);
         } else if (event.getModel() != null) {
             updateGameStateBasedOnModel(event);
@@ -260,6 +268,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case GAMEENDED -> {
                 ui.showWinner(event.getModel());
+                this.inputProcessor.getDataToProcess().popAllData();
                 try {
                     this.inputProcessor.getDataToProcess().popData();
                 } catch (InterruptedException e) {
@@ -286,6 +295,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
         this.ended = ended;
     }
 
+    public void addEvent(Event event) {
+        events.add(event.getModel(), event.getType());
+    }
+
     public void resizeScreen(int x, int y) {
         if (x > 0 && y > 0) {
             ui.resizeScreenView(x, y);
@@ -294,17 +307,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     public void moveScreen(int x, int y) {
         ui.moveScreenView(x, y);
-    }
-
-    public void showChat() {
-        if(lastEvent.getModel().getStatus() != GameStatus.STARTING && lastEvent.getModel().getStatus() != GameStatus.WAITING){
-            ui.showChat(gameImmutable);
-            try {
-                processEvent(lastEvent);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     private void askNickname() {
@@ -318,6 +320,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         }
         ui.show_chosenNickname(nickname);
     }
+
 
     private boolean askSelectGame() throws Exception {
         askNickname();
@@ -383,7 +386,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 }
                 gameId = Integer.parseInt(temp);
             } catch (NumberFormatException | InterruptedException e) {
-                ui.show_NaNMsg();
+                ui.showInvalidInput();
             }
         } while (gameId == null);
         return gameId;
