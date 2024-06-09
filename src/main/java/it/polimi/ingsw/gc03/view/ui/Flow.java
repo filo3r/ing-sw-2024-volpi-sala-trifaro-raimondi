@@ -177,6 +177,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         switch (event.getType()) {
             case APP_MENU -> {
                 boolean selectionOk;
+                ended = false;
                 do {
                     selectionOk = askSelectGame();
                 } while (!selectionOk);
@@ -425,7 +426,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 do {
                     index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
                     if (ended) return;
-                } while (index != 1 && index != 0);
+                } while (index != 1 && index != 0  && ended == false);
                 Player player = model.getPlayers().stream().filter(p -> p.getNickname().equals(this.nickname)).collect(Collectors.toList()).get(0);
                 if (index == 1 || index == 0) {
                     selectCardObjective(player, index);
@@ -434,7 +435,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             } catch (NumberFormatException e) {
                 ui.showInvalidInput();
             }
-        } while (wrongIndex);
+        } while (wrongIndex && ended == false);
     }
 
     public void askToPlaceCardOnCodex(GameImmutable model) throws Exception {
@@ -452,18 +453,20 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 ui.showInvalidInput();
                 indexHand = null;
             }
-        } while (indexHand == null);
-        askSide(model, model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().get(indexHand));
-        askCoordinates(model);
-        placeCardOnCodex(model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), indexHand, frontCard, row, col);
-        ui.showCodex(model);
+        } while (indexHand == null && ended == false);
+        if(!ended){
+            askSide(model, model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().get(indexHand));
+            askCoordinates(model);
+            placeCardOnCodex(model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), indexHand, frontCard, row, col);
+            ui.showCodex(model);
+        }
     }
 
     public Side askSideStarter(GameImmutable model) throws InterruptedException {
         ui.show_askSideStarter(model, nickname);
         String choice;
         Side side = null;
-        while (side == null) {
+        while (side == null && ended == false) {
             choice = this.inputProcessor.getDataToProcess().popData();
             switch (choice) {
                 case "f" -> side = model.getPlayers().stream().filter(p->p.getNickname().equals(nickname)).toList().getFirst().getCardStarter().getFrontStarter();
@@ -483,14 +486,16 @@ public class Flow implements Runnable, ClientAction, GameListener {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        } while (side == null);
-        Player player = model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).findFirst().get();
-        placeStarterOnCodex(player, side);
+        } while (side == null && ended == false);
+        if(!ended){
+            Player player = model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).findFirst().get();
+            placeStarterOnCodex(player, side);
+        }
     }
 
     public void askCoordinates(GameImmutable model) throws InterruptedException {
         boolean validInput = false;
-        while (!validInput) {
+        while (!validInput && ended == false) {
             ui.showAskCoordinates(model);
             String input = this.inputProcessor.getDataToProcess().popData();
             try {
@@ -512,7 +517,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void askSide(GameImmutable model, Card card) throws InterruptedException {
         ui.showAskSide(model, card);
         String sideChosen;
-        while (true) {
+        while (true && ended == false) {
             sideChosen = this.inputProcessor.getDataToProcess().popData();
             switch (sideChosen) {
                 case "f" -> {
