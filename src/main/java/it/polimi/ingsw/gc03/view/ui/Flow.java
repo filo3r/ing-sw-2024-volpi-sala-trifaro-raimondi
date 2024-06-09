@@ -843,6 +843,4 @@ public class Flow implements Runnable, ClientAction, GameListener {
         events.add(gameImmutable, EventType.GAMECREATED);
         ui.addImportantEvent("New game created");
     }
-
-
 }

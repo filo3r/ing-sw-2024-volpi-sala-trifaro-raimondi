@@ -514,7 +514,7 @@ public class Codex implements Serializable {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //System.err.println("A player tried to place a card in an impossible position in the game "+game.getIdGame()+": "+e.getMessage());
             return false;
         }
     }
