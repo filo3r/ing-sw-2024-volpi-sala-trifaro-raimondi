@@ -914,7 +914,6 @@ public class Tui extends UI {
      */
     @Override
     protected void showAskNickname() {
-        // Implementation not provided
     }
 
     /**
@@ -922,7 +921,6 @@ public class Tui extends UI {
      */
     @Override
     protected void showAskGameID() {
-        // Implementation not provided
     }
 
     /**
@@ -930,7 +928,6 @@ public class Tui extends UI {
      */
     @Override
     protected void showAskJoin() {
-        // Implementation not provided
     }
 
     /**
@@ -940,7 +937,6 @@ public class Tui extends UI {
      */
     @Override
     protected void showCardHasBeenDrawn(GameImmutable gameModel) {
-        // Implementation not provided
     }
 
     /**
