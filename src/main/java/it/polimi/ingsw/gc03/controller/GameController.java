@@ -91,7 +91,11 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         for (Player player : game.getPlayers()) {
             Long lastPingTime = playerPingTimestamps.get(player);
             if (lastPingTime != null && currentTime - lastPingTime > TIMEOUT_MILLIS) {
-                handlePlayerTimeout(player);
+                try {
+                    handlePlayerTimeout(player);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -100,9 +104,17 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * Handles player timeout by setting the player to offline and removing their listener.
      * @param player The player who timed out.
      */
-    private void handlePlayerTimeout(Player player) {
+    private void handlePlayerTimeout(Player player) throws Exception {
         if(player.getOnline()){
             player.setOnline(this.getGame(), false, null);
+            switch (player.getAction()){
+                //if the player still has to draw, the first displayed card will be drawn, otherwise he will be skipped.
+                case DRAW -> drawCardDisplayed(player, DeckType.DISPLAYED_RESOURCE, 0);
+                case PLACE -> {
+                    player.setAction(PlayerAction.WAIT, game);
+                    updateCurrPlayer();
+                }
+            }
         }
     }
 
@@ -202,8 +214,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 game.setStatus(lastStatus);
                 playerPingTimestamps.put(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst(), System.currentTimeMillis());
             }
-            // The found player is set to online
+            // The found player is set to online and to WAIT action
+            // The found player is set to online and to WAIT action
             result.getFirst().setOnline(this.getGame(), true, gameListener);
+            result.getFirst().setAction(PlayerAction.WAIT, game);
         } else {
             throw new Exception("No previous game to reconnect with that username");
         }
@@ -232,15 +246,12 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
             if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.PLACE)){
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW, this.game);
-            } else if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.DRAW)){
-                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
+            } else {
+                if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.DRAW))
+                    game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
                 game.updateCurrPlayer();
                 Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
-                try{
-                    currPlayer.checkSkipTurn();
-                } catch (Exception e){
-                    throw new Exception(e);
-                }
+                currPlayer.checkSkipTurn();
                 if(currPlayer.getSkipTurn()){
                     currPlayer.setAction(PlayerAction.ENDED, this.game);
                     updateCurrPlayer();
@@ -253,6 +264,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         } else {
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
+            game.updateCurrPlayer();
         }
 
     }
@@ -499,10 +511,10 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                     }
                 }
             } else {
-                throw new Exception("The player is not the current player or the game is not running or he's current action is not place");
+                throw new Exception("The player is not the current player or the game is not running or he's current action is not place, it's "+game.getPlayers().get(game.getCurrPlayer()).getNickname());
             }
         } else {
-            throw new Exception("The current GameStatus is not either RUNNING or ENDING");
+            throw new Exception("The current GameStatus is not either RUNNING or ENDING or LASTROUND, it's "+game.getStatus());
         }
     }
 

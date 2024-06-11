@@ -591,7 +591,7 @@ public class Tui extends UI {
             }
         }
         clearScreen(' ');
-        int yPos = 364 - screenHeight / 2 + 2;
+        int yPos = 364 - screenHeight / 2 + 1;
         int xPos = 1093 - screenWidth / 2 + 2;
         for (ChatMessage msg : personalChat) {
             generateTextOnScreen(msg.getSender(), CharColor.WHITE, xPos, yPos);
@@ -601,6 +601,7 @@ public class Tui extends UI {
             xPos += 2;
             generateTextOnScreen(msg.getText(), CharColor.WHITE, xPos + msg.getReceiver().length() + 1, yPos);
             yPos += 1;
+            xPos = 1093 - screenWidth / 2 + 2;
         }
 
         refreshScreen(1093, 364);

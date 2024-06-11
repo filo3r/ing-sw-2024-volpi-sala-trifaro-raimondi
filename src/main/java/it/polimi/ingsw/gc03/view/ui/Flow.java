@@ -219,6 +219,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         GameImmutable gameImmutable = event.getModel();
         Player player = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
         ui.setNickname(player.getNickname());
+        inputProcessor.setNickname(nickname);
         switch (event.getModel().getStatus()) {
             case STARTING -> {
                 switch (player.getAction()) {
