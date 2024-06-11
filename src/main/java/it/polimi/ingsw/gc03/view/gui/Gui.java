@@ -317,4 +317,12 @@ public class Gui extends UI {
 
     }
 
+    //@Override
+    // public void showDrawnCard(GameImmutable model) {
+    //}
+
+    //@Override
+    //public void showPoints(GameImmutable model) {
+    //}
+
 }

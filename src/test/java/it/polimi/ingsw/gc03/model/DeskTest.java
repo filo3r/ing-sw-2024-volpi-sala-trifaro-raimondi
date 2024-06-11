@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class DeskTest {
     @Test
     void drawCardDeckResource() throws RemoteException {
         Card firstCard = desk.getDeckResource().getFirst();
-        Card cardResource = desk.drawCardDeck(desk.getDeckResource());
+        Card cardResource = desk.drawCardDeck(DeckType.DECK_RESOURCE);
         assertEquals(cardResource,firstCard);
         assertFalse(desk.getDeckResource().contains(cardResource));
     }
@@ -50,7 +51,7 @@ class DeskTest {
     @Test
     void drawCardDeckGold() throws RemoteException {
         Card firstCard = desk.getDeckGold().getFirst();
-        Card cardGold = desk.drawCardDeck(desk.getDeckGold());
+        Card cardGold = desk.drawCardDeck(DeckType.DECK_GOLD);
         assertEquals(cardGold,firstCard);
         assertFalse(desk.getDeckGold().contains(cardGold));
     }
@@ -61,7 +62,7 @@ class DeskTest {
     @Test
     void drawCardDeckStarter() throws RemoteException {
         Card firstCard = desk.getDeckStarter().getFirst();
-        Card cardStarter = desk.drawCardDeck(desk.getDeckStarter());
+        Card cardStarter = desk.drawCardDeck(DeckType.DECK_STARTER);
         assertEquals(cardStarter,firstCard);
         assertFalse(desk.getDeckStarter().contains(cardStarter));
     }
@@ -72,7 +73,7 @@ class DeskTest {
     @Test
     void drawCardDeckObjective() throws RemoteException {
         Card firstCard = desk.getDeckObjective().getFirst();
-        Card cardObjective = desk.drawCardDeck(desk.getDeckObjective());
+        Card cardObjective = desk.drawCardDeck(DeckType.DECK_OBJECTIVE);
         assertEquals(cardObjective,firstCard);
         assertFalse(desk.getDeckObjective().contains(cardObjective));
     }
@@ -85,10 +86,8 @@ class DeskTest {
     void drawCardDeckEmpty() throws RemoteException {
         Card card;
         //Empty the Deck;
-        while(!desk.getDeckGold().isEmpty()){
-            desk.drawCardDeck(desk.getDeckGold());
-        }
-        card = desk.drawCardDeck(desk.getDeckGold());
+        desk.getDeckGold().clear();
+        card = desk.drawCardDeck(DeckType.DECK_GOLD);
         assertEquals(null,card);
     }
 
@@ -99,7 +98,7 @@ class DeskTest {
     void drawCardDisplayedGold() throws RemoteException {
         int i = 1;
         Card displayedCard = desk.getDisplayedGold().get(i);
-        Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
+        Card card = desk.drawCardDisplayed(DeckType.DISPLAYED_GOLD,i);
         assertEquals(card,displayedCard);
     }
 
@@ -110,7 +109,7 @@ class DeskTest {
     void drawCardDisplayedResource() throws RemoteException {
         int i = 1;
         Card displayedCard = desk.getDisplayedResource().get(i);
-        Card card = desk.drawCardDisplayed(desk.getDisplayedResource(),i);
+        Card card = desk.drawCardDisplayed(DeckType.DISPLAYED_RESOURCE,i);
         assertEquals(card,displayedCard);
     }
 
@@ -121,10 +120,8 @@ class DeskTest {
     void drawCardDisplayedGoldEmpty() throws RemoteException {
         Card card;
         int i=0;
-        while(!desk.getDisplayedGold().isEmpty()){
-           desk.drawCardDisplayed(desk.getDisplayedGold(),i);
-        }
-        card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
+        desk.getDisplayedGold().clear();
+        card = desk.drawCardDisplayed(DeckType.DISPLAYED_GOLD,i);
         assertEquals(null,card);
     }
 
@@ -135,10 +132,8 @@ class DeskTest {
     void drawCardDisplayedResourceEmpty() throws RemoteException {
         Card card;
         int i=0;
-        while(!desk.getDisplayedResource().isEmpty()){
-           desk.drawCardDisplayed(desk.getDisplayedResource(),i);
-        }
-        card = desk.drawCardDisplayed(desk.getDisplayedResource(),i);
+        desk.getDisplayedResource().clear();
+        card = desk.drawCardDisplayed(DeckType.DISPLAYED_RESOURCE,i);
         assertEquals(null,card);
     }
 
@@ -148,7 +143,7 @@ class DeskTest {
     @Test
     void drawCardDisplayedWrongIndexOver() throws RemoteException {
         int i=2;
-        Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
+        Card card = desk.drawCardDisplayed(DeckType.DISPLAYED_GOLD,i);
         assertEquals(card,null);
     }
 
@@ -158,7 +153,7 @@ class DeskTest {
     @Test
     void drawCardDisplayedWrongIndexUnder() throws RemoteException {
         int i=-1;
-        Card card = desk.drawCardDisplayed(desk.getDisplayedGold(),i);
+        Card card = desk.drawCardDisplayed(DeckType.DISPLAYED_GOLD,i);
         assertEquals(card,null);
     }
 

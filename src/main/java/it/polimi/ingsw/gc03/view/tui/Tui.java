@@ -13,6 +13,7 @@ import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.util.ArrayList;
@@ -611,6 +612,18 @@ public class Tui extends UI {
             }
         }
     }
+
+   // @Override
+    //public void showDrawnCard(GameImmutable model) {
+      //  AsyncPrint.asyncPrint(model.getPlayers().get(model.getCurrPlayer()-1).getHand().getLast().getIdCard());
+    //}
+
+    //@Override
+    //public void showPoints(GameImmutable model) {
+    //    for(int i=0;i<model.getPlayers().size();i++){
+    //        AsyncPrint.asyncPrint("\n" + model.getPlayers().get(i).getNickname()+" has " + model.getPlayers().get(i).getCodex().getPointCodex() + " points.\n");
+    //    }
+    //}
 
     /**
      * Method not used in the TUI.

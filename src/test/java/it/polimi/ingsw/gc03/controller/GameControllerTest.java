@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
@@ -111,11 +112,11 @@ class GameControllerTest {
         assertEquals(firstPlayerCard.getBackResource(), placedCard);
 
         // Player1 draw from Displayed Gold
-        gameController.drawCardFromDeck(firstPlayer, gameDesk.getDeckResource());
+        gameController.drawCardFromDeck(firstPlayer, DeckType.DECK_GOLD);
         // Player1 tries to draw again from deck
-        assertThrows(Exception.class, () -> gameController.drawCardFromDeck(firstPlayer, gameDesk.getDeckResource()));
+        assertThrows(Exception.class, () -> gameController.drawCardFromDeck(firstPlayer, DeckType.DECK_RESOURCE));
         // Player1 tries to draw from displayed
-        assertThrows(Exception.class, () -> gameController.drawCardDisplayed(firstPlayer, gameDesk.getDisplayedGold(), 0));
+        assertThrows(Exception.class, () -> gameController.drawCardDisplayed(firstPlayer, DeckType.DISPLAYED_GOLD, 0));
         assertEquals(2, gameDesk.getDisplayedGold().size());
         assertEquals(3, firstPlayer.getHand().size());
         assertEquals(PlayerAction.PLACE, secondPlayer.getAction());
@@ -148,21 +149,13 @@ class GameControllerTest {
         game.setStatus(GameStatus.RUNNING);
         Card card;
         //Empty the decks
-        while(!game.getDesk().getDisplayedGold().isEmpty()){
-            card =game.getDesk().drawCardDisplayed(game.getDesk().getDisplayedGold(),0);
-        }
-        while(!game.getDesk().getDisplayedResource().isEmpty()){
-            card =game.getDesk().drawCardDisplayed(game.getDesk().getDisplayedResource(),0);
-        }
-        while(!game.getDesk().getDeckResource().isEmpty()){
-            card =game.getDesk().drawCardDeck(game.getDesk().getDeckResource());
-        }
-        while(!game.getDesk().getDeckGold().isEmpty()){
-            card =game.getDesk().drawCardDeck(game.getDesk().getDeckGold());
-        }
+        game.getDesk().getDeckGold().clear();
+        game.getDesk().getDeckResource().clear();
+        game.getDesk().getDisplayedGold().clear();
+        game.getDesk().getDisplayedResource().clear();
         game.getPlayers().getFirst().setAction(PlayerAction.DRAW,game);
 
-        gameController.drawCardFromDeck(game.getPlayers().getFirst(),game.getDesk().getDeckGold());
+        gameController.drawCardFromDeck(game.getPlayers().getFirst(),DeckType.DECK_GOLD);
         assertEquals(game.getStatus(),GameStatus.ENDING);
     }
 }

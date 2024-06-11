@@ -221,4 +221,10 @@ public abstract class UI {
     protected abstract void showYouLeft();
 
     public abstract void showChat(GameImmutable gameImmutable);
+
+    //public abstract void showDrawnCard(GameImmutable model);
+
+
+    //public abstract void showPoints(GameImmutable model);
+
 }

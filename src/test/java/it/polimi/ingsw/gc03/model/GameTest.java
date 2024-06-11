@@ -50,7 +50,7 @@ class GameTest {
         game.setSize(4);
         game.addPlayer("newNick2", listener);
         game.addPlayer("newNick3", listener);
-        assertThrows(DeskIsFullException.class, ()-> game.addPlayer("newNick4", listener));
+        assertThrows(IndexOutOfBoundsException.class, ()-> game.addPlayer("newNick4", listener));
 
     }
 

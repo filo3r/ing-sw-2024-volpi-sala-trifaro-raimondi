@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.model.Desk;
 import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class FrontGoldTest {
     @BeforeEach
     void setUp() throws RemoteException {
         desk = new Desk(new Game(15444949));
-        Card card= desk.drawCardDeck(desk.getDeckGold());
+        Card card= desk.drawCardDeck(DeckType.DECK_GOLD);
         CardGold cardGold = (CardGold) card;
         frontGold = cardGold.getFrontGold();
     }

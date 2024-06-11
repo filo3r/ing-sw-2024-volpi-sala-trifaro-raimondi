@@ -347,12 +347,14 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 if (event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
                     askToChooseADeck(event.getModel());
                     ui.showCodex(event.getModel());
+                    //ui.showDrawnCard(event.getModel());
                 }
             }
             case PLACE_CARD_ON_CODEX -> {
                 if (!event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getHand().isEmpty() && event.getModel().getPlayers().get(event.getModel().getCurrPlayer()).getNickname().equals(nickname)) {
                     askToPlaceCardOnCodex(event.getModel());
                     ui.showCodex(event.getModel());
+                    //ui.showPoints(event.getModel());
                 }
             }
             case CARD_CANNOT_BE_PLACED -> {
