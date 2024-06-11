@@ -4,6 +4,7 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
@@ -253,7 +254,7 @@ public class RmiClient implements ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     @Override
-    public void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws RemoteException, Exception {
+    public void drawCardFromDeck(Player player, DeckType deck) throws RemoteException, Exception {
         this.gameController.drawCardFromDeck(player, deck);
     }
 
@@ -266,7 +267,7 @@ public class RmiClient implements ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     @Override
-    public void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws RemoteException, Exception {
+    public void drawCardDisplayed(Player player, DeckType deck, int index) throws RemoteException, Exception {
         this.gameController.drawCardDisplayed(player, deck, index);
     }
 

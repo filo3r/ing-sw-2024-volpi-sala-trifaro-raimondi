@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.networking.rmi;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -54,7 +55,7 @@ public interface GameControllerInterface extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
-    void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws RemoteException, Exception;
+    void drawCardFromDeck(Player player, DeckType deck) throws RemoteException, Exception;
 
     /**
      * This method draws a card from the visible cards.
@@ -64,7 +65,7 @@ public interface GameControllerInterface extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
-    void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws RemoteException, Exception;
+    void drawCardDisplayed(Player player, DeckType deck, int index) throws RemoteException, Exception;
 
     /**
      * This method sends a message in chat.

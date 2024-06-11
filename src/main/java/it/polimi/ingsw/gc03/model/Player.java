@@ -118,19 +118,19 @@ public class Player implements Serializable {
         this.number = number++;
         this.color = createColorArrayList().get(number - 1);
         // Assignment of the Starter card
-        this.cardStarter = (CardStarter) desk.drawCardDeck(desk.getDeckStarter());
+        this.cardStarter = (CardStarter) desk.drawCardDeck(DeckType.DECK_STARTER);
         // Assignment of Objective cards
         this.cardObjective = new ArrayList<>(INITIAL_CARD_OBJECTIVE);
         for (int i = 0; i < INITIAL_CARD_OBJECTIVE; i++) {
-            this.cardObjective.add((CardObjective) desk.drawCardDeck(desk.getDeckObjective()));
+            this.cardObjective.add((CardObjective) desk.drawCardDeck(DeckType.DECK_OBJECTIVE));
         }
         // Assignment of Resource cards and Gold cards in the hand
         this.hand = new ArrayList<>(INITIAL_CARD_RESOURCE + INITIAL_CARD_GOLD);
         for (int i = 0; i < INITIAL_CARD_RESOURCE; i++) {
-            addCardToHand((CardResource) desk.drawCardDeck(desk.getDeckResource()));
+            addCardToHand((CardResource) desk.drawCardDeck(DeckType.DECK_RESOURCE));
         }
         for (int i = 0; i < INITIAL_CARD_GOLD; i++) {
-            addCardToHand((CardGold) desk.drawCardDeck(desk.getDeckGold()));
+            addCardToHand((CardGold) desk.drawCardDeck(DeckType.DECK_GOLD));
         }
         this.codex = new Codex();
         this.pointObjective = 0;

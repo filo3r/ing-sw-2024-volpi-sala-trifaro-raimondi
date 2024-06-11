@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.g
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
@@ -25,7 +26,7 @@ public class SocketClientMessageDrawCardDisplayed extends SocketClientGenericMes
     /**
      * The deck from which the card is drawn.
      */
-    private ArrayList<Card> deck;
+    private DeckType deck;
 
     /**
      * The index of the card in the displayed deck that the player wishes to draw.
@@ -40,12 +41,11 @@ public class SocketClientMessageDrawCardDisplayed extends SocketClientGenericMes
      * @param deck The visible deck from which the card is drawn.
      * @param index The index of the card in the displayed deck that the player wishes to draw.
      */
-    public SocketClientMessageDrawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) {
+    public SocketClientMessageDrawCardDisplayed(Player player, DeckType deck, int index) {
         this.nicknameClient = player.getNickname();
         this.messageType = MessageType.GAME_CONTROLLER;
         this.player = player;
-        this.deck = new ArrayList<>();
-        this.deck.addAll(deck);
+        this.deck = deck;
         this.index = index;
     }
 

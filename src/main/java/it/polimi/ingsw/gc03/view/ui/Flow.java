@@ -6,6 +6,7 @@ import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
@@ -558,12 +559,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
         try {
             choice = this.inputProcessor.getDataToProcess().popData();
             switch (choice) {
-                case "gD" -> drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDeckGold());
-                case "g1" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), 0);
-                case "g2" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedGold(), 1);
-                case "r1" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), 0);
-                case "r2" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDisplayedResource(), 1);
-                case "rD" -> drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()), gameModel.getDesk().getDeckResource());
+                case "gD" -> drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DECK_GOLD);
+                case "g1" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 0);
+                case "g2" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 1);
+                case "r1" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 0);
+                case "r2" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 1);
+                case "rD" -> drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DECK_RESOURCE);
                 default -> {
                     ui.showInvalidInput();
                     askToChooseADeck(gameModel);
@@ -876,7 +877,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws Exception if an error occurs during drawing
      */
     @Override
-    public void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws IOException, InterruptedException, Exception {
+    public void drawCardFromDeck(Player player, DeckType deck) throws IOException, InterruptedException, Exception {
         try {
             clientActions.drawCardFromDeck(player, deck);
         } catch (IOException e) {
@@ -895,7 +896,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws Exception if an error occurs during drawing
      */
     @Override
-    public void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws IOException, InterruptedException, Exception {
+    public void drawCardDisplayed(Player player, DeckType deck, int index) throws IOException, InterruptedException, Exception {
         try {
             clientActions.drawCardDisplayed(player, deck, index);
         } catch (IOException e) {

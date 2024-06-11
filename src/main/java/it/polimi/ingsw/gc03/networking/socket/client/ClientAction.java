@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.networking.socket.client;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -99,7 +100,7 @@ public interface ClientAction {
      * @throws InterruptedException If the thread is interrupted, either before or during the action.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
-    void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws IOException, InterruptedException, Exception;
+    void drawCardFromDeck(Player player, DeckType deck) throws IOException, InterruptedException, Exception;
 
     /**
      * The client can draw a card from the visible cards.
@@ -110,7 +111,7 @@ public interface ClientAction {
      * @throws InterruptedException If the thread is interrupted, either before or during the action.
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
-    void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws IOException, InterruptedException, Exception;
+    void drawCardDisplayed(Player player, DeckType deck, int index) throws IOException, InterruptedException, Exception;
 
     /**
      * The client can send a message in chat.

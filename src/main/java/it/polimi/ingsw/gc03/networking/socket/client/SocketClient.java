@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.networking.socket.client;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.gameControllerMessages.*;
@@ -277,7 +278,7 @@ public class SocketClient implements ClientAction {
      * @throws IOException If an input or output exception occurs during action processing.
      */
     @Override
-    public void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws IOException {
+    public void drawCardFromDeck(Player player, DeckType deck) throws IOException {
         SocketClientMessageDrawCardFromDeck message = new SocketClientMessageDrawCardFromDeck(player, deck);
         this.outputStream.writeObject(message);
         completeTransmission();
@@ -291,7 +292,7 @@ public class SocketClient implements ClientAction {
      * @throws IOException If an input or output exception occurs during action processing.
      */
     @Override
-    public void drawCardDisplayed(Player player, ArrayList<? extends Card> deck, int index) throws IOException {
+    public void drawCardDisplayed(Player player, DeckType deck, int index) throws IOException {
         SocketClientMessageDrawCardDisplayed message = new SocketClientMessageDrawCardDisplayed(player, deck, index);
         this.outputStream.writeObject(message);
         completeTransmission();

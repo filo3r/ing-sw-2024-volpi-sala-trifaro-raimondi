@@ -10,12 +10,14 @@ import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategy;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategyAdapter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -296,19 +298,19 @@ public class Desk implements Serializable {
         // Resource cards
         this.displayedResource = new ArrayList<>(NUM_CARD_DISPLAYED);
         for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
-            CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
+            CardResource cardResource = (CardResource) drawCardDeck(DeckType.DECK_RESOURCE);
             this.displayedResource.add(cardResource);
         }
         // Gold cards
         this.displayedGold = new ArrayList<>(NUM_CARD_DISPLAYED);
         for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
-            CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
+            CardGold cardGold = (CardGold) drawCardDeck(DeckType.DECK_GOLD);
             this.displayedGold.add(cardGold);
         }
         // Objective cards
         this.displayedObjective = new ArrayList<>(NUM_CARD_DISPLAYED);
         for (int i = 0; i < NUM_CARD_DISPLAYED; i++) {
-            CardObjective cardObjective = (CardObjective) drawCardDeck(this.deckObjective);
+            CardObjective cardObjective = (CardObjective) drawCardDeck(DeckType.DECK_OBJECTIVE);
             this.displayedObjective.add(cardObjective);
         }
     }
@@ -318,13 +320,20 @@ public class Desk implements Serializable {
      * @param deck The deck from which you want to draw a card.
      * @return The drawn card.
      */
-    public Card drawCardDeck(ArrayList<? extends Card> deck) throws RemoteException {
-        boolean emptyDeck = deck.isEmpty();
+    public Card drawCardDeck(DeckType deck) throws RemoteException {
+        List<? extends Card> actualDeck = null;
+        switch (deck) {
+            case DECK_GOLD -> actualDeck = this.deckGold;
+            case DECK_RESOURCE -> actualDeck = this.deckResource;
+            case DECK_OBJECTIVE -> actualDeck = this.deckObjective;
+            case DECK_STARTER -> actualDeck = this.deckStarter;
+        }
+        boolean emptyDeck = actualDeck.isEmpty();
         // Empty deck
         if (emptyDeck) {
             return null;
         } else{
-            Card drawnCard =  deck.removeFirst();
+            Card drawnCard =  actualDeck.removeFirst();
             if(game != null && game.getPlayers().size()>=1){
                 game.getListener().notifyCardAddedToHand(this.game, drawnCard);
             }
@@ -334,18 +343,23 @@ public class Desk implements Serializable {
 
     /**
      * Method for drawing a card from those visible.
-     * @param displayed The visible cards from which you want to draw.
+     * @param deck The visible cards from which you want to draw.
      * @param index The index of the card you want to take.
      * @return The card taken.
      */
-    public Card drawCardDisplayed(ArrayList<? extends Card> displayed, int index) throws RemoteException {
+    public Card drawCardDisplayed(DeckType deck, int index) throws RemoteException {
+        List<? extends Card> actualDeck = null;
+        switch (deck) {
+            case DISPLAYED_GOLD -> actualDeck = this.displayedGold;
+            case DISPLAYED_RESOURCE -> actualDeck = this.displayedResource;
+        }
         // Invalid index
-        if (index < 0 || index >= displayed.size() || displayed.isEmpty()){
+        if (index < 0 || index >= actualDeck.size() || actualDeck.isEmpty()){
             checkDisplayed();
             return null;
         }    // Valid index
         else {
-            Card card = displayed.remove(index);
+            Card card = actualDeck.remove(index);
             checkDisplayed();
             if(game != null && game.getPlayers().size()>=1){
                 game.getListener().notifyCardAddedToHand(this.game, card);
@@ -360,22 +374,22 @@ public class Desk implements Serializable {
     private void checkDisplayed() throws RemoteException {
         // Resource cards: Resource deck not empty
         while (this.displayedResource.size() < NUM_CARD_DISPLAYED && !this.deckResource.isEmpty()) {
-            CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
+            CardResource cardResource = (CardResource) drawCardDeck(DeckType.DECK_RESOURCE);
             this.displayedResource.add(cardResource);
         }
         // Resource cards: Resource deck empty
         while (this.displayedResource.size() < NUM_CARD_DISPLAYED && this.deckResource.isEmpty() && !this.deckGold.isEmpty()) {
-            CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
+            CardGold cardGold = (CardGold) drawCardDeck(DeckType.DECK_GOLD);
             this.displayedResource.add(cardGold);
         }
         // Gold cards: Gold deck not empty
         while (this.displayedGold.size() < NUM_CARD_DISPLAYED && !this.deckGold.isEmpty()) {
-            CardGold cardGold = (CardGold) drawCardDeck(this.deckGold);
+            CardGold cardGold = (CardGold) drawCardDeck(DeckType.DECK_GOLD);
             this.displayedGold.add(cardGold);
         }
         // Gold cards: Gold deck empty
         while (this.displayedGold.size() < NUM_CARD_DISPLAYED && this.deckGold.isEmpty() && !this.deckResource.isEmpty()) {
-            CardResource cardResource = (CardResource) drawCardDeck(this.deckResource);
+            CardResource cardResource = (CardResource) drawCardDeck(DeckType.DECK_GOLD);
             this.displayedGold.add(cardResource);
         }
     }

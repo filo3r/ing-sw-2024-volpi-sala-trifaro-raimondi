@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
@@ -370,7 +371,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @param deck The deck from which the card is drawn.
      * @throws Exception If the player's current action is not DRAW or if the game state is not suitable for drawing a card.
      */
-    public synchronized void drawCardFromDeck(Player player, ArrayList<? extends Card> deck) throws Exception {
+    public synchronized void drawCardFromDeck(Player player, DeckType deck) throws Exception {
         // Check that the player is authorized to draw
         Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
 
@@ -393,7 +394,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @param index The index of the card in the displayed deck that the player wishes to draw.
      * @throws Exception If the player's current action is not DRAW or if the game state does not allow drawing a card.
      */
-    public synchronized void drawCardDisplayed(Player player,ArrayList<? extends Card> deck, int index) throws Exception {
+    public synchronized void drawCardDisplayed(Player player, DeckType deck, int index) throws Exception {
         // Check that the player is authorized to draw
         Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
 
