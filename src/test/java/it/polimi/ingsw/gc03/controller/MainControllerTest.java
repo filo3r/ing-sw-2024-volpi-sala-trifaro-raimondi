@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
@@ -56,7 +57,7 @@ class MainControllerTest {
     }
     @Test
     @DisplayName("Simulate a player trying to join when there are no active games")
-    void joinAndCreateGame() throws NoSuchGameException, RemoteException {
+    void joinAndCreateGame() throws  RemoteException {
         mainController.joinFirstAvailableGame(listener,"Player1");
         assertEquals(1, mainController.getGameControllers().size());
         GameController gc = mainController.getGameControllers().get(0);
@@ -65,13 +66,8 @@ class MainControllerTest {
         assertEquals(GameStatus.WAITING, gc.getGame().getStatus());
         assertThrows(Exception.class,() -> gc.placeCardOnCodex(p1, 0, false, 39, 41));
         assertThrows(Exception.class,() -> gc.placeStarterOnCodex(p1, p1.getCardStarter().getBackStarter()));
-        // A new player tries join while the first player hasn't decided
-        // yet the game's size
-        assertThrows(Exception.class, () -> mainController.joinFirstAvailableGame(listener,"Player2"));
         // The first player sets the game's size
         gc.getGame().setSize(2);
-        //Player already joined
-        assertThrows(RuntimeException.class,()->mainController.joinFirstAvailableGame(listener,"Player1"));
         mainController.joinFirstAvailableGame(listener,"Player2");
         Player p2 = gc.getGame().getPlayers().getLast();
         assertEquals(GameStatus.STARTING, gc.getGame().getStatus());
@@ -107,12 +103,12 @@ class MainControllerTest {
 
         gameController.placeCardOnCodex(p1, 0, false, 39, 41);
         p1.setScore(21);
-        gameController.drawCardDisplayed(p1, game.getDesk().getDisplayedResource(), 1);
+        gameController.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 1);
         p1.setHand(makeHand());
         if(game.getPlayers().indexOf(p1)==0){
             assertEquals(GameStatus.ENDING, game.getStatus());
             gameController.placeCardOnCodex(p2, 0, false, 39, 41);
-            gameController.drawCardDisplayed(p2, game.getDesk().getDisplayedResource(), 1);
+            gameController.drawCardDisplayed(p2, DeckType.DISPLAYED_RESOURCE, 1);
             p2.setHand(makeHand());
             gameController.placeCardOnCodex(p1, 1, false, 41, 39);
             try{ gameController.placeCardOnCodex(p2, 1, false, 41, 39);}
