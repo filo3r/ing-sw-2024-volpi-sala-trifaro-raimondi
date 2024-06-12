@@ -4,9 +4,7 @@ import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardResource;
-import it.polimi.ingsw.gc03.model.enumerations.DeckType;
-import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
-import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
+import it.polimi.ingsw.gc03.model.enumerations.*;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.side.Side;
 
@@ -17,6 +15,7 @@ import it.polimi.ingsw.gc03.model.exceptions.*;
 import org.mockito.Mock;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -145,9 +144,13 @@ class GameControllerTest {
         gameController.addPlayerToGame("Player1", listener);
         gameController.updateGameSize(2);
         gameController.addPlayerToGame("Player2", listener);
+        Player first = gameController.getGame().getPlayers().getFirst();
+        Player second = gameController.getGame().getPlayers().getLast();
+        gameController.placeStarterOnCodex(first,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+        gameController.placeStarterOnCodex(second,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+        gameController.selectCardObjective(first,0);
+        gameController.selectCardObjective(second,0);
         Game game = gameController.getGame();
-        game.setStatus(GameStatus.RUNNING);
-        Card card;
         //Empty the decks
         game.getDesk().getDeckGold().clear();
         game.getDesk().getDeckResource().clear();
@@ -155,7 +158,7 @@ class GameControllerTest {
         game.getDesk().getDisplayedResource().clear();
         game.getPlayers().getFirst().setAction(PlayerAction.DRAW,game);
 
-        gameController.drawCardFromDeck(game.getPlayers().getFirst(),DeckType.DECK_GOLD);
+        gameController.drawCardFromDeck(game.getPlayers().get(game.getCurrPlayer()),DeckType.DECK_GOLD);
         assertEquals(game.getStatus(),GameStatus.ENDING);
     }
 }

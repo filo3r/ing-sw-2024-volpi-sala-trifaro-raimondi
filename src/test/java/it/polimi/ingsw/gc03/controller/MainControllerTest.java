@@ -110,7 +110,7 @@ class MainControllerTest {
             gameController.placeCardOnCodex(p2, 0, false, 39, 41);
             gameController.drawCardDisplayed(p2, DeckType.DISPLAYED_RESOURCE, 1);
             p2.setHand(makeHand());
-            gameController.placeCardOnCodex(p1, 1, false, 41, 39);
+            assertEquals(GameStatus.LASTROUND,game.getStatus());
             try{ gameController.placeCardOnCodex(p2, 1, false, 41, 39);}
             catch (Exception e){
                 return;
@@ -119,8 +119,9 @@ class MainControllerTest {
         } else {
             assertEquals(GameStatus.LASTROUND, game.getStatus());
             gameController.placeCardOnCodex(p2, 0, false, 39, 41);
+            gameController.drawCardFromDeck(p2,DeckType.DECK_GOLD);
             gameController.placeCardOnCodex(p1, 1, false, 41, 39);
-
+            gameController.drawCardFromDeck(p2,DeckType.DECK_GOLD);
 
         }
         assertEquals(GameStatus.ENDED, game.getStatus());
