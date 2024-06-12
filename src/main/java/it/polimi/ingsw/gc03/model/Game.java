@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This class represents a game.
@@ -288,10 +289,7 @@ public class Game implements Serializable {
         if(oldStatus.equals(GameStatus.WAITING) && status.equals(GameStatus.STARTING)){
             listenersHandler.notifyGameStarted(this);
         }
-        if(oldStatus.equals(GameStatus.RUNNING) && status.equals(GameStatus.LASTROUND)){
-         listenersHandler.notifyEndConditionReached(this);
-        }
-        if(oldStatus.equals(GameStatus.LASTROUND) && status.equals(GameStatus.ENDING)) {
+        if(oldStatus.equals(GameStatus.RUNNING) && status.equals(GameStatus.ENDING)) {
             listenersHandler.notifyEndConditionReached(this);
         }
         if(status.equals(GameStatus.ENDED)) {
@@ -371,6 +369,8 @@ public class Game implements Serializable {
      */
     public void setCurrPlayer(int currPlayer) {
         this.currPlayer = currPlayer;
+        Collections.rotate(players, -currPlayer);
+        this.currPlayer = 0;
     }
 
     /**

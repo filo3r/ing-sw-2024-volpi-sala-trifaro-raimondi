@@ -14,6 +14,7 @@ import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.security.interfaces.EdECKey;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -215,7 +216,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                 playerPingTimestamps.put(game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst(), System.currentTimeMillis());
             }
             // The found player is set to online and to WAIT action
-            // The found player is set to online and to WAIT action
             result.getFirst().setOnline(this.getGame(), true, gameListener);
             result.getFirst().setAction(PlayerAction.WAIT, game);
         } else {
@@ -265,6 +265,19 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         } else {
             game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.WAIT, this.game);
             game.updateCurrPlayer();
+            Player currPlayer = game.getPlayers().get(game.getCurrPlayer());
+            if(!currPlayer.getAction().equals(PlayerAction.ENDED)){
+                currPlayer.checkSkipTurn();
+                if(currPlayer.getSkipTurn()){
+                    currPlayer.setAction(PlayerAction.ENDED, this.game);
+                    updateCurrPlayer();
+                } else if(!currPlayer.getOnline()) {
+                    currPlayer.setAction(PlayerAction.DISCONNECTED, this.game);
+                    updateCurrPlayer();
+                } else {
+                    currPlayer.setAction(PlayerAction.PLACE, this.game);
+                }
+            }
         }
 
     }
@@ -351,16 +364,15 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * If the game is not in the ENDING state, it sets the player's action to WAIT.
      * @param player The player whose action is to be updated based on the game's state.
      */
-    private synchronized void checkFinalAction(Player player) {
-        if (player.getScore() >= Game.STOP_POINT_GAME) {
+    private synchronized void checkFinalAction(Player player) throws Exception {
+        if (player.getScore() >= Game.STOP_POINT_GAME && !game.getStatus().equals(GameStatus.ENDING)) {
             if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                 game.setStatus(GameStatus.ENDING);
                 lastStatus = GameStatus.ENDING;
             }
-        }
-        if(game.getDesk().getDeckResource().isEmpty()) {
+        } else if(game.getDesk().getDeckResource().isEmpty()) {
             if (game.getDesk().getDeckGold().isEmpty()){
-                if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
+                if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED) && !game.getStatus().equals(GameStatus.ENDING)){
                     game.setStatus(GameStatus.ENDING);
                     lastStatus = GameStatus.ENDING;
                 }

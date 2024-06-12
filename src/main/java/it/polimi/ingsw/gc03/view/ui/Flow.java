@@ -1233,7 +1233,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void winnerDeclared(GameImmutable model, ArrayList<String> nickname) throws RemoteException {
-        ui.addImportantEvent(nickname.get(0) + " has won the game");
+        String text = "";
+        for(int i = 0; i<nickname.size(); i++){
+            text += nickname.get(i)+" ";
+        }
+        ui.addImportantEvent(text + " won the game.");
     }
 
     /**

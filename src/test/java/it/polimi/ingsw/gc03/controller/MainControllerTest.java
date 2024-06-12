@@ -14,6 +14,8 @@ import it.polimi.ingsw.gc03.model.side.back.BackResource;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 
+import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
+import javafx.scene.SubScene;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -72,59 +74,45 @@ class MainControllerTest {
         Player p2 = gc.getGame().getPlayers().getLast();
         assertEquals(GameStatus.STARTING, gc.getGame().getStatus());
     }
+
     @Test
     @DisplayName("Game ending and winner")
     void gameEnd() throws Exception {
-        mainController.joinFirstAvailableGame(listener,"Player1");
-        GameController gameController= mainController.getGameControllers().getFirst();
-        Game game = gameController.getGame();
-        game.setSize(2);
-        gameController.addPlayerToGame("Player2", listener);
-        assertEquals(2, game.getNumPlayer());
-        assertEquals(GameStatus.STARTING, game.getStatus());
-        // p1 is the first player to play.
-        Player p1 = game.getPlayers().get(game.getCurrPlayer());
-        Player p2 = null;
+        mainController.joinFirstAvailableGame(listener, "Player1");
+        GameController gc = mainController.getGameControllers().get(0);
+        gc.getGame().setSize(2);
+        mainController.joinSpecificGame(listener, "Player2", gc.getGame().getIdGame());
+        Player tempP1 = gc.getGame().getPlayers().stream().filter(p->p.getNickname().equals("Player1")).toList().getFirst();
+        Player tempP2 = gc.getGame().getPlayers().stream().filter(p->p.getNickname().equals("Player2")).toList().getFirst();
+        gc.placeStarterOnCodex(tempP1, tempP1.getCardStarter().getFrontStarter());
+        gc.placeStarterOnCodex(tempP2, tempP2.getCardStarter().getFrontStarter());
+        gc.selectCardObjective(tempP1, 0);
+        gc.selectCardObjective(tempP2, 0);
 
-        if (game.getCurrPlayer() == 0) {
-            p2 = game.getPlayers().getLast();
-        } else {
-            p2 = game.getPlayers().getFirst();
-        }
+        Player p1 = gc.getGame().getPlayers().get(gc.getGame().getCurrPlayer());
+        Player p2 = gc.getGame().getPlayers().stream().filter(p->!p.getNickname().equals(p1.getNickname())).toList().getFirst();
 
-        p1.setHand(makeHand());
-        p2.setHand(makeHand());
-        gameController.selectCardObjective(p1, 1);
-        gameController.selectCardObjective(p2, 1);
-        gameController.placeStarterOnCodex(p1, p1.getCardStarter().getFrontStarter());
-        gameController.placeStarterOnCodex(p2, p2.getCardStarter().getFrontStarter());
+        gc.placeCardOnCodex(p1, 0, false, 39, 39);
+        gc.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 0);
 
-        assertEquals(GameStatus.RUNNING, game.getStatus());
+        gc.placeCardOnCodex(p2, 0, false, 39, 39);
+        gc.drawCardDisplayed(p2, DeckType.DISPLAYED_RESOURCE, 0);
 
-        gameController.placeCardOnCodex(p1, 0, false, 39, 41);
-        p1.setScore(21);
-        gameController.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 1);
-        p1.setHand(makeHand());
-        if(game.getPlayers().indexOf(p1)==0){
-            assertEquals(GameStatus.ENDING, game.getStatus());
-            gameController.placeCardOnCodex(p2, 0, false, 39, 41);
-            gameController.drawCardDisplayed(p2, DeckType.DISPLAYED_RESOURCE, 1);
-            p2.setHand(makeHand());
-            assertEquals(GameStatus.LASTROUND,game.getStatus());
-            try{ gameController.placeCardOnCodex(p2, 1, false, 41, 39);}
-            catch (Exception e){
-                return;
-            }
-            return;
-        } else {
-            assertEquals(GameStatus.LASTROUND, game.getStatus());
-            gameController.placeCardOnCodex(p2, 0, false, 39, 41);
-            gameController.drawCardFromDeck(p2,DeckType.DECK_GOLD);
-            gameController.placeCardOnCodex(p1, 1, false, 41, 39);
-            gameController.drawCardFromDeck(p2,DeckType.DECK_GOLD);
+        gc.placeCardOnCodex(p1, 0, false, 41, 41);
+        // Simulate end game condition. (GameStatus is now ending after this turn ends, the last turn will start).
+        p1.setScore(22);
+        gc.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 0);
+        assertEquals(GameStatus.ENDING, gc.getGame().getStatus());
+        gc.placeCardOnCodex(p2, 0, false, 41, 41);
+        gc.drawCardDisplayed(p2, DeckType.DISPLAYED_RESOURCE, 0);
+        // Now it's the last round
+        assertEquals(GameStatus.LASTROUND, gc.getGame().getStatus());
 
-        }
-        assertEquals(GameStatus.ENDED, game.getStatus());
+        gc.placeCardOnCodex(p1, 0, false, 39, 41);
+
+        gc.placeCardOnCodex(p2, 0, false, 39, 41);
+
+        assertEquals(GameStatus.ENDED, gc.getGame().getStatus());
     }
 
     @Test
