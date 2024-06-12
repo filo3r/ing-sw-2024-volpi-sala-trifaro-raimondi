@@ -639,11 +639,11 @@ public class Tui extends UI {
     @Override
     protected void show_menuOptions() {
         clearScreen(' ');
-        generateTextOnScreen("Please choose an option", CharColor.WHITE, 1093, 364);
-        generateTextOnScreen("c -> Create a game", CharColor.WHITE, 1093, 365);
-        generateTextOnScreen("j -> Join a random game", CharColor.WHITE, 1093, 366);
-        generateTextOnScreen("js -> Join a specific game", CharColor.WHITE, 1093, 367);
-        generateTextOnScreen("r -> Reconnect to a game", CharColor.WHITE, 1093, 368);
+        generateTextOnScreen("Please choose an option", CharColor.WHITE, 1093-"Please choose an option".length()/2, 364);
+        generateTextOnScreen("c -> Create a game", CharColor.WHITE, 1093-"c -> Create a game".length()/2, 365);
+        generateTextOnScreen("j -> Join a random game", CharColor.WHITE, 1093-"j -> Join a random game".length()/2, 366);
+        generateTextOnScreen("js -> Join a specific game", CharColor.WHITE, 1093-"js -> Join a specific game".length()/2, 367);
+        generateTextOnScreen("r -> Reconnect to a game", CharColor.WHITE, 1093-"r -> Reconnect to a game".length()/2, 368);
         refreshScreen(1093, 364);
     }
 
@@ -655,7 +655,7 @@ public class Tui extends UI {
     @Override
     protected void show_creatingNewGameMsg(String nickname) {
         clearScreen(' ');
-        generateTextOnScreen("Creating a new game...", CharColor.GOLD, 1093, 364);
+        generateTextOnScreen("Creating a new game...", CharColor.GOLD, 1093-"Creating a new game...".length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -667,7 +667,7 @@ public class Tui extends UI {
     @Override
     protected void showAskSize(GameImmutable gameImmutable) {
         clearScreen(' ');
-        generateTextOnScreen("Please choose the game size (2,3,4)", CharColor.WHITE, 1093, 364);
+        generateTextOnScreen("Please choose the game size (2,3,4)", CharColor.WHITE, 1093-"Please choose the game size (2,3,4)".length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -679,7 +679,7 @@ public class Tui extends UI {
     @Override
     protected void show_joiningFirstAvailableMsg(String nickname) {
         clearScreen(' ');
-        generateTextOnScreen("Joining the first available game...", CharColor.GOLD, 1093, 364);
+        generateTextOnScreen("Joining the first available game...", CharColor.GOLD, 1093-"Joining the first available game...".length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -692,7 +692,8 @@ public class Tui extends UI {
     @Override
     protected void show_joiningToGameIdMsg(int idGame, String nickname) {
         clearScreen(' ');
-        generateTextOnScreen("Joining the game with id " + idGame, CharColor.GOLD, 1093, 364);
+        String text = "Joining the game with id " + idGame;
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -702,7 +703,7 @@ public class Tui extends UI {
     @Override
     protected void show_inputGameIdMsg() {
         clearScreen(' ');
-        generateTextOnScreen("Please write the game id", CharColor.WHITE, 1093, 364);
+        generateTextOnScreen("Please write the game id", CharColor.WHITE, 1093-"Please write the game id".length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -712,7 +713,7 @@ public class Tui extends UI {
     @Override
     protected void show_insertNicknameMsg() {
         clearScreen(' ');
-        generateTextOnScreen("Please choose your nickname", CharColor.WHITE, 1093, 364);
+        generateTextOnScreen("Please choose your nickname", CharColor.WHITE, 1093-"Please choose your nickname".length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -724,7 +725,8 @@ public class Tui extends UI {
     @Override
     protected void show_chosenNickname(String nickname) {
         clearScreen(' ');
-        generateTextOnScreen("Hi, " + nickname, CharColor.GOLD, 1093, 364);
+        String text = "Hi, " + nickname;
+        generateTextOnScreen(text, CharColor.GOLD, 1093-text.length()/2, 364);
         refreshScreen(1093, 364);
     }
 
@@ -916,9 +918,14 @@ public class Tui extends UI {
     @Override
     protected void showWinner(GameImmutable model) {
         clearScreen(' ');
-        String text = model.getWinner().getFirst().getNickname() + " has won the game!";
+        List<Player> winners = model.getWinner();
+        String text = "";
+        for(int i = 0; i<winners.size(); i++){
+            text += winners.get(i).getNickname()+" ";
+        }
+        text += " won the game!";
         generateTextOnScreen(text, CharColor.GOLD, 1093 - text.length() / 2, 364);
-        text = "press enter to back to the menu";
+        text = "press enter to go back to the menu";
         generateTextOnScreen(text, CharColor.WHITE, 1093 - text.length() / 2, 364 + 6);
         refreshScreen(1093, 364);
     }
@@ -1170,7 +1177,7 @@ public class Tui extends UI {
         clearScreen(' ');
         String text = "You left the game.";
         generateTextOnScreen(text, CharColor.GOLD, 1093 - text.length() / 2, 364);
-        text = "press enter to back to the menu";
+        text = "press enter to go back to the menu";
         generateTextOnScreen(text, CharColor.WHITE, 1093 - text.length() / 2, 364 + 6);
         refreshScreen(1093, 364);
     }

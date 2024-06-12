@@ -379,7 +379,9 @@ public class Player implements Serializable {
             game.getListener().removeListener(selfListener);
             game.getListener().notifyPlayerDisconnected(game, this.getNickname());
             // if someone disconnects when the game is starting, end the game
-            if(game.getStatus().equals(GameStatus.STARTING) && game.getSize()>2){
+            if(game.getStatus().equals(GameStatus.STARTING) && game.getSize()>1){
+                ArrayList<Player> winners = new ArrayList<>(game.getPlayers().stream().filter(p->p.getOnline()).toList());
+                game.setWinner(winners);
                 game.setStatus(GameStatus.ENDED);
             }
 

@@ -171,6 +171,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         if (game.getStatus() == GameStatus.HALTED) {
             if (timer == null && timerTask == null) { // Check if a timer is already running
                 timer = new Timer();
+                ArrayList<Player> winners = new ArrayList<>();
+                winners.add(game.getPlayers().stream().filter(p->p.getOnline()).toList().get(0));
+                game.setWinner(winners);
                 timerTask = new TimerTask() {
                     @Override
                     public void run() {
