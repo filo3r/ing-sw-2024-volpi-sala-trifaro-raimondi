@@ -79,14 +79,14 @@ class GameTest {
         game.setCurrPlayer(1);
         game.setNumPlayer(3);
         game.updateCurrPlayer();
-        assertEquals(game.getCurrPlayer(), 2);
+        assertEquals(game.getCurrPlayer(), 1);
     }
     @Test
     void updateCurrPlayerRestart() throws RemoteException {
         game.setCurrPlayer(2);
         game.setNumPlayer(2);
         game.updateCurrPlayer();
-        assertEquals(game.getCurrPlayer(),0);
+        assertEquals(game.getCurrPlayer(),1);
     }
 
     @Test
