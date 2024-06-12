@@ -432,7 +432,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @param y the new height.
      */
     public void resizeScreen(int x, int y) {
-        if (x > 0 && y > 0) {
+        if ((x > 0 && y > 0) && (x<501 && y<201)) {
             ui.resizeScreenView(x, y);
         }
     }
