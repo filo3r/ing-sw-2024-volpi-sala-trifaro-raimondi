@@ -6,6 +6,7 @@ package it.polimi.ingsw.gc03.view.gui;
  */
 public enum SceneEnum {
 
+
     /**
      * NICKNAME is the scene where the user is asked to enter their nickname.
      */
