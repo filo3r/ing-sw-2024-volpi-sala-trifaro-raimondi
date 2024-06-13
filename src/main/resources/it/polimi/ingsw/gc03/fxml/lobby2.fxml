@@ -26,8 +26,8 @@
                                 <Font name="Arial Black" size="20.0" />
                             </font>
                         </Text>
-                      <Pane fx:id="pane1" layoutX="300.0" layoutY="173.0" prefHeight="418.0" prefWidth="286.0" style="-fx-background-color: white;" />
-                      <Pane fx:id="pane2" layoutX="653.0" layoutY="173.0" prefHeight="418.0" prefWidth="286.0" style="-fx-background-color: white;" />
+                        <Pane fx:id="pane1" layoutX="300.0" layoutY="173.0" prefHeight="418.0" prefWidth="286.0" style="-fx-background-color: white;" />
+                        <Pane fx:id="pane2" layoutX="653.0" layoutY="173.0" prefHeight="418.0" prefWidth="286.0" style="-fx-background-color: white;" />
                     </children>
                 </Pane>
                 <Text fill="WHITE" layoutX="40.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:" textAlignment="CENTER" wrappingWidth="179.66716154871494">

@@ -21,7 +21,7 @@
                 <Font name="Arial Black" size="25.0" />
             </font>
         </Label>
-        <TextArea fx:id="errorText" layoutX="62.0" layoutY="76.0" prefHeight="150.0" prefWidth="472.0" styleClass="text-area" stylesheets="@style.css" text="Error">
+        <TextArea fx:id="errorText" layoutX="62.0" layoutY="76.0" prefHeight="150.0" prefWidth="472.0" styleClass="text-area" stylesheets="@style.css" text="Error" editable="false">
             <font>
                 <Font name="Arial Black" size="18.0" />
             </font>
