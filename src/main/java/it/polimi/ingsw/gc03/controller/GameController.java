@@ -12,6 +12,7 @@ import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.security.interfaces.EdECKey;
@@ -305,23 +306,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // Proceed with inserting the starting card into the player's Codex
         Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
         playerFromController.getCodex().insertStarterIntoCodex(side, this.game, player.getNickname());
-        // Check if the objective cards are in the correct number
-        if (player.getCardObjective().size() == Player.FINAL_CARD_OBJECTIVE) {
-            // The player's action is updated to WAIT
-            player.setAction(PlayerAction.WAIT, this.game);
-            // Check whether all players have completed their initial moves
-            List<Player> firstMovers = game.getPlayers().stream()
-                    .filter(x -> x.getAction().equals(PlayerAction.FIRSTMOVES))
-                    .toList();
-            // If there are no more players they must make their initial move
-            if (firstMovers.isEmpty()) {
-                // The game switches to RUNNING state
-                game.setStatus(GameStatus.RUNNING);
-                lastStatus = GameStatus.RUNNING;
-                // The current player's action is set to PLACE
-                game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.PLACE, this.game);
-            }
-        }
     }
 
     /**

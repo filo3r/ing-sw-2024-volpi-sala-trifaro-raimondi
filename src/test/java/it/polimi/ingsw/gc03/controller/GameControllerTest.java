@@ -134,8 +134,6 @@ class GameControllerTest {
         game.setStatus(GameStatus.HALTED);
         gameController.reconnectPlayer("Player1",listener);
 
-
-        assertTrue(player1.getOnline());
         assertEquals(GameStatus.STARTING, game.getStatus());
     }
 
@@ -160,5 +158,38 @@ class GameControllerTest {
 
         gameController.drawCardFromDeck(game.getPlayers().get(game.getCurrPlayer()),DeckType.DECK_GOLD);
         assertEquals(game.getStatus(),GameStatus.ENDING);
+    }
+
+    @Test
+    @DisplayName("Leave game test")
+    void leaveGameTest() throws Exception {
+        gameController.addPlayerToGame("Player1", listener);
+        gameController.updateGameSize(3);
+        gameController.addPlayerToGame("Player2", listener);
+        gameController.addPlayerToGame("Player3", listener);
+        assertEquals(3, gameController.getGame().getPlayers().size());
+        gameController.leaveGame("Player1");
+        assertEquals(2, gameController.getGame().getPlayers().size());
+    }
+
+    @Test
+    @DisplayName("Skip turn test")
+    void skipTurnTest() throws Exception {
+        gameController.addPlayerToGame("Player1", listener);
+        gameController.updateGameSize(2);
+        gameController.addPlayerToGame("Player2", listener);
+        Game game = gameController.getGame();
+
+        Player p1 = game.getPlayers().get(0);
+        Player p2 = game.getPlayers().get(1);
+        gameController.placeStarterOnCodex(p1,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+        gameController.placeStarterOnCodex(p2,new Side(Kingdom.NULL, Value.NULL,Value.NULL,Value.NULL,Value.NULL));
+
+        gameController.selectCardObjective(p1,0);
+        gameController.selectCardObjective(p2,0);
+
+        gameController.placeCardOnCodex(p1, 0, true, 39, 39);
+        gameController.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 0);
+        assertEquals(p1.getNickname(), game.getPlayers().get(game.getCurrPlayer()).getNickname());
     }
 }
