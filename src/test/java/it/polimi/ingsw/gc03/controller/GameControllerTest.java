@@ -8,6 +8,7 @@ import it.polimi.ingsw.gc03.model.enumerations.*;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.side.Side;
 
+import javafx.scene.SubScene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -190,6 +191,70 @@ class GameControllerTest {
 
         gameController.placeCardOnCodex(p1, 0, true, 39, 39);
         gameController.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 0);
+        assertEquals(p1.getNickname(), game.getPlayers().get(game.getCurrPlayer()).getNickname());
+    }
+
+    @Test
+    @DisplayName("Skip turn test")
+    void skipTurnTestLastRound() throws Exception {
+        gameController.addPlayerToGame("Player1", listener);
+        gameController.updateGameSize(2);
+        gameController.addPlayerToGame("Player2", listener);
+        Game game = gameController.getGame();
+
+        Player p1 = game.getPlayers().get(0);
+        Player p2 = game.getPlayers().get(1);
+        gameController.placeStarterOnCodex(p1,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+        gameController.placeStarterOnCodex(p2,new Side(Kingdom.NULL, Value.NULL,Value.NULL,Value.NULL,Value.NULL));
+
+        gameController.selectCardObjective(p1,0);
+        gameController.selectCardObjective(p2,0);
+
+        game.setStatus(GameStatus.LASTROUND);
+        gameController.placeCardOnCodex(p1, 0, true, 39, 39);
+        assertEquals(p1.getNickname(), game.getPlayers().get(game.getCurrPlayer()).getNickname());
+    }
+
+    @Test
+    @DisplayName("Skip turn test")
+    void skipTurnTestDisconnection() throws Exception {
+        gameController.addPlayerToGame("Player1", listener);
+        gameController.updateGameSize(2);
+        gameController.addPlayerToGame("Player2", listener);
+        Game game = gameController.getGame();
+
+        Player p1 = game.getPlayers().get(0);
+        Player p2 = game.getPlayers().get(1);
+        gameController.placeStarterOnCodex(p1,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+        gameController.placeStarterOnCodex(p2,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+
+        gameController.selectCardObjective(p1,0);
+        gameController.selectCardObjective(p2,0);
+        p2.setOnline(game, false, listener);
+        gameController.placeCardOnCodex(p1, 0, true, 39, 39);
+        gameController.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 0);
+        assertEquals(p1.getNickname(), game.getPlayers().get(game.getCurrPlayer()).getNickname());
+    }
+
+    @Test
+    @DisplayName("Skip turn test")
+    void skipTurnTestDisconnectionLastRound() throws Exception {
+        gameController.addPlayerToGame("Player1", listener);
+        gameController.updateGameSize(2);
+        gameController.addPlayerToGame("Player2", listener);
+        Game game = gameController.getGame();
+
+        Player p1 = game.getPlayers().get(0);
+        Player p2 = game.getPlayers().get(1);
+        gameController.placeStarterOnCodex(p1,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+        gameController.placeStarterOnCodex(p2,new Side(Kingdom.NULL, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY));
+
+        gameController.selectCardObjective(p1,0);
+        gameController.selectCardObjective(p2,0);
+        p2.setOnline(game, false, listener);
+
+        game.setStatus(GameStatus.LASTROUND);
+        gameController.placeCardOnCodex(p1, 0, true, 39, 39);
         assertEquals(p1.getNickname(), game.getPlayers().get(game.getCurrPlayer()).getNickname());
     }
 }

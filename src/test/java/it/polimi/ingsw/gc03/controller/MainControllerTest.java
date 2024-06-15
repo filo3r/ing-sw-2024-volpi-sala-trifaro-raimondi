@@ -66,7 +66,7 @@ class MainControllerTest {
         // The first player tries to place a card
         Player p1 = gc.getGame().getPlayers().getFirst();
         assertEquals(GameStatus.WAITING, gc.getGame().getStatus());
-        assertThrows(Exception.class,() -> gc.placeCardOnCodex(p1, 0, false, 39, 41));
+        assertThrows(Exception.class,() -> gc.placeCardOnCodex(p1, -1, false, 39, 41));
         assertThrows(Exception.class,() -> gc.placeStarterOnCodex(p1, p1.getCardStarter().getBackStarter()));
         // The first player sets the game's size
         gc.getGame().setSize(2);
