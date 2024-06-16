@@ -52,7 +52,7 @@ public class WinnersController extends GenericController {
      * Displays the players' rankings and highlights the winners.
      * @param gameImmutable The game data containing players' scores and winners.
      */
-    public void show(GameImmutable gameImmutable) {
+    public void showPoints(GameImmutable gameImmutable) {
         player1.setVisible(false);
         player2.setVisible(false);
         player3.setVisible(false);
@@ -94,7 +94,7 @@ public class WinnersController extends GenericController {
      * @param actionEvent The action event triggered by the user.
      */
     public void actionClose(ActionEvent actionEvent) {
-        getInputReaderGUI().addTxt("e");
+        getInputReaderGUI().addTxt("leave");
     }
 
 

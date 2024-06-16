@@ -22,9 +22,8 @@ public class NicknameController extends GenericController {
      * Handles the action event when the user presses enter.
      * If the nickname text field is not empty, the text is added to the input reader.
      * @param actionEvent The action event triggered by the user.
-     * @throws IOException If an I/O error occurs.
      */
-    public void actionEnter(ActionEvent actionEvent) throws IOException {
+    public void actionEnter(ActionEvent actionEvent) {
         if (!nicknameTextField.getText().isEmpty())
             getInputReaderGUI().addTxt(nicknameTextField.getText());
     }

@@ -55,11 +55,11 @@
             <Button id="displayed2" layoutX="1160.0" layoutY="506.0" mnemonicParsing="false" prefHeight="134.1" prefWidth="201.15" text="Displayed2" />
             <Button id="displayed1" layoutX="1160.0" layoutY="351.0" mnemonicParsing="false" prefHeight="134.1" prefWidth="201.15" text="Displayed1" />
             <Button id="displayed3" layoutX="1385.0" layoutY="351.0" mnemonicParsing="false" prefHeight="134.1" prefWidth="201.15" text="Displayed3" />
-            <Button id="deckResource" layoutX="1160.0" layoutY="192.0" mnemonicParsing="false" prefHeight="134.1" prefWidth="201.15" text="DeckR" />
-            <Button id="deckGold" layoutX="1385.0" layoutY="192.0" mnemonicParsing="false" prefHeight="134.1" prefWidth="201.15" text="DeckG" />
+            <Button id="deckResource" fx:id="deckResource" layoutX="1160.0" layoutY="192.0" mnemonicParsing="false" onAction="#actionDeckResource" prefHeight="134.1" prefWidth="201.15" text="DeckR" />
+            <Button id="deckGold" layoutX="1385.0" layoutY="192.0" mnemonicParsing="false" onAction="#actionDeckGold" prefHeight="134.1" prefWidth="201.15" text="DeckG" />
             <Pane id="sharedObjective1" layoutX="1160.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;" />
             <Pane id="sharedObjective2" layoutX="1385.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;" />
-            <Pane layoutX="292.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+            <Pane id="board1" layoutX="292.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
                <children>
                   <Pane id="color1" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
                   <Text id="nickname1" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
@@ -139,12 +139,12 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Button>
-            <Button id="leave" layoutX="1481.0" layoutY="48.0" mnemonicParsing="false" text="Leave" textAlignment="CENTER">
+            <Button id="leave" layoutX="1481.0" layoutY="48.0" mnemonicParsing="false" onAction="#actionLeave" text="Leave" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Button>
-            <Pane layoutX="522.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+            <Pane id="board2" layoutX="522.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
                <children>
                   <Pane id="color2" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
                   <Text id="nickname2" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
@@ -205,7 +205,7 @@
                   <Pane id="hand23" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
                </children>
             </Pane>
-            <Pane layoutX="752.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+            <Pane id="board3" layoutX="752.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
                <children>
                   <Pane id="color3" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
                   <Text id="nickname3" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
@@ -266,7 +266,7 @@
                   <Pane id="hand33" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
                </children>
             </Pane>
-            <Pane layoutX="982.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+            <Pane id="board4" layoutX="982.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
                <children>
                   <Pane id="color4" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
                   <Text id="nickname4" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
