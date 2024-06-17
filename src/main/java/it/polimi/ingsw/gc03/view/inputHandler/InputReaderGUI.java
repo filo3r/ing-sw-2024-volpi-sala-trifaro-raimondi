@@ -25,7 +25,7 @@ public class InputReaderGUI implements InputReader{
      */
     @Override
     public InputQueue getQueue() {
-        return null;
+        return inputQueue;
     }
 
     /**

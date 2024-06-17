@@ -28,7 +28,6 @@ public class InputReaderTUI extends Thread implements InputReader {
     public void run(){
         Scanner sc = new Scanner(System.in);
         while(!this.isInterrupted()){
-            //Reads the input and add what It reads to the inputQueue
             String temp = sc.nextLine();
             inputQueue.addData(temp);
         }

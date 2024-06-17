@@ -1,9 +1,12 @@
 package it.polimi.ingsw.gc03.main;
 
+import it.polimi.ingsw.gc03.view.gui.ApplicationGui;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.Flow;
+import javafx.application.Application;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -191,17 +194,17 @@ public class MainClient {
             case 3:
                 // GUI + RMI
                 try {
-                    new Flow(OptionSelection.GUI, OptionSelection.RMI, serverIpAddress, RMI_PORT);
+                    Application.launch(ApplicationGui.class, OptionSelection.RMI.toString(), serverIpAddress.toString(), String.valueOf(RMI_PORT));
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
                 break;
             case 4:
                 // GUI + Socket
-                try {
-                    new Flow(OptionSelection.GUI, OptionSelection.SOCKET, serverIpAddress, SOCKET_PORT);
-                } catch (InterruptedException e) {
-
+                try{
+                    Application.launch(ApplicationGui.class, OptionSelection.SOCKET.toString(), serverIpAddress.toString(), String.valueOf(SOCKET_PORT));
+                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
             default:

@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.view.gui;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.controllers.*;
 import it.polimi.ingsw.gc03.view.ui.Flow;
 import javafx.application.Application;
@@ -16,25 +17,29 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicationGui extends Application {
-
     private Flow flow;
+    private String connectionType;
+    private String ipAddress;
+    private int port;
 
     private Stage stage, popUpStage;
-
     private StackPane root;
     private ArrayList<Scenes> scenes;
-
     private String nickname;
-
-    public ApplicationGui(Flow flow) {
-        this.flow = flow;
-    }
 
 
     @Override
     public void start(Stage stage) throws Exception {
+        Parameters params = getParameters();
+        List<String> parameters = params.getRaw();
+        connectionType = parameters.get(0);
+        ipAddress = parameters.get(1);
+        port = Integer.parseInt(parameters.get(2));
+        OptionSelection optionSelection = OptionSelection.valueOf(connectionType);
+        this.flow = new Flow(this, optionSelection, ipAddress, port);
         getScene();
         this.stage = stage;
         this.stage.setTitle("CodeX");
@@ -48,7 +53,6 @@ public class ApplicationGui extends Application {
         GenericController gc;
         for (int i = 0; i < SceneEnum.values().length; i++) {
             loader = new FXMLLoader(getClass().getResource(SceneEnum.values()[i].getValue()));
-
             try {
                 root = loader.load();
                 gc = loader.getController();

@@ -92,6 +92,7 @@ public class InputProcessor extends Thread{
             else {
                 dataToProcess.addData(txt);
             }
+            flow.terminalPrint("✓");
         }
     }
 

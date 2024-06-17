@@ -15,6 +15,7 @@ import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.Gui;
 import it.polimi.ingsw.gc03.view.gui.ApplicationGui;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.ui.events.EventType;
@@ -116,12 +117,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     public Flow(OptionSelection uiSelection, OptionSelection connectionSelection, String serverIpAddress, int port) throws InterruptedException {
         switch (uiSelection) {
-            case GUI -> {
-                ApplicationGui applicationGui = new ApplicationGui(this);
-                this.inputReader = new InputReaderGUI();
-                ui = new Gui(applicationGui, (InputReaderGUI) inputReader);
-                this.inputProcessor = new InputProcessor(this.inputReader.getQueue(), this);
-            }
             case TUI -> {
                 ui = new Tui(150, 35);
                 this.inputReader = new InputReaderTUI();
@@ -132,6 +127,17 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case RMI -> clientActions = new RmiClient(serverIpAddress, port, this);
             case SOCKET -> clientActions = new SocketClient(serverIpAddress, port, this);
         }
+        new Thread(this).start();
+    }
+
+    public Flow(ApplicationGui applicationGui, OptionSelection connectionSelection, String serverIpAddress, int port) {
+        switch (connectionSelection) {
+            case RMI -> clientActions = new RmiClient(serverIpAddress, port, this);
+            case SOCKET -> clientActions = new SocketClient(serverIpAddress, port, this);
+        }
+        this.inputReader = new InputReaderGUI();
+        ui = new Gui(applicationGui, (InputReaderGUI) inputReader);
+        this.inputProcessor = new InputProcessor(this.inputReader.getQueue(), this);
         new Thread(this).start();
     }
 
@@ -733,6 +739,16 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     /**
+     * Print a text in the terminal.
+     *
+     * @param text The text to print.
+     */
+    public void terminalPrint(String text){
+        AsyncPrint.asyncPrint(text+"\n");
+    }
+
+
+    /**
      * Displays a notification for no connection error.
      */
     public void noConnectionError() {
@@ -919,7 +935,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         } catch (RemoteException e) {
             noConnectionError();
         }
-        System.out.println("✓");
     }
 
     /**
