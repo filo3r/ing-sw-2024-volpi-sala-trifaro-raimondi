@@ -2,6 +2,9 @@ package it.polimi.ingsw.gc03.view.gui.controllers;
 
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.CardGold;
+import it.polimi.ingsw.gc03.model.card.CardResource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -11,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+import java.util.ArrayList;
 
 
 /**
@@ -35,6 +39,12 @@ public class GameRunningController extends GenericController {
      */
     @FXML
     private Button leave;
+
+    /**
+     * Text to display the title "Points".
+     */
+    @FXML
+    private Text points;
 
     /**
      * Label to display points for player 1.
@@ -79,16 +89,63 @@ public class GameRunningController extends GenericController {
     private Pane sharedObjective2;
 
     /**
-     *
+     * Button to display the deck of Resource cards.
      */
     @FXML
     private Button deckResource;
 
     /**
-     *
+     * Button to display the deck of Gold cards.
      */
     @FXML
     private Button deckGold;
+
+    /**
+     * Button to display the first displayed card.
+     */
+    @FXML
+    private Button displayed1;
+
+    /**
+     * Button to display the second displayed card.
+     */
+    @FXML
+    private Button displayed2;
+
+    /**
+     * Button to display the third displayed card.
+     */
+    @FXML
+    private Button displayed3;
+
+    /**
+     * Button to display the fourth displayed card.
+     */
+    @FXML
+    private Button displayed4;
+
+    /**
+     *
+     */
+    @FXML
+    private Button hand1;
+
+    /**
+     *
+     */
+    @FXML
+    private Button hand2;
+
+    /**
+     *
+     */
+    @FXML
+    private Button hand3;
+
+    /**
+     *  TRUE O FALSE PER LE CARTE NELLA HAND (front back)
+     */
+
 
 
 
@@ -124,6 +181,8 @@ public class GameRunningController extends GenericController {
      * @param gameImmutable The current state of the game, used to get each player's points.
      */
     public void setPoints(GameImmutable gameImmutable) {
+        this.points.setVisible(true);
+        this.points.setText("Points");
         this.points1.setVisible(false);
         this.points2.setVisible(false);
         this.points3.setVisible(false);
@@ -224,27 +283,36 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the image for the deck of Resource cards.
+     * @param gameImmutable The current state of the game.
      */
     public void setDeckResource(GameImmutable gameImmutable) {
-        String imagePath = gameImmutable.getDesk().getDeckResource().get(0).getBackResource().getImage();
-        if (imagePath != null) {
-            try {
-                Image image = new Image("file:" + imagePath);
-                deckResource.setGraphic(new ImageView(image));
-            } catch (Exception e) {
-                showError("Error loading image", "There was an error loading the Deck Resource images.");
-                System.exit(1);
-            }
+        if (gameImmutable.getDesk().getDeckResource().isEmpty()) {
+            deckResource.setVisible(false);
         } else {
-            showError("Image path is null", "The image path for the Deck Resource is null.");
-            System.exit(1);
+            deckResource.setVisible(true);
+            String imagePath = gameImmutable.getDesk().getDeckResource().get(0).getBackResource().getImage();
+            if (imagePath != null) {
+                try {
+                    Image image = new Image("file:" + imagePath);
+                    deckResource.setGraphic(new ImageView(image));
+                } catch (Exception e) {
+                    showError("Error loading image", "There was an error loading the Deck Resource images.");
+                    System.exit(1);
+                }
+            } else {
+                if (!gameImmutable.getDesk().getDeckResource().isEmpty()) {
+                    showError("Image path is null", "The image path for the Deck Resource is null.");
+                    System.exit(1);
+                }
+            }
         }
     }
 
 
     /**
-     *
+     * Handles the action of clicking the deck Resource button.
+     * @param actionEvent The event triggered by clicking the deck Resource button.
      */
     public void actionDeckResource(ActionEvent actionEvent) {
         getInputReaderGUI().addTxt("rD");
@@ -252,21 +320,210 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the image for the deck of Gold cards.
+     * @param gameImmutable The current state of the game.
      */
     public void setDeckGold(GameImmutable gameImmutable) {
-        String imagePath = gameImmutable.getDesk().getDeckGold().get(0).getBackGold().getImage();
-        if (imagePath != null) {
-            try {
-                Image image = new Image("file:" + imagePath);
-                deckGold.setGraphic(new ImageView(image));
-            } catch (Exception e) {
-                showError("Error loading image", "There was an error loading the Deck Gold images.");
-                System.exit(1);
-            }
+        if (gameImmutable.getDesk().getDeckGold().isEmpty()) {
+            deckGold.setVisible(false);
         } else {
-            showError("Image path is null", "The image path for the Deck Gold is null.");
-            System.exit(1);
+            deckGold.setVisible(true);
+            String imagePath = gameImmutable.getDesk().getDeckGold().get(0).getBackGold().getImage();
+            if (imagePath != null) {
+                try {
+                    Image image = new Image("file:" + imagePath);
+                    deckGold.setGraphic(new ImageView(image));
+                } catch (Exception e) {
+                    showError("Error loading image", "There was an error loading the Deck Gold images.");
+                    System.exit(1);
+                }
+            } else {
+                if (!gameImmutable.getDesk().getDeckGold().isEmpty()) {
+                    showError("Image path is null", "The image path for the Deck Gold is null.");
+                    System.exit(1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Handles the action of clicking the deck Gold button.
+     * @param actionEvent The event triggered by clicking the deck Gold button.
+     */
+    public void actionDeckGold(ActionEvent actionEvent) {
+        getInputReaderGUI().addTxt("gD");
+    }
+
+
+    /**
+     * Sets the images for the displayed cards.
+     * @param gameImmutable The current state of the game.
+     */
+    public void setDisplayed(GameImmutable gameImmutable) {
+        // Displayed Resource
+        ArrayList<String> imagePathResource = new ArrayList<>(gameImmutable.getDesk().getDisplayedResource().size());
+        for (Card card : gameImmutable.getDesk().getDisplayedResource()) {
+            if (card instanceof CardResource) {
+                CardResource cardResource = (CardResource) card;
+                String imagePath = cardResource.getFrontResource().getImage();
+                imagePathResource.add(imagePath);
+            } else if (card instanceof CardGold) {
+                CardGold cardGold = (CardGold) card;
+                String imagePath = cardGold.getFrontGold().getImage();
+                imagePathResource.add(imagePath);
+            }
+        }
+        // Displayed Gold
+        ArrayList<String> imagePathGold = new ArrayList<>(gameImmutable.getDesk().getDisplayedGold().size());
+        for (Card card : gameImmutable.getDesk().getDisplayedGold()) {
+            if (card instanceof CardResource) {
+                CardResource cardResource = (CardResource) card;
+                String imagePath = cardResource.getFrontResource().getImage();
+                imagePathGold.add(imagePath);
+            } else if (card instanceof CardGold) {
+                CardGold cardGold = (CardGold) card;
+                String imagePath = cardGold.getFrontGold().getImage();
+                imagePathGold.add(imagePath);
+            }
+        }
+        // Load images Resource
+        displayed1.setVisible(false);
+        displayed2.setVisible(false);
+        for (int i = 0; i < gameImmutable.getDesk().getDisplayedResource().size(); i++) {
+            if (imagePathResource.get(i) != null) {
+                try {
+                    Image image = new Image("file:" + imagePathResource.get(i));
+                    if (i == 0) {
+                        displayed1.setVisible(true);
+                        displayed1.setGraphic(new ImageView(image));
+                    }
+                    if (i == 1) {
+                        displayed2.setVisible(true);
+                        displayed2.setGraphic(new ImageView(image));
+                    }
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the displayed cards images.");
+                    System.exit(1);
+                }
+            } else {
+                if (i < gameImmutable.getDesk().getDisplayedResource().size()) {
+                    showError("Image path is null", "The image path for the displayed card is null.");
+                    System.exit(1);
+                }
+            }
+        }
+        // Load images Gold
+        displayed3.setVisible(false);
+        displayed4.setVisible(false);
+        for (int i = 0; i < gameImmutable.getDesk().getDisplayedGold().size(); i++) {
+            if (imagePathGold.get(i) != null) {
+                try {
+                    Image image = new Image("file:" + imagePathGold.get(i));
+                    if (i == 0) {
+                        displayed3.setVisible(true);
+                        displayed3.setGraphic(new ImageView(image));
+                    }
+                    if (i == 1) {
+                        displayed4.setVisible(true);
+                        displayed4.setGraphic(new ImageView(image));
+                    }
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the displayed cards images.");
+                    System.exit(1);
+                }
+            } else {
+                if (i < gameImmutable.getDesk().getDisplayedGold().size()) {
+                    showError("Image path is null", "The image path for the displayed card is null.");
+                    System.exit(1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Handles the action of clicking the first displayed button.
+     * @param actionEvent The event triggered by clicking the first displayed button.
+     */
+    public void actionDisplayed1(ActionEvent actionEvent) {
+        getInputReaderGUI().addTxt("r1");
+    }
+
+
+    /**
+     * Handles the action of clicking the second displayed button.
+     * @param actionEvent The event triggered by clicking the second displayed button.
+     */
+    public void actionDisplayed2(ActionEvent actionEvent) {
+        getInputReaderGUI().addTxt("r2");
+    }
+
+
+    /**
+     * Handles the action of clicking the third displayed button.
+     * @param actionEvent The event triggered by clicking the third displayed button.
+     */
+    public void actionDisplayed3(ActionEvent actionEvent) {
+        getInputReaderGUI().addTxt("g1");
+    }
+
+
+    /**
+     * Handles the action of clicking the fourth displayed button.
+     * @param actionEvent The event triggered by clicking the fourth displayed button.
+     */
+    public void actionDisplayed4(ActionEvent actionEvent) {
+        getInputReaderGUI().addTxt("g2");
+    }
+
+
+    /**
+     *
+     */
+    public void setHand(GameImmutable gameImmutable, String nickname) {
+        hand1.setVisible(false);
+        hand2.setVisible(false);
+        hand3.setVisible(false);
+        // Hand
+        Player player = getPlayer(gameImmutable, nickname);
+        ArrayList<String> imagePath = new ArrayList<>(player.getHand().size());
+        for (Card card : player.getHand()) {
+            if (card instanceof CardResource) {
+                CardResource cardResource = (CardResource) card;
+                imagePath.add(cardResource.getFrontResource().getImage());
+            } else if (card instanceof CardGold) {
+                CardGold cardGold = (CardGold) card;
+                imagePath.add(cardGold.getFrontGold().getImage());
+            }
+        }
+        // Load images
+        for (int i = 0; i < player.getHand().size(); i++) {
+            if (imagePath.get(i) != null) {
+                try {
+                    Image image = new Image("file:" + imagePath.get(i));
+                    if (i == 0) {
+                        hand1.setVisible(true);
+                        hand1.setGraphic(new ImageView(image));
+                    }
+                    if (i == 1) {
+                        hand2.setVisible(true);
+                        hand2.setGraphic(new ImageView(image));
+                    }
+                    if (i == 2) {
+                        hand3.setVisible(true);
+                        hand3.setGraphic(new ImageView(image));
+                    }
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            } else {
+                if (i < player.getHand().size()) {
+                    showError("Image path is null", "The image path for the hand card is null.");
+                    System.exit(1);
+                }
+            }
         }
     }
 
@@ -274,12 +531,22 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    public void actionDeckGold(ActionEvent actionEvent) {
-        getInputReaderGUI().addTxt("gD");
+    public void actionHand1(ActionEvent actionEvent) {
     }
 
 
+    /**
+     *
+     */
+    public void actionHand2(ActionEvent actionEvent) {
+    }
 
+
+    /**
+     *
+     */
+    public void actionHand3(ActionEvent actionEvent) {
+    }
 
 
 
