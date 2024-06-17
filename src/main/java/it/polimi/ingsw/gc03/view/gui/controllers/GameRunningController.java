@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -143,8 +144,537 @@ public class GameRunningController extends GenericController {
     private Button hand3;
 
     /**
-     *  TRUE O FALSE PER LE CARTE NELLA HAND (front back)
+     *
      */
+    private HashMap<String, Boolean> frontSideHand = new HashMap<>(3);
+
+    /**
+     *
+     */
+    @FXML
+    private Pane board1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane color1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text nickname1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane fungi1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text fungiCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane plant1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text plantCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane animal1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text animalCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane insect1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text insectCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane quill1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text quillCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane inkwell1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text inkwellCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane manuscript1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text manuscriptCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane covered1;
+
+    /**
+     *
+     */
+    @FXML
+    private Text coveredCount1;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand11;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand12;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand13;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane board2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane color2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text nickname2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane fungi2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text fungiCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane plant2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text plantCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane animal2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text animalCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane insect2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text insectCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane quill2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text quillCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane inkwell2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text inkwellCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane manuscript2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text manuscriptCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane covered2;
+
+    /**
+     *
+     */
+    @FXML
+    private Text coveredCount2;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand21;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand22;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand23;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane board3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane color3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text nickname3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane fungi3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text fungiCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane plant3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text plantCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane animal3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text animalCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane insect3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text insectCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane quill3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text quillCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane inkwell3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text inkwellCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane manuscript3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text manuscriptCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane covered3;
+
+    /**
+     *
+     */
+    @FXML
+    private Text coveredCount3;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand31;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand32;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand33;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane board4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane color4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text nickname4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane fungi4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text fungiCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane plant4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text plantCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane animal4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text animalCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane insect4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text insectCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane quill4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text quillCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane inkwell4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text inkwellCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane manuscript4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text manuscriptCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane covered4;
+
+    /**
+     *
+     */
+    @FXML
+    private Text coveredCount4;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand41;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand42;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand43;
 
 
 
@@ -525,32 +1055,185 @@ public class GameRunningController extends GenericController {
                 }
             }
         }
+        // Set as front images
+        frontSideHand.clear();
+        for (int i = 1; i <= player.getHand().size(); i++) {
+            frontSideHand.put("hand" + i, true);
+        }
     }
 
 
     /**
      *
      */
+    private Card getCardHand(GameImmutable gameImmutable, String nickname, int index) {
+        Player player = getPlayer(gameImmutable, nickname);
+        return player.getHand().get(index);
+    }
+
+
+    /**
+     *
+     */
+    private String getFrontSideImagePath(Card card) {
+        if (card instanceof CardResource)
+            return ((CardResource) card).getFrontResource().getImage();
+        else if (card instanceof CardGold)
+            return ((CardGold) card).getFrontGold().getImage();
+        else
+            return null;
+    }
+
+
+    /**
+     *
+     */
+    private String getBackSideImagePath(Card card) {
+        if (card instanceof CardResource)
+            return ((CardResource) card).getBackResource().getImage();
+        else if (card instanceof CardGold)
+            return ((CardGold) card).getBackGold().getImage();
+        else
+            return null;
+    }
+
+
+    /**
+     *
+     */
+    public void actionHand1(ActionEvent actionEvent, GameImmutable gameImmutable, String nickname) {
+        hand1.setVisible(false);
+        Card card = getCardHand(gameImmutable, nickname, 0);
+        String frontSideImagePath = getFrontSideImagePath(card);
+        String backSideImagePath = getBackSideImagePath(card);
+        if (frontSideImagePath == null || backSideImagePath == null) {
+            showError("Image path is null", "The image path for the hand card is null.");
+            System.exit(1);
+        } else {
+            if (frontSideHand.get("hand1")) {
+                try {
+                    Image image = new Image("file:" + backSideImagePath);
+                    hand1.setGraphic(new ImageView(image));
+                    frontSideHand.put("hand1", false);
+                    hand1.setVisible(true);
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            } else {
+                try {
+                    Image image = new Image("file:" + frontSideImagePath);
+                    hand1.setGraphic(new ImageView(image));
+                    frontSideHand.put("hand1", true);
+                    hand1.setVisible(true);
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     *
+     */
+    public void actionHand2(ActionEvent actionEvent, GameImmutable gameImmutable, String nickname) {
+        hand2.setVisible(false);
+        Card card = getCardHand(gameImmutable, nickname, 1);
+        String frontSideImagePath = getFrontSideImagePath(card);
+        String backSideImagePath = getBackSideImagePath(card);
+        if (frontSideImagePath == null || backSideImagePath == null) {
+            showError("Image path is null", "The image path for the hand card is null.");
+            System.exit(1);
+        } else {
+            if (frontSideHand.get("hand2")) {
+                try {
+                    Image image = new Image("file:" + backSideImagePath);
+                    hand2.setGraphic(new ImageView(image));
+                    frontSideHand.put("hand2", false);
+                    hand2.setVisible(true);
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            } else {
+                try {
+                    Image image = new Image("file:" + frontSideImagePath);
+                    hand2.setGraphic(new ImageView(image));
+                    frontSideHand.put("hand2", true);
+                    hand2.setVisible(true);
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     *
+     */
+    public void actionHand3(ActionEvent actionEvent, GameImmutable gameImmutable, String nickname) {
+        hand3.setVisible(false);
+        Card card = getCardHand(gameImmutable, nickname, 2);
+        String frontSideImagePath = getFrontSideImagePath(card);
+        String backSideImagePath = getBackSideImagePath(card);
+        if (frontSideImagePath == null || backSideImagePath == null) {
+            showError("Image path is null", "The image path for the hand card is null.");
+            System.exit(1);
+        } else {
+            if (frontSideHand.get("hand3")) {
+                try {
+                    Image image = new Image("file:" + backSideImagePath);
+                    hand3.setGraphic(new ImageView(image));
+                    frontSideHand.put("hand3", false);
+                    hand3.setVisible(true);
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            } else {
+                try {
+                    Image image = new Image("file:" + frontSideImagePath);
+                    hand3.setGraphic(new ImageView(image));
+                    frontSideHand.put("hand3", true);
+                    hand3.setVisible(true);
+                } catch (Exception e) {
+                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    System.exit(1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     *
+     */
+    private void setBoards(GameImmutable gameImmutable) {
+        // Set visibility
+        board1.setVisible(false);
+        board2.setVisible(false);
+        board3.setVisible(false);
+        board4.setVisible(false);
+        // Set images
+
+        // Game size = 2
+        if (gameImmutable.getSize() == 2) {
+
+        }
+    }
+
+
+    // CAPIRE PERCHÉ È ERRORE (parametri?)
     public void actionHand1(ActionEvent actionEvent) {
     }
 
-
-    /**
-     *
-     */
     public void actionHand2(ActionEvent actionEvent) {
     }
 
-
-    /**
-     *
-     */
     public void actionHand3(ActionEvent actionEvent) {
     }
-
-
-
-
-
-
 }
