@@ -212,7 +212,7 @@ public class Player implements Serializable {
      * Method for calculating the total score made by the player.
      */
     public void calculatePlayerScore() {
-        this.score = this.score + this.codex.getPointCodex() + this.pointObjective;
+        this.score = this.codex.getPointCodex() + this.pointObjective;
     }
 
     /**

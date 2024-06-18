@@ -183,9 +183,14 @@ public class Game implements Serializable {
      * Method for determining who won the game.
      */
     private void decideWinner() throws RemoteException {
-        if(this.getStatus().equals(GameStatus.ENDED)){
-            int maxScore = 0;
+        if (this.getStatus().equals(GameStatus.ENDED)) {
+            // Calculate the points scored with the objective cards and total score
+            for (Player player : this.players) {
+                player.calculatePointObjective(this.desk);
+                player.calculatePlayerScore();
+            }
             // Determine which score is the highest
+            int maxScore = 0;
             for (Player player : this.players) {
                 if (player.getScore() > maxScore)
                     maxScore = player.getScore();
