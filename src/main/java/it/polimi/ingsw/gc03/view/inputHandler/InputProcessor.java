@@ -78,13 +78,25 @@ public class InputProcessor extends Thread{
                 flow.leaveGame(nickname);
             } else if (txt.startsWith("resize ")) {
                 String dimensions = txt.substring(txt.indexOf(" ") + 1);
-                int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
-                int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
+                int x = 0;
+                int y = 0;
+                try{
+                    x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
+                    y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
+                } catch (NumberFormatException e) {
+                    flow.showInvalidInput();
+                }
                 flow.resizeScreen(x, y);
             } else if (txt.startsWith("move ")){
                 String dimensions = txt.substring(txt.indexOf(" ") + 1);
-                int x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
-                int y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
+                int x = 0;
+                int y = 0;
+                try{
+                    x = Integer.parseInt(dimensions.substring(0, dimensions.indexOf(" ")));
+                    y = Integer.parseInt(dimensions.substring(dimensions.indexOf(" ") + 1));
+                } catch (NumberFormatException e) {
+                    flow.showInvalidInput();
+                }
                 flow.moveScreen(x, y);
             } else if(nickname != null && txt.equals("chat")){
                 flow.showChat();

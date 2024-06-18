@@ -2,8 +2,12 @@ package it.polimi.ingsw.gc03.model;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategy;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
+import it.polimi.ingsw.gc03.model.card.cardObjective.MainDiagonalStrategy;
+import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,14 +68,6 @@ class PlayerTest {
         int index = 1;
         assertTrue(player.selectObjectiveCard(index,game));
     }
-    //Bisogna trovare combinazione di carte per bloccare il gioco
-    @Test
-    void checkSkipTurn() {
-    }
-
-    @Test
-    void calculatePointObjective() {
-    }
 
     /**
      * Check if the score is calculated correctly
@@ -85,107 +81,4 @@ class PlayerTest {
         assertEquals(player.getScore(),5+8+7);
     }
 
-    @Test
-    void getNickname() {
-    }
-
-    @Test
-    void setNickname() {
-    }
-
-    @Test
-    void getNumber() {
-    }
-
-    @Test
-    void setNumber() {
-    }
-
-    @Test
-    void getColor() {
-    }
-
-    @Test
-    void setColor() {
-    }
-
-    @Test
-    void getCardStarter() {
-    }
-
-    @Test
-    void setCardStarter() {
-    }
-
-    @Test
-    void getCardObjective() {
-    }
-
-    @Test
-    void setCardObjective() {
-    }
-
-    @Test
-    void getHand() {
-    }
-
-    @Test
-    void setHand() {
-    }
-
-    @Test
-    void getCodex() {
-    }
-
-    @Test
-    void setCodex() {
-    }
-
-    @Test
-    void getPointObjective() {
-    }
-
-    @Test
-    void setPointObjective() {
-    }
-
-    @Test
-    void getScore() {
-    }
-
-    @Test
-    void setScore() {
-    }
-
-    @Test
-    void getOnline() {
-    }
-
-    @Test
-    void setOnline() {
-    }
-
-    @Test
-    void getSkipTurn() {
-    }
-
-    @Test
-    void setSkipTurn() {
-    }
-
-    @Test
-    void getAction() {
-    }
-
-    @Test
-    void setAction() {
-    }
-
-    @Test
-    void addCardToHand() {
-    }
-
-    @Test
-    void removeCardFromHand() {
-    }
 }

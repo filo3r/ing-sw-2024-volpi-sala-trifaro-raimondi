@@ -294,6 +294,7 @@ public class Gui extends UI {
 
     @Override
     protected void show_askSideStarter(GameImmutable game, String nickname) {
+        this.nickname = nickname;
 
     }
 

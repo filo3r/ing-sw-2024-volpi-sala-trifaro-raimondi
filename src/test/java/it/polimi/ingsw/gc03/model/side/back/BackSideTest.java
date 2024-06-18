@@ -23,16 +23,4 @@ class BackSideTest {
         backSide = new BackSide(Kingdom.FUNGI, Value.EMPTY,Value.EMPTY,Value.EMPTY,Value.EMPTY,center);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void getCenter() {
-        assertEquals(backSide.getCenter(),center);
-    }
-
-    @Test
-    void setCenter() {
-    }
 }

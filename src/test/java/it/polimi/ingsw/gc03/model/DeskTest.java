@@ -186,10 +186,6 @@ class DeskTest {
     }
 
     @Test
-    void getDeckGold() {
-    }
-
-    @Test
     void setDeckGold() throws RemoteException {
         Game game1 = new Game(555454454);
         Desk desk1 = new Desk(game1);
@@ -215,10 +211,6 @@ class DeskTest {
     }
 
     @Test
-    void getDisplayedResource() {
-    }
-
-    @Test
     void setDisplayedResource() throws RemoteException {
         Game game1 = new Game(555454454);
         Desk desk1 = new Desk(game1);
@@ -229,10 +221,6 @@ class DeskTest {
     }
 
     @Test
-    void getDisplayedGold() {
-    }
-
-    @Test
     void setDisplayedGold() throws RemoteException {
         Game game1 = new Game(555454454);
         Desk desk1 = new Desk(game1);
@@ -240,10 +228,6 @@ class DeskTest {
         desk.setDisplayedGold(desk1.getDisplayedGold());
         assertEquals(desk.getDisplayedGold(),desk1.getDisplayedGold());
         assertNotEquals(displayedGold,desk.getDisplayedGold());
-    }
-
-    @Test
-    void getDisplayedObjective() {
     }
 
     @Test

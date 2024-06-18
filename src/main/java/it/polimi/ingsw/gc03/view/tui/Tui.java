@@ -16,9 +16,14 @@ import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.gc03.view.tui.print.AsyncPrint.*;
 
@@ -575,8 +580,11 @@ public class Tui extends UI {
      * @param message the message to display.
      */
     public void showNotification(String message) {
-        StringBuilder sb = new StringBuilder(message);
-        asyncPrint(sb);
+        message+="\n";
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        String finalMessage = message;
+        ScheduledFuture<?> future = executor.schedule(() -> System.out.println(finalMessage), 200, TimeUnit.MILLISECONDS);
+        executor.shutdown();
     }
 
     /**
@@ -1054,7 +1062,7 @@ public class Tui extends UI {
      */
     @Override
     protected void showAskToChooseADeck() {
-        showNotification("Please, choose a deck from the following:\n rD: Deck Resource, gD: Deck Gold\ng1: the first gold displayed card, g2: the second gold displayed card\nr1: the first resource displayed card, r2: the second resource displayed card:\n");
+        showNotification("Please, choose a deck from the following:\nrD: Deck Resource, gD: Deck Gold\ng1: the first gold displayed card, g2: the second gold displayed card\nr1: the first resource displayed card, r2: the second resource displayed card:\n");
     }
 
     /**
@@ -1143,9 +1151,8 @@ public class Tui extends UI {
      */
     @Override
     protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
-        clearScreen(' ');
         String text = "Requirements not respected try to place another Card.";
-        generateTextOnScreen(text, CharColor.RED, 1093 - text.length() / 2, 364 - 5);
+        showNotification(text);
     }
 
     /**

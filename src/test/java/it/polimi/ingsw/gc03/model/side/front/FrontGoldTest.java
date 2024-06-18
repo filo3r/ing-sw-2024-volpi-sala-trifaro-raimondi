@@ -50,19 +50,4 @@ class FrontGoldTest {
 
     }
 
-    @Test
-    void getRequirementPoint() {
-    }
-
-    @Test
-    void setRequirementPoint() {
-    }
-
-    @Test
-    void getRequirementPlacement() {
-    }
-
-    @Test
-    void setRequirementPlacement() {
-    }
 }

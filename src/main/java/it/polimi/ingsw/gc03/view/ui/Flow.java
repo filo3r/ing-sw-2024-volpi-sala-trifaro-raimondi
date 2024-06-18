@@ -595,10 +595,16 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.showObjectiveNotChosen(model);
         boolean wrongIndex = true;
         do {
-            int index;
+            int index = 3;
             try {
                 do {
-                    index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+                    try{
+                        index = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+                    } catch (Exception e){
+                        
+                    }
+                    if(index != 1 && index != 0)
+                        ui.showInvalidInput();
                     if (ended) return;
                 } while (index != 1 && index != 0 && !ended);
                 Player player = model.getPlayers().stream().filter(p -> p.getNickname().equals(this.nickname)).collect(Collectors.toList()).get(0);
@@ -739,6 +745,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     /**
+     * UI invalidInput.
+     */
+    public void showInvalidInput(){
+        ui.showInvalidInput();
+    }
+
+    /**
      * Print a text in the terminal.
      *
      * @param text The text to print.
@@ -746,7 +759,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void terminalPrint(String text){
         AsyncPrint.asyncPrint(text+"\n");
     }
-
 
     /**
      * Displays a notification for no connection error.
@@ -1060,7 +1072,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void gameEnded(GameImmutable gameModel) {
         ended = true;
-        events.add(gameModel, EventType.GAMEENDED);
+        events.add(gameModel, GAMEENDED);
         ui.show_gameEnded(gameModel);
     }
 
@@ -1071,7 +1083,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void nextTurn(GameImmutable gameModel) {
-        events.add(gameModel, EventType.NEXT_TURN);
+        events.add(gameModel, NEXT_TURN);
         this.inputProcessor.getDataToProcess().popAllData();
     }
 
@@ -1358,7 +1370,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
-        events.add(gameImmutable, EventType.GAMECREATED);
+        events.add(gameImmutable, GAMECREATED);
         ui.addImportantEvent("New game created");
     }
 }
