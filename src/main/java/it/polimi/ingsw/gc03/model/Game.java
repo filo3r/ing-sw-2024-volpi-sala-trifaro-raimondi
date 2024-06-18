@@ -184,41 +184,47 @@ public class Game implements Serializable {
      */
     private void decideWinner() throws RemoteException {
         if (this.getStatus().equals(GameStatus.ENDED)) {
-            // Calculate the points scored with the objective cards and total score
-            for (Player player : this.players) {
-                if(this.getOnlinePlayers().size()>1)
-                    player.calculatePointObjective(this.desk);
-                player.calculatePlayerScore();
-            }
-            // Determine which score is the highest
-            int maxScore = 0;
-            for (Player player : this.players) {
-                if (player.getScore() > maxScore)
-                    maxScore = player.getScore();
-            }
-            // Add all players with maximum score to the temporary winners array
-            ArrayList<Player> tempWinners = new ArrayList<>(MAX_NUM_PLAYERS);
-            for (Player player : this.players) {
-                if (player.getScore() == maxScore)
-                    tempWinners.add(player);
-            }
-            // If there are multiple players with the same score, compare the points obtained from the Objective cards
-            if (tempWinners.size() > 1) {
-                int maxPointObjective = 0;
-                // Determine which pointObjective is the highest
-                for (Player tempWinner : tempWinners) {
-                    if (tempWinner.getPointObjective() > maxPointObjective)
-                        maxPointObjective = tempWinner.getPointObjective();
-                }
-                // Add all players with maximum pointObjective to the final winners array
-                ArrayList<Player> winners = new ArrayList<>(MAX_NUM_PLAYERS);
-                for (Player tempWinner : tempWinners) {
-                    if (tempWinner.getPointObjective() == maxPointObjective)
-                        winners.add(tempWinner);
-                }
-                this.winner.addAll(winners);
+            // If the game ended because there was only one player connected, the last player won.
+            if(this.getOnlinePlayers().size()==1){
+                this.winner.addAll(this.getOnlinePlayers());
+
             } else {
-                this.winner.addAll(tempWinners);
+                // Calculate the points scored with the objective cards and total score
+                for (Player player : this.players) {
+                    if(player.getCardObjective().size()==3)
+                        player.calculatePointObjective(this.desk);
+                    player.calculatePlayerScore();
+                }
+                // Determine which score is the highest
+                int maxScore = 0;
+                for (Player player : this.players) {
+                    if (player.getScore() > maxScore)
+                        maxScore = player.getScore();
+                }
+                // Add all players with maximum score to the temporary winners array
+                ArrayList<Player> tempWinners = new ArrayList<>(MAX_NUM_PLAYERS);
+                for (Player player : this.players) {
+                    if (player.getScore() == maxScore)
+                        tempWinners.add(player);
+                }
+                // If there are multiple players with the same score, compare the points obtained from the Objective cards
+                if (tempWinners.size() > 1) {
+                    int maxPointObjective = 0;
+                    // Determine which pointObjective is the highest
+                    for (Player tempWinner : tempWinners) {
+                        if (tempWinner.getPointObjective() > maxPointObjective)
+                            maxPointObjective = tempWinner.getPointObjective();
+                    }
+                    // Add all players with maximum pointObjective to the final winners array
+                    ArrayList<Player> winners = new ArrayList<>(MAX_NUM_PLAYERS);
+                    for (Player tempWinner : tempWinners) {
+                        if (tempWinner.getPointObjective() == maxPointObjective)
+                            winners.add(tempWinner);
+                    }
+                    this.winner.addAll(winners);
+                } else {
+                    this.winner.addAll(tempWinners);
+                }
             }
             ArrayList<String> winnerNicknames = new ArrayList<String>();
             for (Player player : this.winner) {
