@@ -1,13 +1,11 @@
 package it.polimi.ingsw.gc03.view.gui;
 
-import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.controllers.*;
 import it.polimi.ingsw.gc03.view.ui.Flow;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -156,16 +154,22 @@ public class ApplicationGui extends Application {
             popUpStage.hide();
         }
     }
-    /*public void showGameRunning(GameImmutable model,String nickname){
+    public void showGameRunning(GameImmutable model,String nickname){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setNickname(model,nickname);
-        controller.setDesk(model);
-        controller.setCommonObjectives(model);
-        controller.setHand(model);
-        controller.setPersonalObjective(model);
+        controller.setDeckGold(model);
+        controller.setDeckResource(model);
+        controller.setDisplayed(model);
+        controller.setSharedObjective(model);
+        controller.setHand(model,nickname);
+        controller.setPersonalObjective(model,nickname);
         controller.setCodex(model);
     }
-
+    public void showTurnUsername(GameImmutable model){
+        GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
+        controller.setTurnUsername(model);
+    }
+    /*
 
     public void showDrawnCard(GameImmutable model, String nickname){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
@@ -194,16 +198,18 @@ public class ApplicationGui extends Application {
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setPointsUpdated(model,player,points);
     }
+
+     */
     public void showWinner(GameImmutable model){
         WinnersController controller = (WinnersController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.show(model);
+        controller.showPoints(model);
     }
    public void close(){
         WinnersController controller = (WinnersController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.;
     }
 
-    */
+
     public void showError(String message){
         ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setErrorText(message,false);

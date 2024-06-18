@@ -6,6 +6,7 @@ import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.UI;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -41,7 +42,7 @@ public class Gui extends UI {
 
     }
 
-
+    /*
     protected Image getFrontCardImage(Card card) throws IOException {
         String idCard = card.getIdCard();
         String imagePath ="/it.polimi.ingsw.gc03/images/cards_front/"+ idCard +".png";
@@ -61,9 +62,11 @@ public class Gui extends UI {
         InputStream inputStream = getClass().getResourceAsStream(imagePath);
         return new Image(inputStream);
     }
+    */
 
     @Override
     protected void show_menuOptions() {
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.MENU));
     }
 
     @Override
@@ -83,12 +86,12 @@ public class Gui extends UI {
 
     @Override
     protected void show_inputGameIdMsg() {
-
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.GAME_ID));
     }
 
     @Override
     protected void show_insertNicknameMsg() {
-
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.NICKNAME));
     }
 
     @Override
@@ -98,32 +101,34 @@ public class Gui extends UI {
 
     @Override
     protected void show_gameStarted(GameImmutable model) {
-
+        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
+        Platform.runLater(()-> this.applicationGui.showGameRunning(model,nickname));
     }
 
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
-
+        Platform.runLater(()->this.applicationGui.showError(msgToVisualize));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.ERROR));
     }
 
     @Override
     protected void show_gameEnded(GameImmutable model) {
-
+        Platform.runLater(()->this.applicationGui.showWinner(model));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
     }
 
     @Override
-    protected void show_playerJoined(GameImmutable gameModel, String nick) {
-
+    protected void show_playerJoined(GameImmutable model, String nick) {
+        Platform.runLater(()->this.applicationGui.showPlayersInLobby(model));
     }
 
     @Override
     protected void showNextTurn(GameImmutable model, String nickname) {
-
+        Platform.runLater(()->this.applicationGui.showTurnUsername(model));
     }
 
     @Override
     protected void show_playerHand(GameImmutable gameModel, String nickname) {
-
     }
 
     @Override
@@ -158,29 +163,24 @@ public class Gui extends UI {
 
     @Override
     protected void resetImportantEvents() {
-
     }
 
     @Override
     protected void show_noConnectionError() {
-
     }
 
     @Override
     protected void showAskIndex(GameImmutable model) {
-
     }
 
     @Override
     protected void show_wrongSelectionHandMsg() {
-
     }
 
 
 
     @Override
     protected void showAskCoordinates(GameImmutable model) {
-
     }
 
     @Override
@@ -195,19 +195,18 @@ public class Gui extends UI {
 
     @Override
     protected void showAskToChooseADeck() {
-
     }
 
     @Override
     protected void showCardCannotBePlaced(GameImmutable model, String nickname) {
-
     }
 
 
 
     @Override
     protected void showInvalidInput() {
-
+        Platform.runLater(()->this.applicationGui.showError("Invalid Input"));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.ERROR));
     }
 
 
