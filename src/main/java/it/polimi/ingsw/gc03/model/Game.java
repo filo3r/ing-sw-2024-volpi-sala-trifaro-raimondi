@@ -191,7 +191,7 @@ public class Game implements Serializable {
             } else {
                 // Calculate the points scored with the objective cards and total score
                 for (Player player : this.players) {
-                    if(player.getCardObjective().size()==3)
+                    if(player.getCardObjective().size()==1)
                         player.calculatePointObjective(this.desk);
                     player.calculatePlayerScore();
                 }
