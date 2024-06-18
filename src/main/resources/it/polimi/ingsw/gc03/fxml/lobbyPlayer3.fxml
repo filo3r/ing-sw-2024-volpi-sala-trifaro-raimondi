@@ -23,7 +23,7 @@
         </Text>
         <ImageView fitHeight="202.0" fitWidth="242.0" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="120.0">
             <image>
-                <Image url="" />
+                <Image url="@images/background.png" />
             </image>
         </ImageView>
     </children>

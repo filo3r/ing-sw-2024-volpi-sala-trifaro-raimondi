@@ -29,4 +29,6 @@ module it.polimi.ingsw.gc03 {
     opens it.polimi.ingsw.gc03.view to com.google.gson, javafx.fxml;
     exports it.polimi.ingsw.gc03.listeners;
     exports it.polimi.ingsw.gc03.view.gui to javafx.graphics;
+    exports it.polimi.ingsw.gc03.view.gui.controllers to javafx.fxml;
+    opens it.polimi.ingsw.gc03.view.gui.controllers to javafx.fxml;
 }

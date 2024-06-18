@@ -48,7 +48,7 @@
                 <Pane layoutX="103.0" layoutY="3.0" opacity="0.8" prefHeight="137.0" prefWidth="1152.0" style="-fx-background-color: black;" />
                 <ImageView fitHeight="120.0" fitWidth="815.0" layoutX="268.0" layoutY="17.0">
                     <image>
-                        <Image url="@" />
+                        <Image url="@images/background.png" />
                     </image>
                 </ImageView>
             </children>

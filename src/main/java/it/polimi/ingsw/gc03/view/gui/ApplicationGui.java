@@ -38,9 +38,9 @@ public class ApplicationGui extends Application {
         port = Integer.parseInt(parameters.get(2));
         OptionSelection optionSelection = OptionSelection.valueOf(connectionType);
         this.flow = new Flow(this, optionSelection, ipAddress, port);
-        getScene();
         this.stage = stage;
         this.stage.setTitle("CodeX");
+        getScene();
         root = new StackPane();
     }
 
@@ -49,19 +49,19 @@ public class ApplicationGui extends Application {
         FXMLLoader loader;
         Parent root;
         GenericController gc;
-        for (int i = 0; i < SceneEnum.values().length; i++) {
-            loader = new FXMLLoader(getClass().getResource(SceneEnum.values()[i].getValue()));
+        for (SceneEnum sceneEnum : SceneEnum.values()) {
+            String fxmlPath = sceneEnum.getValue();
+            loader = new FXMLLoader(getClass().getResource(fxmlPath));
             try {
                 root = loader.load();
                 gc = loader.getController();
+                scenes.add(new Scenes(new Scene(root), sceneEnum, gc));
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
-            scenes.add(new Scenes(new Scene(root), SceneEnum.values()[i], gc));
         }
     }
-
-
 
     public GenericController getController(SceneEnum scene) {
         int index = scenes.indexOf(scenes.stream().filter(x->x.getSceneEnum().equals(scene)).toList().getFirst());
@@ -88,7 +88,6 @@ public class ApplicationGui extends Application {
             this.stage.setScene(activeScene.getScene());
             this.stage.show();
         }
-
     }
 
     public void showPlayersInLobby(GameImmutable model){
@@ -156,14 +155,12 @@ public class ApplicationGui extends Application {
     }
     public void showGameRunning(GameImmutable model,String nickname){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.setNickname(model,nickname);
         controller.setDeckGold(model);
         controller.setDeckResource(model);
         controller.setDisplayed(model);
         controller.setSharedObjective(model);
         controller.setHand(model,nickname);
         controller.setPersonalObjective(model,nickname);
-        controller.setCodex(model);
     }
     public void showTurnUsername(GameImmutable model){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
@@ -204,9 +201,8 @@ public class ApplicationGui extends Application {
         WinnersController controller = (WinnersController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.showPoints(model);
     }
-   public void close(){
+    public void close(){
         WinnersController controller = (WinnersController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.;
     }
 
 
@@ -236,5 +232,3 @@ public class ApplicationGui extends Application {
     }
 
 }
-
-
