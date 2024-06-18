@@ -74,11 +74,10 @@ class PlayerTest {
      */
     @Test
     void calculatePlayerScore() {
-        player.setScore(5);
         player.getCodex().setPointCodex(8);
         player.setPointObjective(7);
         player.calculatePlayerScore();
-        assertEquals(player.getScore(),5+8+7);
+        assertEquals(player.getScore(),8+7);
     }
 
 }
