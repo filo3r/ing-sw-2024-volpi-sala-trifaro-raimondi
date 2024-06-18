@@ -3,6 +3,7 @@ package it.polimi.ingsw.gc03.model;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
@@ -61,7 +62,16 @@ class GameTest {
         assertTrue(game.removePlayer("newNick"));
         assertEquals(newPlayerNum-1,game.getNumPlayer());
         assertFalse(game.removePlayer("newNick"));
+    }
 
+    @Test
+    void removePlayerOnePlayerLeft() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException, CannotJoinGameException {
+        game.addPlayer("newNick",listener);
+        game.setSize(2);
+        game.addPlayer("newNick1",listener);
+        game.removePlayer("newNick");
+        assertEquals(game.getStatus(), GameStatus.ENDED);
+        assertEquals(game.getWinner(),game.getPlayers());
     }
 
     @Test
