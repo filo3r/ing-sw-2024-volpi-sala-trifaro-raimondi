@@ -98,7 +98,7 @@ public class Desk implements Serializable {
      */
     private static final String IMAGE_PATH_FRONT = System.getProperty("user.dir") + File.separator + "src" +
             File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "images" + File.separator +
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" + File.separator + "images" + File.separator +
             "cards" + File.separator + "frontSide" + File.separator;
 
     /**
@@ -106,7 +106,7 @@ public class Desk implements Serializable {
      */
     private static final String IMAGE_PATH_BACK = System.getProperty("user.dir") + File.separator + "src" +
             File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "images" + File.separator +
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" + File.separator + "images" + File.separator +
             "cards" + File.separator + "backSide" + File.separator;
 
     /**

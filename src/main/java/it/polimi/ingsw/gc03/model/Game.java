@@ -186,7 +186,8 @@ public class Game implements Serializable {
         if (this.getStatus().equals(GameStatus.ENDED)) {
             // Calculate the points scored with the objective cards and total score
             for (Player player : this.players) {
-                player.calculatePointObjective(this.desk);
+                if(this.getOnlinePlayers().size()>1)
+                    player.calculatePointObjective(this.desk);
                 player.calculatePlayerScore();
             }
             // Determine which score is the highest
