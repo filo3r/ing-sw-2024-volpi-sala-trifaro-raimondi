@@ -1,0 +1,5 @@
+.gameTitle{
+    -fx-background-image: url("images/background.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}

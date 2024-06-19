@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gc03.view.gui;
 
 import it.polimi.ingsw.gc03.view.gui.controllers.GenericController;
+import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import javafx.scene.Scene;
 
 public class Scenes {
@@ -28,6 +29,12 @@ public class Scenes {
 
     public void setGenericController(GenericController genericController) {
         this.genericController = genericController;
+    }
+
+    public void setInputReaderGUI(InputReaderGUI inputReaderGUI){
+        if(genericController!=null) {
+            genericController.setInputReaderGUI(inputReaderGUI);
+        }
     }
 
     public SceneEnum getSceneEnum() {

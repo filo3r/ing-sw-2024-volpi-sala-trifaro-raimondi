@@ -187,7 +187,6 @@ public class Game implements Serializable {
             // If the game ended because there was only one player connected, the last player won.
             if(this.getOnlinePlayers().size()==1){
                 this.winner.addAll(this.getOnlinePlayers());
-
             } else {
                 // Calculate the points scored with the objective cards and total score
                 for (Player player : this.players) {

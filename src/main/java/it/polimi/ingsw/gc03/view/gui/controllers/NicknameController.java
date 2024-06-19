@@ -24,8 +24,9 @@ public class NicknameController extends GenericController {
      * @param actionEvent The action event triggered by the user.
      */
     public void actionEnter(ActionEvent actionEvent) {
-        if (!nicknameTextField.getText().isEmpty())
+        if (!nicknameTextField.getText().isEmpty()){
             getInputReaderGUI().addTxt(nicknameTextField.getText());
+        }
     }
 
 

@@ -1,12 +1,17 @@
 package it.polimi.ingsw.gc03.view.gui;
 
+import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.controllers.*;
+import it.polimi.ingsw.gc03.view.inputHandler.InputProcessor;
+import it.polimi.ingsw.gc03.view.inputHandler.InputReader;
+import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.Flow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -63,6 +68,13 @@ public class ApplicationGui extends Application {
         }
     }
 
+    public void setupGUIInputController(InputReaderGUI inputReader) {
+        getScene();
+        for (Scenes s : scenes) {
+            s.setInputReaderGUI(inputReader);
+        }
+    }
+
     public GenericController getController(SceneEnum scene) {
         int index = scenes.indexOf(scenes.stream().filter(x->x.getSceneEnum().equals(scene)).toList().getFirst());
         return scenes.get(index).getGenericController();
@@ -70,14 +82,19 @@ public class ApplicationGui extends Application {
 
     public void setActiveScene(SceneEnum scene) {
         this.stage.setTitle("Codex - " + scene.name());
+        System.out.println(scene.name());
         if (!scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().isEmpty()) {
             Scenes activeScene = scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().getFirst();
             switch (scene) {
+                case GAME_TITLE -> {
+                    this.stage.initStyle(StageStyle.UNDECORATED);
+                    this.stage.setAlwaysOnTop(true);
+                    this.stage.centerOnScreen();
+                }
                 case ERROR, GAME_RUNNING -> {
                     this.closePopUps();
                 }
                 case MENU -> {
-                    stage.initStyle(StageStyle.UNDECORATED);
                     stage.setAlwaysOnTop(false);
                     stage.centerOnScreen();
                 }
@@ -90,55 +107,55 @@ public class ApplicationGui extends Application {
         }
     }
 
-    public void showPlayersInLobby(GameImmutable model){
-        SceneEnum scene = null;
-        int size = model.getSize();
-        switch(size){
-            case 2->{
-                scene = SceneEnum.LOBBY2;
+    public void showLobby(GameImmutable gameImmutable) {
+        for (int i = 1; i < 5; i++) {
+            Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + i+1);
+            if (panePlayerLobby != null) {
+                panePlayerLobby.setVisible(false);
+            } else {
+                System.out.println("Pane #" + i + " non trovato.");
             }
-            case 3->{
-                scene = SceneEnum.LOBBY3;
-            }
-            case 4->{
-                scene = SceneEnum.LOBBY4;
-            }
-        }
-        SceneEnum finalScene = scene;
-        Scenes sceneToGet = scenes.stream().filter(x -> x.getSceneEnum().equals(finalScene)).toList().getFirst();
-        ((LobbyController) sceneToGet.getGenericController()).setUsername(nickname);
-        ((LobbyController) sceneToGet.getGenericController()).setGameId(model.getIdGame());
-        for(Player player: model.getPlayers()) {
-            showPlayerInLobby(player,model);
-        }
-    }
-    private void showPlayerInLobby(Player player,GameImmutable model){
-        SceneEnum scene = null;
-        int indexPlayer = model.getPlayers().indexOf(player);
-        switch(indexPlayer){
-            case 0->{
-                scene = SceneEnum.LOBBY_PLAYER1;
-            }
-            case 1->{
-                scene = SceneEnum.LOBBY_PLAYER2;
-            }
-            case 2->{
-                scene = SceneEnum.LOBBY_PLAYER3;
-            }
-            case 3->{
-                scene = SceneEnum.LOBBY_PLAYER4;
-            }
-        }
-        SceneEnum finalScene = scene;
-        Scenes sceneToGet = scenes.stream().filter(x -> x.getSceneEnum().equals(finalScene)).toList().getFirst();
-        if(!nickname.equals(player.getNickname())) {
-            ((LobbyPlayerController) sceneToGet.getGenericController()).setNickname(player.getNickname());
-        }else{
-            ((LobbyPlayerController)sceneToGet.getGenericController()).setNickname("You");
         }
     }
 
-    private void openPopUps(Scene scene){
+    private void showPlayerInLobby(String nickname, GameImmutable gameImmutable) {
+        SceneEnum s = null;
+        switch (gameImmutable.getPlayers().size()){
+            case 1 -> {
+                s = SceneEnum.LOBBY_PLAYER1;
+            }
+            case 2 -> {
+                s = SceneEnum.LOBBY_PLAYER2;
+            }
+            case 3 -> {
+                s = SceneEnum.LOBBY_PLAYER3;
+            }
+            case 4 -> {
+                s = SceneEnum.LOBBY_PLAYER4;
+            }
+        }
+        Pane paneToLoad;
+        SceneEnum finalS = s;
+        Scenes sceneToLoad = scenes.get(scenes.indexOf(scenes.stream().filter(x->x.getSceneEnum().equals(finalS)).toList().getFirst()));
+        paneToLoad = (Pane) sceneToLoad.getScene().getRoot();
+        ((LobbyPlayerController) sceneToLoad.getGenericController()).setNickname(nickname);
+        Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + gameImmutable.getPlayers().indexOf(gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)))+1);
+        panePlayerLobby.setVisible(true);
+        panePlayerLobby.getChildren().clear();
+        paneToLoad.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(paneToLoad);
+        StackPane.setAlignment(paneToLoad, Pos.CENTER);
+
+
+        paneToLoad.prefWidthProperty().bind(panePlayerLobby.widthProperty());
+        paneToLoad.prefHeightProperty().bind(panePlayerLobby.heightProperty());
+
+        panePlayerLobby.getChildren().add(stackPane);
+    }
+
+
+    public void openPopUps(Scene scene){
         popUpStage = new Stage();
         popUpStage.setResizable(false);
         popUpStage.setScene(scene);
@@ -148,7 +165,7 @@ public class ApplicationGui extends Application {
         popUpStage.setX(stage.getX()+(stage.getWidth()-scene.getWidth())*0.5);
         popUpStage.setY(stage.getY()+(stage.getHeight()-scene.getHeight())*0.5);
     }
-    private void closePopUps() {
+    public void closePopUps() {
         if(popUpStage != null){
             popUpStage.hide();
         }
@@ -210,10 +227,13 @@ public class ApplicationGui extends Application {
         ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setErrorText(message,false);
     }
+
     public void showFatalError(String message){
         ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setErrorText(message,true);
-    } public void createNewWindowWithStyle() {
+    }
+
+    public void createNewWindowWithStyle() {
         Stage newStage = new Stage();
         newStage.setScene(this.stage.getScene());
         newStage.show();
@@ -222,9 +242,13 @@ public class ApplicationGui extends Application {
         this.stage.centerOnScreen();
         this.stage.setAlwaysOnTop(true);
         this.stage.setOnCloseRequest(event -> {
-            System.out.println("Closing all");
             System.exit(1);
         });
+    }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+        System.out.println("Nickname set to " + nickname);
     }
 
     public static void main(String[] args) {

@@ -4,6 +4,9 @@ import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
+import it.polimi.ingsw.gc03.view.gui.controllers.ChooseSizeController;
+import it.polimi.ingsw.gc03.view.gui.controllers.LobbyController;
+import it.polimi.ingsw.gc03.view.gui.controllers.LobbyPlayerController;
 import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.UI;
 import javafx.application.Platform;
@@ -118,8 +121,14 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_playerJoined(GameImmutable model, String nick) {
-        Platform.runLater(()->this.applicationGui.showPlayersInLobby(model));
+    protected void show_playerJoined(GameImmutable gameImmutable, String nickname) {
+
+        Platform.runLater(()->this.applicationGui.closePopUps());
+        LobbyController lc = (LobbyController) this.applicationGui.getController(SceneEnum.LOBBY4);
+        Platform.runLater(()-> lc.setUsername(nickname));
+        Platform.runLater(()-> lc.setGameId(gameImmutable.getIdGame()));
+        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.LOBBY4));
+        Platform.runLater(()->this.applicationGui.showLobby(gameImmutable));
     }
 
     @Override
@@ -206,13 +215,26 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showAskSize(GameImmutable model) {
-
+    protected void showAskSize(GameImmutable gameImmutable) {
+        Platform.runLater(()->{this.applicationGui.setActiveScene(SceneEnum.CHOOSE_SIZE);});
     }
 
     @Override
     protected void show_sizeSetted(int size, GameImmutable gameImmutable) {
+        SceneEnum scene = null;
+        switch (size) {
+            case 2 -> scene = SceneEnum.LOBBY2;
+            case 3 -> scene = SceneEnum.LOBBY3;
+            case 4 -> scene = SceneEnum.LOBBY4;
+        }
 
+        Platform.runLater(()->this.applicationGui.closePopUps());
+        LobbyController lc = (LobbyController) this.applicationGui.getController(scene);
+        Platform.runLater(()-> lc.setUsername(nickname));
+        Platform.runLater(()-> lc.setGameId(gameImmutable.getIdGame()));
+        SceneEnum finalScene = scene;
+        Platform.runLater(()-> this.applicationGui.setActiveScene(finalScene));
+        Platform.runLater(()->this.applicationGui.showLobby(gameImmutable));
     }
 
     @Override
@@ -242,6 +264,9 @@ public class Gui extends UI {
 
     @Override
     protected void show_GameTitle() {
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.GAME_TITLE));
+        Platform.runLater(()->this.applicationGui.setupGUIInputController(this.inputReaderGUI));
+        Platform.runLater(()->this.applicationGui.createNewWindowWithStyle());
 
     }
 
@@ -266,9 +291,15 @@ public class Gui extends UI {
 
     }
 
+    /**
+     * Sets the player's nickname.
+     *
+     * @param nickname the player's nickname.
+     */
     @Override
     protected void setNickname(String nickname) {
-
+        this.nickname = nickname;
+        applicationGui.setNickname(nickname);
     }
 
     @Override

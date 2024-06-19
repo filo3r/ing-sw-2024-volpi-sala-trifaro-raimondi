@@ -186,6 +186,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws Exception if an error occurs during processing
      */
     private void processEvent(Event event) throws Exception {
+        System.out.println(event.getType());
         if (event.getType().equals(PLAYER_RECONNECTED) && nickname.equals(lastPlayerReconnected)) {
             handlePlayerReconnection(event);
         } else if (event.getModel() != null) {

@@ -78,7 +78,18 @@ public enum SceneEnum {
     /**
      * ERROR is the scene displayed in case an error occurs.
      */
-    ERROR("/it/polimi/ingsw/gc03/fxml/error.fxml");
+    ERROR("/it/polimi/ingsw/gc03/fxml/error.fxml"),
+
+    /**
+     * GAME_TITLE is the scene of the game logo
+     */
+    GAME_TITLE("/it/polimi/ingsw/gc03/fxml/gametitle.fxml"),
+
+    /**
+     * CHOOSE_SIZE is the scene where the player choose the game's size.
+     */
+    CHOOSE_SIZE("/it/polimi/ingsw/gc03/fxml/chooseSize.fxml");
+
 
     private final String value;
 
