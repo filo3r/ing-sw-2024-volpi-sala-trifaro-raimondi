@@ -184,16 +184,6 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showDisplayedResource(GameImmutable gameModel) {
-
-    }
-
-    @Override
-    protected void showDisplayedGold(GameImmutable gameModel) {
-
-    }
-
-    @Override
     protected void showAskToChooseADeck() {
     }
 
@@ -234,27 +224,6 @@ public class Gui extends UI {
     protected void showWinner(GameImmutable model) {
 
     }
-
-    @Override
-    protected void showAskNickname() {
-
-    }
-
-    @Override
-    protected void showAskGameID() {
-
-    }
-
-    @Override
-    protected void showAskJoin() {
-
-    }
-
-    @Override
-    protected void showCardHasBeenDrawn(GameImmutable gameModel) {
-
-    }
-
 
     @Override
     protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {

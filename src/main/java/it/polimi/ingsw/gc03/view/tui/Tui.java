@@ -939,36 +939,6 @@ public class Tui extends UI {
     }
 
     /**
-     * Prompts the user to choose a nickname. (not used in the tui)
-     */
-    @Override
-    protected void showAskNickname() {
-    }
-
-    /**
-     * Prompts the user to input a game ID. (not used in the tui)
-     */
-    @Override
-    protected void showAskGameID() {
-    }
-
-    /**
-     * Prompts the user to join a game. (not used in the tui)
-     */
-    @Override
-    protected void showAskJoin() {
-    }
-
-    /**
-     * Displays a message that a card has been drawn. (not used in the tui)
-     *
-     * @param gameModel the game instance.
-     */
-    @Override
-    protected void showCardHasBeenDrawn(GameImmutable gameModel) {
-    }
-
-    /**
      * Displays a notification that a player has chosen their personal objective.
      *
      * @param model         the game instance.
@@ -1035,26 +1005,6 @@ public class Tui extends UI {
         clearScreen(' ');
         showCodex(model);
         showNotification("Please choose the coordinates where to place the card (x y): ");
-    }
-
-    /**
-     * Displays the resources currently on display.  (not used in the tui)
-     *
-     * @param gameModel the game instance.
-     */
-    @Override
-    protected void showDisplayedResource(GameImmutable gameModel) {
-        // Implementation not provided
-    }
-
-    /**
-     * Displays the gold cards currently on display.  (not used in the tui)
-     *
-     * @param gameModel the game instance.
-     */
-    @Override
-    protected void showDisplayedGold(GameImmutable gameModel) {
-        // Implementation not provided
     }
 
     /**

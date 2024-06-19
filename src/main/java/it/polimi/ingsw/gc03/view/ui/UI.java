@@ -169,11 +169,6 @@ public abstract class UI {
     protected abstract void show_wrongSelectionHandMsg();
 
     protected abstract void showAskCoordinates(GameImmutable model);
-
-    protected abstract void showDisplayedResource(GameImmutable gameModel);
-
-    protected abstract void showDisplayedGold(GameImmutable gameModel);
-
     protected abstract void showAskToChooseADeck();
 
     protected abstract void showCardCannotBePlaced(GameImmutable model, String nickname);
@@ -189,14 +184,6 @@ public abstract class UI {
     protected abstract void showCardAddedToHand(GameImmutable model, Card card);
 
     protected abstract void showWinner(GameImmutable model);
-    protected abstract void showAskNickname();
-
-    protected abstract void showAskGameID();
-
-    protected abstract void showAskJoin();
-
-    protected abstract void showCardHasBeenDrawn(GameImmutable gameModel);
-
 
     protected abstract void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname);
 
