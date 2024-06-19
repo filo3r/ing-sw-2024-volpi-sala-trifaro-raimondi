@@ -1322,7 +1322,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
-            ui.addImportantEvent("Card not added to hand");
+            ui.addImportantEvent("You can't draw a card");
         }
     }
 

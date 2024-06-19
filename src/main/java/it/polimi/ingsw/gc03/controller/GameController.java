@@ -244,9 +244,8 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
     /**
      * The method handles the transition and updating of player actions in the game.
-     * @throws Exception If there is an error during the transition.
      */
-    private synchronized void updateCurrPlayer() throws Exception {
+    private synchronized void updateCurrPlayer() {
         if(!game.getStatus().equals(GameStatus.LASTROUND)){
             if(game.getPlayers().get(game.getCurrPlayer()).getAction().equals(PlayerAction.PLACE)){
                 game.getPlayers().get(game.getCurrPlayer()).setAction(PlayerAction.DRAW, this.game);
@@ -351,7 +350,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * If the game is not in the ENDING state, it sets the player's action to WAIT.
      * @param player The player whose action is to be updated based on the game's state.
      */
-    private synchronized void checkFinalAction(Player player) throws Exception {
+    private synchronized void checkFinalAction(Player player) {
         if (player.getScore() >= Game.STOP_POINT_GAME && !game.getStatus().equals(GameStatus.ENDING)) {
             if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                 game.setStatus(GameStatus.ENDING);
@@ -391,7 +390,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             checkFinalAction(playerFromController);
             updateCurrPlayer();
         } else {
-            throw new Exception("Player's action is not draw.");
+            playerFromController.getSelfListener().cardNotAddedToHand(new GameImmutable(game));
         }
     }
 
@@ -405,7 +404,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @param index The index of the card in the displayed deck that the player wishes to draw.
      * @throws Exception If the player's current action is not DRAW or if the game state does not allow drawing a card.
      */
-    public synchronized void drawCardDisplayed(Player player, DeckType deck, int index) throws Exception {
+    public synchronized void drawCardDisplayed(Player player, DeckType deck, int index) throws RemoteException {
         // Check that the player is authorized to draw
         Player playerFromController = this.game.getPlayers().stream().filter(p->p.getNickname().equals(player.getNickname())).toList().getFirst();
 
@@ -414,7 +413,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             checkFinalAction(playerFromController);
             updateCurrPlayer();
         } else {
-            throw new Exception("Player's action is not draw.");
+            playerFromController.getSelfListener().cardNotAddedToHand(new GameImmutable(game));
         }
     }
 

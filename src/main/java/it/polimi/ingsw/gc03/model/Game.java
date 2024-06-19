@@ -158,7 +158,7 @@ public class Game implements Serializable {
     /**
      * Method to update the current player.
      */
-    public void updateCurrPlayer() throws RemoteException {
+    public void updateCurrPlayer() {
         if (this.currPlayer < this.numPlayer - 1)
             this.currPlayer++;
         else

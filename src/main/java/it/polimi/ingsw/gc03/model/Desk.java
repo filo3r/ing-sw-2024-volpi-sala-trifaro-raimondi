@@ -320,7 +320,7 @@ public class Desk implements Serializable {
      * @param deck The deck from which you want to draw a card.
      * @return The drawn card.
      */
-    public Card drawCardDeck(DeckType deck) throws RemoteException {
+    public Card drawCardDeck(DeckType deck) {
         List<? extends Card> actualDeck = null;
         switch (deck) {
             case DECK_GOLD -> actualDeck = this.deckGold;
@@ -347,7 +347,7 @@ public class Desk implements Serializable {
      * @param index The index of the card you want to take.
      * @return The card taken.
      */
-    public Card drawCardDisplayed(DeckType deck, int index) throws RemoteException {
+    public Card drawCardDisplayed(DeckType deck, int index) {
         List<? extends Card> actualDeck = null;
         switch (deck) {
             case DISPLAYED_GOLD -> actualDeck = this.displayedGold;
@@ -371,7 +371,7 @@ public class Desk implements Serializable {
     /**
      * Method for checking that the visible cards are always in the correct number.
      */
-    private void checkDisplayed() throws RemoteException {
+    private void checkDisplayed() {
         // Resource cards: Resource deck not empty
         while (this.displayedResource.size() < NUM_CARD_DISPLAYED && !this.deckResource.isEmpty()) {
             CardResource cardResource = (CardResource) drawCardDeck(DeckType.DECK_RESOURCE);
