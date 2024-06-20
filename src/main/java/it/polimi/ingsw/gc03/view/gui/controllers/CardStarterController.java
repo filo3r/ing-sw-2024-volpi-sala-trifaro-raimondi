@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 
 /**
@@ -19,13 +20,13 @@ public class CardStarterController extends GenericController {
      * Button to select the front side of the Starter card.
      */
     @FXML
-    private Button frontSide;
+    private ImageView frontSide;
 
     /**
      * Button to select the back side of the Starter card.
      */
     @FXML
-    private Button backSide;
+    private ImageView backSide;
 
 
     /**
@@ -48,8 +49,8 @@ public class CardStarterController extends GenericController {
                 Image frontImage = new Image("file:" + frontImagePath);
                 Image backImage = new Image("file:" + backImagePath);
                 // Set images to buttons
-                frontSide.setGraphic(new ImageView(frontImage));
-                backSide.setGraphic(new ImageView(backImage));
+                frontSide.setImage(frontImage);
+                backSide.setImage(backImage);
             } catch (Exception e) {
                 showError("Error loading images", "There was an error loading the Starter card images.");
                 System.exit(1);
@@ -89,23 +90,22 @@ public class CardStarterController extends GenericController {
         alert.showAndWait();
     }
 
-
     /**
      * Handles the click event for the front side of the Starter card.
-     * @param actionEvent The action event triggered by the user.
+     * @param mouseEvent The mouse event triggered by the user.
      */
     @FXML
-    public void actionClickOnFrontSide(ActionEvent actionEvent) {
+    public void actionClickOnFrontSide(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("f");
     }
 
 
     /**
      * Handles the click event for the back side of the Starter card.
-     * @param actionEvent The action event triggered by the user.
+     * @param mouseEvent The mouse event triggered by the user.
      */
     @FXML
-    public void actionClickOnBackSide(ActionEvent actionEvent) {
+    public void actionClickOnBackSide(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("b");
     }
 

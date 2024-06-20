@@ -103,8 +103,7 @@ public class Gui extends UI {
 
     @Override
     protected void show_gameStarted(GameImmutable model) {
-        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
-        Platform.runLater(()-> this.applicationGui.showGameRunning(model,nickname));
+
     }
 
     @Override
@@ -217,7 +216,8 @@ public class Gui extends UI {
 
     @Override
     protected void showCodex(GameImmutable model) {
-
+        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
+        Platform.runLater(()-> this.applicationGui.showGameRunning(model,nickname));
     }
 
     @Override
