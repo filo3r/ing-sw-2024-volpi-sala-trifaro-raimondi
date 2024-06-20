@@ -113,8 +113,6 @@ public class ApplicationGui extends Application {
             Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + (i + 1));
             if (panePlayerLobby != null) {
                 panePlayerLobby.setVisible(false);
-            } else {
-                System.out.println("Pane #" + (i + 1) + " non trovato.");
             }
         }
         for (Player p : gameImmutable.getPlayers()) {
@@ -148,14 +146,8 @@ public class ApplicationGui extends Application {
                     paneToLoad.prefWidthProperty().bind(panePlayerLobby.widthProperty());
                     paneToLoad.prefHeightProperty().bind(panePlayerLobby.heightProperty());
                     panePlayerLobby.getChildren().add(stackPane);
-                } else {
-                    System.out.println("Pane #" + playerIndex + " non trovato.");
                 }
-            } else {
-                System.out.println("Scena per il giocatore #" + playerIndex + " non trovata.");
             }
-        } else {
-            System.out.println("Indice del giocatore non valido: " + playerIndex);
         }
     }
 
@@ -254,7 +246,6 @@ public class ApplicationGui extends Application {
 
     public void setNickname(String nickname){
         this.nickname = nickname;
-        System.out.println("Nickname set to " + nickname);
     }
 
     public static void main(String[] args) {

@@ -21,12 +21,11 @@ public class Gui extends UI {
 
     private ApplicationGui applicationGui;
     private InputReaderGUI inputReaderGUI;
-    private String nickname;
+    private String nickname = null;
 
     public Gui(ApplicationGui applicationGui, InputReaderGUI inputReaderGUI){
         this.applicationGui = applicationGui;
         this.inputReaderGUI = inputReaderGUI;
-        nickname = null;
         init();
     }
 
@@ -131,9 +130,10 @@ public class Gui extends UI {
 
         Platform.runLater(()->this.applicationGui.closePopUps());
         LobbyController lc = (LobbyController) this.applicationGui.getController(scene);
-        Platform.runLater(()-> lc.setUsername(this.nickname));
-        Platform.runLater(()-> lc.setGameId(gameImmutable.getIdGame()));
-        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.LOBBY4));
+        Platform.runLater(()->lc.setUsername(this.nickname));
+        Platform.runLater(()->lc.setGameId(gameImmutable.getIdGame()));
+        SceneEnum finalScene = scene;
+        Platform.runLater(()-> this.applicationGui.setActiveScene(finalScene));
         Platform.runLater(()->this.applicationGui.showLobby(gameImmutable));
     }
 
@@ -233,10 +233,9 @@ public class Gui extends UI {
             case 3 -> scene = SceneEnum.LOBBY3;
             case 4 -> scene = SceneEnum.LOBBY4;
         }
-
         Platform.runLater(()->this.applicationGui.closePopUps());
         LobbyController lc = (LobbyController) this.applicationGui.getController(scene);
-        Platform.runLater(()-> lc.setUsername(nickname));
+        Platform.runLater(()-> lc.setUsername(this.nickname));
         Platform.runLater(()-> lc.setGameId(gameImmutable.getIdGame()));
         SceneEnum finalScene = scene;
         Platform.runLater(()-> this.applicationGui.setActiveScene(finalScene));
@@ -304,8 +303,11 @@ public class Gui extends UI {
      */
     @Override
     protected void setNickname(String nickname) {
-        this.nickname = nickname;
-        applicationGui.setNickname(nickname);
+        if(this.nickname == null){
+            System.out.println("setNickname: " + nickname);
+            this.nickname = nickname;
+            this.applicationGui.setNickname(nickname);
+        }
     }
 
     @Override

@@ -39,7 +39,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * The player's nickname.
      */
-    private String nickname;
+    private String nickname = null;
 
     /**
      * The list of events.
@@ -311,7 +311,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
         String nickLastPlayer = event.getModel().getPlayers().get(event.getModel().getPlayers().size() - 1).getNickname();
         switch (event.getType()) {
             case PLAYER_JOINED -> {
-                if(!this.nickname.equals("")){
+                if(this.nickname == null){
                     this.nickname = nickLastPlayer;
                     ui.setNickname(nickname);
                 }
