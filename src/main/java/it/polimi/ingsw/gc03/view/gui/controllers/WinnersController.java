@@ -75,6 +75,7 @@ public class WinnersController extends GenericController {
                 case 3 -> temp = player4;
             }
             // Set the Label text with the player's nickname and score
+            System.out.println(player.getNickname() + ": " + player.getScore() + " points");
             temp.setText(player.getNickname() + ": " + player.getScore() + " points");
             // Color the nickname if the player is a winner
             if (winners.contains(player))
