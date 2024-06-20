@@ -211,6 +211,17 @@ public class ApplicationGui extends Application {
     }
 
      */
+
+    public void show_askSideStarter(GameImmutable game, String nickname){
+        CardStarterController controller = (CardStarterController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.CARD_STARTER)).toList().getFirst().getGenericController();
+        controller.showCardStarter(game, nickname);
+    }
+
+    public void showObjectiveNotChosen(GameImmutable model){
+        CardObjectiveController controller = (CardObjectiveController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.CARD_OBJECTIVE)).toList().getFirst().getGenericController();
+        controller.showCardObjective(model, this.nickname);
+    }
+
     public void showWinner(GameImmutable model){
         WinnersController controller = (WinnersController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.WINNERS)).toList().getFirst().getGenericController();
         controller.showPoints(model);
@@ -222,8 +233,9 @@ public class ApplicationGui extends Application {
 
 
     public void showError(String message){
-        ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.setErrorText(message,false);
+        //ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
+        //controller.setErrorText(message,false);
+        System.err.println(message);
     }
 
     public void showFatalError(String message){

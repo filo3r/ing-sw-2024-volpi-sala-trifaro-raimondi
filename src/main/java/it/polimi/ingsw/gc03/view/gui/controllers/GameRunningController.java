@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -14,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -770,9 +773,13 @@ public class GameRunningController extends GenericController {
      */
     public void setPersonalObjective(GameImmutable gameImmutable, String nickname) {
         Player player = getPlayer(gameImmutable, nickname);
+        String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "src" +
+                File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
+                + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" +File.separator + "images" + File.separator +
+                "cards" + File.separator + "frontSide" + File.separator;
         String imagePath = null;
         if (player != null)
-            imagePath = player.getCardObjective().get(0).getImage();
+            imagePath = IMAGE_PATH + player.getCardObjective().get(0).getIdCard() + "_front.png";
         if (imagePath != null) {
             try {
                 Image image = new Image("file:" + imagePath);
@@ -782,8 +789,10 @@ public class GameRunningController extends GenericController {
                 System.exit(1);
             }
         } else {
-            showError("Image path is null", "The image path for the Objective card is null.");
-            System.exit(1);
+            if(!(gameImmutable.getStatus().equals(GameStatus.STARTING) || gameImmutable.getStatus().equals(GameStatus.WAITING))){
+                showError("Image path is null", "The image path for the Objective card is null.");
+                System.exit(1);
+            }
         }
     }
 
@@ -793,20 +802,19 @@ public class GameRunningController extends GenericController {
      * @param gameImmutable The current state of the game.
      */
     public void setSharedObjective(GameImmutable gameImmutable) {
-        String imagePath1 = gameImmutable.getDesk().getDisplayedObjective().get(0).getImage();
-        String imagePath2 = gameImmutable.getDesk().getDisplayedObjective().get(1).getImage();
-        if (imagePath1 != null && imagePath2 != null) {
-            try {
-                Image image1 = new Image("file:" + imagePath1);
-                sharedObjective1.getChildren().add(new ImageView(image1));
-                Image image2 = new Image("file:" + imagePath2);
-                sharedObjective2.getChildren().add(new ImageView(image2));
-            } catch (Exception e) {
-                showError("Error loading images", "There was an error loading the Objective cards images.");
-                System.exit(1);
-            }
-        } else {
-            showError("Images paths are null", "The images paths for the Objective cards are null.");
+        String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "src" +
+                File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
+                + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" +File.separator + "images" + File.separator +
+                "cards" + File.separator + "frontSide" + File.separator;
+        String imagePath1 = IMAGE_PATH + gameImmutable.getDesk().getDisplayedObjective().get(0).getIdCard() + "_front.png";
+        String imagePath2 = IMAGE_PATH + gameImmutable.getDesk().getDisplayedObjective().get(1).getIdCard() + "_front.png";
+        try {
+            Image image1 = new Image("file:" + imagePath1);
+            sharedObjective1.getChildren().add(new ImageView(image1));
+            Image image2 = new Image("file:" + imagePath2);
+            sharedObjective2.getChildren().add(new ImageView(image2));
+        } catch (Exception e) {
+            showError("Error loading images", "There was an error loading the Objective cards images.");
             System.exit(1);
         }
     }

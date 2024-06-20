@@ -148,7 +148,7 @@ public class CardObjective extends Card implements Serializable {
      * @return The image of the card.
      */
     public String getImage() {
-        return image;
+        return this.image;
     }
 
     /**

@@ -259,7 +259,8 @@ public class Gui extends UI {
 
     @Override
     protected void showObjectiveNotChosen(GameImmutable model) {
-
+        Platform.runLater(()->this.applicationGui.showObjectiveNotChosen(model));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.CARD_OBJECTIVE));
     }
 
     @Override
@@ -292,8 +293,8 @@ public class Gui extends UI {
 
     @Override
     protected void show_askSideStarter(GameImmutable game, String nickname) {
-        this.nickname = nickname;
-
+        Platform.runLater(()->this.applicationGui.show_askSideStarter(game, nickname));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.CARD_STARTER));
     }
 
     /**
