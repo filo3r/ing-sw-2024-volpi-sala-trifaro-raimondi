@@ -502,4 +502,20 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
+
+    /**
+     * This method is used to inform the clients that a player tried to place a card when he can't.
+     * @param gameImmutable The immutable game object.
+     * @param nickname The nickname of the player who tried.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
+        try {
+            SocketServerMessageCanNotPlaceCard message = new SocketServerMessageCanNotPlaceCard(gameImmutable, nickname);
+            this.outputStream.writeObject(message);
+            completeTransmission();
+        } catch (IOException e) {}
+    }
+
+
 }

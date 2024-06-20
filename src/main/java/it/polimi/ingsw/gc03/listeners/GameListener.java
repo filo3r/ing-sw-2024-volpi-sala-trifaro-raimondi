@@ -283,6 +283,14 @@ public interface GameListener extends Remote {
      */
     void gameCreated(GameImmutable gameImmutable) throws RemoteException;
 
+    /**
+     * This method is used to inform the clients that a player tried to place a card when he can't.
+     * @param gameImmutable The immutable game object.
+     * @param nickname The nickname of the player who tried.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException;
+
     // Additional methods may be necessary
     // For other methods you have to create the respective message in serverToClientMessages package and method in ListenersHandler
 

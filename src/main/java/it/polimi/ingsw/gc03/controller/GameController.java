@@ -509,6 +509,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                     }
                 }
             } else {
+                playerFromController.getSelfListener().canNotPlaceCard(new GameImmutable(game), playerFromController.getNickname());
                 throw new Exception("The player is not the current player or the game is not running or he's current action is not place, it's "+game.getPlayers().get(game.getCurrPlayer()).getNickname());
             }
         } else {

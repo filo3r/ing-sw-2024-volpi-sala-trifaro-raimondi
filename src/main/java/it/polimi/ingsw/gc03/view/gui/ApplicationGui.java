@@ -76,7 +76,7 @@ public class ApplicationGui extends Application {
     }
 
     public GenericController getController(SceneEnum scene) {
-        int index = scenes.indexOf(scenes.stream().filter(x->x.getSceneEnum().equals(scene)).toList().getFirst());
+        int index = scenes.indexOf(scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().getFirst());
         return scenes.get(index).getGenericController();
     }
 
@@ -108,50 +108,55 @@ public class ApplicationGui extends Application {
     }
 
     public void showLobby(GameImmutable gameImmutable) {
-        for (int i = 1; i < 5; i++) {
-            Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + i+1);
+        int gameSize = gameImmutable.getSize();
+        for (int i = 0; i < gameSize; i++) {
+            Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + (i + 1));
             if (panePlayerLobby != null) {
                 panePlayerLobby.setVisible(false);
             } else {
-                System.out.println("Pane #" + i + " non trovato.");
+                System.out.println("Pane #" + (i + 1) + " non trovato.");
             }
+        }
+        for (Player p : gameImmutable.getPlayers()) {
+            showPlayerInLobby(p.getNickname(), gameImmutable);
         }
     }
 
     private void showPlayerInLobby(String nickname, GameImmutable gameImmutable) {
-        SceneEnum s = null;
-        switch (gameImmutable.getPlayers().size()){
-            case 1 -> {
-                s = SceneEnum.LOBBY_PLAYER1;
+        int playerIndex = gameImmutable.getPlayers().indexOf(gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null))+1;
+        if (playerIndex <= gameImmutable.getSize()) {
+            SceneEnum sceneEnum = null;
+            switch (playerIndex) {
+                case 1 -> sceneEnum = SceneEnum.LOBBY_PLAYER1;
+                case 2 -> sceneEnum = SceneEnum.LOBBY_PLAYER2;
+                case 3 -> sceneEnum = SceneEnum.LOBBY_PLAYER3;
+                case 4 -> sceneEnum = SceneEnum.LOBBY_PLAYER4;
             }
-            case 2 -> {
-                s = SceneEnum.LOBBY_PLAYER2;
+            SceneEnum finalSceneEnum = sceneEnum;
+            Scenes sceneToLoad = scenes.stream().filter(x -> x.getSceneEnum().equals(finalSceneEnum)).findFirst().orElse(null);
+            if (sceneToLoad != null) {
+                Pane paneToLoad = (Pane) sceneToLoad.getScene().getRoot();
+                ((LobbyPlayerController) sceneToLoad.getGenericController()).setNickname(nickname);
+                Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + playerIndex);
+                if (panePlayerLobby != null) {
+                    panePlayerLobby.setVisible(true);
+                    panePlayerLobby.getChildren().clear();
+                    paneToLoad.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                    StackPane stackPane = new StackPane();
+                    stackPane.getChildren().add(paneToLoad);
+                    StackPane.setAlignment(paneToLoad, Pos.CENTER);
+                    paneToLoad.prefWidthProperty().bind(panePlayerLobby.widthProperty());
+                    paneToLoad.prefHeightProperty().bind(panePlayerLobby.heightProperty());
+                    panePlayerLobby.getChildren().add(stackPane);
+                } else {
+                    System.out.println("Pane #" + playerIndex + " non trovato.");
+                }
+            } else {
+                System.out.println("Scena per il giocatore #" + playerIndex + " non trovata.");
             }
-            case 3 -> {
-                s = SceneEnum.LOBBY_PLAYER3;
-            }
-            case 4 -> {
-                s = SceneEnum.LOBBY_PLAYER4;
-            }
+        } else {
+            System.out.println("Indice del giocatore non valido: " + playerIndex);
         }
-        Pane paneToLoad;
-        SceneEnum finalS = s;
-        Scenes sceneToLoad = scenes.get(scenes.indexOf(scenes.stream().filter(x->x.getSceneEnum().equals(finalS)).toList().getFirst()));
-        paneToLoad = (Pane) sceneToLoad.getScene().getRoot();
-        ((LobbyPlayerController) sceneToLoad.getGenericController()).setNickname(nickname);
-        Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + gameImmutable.getPlayers().indexOf(gameImmutable.getPlayers().stream().filter(p->p.getNickname().equals(nickname)))+1);
-        panePlayerLobby.setVisible(true);
-        panePlayerLobby.getChildren().clear();
-        paneToLoad.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().add(paneToLoad);
-        StackPane.setAlignment(paneToLoad, Pos.CENTER);
-
-
-        paneToLoad.prefWidthProperty().bind(panePlayerLobby.widthProperty());
-        paneToLoad.prefHeightProperty().bind(panePlayerLobby.heightProperty());
-
-        panePlayerLobby.getChildren().add(stackPane);
     }
 
 

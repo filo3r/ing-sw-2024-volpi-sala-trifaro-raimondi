@@ -122,10 +122,16 @@ public class Gui extends UI {
 
     @Override
     protected void show_playerJoined(GameImmutable gameImmutable, String nickname) {
+        SceneEnum scene = null;
+        switch (gameImmutable.getSize()){
+            case 1,2 -> scene = SceneEnum.LOBBY2;
+            case 3 -> scene = SceneEnum.LOBBY3;
+            case 4 -> scene = SceneEnum.LOBBY4;
+        }
 
         Platform.runLater(()->this.applicationGui.closePopUps());
-        LobbyController lc = (LobbyController) this.applicationGui.getController(SceneEnum.LOBBY4);
-        Platform.runLater(()-> lc.setUsername(nickname));
+        LobbyController lc = (LobbyController) this.applicationGui.getController(scene);
+        Platform.runLater(()-> lc.setUsername(this.nickname));
         Platform.runLater(()-> lc.setGameId(gameImmutable.getIdGame()));
         Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.LOBBY4));
         Platform.runLater(()->this.applicationGui.showLobby(gameImmutable));

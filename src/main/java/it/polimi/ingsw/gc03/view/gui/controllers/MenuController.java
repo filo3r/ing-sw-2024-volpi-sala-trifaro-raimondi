@@ -25,7 +25,7 @@ public class MenuController extends GenericController {
      * @param actionEvent The action event triggered by the user.
      */
     public void actionJoinFirstAvailableGame(ActionEvent actionEvent) {
-        getInputReaderGUI().addTxt("js");
+        getInputReaderGUI().addTxt("j");
     }
 
 

@@ -8,12 +8,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="backgroundWelcome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.MenuController">
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="backgroundWelcome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.MenuController">
     <children>
         <Pane prefHeight="740.0" prefWidth="1025.0" styleClass="backgroundmio" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <Pane fx:id="content" layoutX="-9.0" layoutY="19.0" prefHeight="706.0" prefWidth="1294.0">
             <children>
-                <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="171.0" mnemonicParsing="false" onAction="#actionCreateGame" prefHeight="86.0" prefWidth="453.0" style="-fx-font-size: 22;" styleClass="record-sales" stylesheets="@style.css" text="Create a new game">
+            <ImageView fitHeight="1044.0" fitWidth="1392.0" layoutX="-59.0" layoutY="-20.0" nodeOrientation="INHERIT" preserveRatio="true">
+               <image>
+                  <Image url="@images/title_screen.png" />
+               </image>
+            </ImageView>
+                <Button alignment="CENTER" layoutX="154.0" layoutY="334.0" mnemonicParsing="false" onAction="#actionCreateGame" prefHeight="86.0" prefWidth="450.0" style="-fx-font-size: 22;" styleClass="record-sales" stylesheets="@style.css" text="Create a new game">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -21,7 +26,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="277.0" mnemonicParsing="false" onAction="#actionJoinFirstAvailableGame" prefHeight="86.0" prefWidth="423.0" styleClass="record-sales2" stylesheets="@style.css" text="Join to a random game">
+                <Button alignment="CENTER" layoutX="154.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionJoinFirstAvailableGame" prefHeight="86.0" prefWidth="450.0" styleClass="record-sales2" stylesheets="@style.css" text="Join to a random game">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -29,7 +34,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="383.0" mnemonicParsing="false" onAction="#actionJoinSpecificGame" prefHeight="86.0" prefWidth="393.0" styleClass="record-sales3" stylesheets="@style.css" text="Join to specific Game">
+                <Button alignment="CENTER" contentDisplay="TOP" layoutX="704.0" layoutY="334.0" mnemonicParsing="false" onAction="#actionJoinSpecificGame" prefHeight="86.0" prefWidth="450.0" styleClass="record-sales3" stylesheets="@style.css" text="Join to specific Game">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -37,7 +42,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="489.0" mnemonicParsing="false" onAction="#actionReconnectToGame" prefHeight="86.0" prefWidth="363.0" styleClass="record-sales4" stylesheets="@style.css" text="Reconnect">
+                <Button alignment="CENTER" layoutX="704.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionReconnectToGame" prefHeight="86.0" prefWidth="450.0" styleClass="record-sales4" stylesheets="@style.css" text="Reconnect">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -45,12 +50,6 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Pane layoutX="103.0" layoutY="3.0" opacity="0.8" prefHeight="137.0" prefWidth="1152.0" style="-fx-background-color: black;" />
-                <ImageView fitHeight="120.0" fitWidth="815.0" layoutX="268.0" layoutY="17.0">
-                    <image>
-                        <Image url="@images/background.png" />
-                    </image>
-                </ImageView>
             </children>
         </Pane>
     </children>

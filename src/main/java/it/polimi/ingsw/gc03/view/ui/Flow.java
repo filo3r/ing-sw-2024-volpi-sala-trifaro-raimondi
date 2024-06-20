@@ -311,6 +311,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
         String nickLastPlayer = event.getModel().getPlayers().get(event.getModel().getPlayers().size() - 1).getNickname();
         switch (event.getType()) {
             case PLAYER_JOINED -> {
+                if(!this.nickname.equals("")){
+                    this.nickname = nickLastPlayer;
+                    ui.setNickname(nickname);
+                }
+
                 if (nickLastPlayer.equals(nickname)) {
                     //ui.show_playerJoined(event.getModel(), nickname);
                 }
@@ -467,6 +472,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             throw new RuntimeException(e);
         }
         ui.show_chosenNickname(nickname);
+        ui.setNickname(nickname);
     }
 
     /**
@@ -1373,5 +1379,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
         events.add(gameImmutable, GAMECREATED);
         ui.addImportantEvent("New game created");
+    }
+
+    @Override
+    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
+            ui.addImportantEvent("You can't place a card now");
+        }
     }
 }

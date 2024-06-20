@@ -362,4 +362,16 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     public void gameCreated(GameImmutable gameImmutable) throws RemoteException{
         this.flow.gameCreated(gameImmutable);
     }
+
+    /**
+     * Handles the failure of placing a card.
+     * @param gameImmutable The immutable game object.
+     * @param nickname The nickname of the player who tried.
+     * @throws RemoteException If an error occurs in remote communication.
+     */
+    @Override
+    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
+        this.flow.canNotPlaceCard(gameImmutable, nickname);
+    }
+
 }
