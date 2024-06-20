@@ -134,6 +134,11 @@ public class Game implements Serializable {
             this.numPlayer--;
             listenersHandler.notifyPlayerLeft(this, nickname);
 
+            if(this.getStatus().equals(GameStatus.WAITING)) {
+                this.decideWinner();
+                this.setStatus(GameStatus.ENDED);
+            }
+
             if(this.getPlayers().size()==1) {
                 this.decideWinner();
                 this.setStatus(GameStatus.ENDED);
