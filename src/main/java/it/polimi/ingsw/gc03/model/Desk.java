@@ -98,7 +98,7 @@ public class Desk implements Serializable {
      */
     private static final String IMAGE_PATH_FRONT = System.getProperty("user.dir") + File.separator + "src" +
             File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" + File.separator + "images" + File.separator +
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "gui" + File.separator + "images" + File.separator +
             "cards" + File.separator + "frontSide" + File.separator;
 
     /**
@@ -106,7 +106,7 @@ public class Desk implements Serializable {
      */
     private static final String IMAGE_PATH_BACK = System.getProperty("user.dir") + File.separator + "src" +
             File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" + File.separator + "images" + File.separator +
+            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "gui" + File.separator + "images" + File.separator +
             "cards" + File.separator + "backSide" + File.separator;
 
     /**
@@ -277,7 +277,10 @@ public class Desk implements Serializable {
             ArrayList<CardObjective> objectiveCards = gson.fromJson(inputStreamReader, objectiveCardType);
             this.deckObjective.addAll(objectiveCards);
             inputStream.close();
-            // (for Objective cards the association with your image occurs in the class constructor)
+            // Associate the images with the card
+            for (CardObjective cardObjective : this.deckObjective) {
+                cardObjective.setImage(IMAGE_PATH_FRONT + cardObjective.getIdCard() + "_front.png");
+            }
             // Shuffle the deck
             Collections.shuffle(this.deckObjective);
             return true;

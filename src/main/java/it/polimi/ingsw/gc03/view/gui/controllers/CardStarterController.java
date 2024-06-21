@@ -97,6 +97,7 @@ public class CardStarterController extends GenericController {
     @FXML
     public void actionClickOnFrontSide(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("f");
+        backSide.setVisible(false);
     }
 
 
@@ -107,6 +108,7 @@ public class CardStarterController extends GenericController {
     @FXML
     public void actionClickOnBackSide(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("b");
+        frontSide.setVisible(false);
     }
 
 

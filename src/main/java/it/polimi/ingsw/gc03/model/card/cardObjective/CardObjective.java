@@ -42,13 +42,6 @@ public class CardObjective extends Card implements Serializable {
      */
     private String image;
 
-    /**
-     * Path to the image folder.
-     */
-    private static final String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" +File.separator + "images" + File.separator +
-            "cards" + File.separator + "frontSide" + File.separator;
 
     /**
      * Constructor for the CardObjective class.
@@ -65,7 +58,7 @@ public class CardObjective extends Card implements Serializable {
         this.point = point;
         this.parameters = new ArrayList<>(parameters);
         this.scoreStrategy = scoreStrategy;
-        this.image = IMAGE_PATH + idCard + "_front.png";
+        this.image = null;
     }
 
     /**

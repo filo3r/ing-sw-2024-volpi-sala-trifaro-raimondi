@@ -8,87 +8,87 @@ public enum SceneEnum {
     /**
      * NICKNAME is the scene where the user is asked to enter their nickname.
      */
-    NICKNAME("/it/polimi/ingsw/gc03/fxml/nickname.fxml"),
+    NICKNAME("/it/polimi/ingsw/gc03/gui/nickname.fxml"),
 
     /**
      * MENU is the scene that displays the menu with possible actions for the player to choose from.
      */
-    MENU("/it/polimi/ingsw/gc03/fxml/menu.fxml"),
+    MENU("/it/polimi/ingsw/gc03/gui/menu.fxml"),
 
     /**
      * GAME_ID is the scene where the user is asked to enter the game ID.
      */
-    GAME_ID("/it/polimi/ingsw/gc03/fxml/gameId.fxml"),
+    GAME_ID("/it/polimi/ingsw/gc03/gui/gameId.fxml"),
 
     /**
      * LOBBY2 is the scene that represents the lobby for a two-player game.
      */
-    LOBBY2("/it/polimi/ingsw/gc03/fxml/lobby2.fxml"),
+    LOBBY2("/it/polimi/ingsw/gc03/gui/lobby2.fxml"),
 
     /**
      * LOBBY3 is the scene that represents the lobby for a three-player game.
      */
-    LOBBY3("/it/polimi/ingsw/gc03/fxml/lobby3.fxml"),
+    LOBBY3("/it/polimi/ingsw/gc03/gui/lobby3.fxml"),
 
     /**
      * LOBBY4 is the scene that represents the lobby for a four-player game.
      */
-    LOBBY4("/it/polimi/ingsw/gc03/fxml/lobby4.fxml"),
+    LOBBY4("/it/polimi/ingsw/gc03/gui/lobby4.fxml"),
 
     /**
      * LOBBY_PLAYER1 is the scene that represents the first player in the lobby.
      */
-    LOBBY_PLAYER1("/it/polimi/ingsw/gc03/fxml/lobbyPlayer1.fxml"),
+    LOBBY_PLAYER1("/it/polimi/ingsw/gc03/gui/lobbyPlayer1.fxml"),
 
     /**
      * LOBBY_PLAYER2 is the scene that represents the second player in the lobby.
      */
-    LOBBY_PLAYER2("/it/polimi/ingsw/gc03/fxml/lobbyPlayer2.fxml"),
+    LOBBY_PLAYER2("/it/polimi/ingsw/gc03/gui/lobbyPlayer2.fxml"),
 
     /**
      * LOBBY_PLAYER3 is the scene that represents the third player in the lobby.
      */
-    LOBBY_PLAYER3("/it/polimi/ingsw/gc03/fxml/lobbyPlayer3.fxml"),
+    LOBBY_PLAYER3("/it/polimi/ingsw/gc03/gui/lobbyPlayer3.fxml"),
 
     /**
      * LOBBY_PLAYER4 is the scene that represents the fourth player in the lobby.
      */
-    LOBBY_PLAYER4("/it/polimi/ingsw/gc03/fxml/lobbyPlayer4.fxml"),
+    LOBBY_PLAYER4("/it/polimi/ingsw/gc03/gui/lobbyPlayer4.fxml"),
 
     /**
      * CARD_STARTER is the scene where the player is asked to choose the side of their starter card.
      */
-    CARD_STARTER("/it/polimi/ingsw/gc03/fxml/cardStarter.fxml"),
+    CARD_STARTER("/it/polimi/ingsw/gc03/gui/cardStarter.fxml"),
 
     /**
      * CARD_OBJECTIVE is the scene where the player is asked to choose their personal objective card.
      */
-    CARD_OBJECTIVE("/it/polimi/ingsw/gc03/fxml/cardObjective.fxml"),
+    CARD_OBJECTIVE("/it/polimi/ingsw/gc03/gui/cardObjective.fxml"),
 
     /**
      * GAME_RUNNING is the scene displayed during the actual execution of the game.
      */
-    GAME_RUNNING("/it/polimi/ingsw/gc03/fxml/gameRunning.fxml"),
+    GAME_RUNNING("/it/polimi/ingsw/gc03/gui/gameRunning.fxml"),
 
     /**
      * WINNERS is the final scene where the players' scores and the winners of the game are displayed.
      */
-    WINNERS("/it/polimi/ingsw/gc03/fxml/winners.fxml"),
+    WINNERS("/it/polimi/ingsw/gc03/gui/winners.fxml"),
 
     /**
      * ERROR is the scene displayed in case an error occurs.
      */
-    ERROR("/it/polimi/ingsw/gc03/fxml/error.fxml"),
+    ERROR("/it/polimi/ingsw/gc03/gui/error.fxml"),
 
     /**
      * GAME_TITLE is the scene of the game logo
      */
-    GAME_TITLE("/it/polimi/ingsw/gc03/fxml/gametitle.fxml"),
+    GAME_TITLE("/it/polimi/ingsw/gc03/gui/gametitle.fxml"),
 
     /**
      * CHOOSE_SIZE is the scene where the player choose the game's size.
      */
-    CHOOSE_SIZE("/it/polimi/ingsw/gc03/fxml/chooseSize.fxml");
+    CHOOSE_SIZE("/it/polimi/ingsw/gc03/gui/chooseSize.fxml");
 
 
     private final String value;

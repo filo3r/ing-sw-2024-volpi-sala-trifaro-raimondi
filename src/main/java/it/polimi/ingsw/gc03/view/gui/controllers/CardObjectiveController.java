@@ -2,12 +2,11 @@ package it.polimi.ingsw.gc03.view.gui.controllers;
 
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 
 /**
@@ -19,13 +18,13 @@ public class CardObjectiveController extends GenericController {
      * Button to select the first Objective card.
      */
     @FXML
-    private Button firstCard;
+    private ImageView firstCard;
 
     /**
      * Button to select the second Objective card.
      */
     @FXML
-    private Button secondCard;
+    private ImageView secondCard;
 
 
     /**
@@ -48,8 +47,8 @@ public class CardObjectiveController extends GenericController {
                 Image firstImage = new Image("file:" + firstImagePath);
                 Image secondImage = new Image("file:" + secondImagePath);
                 // Set images to buttons
-                firstCard.setGraphic(new ImageView(firstImage));
-                secondCard.setGraphic(new ImageView(secondImage));
+                firstCard.setImage(firstImage);
+                secondCard.setImage(secondImage);
             } catch (Exception e) {
                 showError("Error loading images", "There was an error loading the Objective cards images.");
                 System.exit(1);
@@ -92,21 +91,23 @@ public class CardObjectiveController extends GenericController {
 
     /**
      * Handles the click event for the first Objective card.
-     * @param actionEvent The action event triggered by the user.
+     * @param mouseEvent The mouse event triggered by the user.
      */
     @FXML
-    public void actionClickOnFirstCard(ActionEvent actionEvent) {
+    public void actionClickOnFirstCard(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("0");
+        secondCard.setVisible(false);
     }
 
 
     /**
      * Handles the click event for the second Objective card.
-     * @param actionEvent The action event triggered by the user.
+     * @param mouseEvent The mouse event triggered by the user.
      */
     @FXML
-    public void actionClickOnSecondCard(ActionEvent actionEvent) {
+    public void actionClickOnSecondCard(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("1");
+        firstCard.setVisible(false);
     }
 
 
