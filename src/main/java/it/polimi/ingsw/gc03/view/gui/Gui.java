@@ -98,12 +98,10 @@ public class Gui extends UI {
 
     @Override
     protected void show_chosenNickname(String nickname) {
-
     }
 
     @Override
     protected void show_gameStarted(GameImmutable model) {
-
     }
 
     @Override
@@ -147,7 +145,7 @@ public class Gui extends UI {
 
     @Override
     protected void show_sentMessage(GameImmutable model, String nickname) {
-
+        Platform.runLater(()->this.applicationGui.showChat(model,nickname));
     }
 
     @Override
@@ -249,7 +247,6 @@ public class Gui extends UI {
 
     @Override
     protected void showWinner(GameImmutable model) {
-
     }
 
     @Override
@@ -278,7 +275,8 @@ public class Gui extends UI {
 
     @Override
     protected void showInvalidNickname(String nickname) {
-
+        //Platform.runLater(()->this.applicationGui.showError("Invalid Nickname"));
+        //Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.ERROR));
     }
 
     @Override

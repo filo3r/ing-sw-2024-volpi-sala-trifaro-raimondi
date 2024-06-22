@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gc03.view.gui.controllers;
 
+import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -18,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -755,7 +758,17 @@ public class GameRunningController extends GenericController {
     @FXML
     private Pane hand43;
 
+    /**
+     *
+     */
+    @FXML
+    private ListView<String> chat;
 
+    /**
+     *
+     */
+    @FXML
+    private ListView<String> latestEvent;
 
 
     /**
@@ -1393,6 +1406,9 @@ public class GameRunningController extends GenericController {
         }
     }
 
+    public void addMessages(List<ChatMessage> messages , String nickname){
+
+    }
 
 
 }

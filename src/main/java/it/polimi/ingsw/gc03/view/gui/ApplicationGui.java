@@ -264,4 +264,9 @@ public class ApplicationGui extends Application {
         launch(args);
     }
 
+    public void showChat(GameImmutable model, String nickname){
+     GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
+     controller.addMessages(model.getChat(),nickname);
+    }
+
 }
