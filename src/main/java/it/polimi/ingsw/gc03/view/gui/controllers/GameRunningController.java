@@ -15,8 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
-
-import java.io.File;
+import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -75,76 +74,153 @@ public class GameRunningController extends GenericController {
     private Label points4;
 
     /**
+     *
+     */
+    @FXML
+    private Pane personalObjectivePane;
+
+    /**
      * Pane to display the personal Objective card.
      */
     @FXML
-    private Pane personalObjective;
+    private ImageView personalObjectiveImage;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane sharedObjective1Pane;
 
     /**
      * Pane to display the first shared Objective card.
      */
     @FXML
-    private Pane sharedObjective1;
+    private ImageView sharedObjective1Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane sharedObjective2Pane;
 
     /**
      * Pane to display the second shared Objective card.
      */
     @FXML
-    private Pane sharedObjective2;
+    private ImageView sharedObjective2Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane deckResourcePane;
 
     /**
      * Button to display the deck of Resource cards.
      */
     @FXML
-    private Button deckResource;
+    private ImageView deckResourceImage;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane deckGoldPane;
 
     /**
      * Button to display the deck of Gold cards.
      */
     @FXML
-    private Button deckGold;
+    private ImageView deckGoldImage;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane displayed1Pane;
 
     /**
      * Button to display the first displayed card.
      */
     @FXML
-    private Button displayed1;
+    private ImageView displayed1Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane displayed2Pane;
 
     /**
      * Button to display the second displayed card.
      */
     @FXML
-    private Button displayed2;
+    private ImageView displayed2Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane displayed3Pane;
 
     /**
      * Button to display the third displayed card.
      */
     @FXML
-    private Button displayed3;
+    private ImageView displayed3Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane displayed4Pane;
 
     /**
      * Button to display the fourth displayed card.
      */
     @FXML
-    private Button displayed4;
+    private ImageView displayed4Image;
 
     /**
      *
      */
     @FXML
-    private Button hand1;
+    private Pane hand1Pane;
 
     /**
      *
      */
     @FXML
-    private Button hand2;
+    private ImageView hand1Image;
 
     /**
      *
      */
     @FXML
-    private Button hand3;
+    private Pane hand2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand2Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand3Image;
+
+    /**
+     *
+     */
+    private HashMap<String, Card> hand = new HashMap<>(3);
 
     /**
      *
@@ -704,6 +780,7 @@ public class GameRunningController extends GenericController {
      * Handles the action of leaving the game.
      * @param actionEvent The event triggered by clicking the leave button.
      */
+    @FXML
     public void actionLeave(ActionEvent actionEvent) {
         getInputReaderGUI().addTxt("leave");
     }
@@ -773,23 +850,24 @@ public class GameRunningController extends GenericController {
      */
     public void setPersonalObjective(GameImmutable gameImmutable, String nickname) {
         Player player = getPlayer(gameImmutable, nickname);
-        String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "src" +
-                File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-                + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" +File.separator + "images" + File.separator +
-                "cards" + File.separator + "frontSide" + File.separator;
         String imagePath = null;
         if (player != null)
-            imagePath = IMAGE_PATH + player.getCardObjective().get(0).getIdCard() + "_front.png";
+            imagePath = player.getCardObjective().get(0).getImage();
         if (imagePath != null) {
             try {
                 Image image = new Image("file:" + imagePath);
-                personalObjective.getChildren().add(new ImageView(image));
+                personalObjectiveImage.setImage(image);
+                personalObjectiveImage.setFitWidth(personalObjectivePane.getPrefWidth());
+                personalObjectiveImage.setFitHeight(personalObjectivePane.getPrefHeight());
+                personalObjectiveImage.setPreserveRatio(true);
+                personalObjectiveImage.setSmooth(true);
+                personalObjectiveImage.setCache(true);
             } catch (Exception e) {
                 showError("Error loading image", "There was an error loading the Objective card image.");
                 System.exit(1);
             }
         } else {
-            if(!(gameImmutable.getStatus().equals(GameStatus.STARTING) || gameImmutable.getStatus().equals(GameStatus.WAITING))){
+            if (!(gameImmutable.getStatus().equals(GameStatus.STARTING) || gameImmutable.getStatus().equals(GameStatus.WAITING))) {
                 showError("Image path is null", "The image path for the Objective card is null.");
                 System.exit(1);
             }
@@ -802,19 +880,32 @@ public class GameRunningController extends GenericController {
      * @param gameImmutable The current state of the game.
      */
     public void setSharedObjective(GameImmutable gameImmutable) {
-        String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "src" +
-                File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-                + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "fxml" +File.separator + "images" + File.separator +
-                "cards" + File.separator + "frontSide" + File.separator;
-        String imagePath1 = IMAGE_PATH + gameImmutable.getDesk().getDisplayedObjective().get(0).getIdCard() + "_front.png";
-        String imagePath2 = IMAGE_PATH + gameImmutable.getDesk().getDisplayedObjective().get(1).getIdCard() + "_front.png";
-        try {
-            Image image1 = new Image("file:" + imagePath1);
-            sharedObjective1.getChildren().add(new ImageView(image1));
-            Image image2 = new Image("file:" + imagePath2);
-            sharedObjective2.getChildren().add(new ImageView(image2));
-        } catch (Exception e) {
-            showError("Error loading images", "There was an error loading the Objective cards images.");
+        String imagePath1 = gameImmutable.getDesk().getDisplayedObjective().get(0).getImage();
+        String imagePath2 = gameImmutable.getDesk().getDisplayedObjective().get(1).getImage();
+        if (imagePath1 != null && imagePath2 != null) {
+            try {
+                // Card 1
+                Image image1 = new Image("file:" + imagePath1);
+                sharedObjective1Image.setImage(image1);
+                sharedObjective1Image.setFitWidth(sharedObjective1Pane.getPrefWidth());
+                sharedObjective1Image.setFitHeight(sharedObjective1Pane.getPrefHeight());
+                sharedObjective1Image.setPreserveRatio(true);
+                sharedObjective1Image.setSmooth(true);
+                sharedObjective1Image.setCache(true);
+                // Card 2
+                Image image2 = new Image("file:" + imagePath2);
+                sharedObjective2Image.setImage(image2);
+                sharedObjective2Image.setFitWidth(sharedObjective2Pane.getPrefWidth());
+                sharedObjective2Image.setFitHeight(sharedObjective2Pane.getPrefHeight());
+                sharedObjective2Image.setPreserveRatio(true);
+                sharedObjective2Image.setSmooth(true);
+                sharedObjective2Image.setCache(true);
+            } catch (Exception e) {
+                showError("Error loading images", "There was an error loading the Objective cards images.");
+                System.exit(1);
+            }
+        } else {
+            showError("Image paths are null", "The image paths for the Objective cards are null.");
             System.exit(1);
         }
     }
@@ -826,14 +917,19 @@ public class GameRunningController extends GenericController {
      */
     public void setDeckResource(GameImmutable gameImmutable) {
         if (gameImmutable.getDesk().getDeckResource().isEmpty()) {
-            deckResource.setVisible(false);
+            deckResourcePane.setVisible(false);
         } else {
-            deckResource.setVisible(true);
+            deckResourcePane.setVisible(true);
             String imagePath = gameImmutable.getDesk().getDeckResource().get(0).getBackResource().getImage();
             if (imagePath != null) {
                 try {
                     Image image = new Image("file:" + imagePath);
-                    deckResource.setGraphic(new ImageView(image));
+                    deckResourceImage.setImage(image);
+                    deckResourceImage.setFitWidth(deckResourcePane.getPrefWidth());
+                    deckResourceImage.setFitHeight(deckResourcePane.getPrefHeight());
+                    deckResourceImage.setPreserveRatio(true);
+                    deckResourceImage.setSmooth(true);
+                    deckResourceImage.setCache(true);
                 } catch (Exception e) {
                     showError("Error loading image", "There was an error loading the Deck Resource images.");
                     System.exit(1);
@@ -850,9 +946,10 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the deck Resource button.
-     * @param actionEvent The event triggered by clicking the deck Resource button.
+     * @param mouseEvent
      */
-    public void actionDeckResource(ActionEvent actionEvent) {
+    @FXML
+    public void actionDeckResource(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("rD");
     }
 
@@ -863,14 +960,19 @@ public class GameRunningController extends GenericController {
      */
     public void setDeckGold(GameImmutable gameImmutable) {
         if (gameImmutable.getDesk().getDeckGold().isEmpty()) {
-            deckGold.setVisible(false);
+            deckGoldPane.setVisible(false);
         } else {
-            deckGold.setVisible(true);
+            deckGoldPane.setVisible(true);
             String imagePath = gameImmutable.getDesk().getDeckGold().get(0).getBackGold().getImage();
             if (imagePath != null) {
                 try {
                     Image image = new Image("file:" + imagePath);
-                    deckGold.setGraphic(new ImageView(image));
+                    deckGoldImage.setImage(image);
+                    deckGoldImage.setFitWidth(deckGoldPane.getPrefWidth());
+                    deckGoldImage.setFitHeight(deckGoldPane.getPrefHeight());
+                    deckGoldImage.setPreserveRatio(true);
+                    deckGoldImage.setSmooth(true);
+                    deckGoldImage.setCache(true);
                 } catch (Exception e) {
                     showError("Error loading image", "There was an error loading the Deck Gold images.");
                     System.exit(1);
@@ -887,9 +989,10 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the deck Gold button.
-     * @param actionEvent The event triggered by clicking the deck Gold button.
+     * @param mouseEvent
      */
-    public void actionDeckGold(ActionEvent actionEvent) {
+    @FXML
+    public void actionDeckGold(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("gD");
     }
 
@@ -926,19 +1029,29 @@ public class GameRunningController extends GenericController {
             }
         }
         // Load images Resource
-        displayed1.setVisible(false);
-        displayed2.setVisible(false);
+        displayed1Pane.setVisible(false);
+        displayed2Pane.setVisible(false);
         for (int i = 0; i < gameImmutable.getDesk().getDisplayedResource().size(); i++) {
             if (imagePathResource.get(i) != null) {
                 try {
                     Image image = new Image("file:" + imagePathResource.get(i));
                     if (i == 0) {
-                        displayed1.setVisible(true);
-                        displayed1.setGraphic(new ImageView(image));
+                        displayed1Pane.setVisible(true);
+                        displayed1Image.setImage(image);
+                        displayed1Image.setFitWidth(displayed1Pane.getPrefWidth());
+                        displayed1Image.setFitHeight(displayed1Pane.getPrefHeight());
+                        displayed1Image.setPreserveRatio(true);
+                        displayed1Image.setSmooth(true);
+                        displayed1Image.setCache(true);
                     }
                     if (i == 1) {
-                        displayed2.setVisible(true);
-                        displayed2.setGraphic(new ImageView(image));
+                        displayed2Pane.setVisible(true);
+                        displayed2Image.setImage(image);
+                        displayed2Image.setFitWidth(displayed2Pane.getPrefWidth());
+                        displayed2Image.setFitHeight(displayed2Pane.getPrefHeight());
+                        displayed2Image.setPreserveRatio(true);
+                        displayed2Image.setSmooth(true);
+                        displayed2Image.setCache(true);
                     }
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the displayed cards images.");
@@ -952,19 +1065,29 @@ public class GameRunningController extends GenericController {
             }
         }
         // Load images Gold
-        displayed3.setVisible(false);
-        displayed4.setVisible(false);
+        displayed3Pane.setVisible(false);
+        displayed4Pane.setVisible(false);
         for (int i = 0; i < gameImmutable.getDesk().getDisplayedGold().size(); i++) {
             if (imagePathGold.get(i) != null) {
                 try {
                     Image image = new Image("file:" + imagePathGold.get(i));
                     if (i == 0) {
-                        displayed3.setVisible(true);
-                        displayed3.setGraphic(new ImageView(image));
+                        displayed3Pane.setVisible(true);
+                        displayed3Image.setImage(image);
+                        displayed3Image.setFitWidth(displayed3Pane.getPrefWidth());
+                        displayed3Image.setFitHeight(displayed3Pane.getPrefHeight());
+                        displayed3Image.setPreserveRatio(true);
+                        displayed3Image.setSmooth(true);
+                        displayed3Image.setCache(true);
                     }
                     if (i == 1) {
-                        displayed4.setVisible(true);
-                        displayed4.setGraphic(new ImageView(image));
+                        displayed4Pane.setVisible(true);
+                        displayed4Image.setImage(image);
+                        displayed4Image.setFitWidth(displayed4Pane.getPrefWidth());
+                        displayed4Image.setFitHeight(displayed4Pane.getPrefHeight());
+                        displayed4Image.setPreserveRatio(true);
+                        displayed4Image.setSmooth(true);
+                        displayed4Image.setCache(true);
                     }
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the displayed cards images.");
@@ -982,36 +1105,40 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the first displayed button.
-     * @param actionEvent The event triggered by clicking the first displayed button.
+     * @param mouseEvent
      */
-    public void actionDisplayed1(ActionEvent actionEvent) {
+    @FXML
+    public void actionDisplayed1(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("r1");
     }
 
 
     /**
      * Handles the action of clicking the second displayed button.
-     * @param actionEvent The event triggered by clicking the second displayed button.
+     * @param mouseEvent
      */
-    public void actionDisplayed2(ActionEvent actionEvent) {
+    @FXML
+    public void actionDisplayed2(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("r2");
     }
 
 
     /**
      * Handles the action of clicking the third displayed button.
-     * @param actionEvent The event triggered by clicking the third displayed button.
+     * @param mouseEvent
      */
-    public void actionDisplayed3(ActionEvent actionEvent) {
+    @FXML
+    public void actionDisplayed3(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("g1");
     }
 
 
     /**
      * Handles the action of clicking the fourth displayed button.
-     * @param actionEvent The event triggered by clicking the fourth displayed button.
+     * @param mouseEvent
      */
-    public void actionDisplayed4(ActionEvent actionEvent) {
+    @FXML
+    public void actionDisplayed4(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("g2");
     }
 
@@ -1020,37 +1147,50 @@ public class GameRunningController extends GenericController {
      *
      */
     public void setHand(GameImmutable gameImmutable, String nickname) {
-        hand1.setVisible(false);
-        hand2.setVisible(false);
-        hand3.setVisible(false);
-        // Hand
+        hand1Pane.setVisible(false);
+        hand2Pane.setVisible(false);
+        hand3Pane.setVisible(false);
+        // Get the player's hand
         Player player = getPlayer(gameImmutable, nickname);
-        ArrayList<String> imagePath = new ArrayList<>(player.getHand().size());
-        for (Card card : player.getHand()) {
-            if (card instanceof CardResource) {
-                CardResource cardResource = (CardResource) card;
-                imagePath.add(cardResource.getFrontResource().getImage());
-            } else if (card instanceof CardGold) {
-                CardGold cardGold = (CardGold) card;
-                imagePath.add(cardGold.getFrontGold().getImage());
-            }
+        // Set hashmaps
+        this.hand.clear();
+        this.frontSideHand.clear();
+        for (int i = 1; i <= player.getHand().size(); i++) {
+            this.hand.put("hand" + i, player.getHand().get(i - 1));
+            this.frontSideHand.put("hand" + i, true);
         }
-        // Load images
+        // Loading images
         for (int i = 0; i < player.getHand().size(); i++) {
-            if (imagePath.get(i) != null) {
+            String imagePath = getFrontSideImagePath(player.getHand().get(i));
+            if (imagePath != null) {
                 try {
-                    Image image = new Image("file:" + imagePath.get(i));
+                    Image image = new Image(imagePath);
                     if (i == 0) {
-                        hand1.setVisible(true);
-                        hand1.setGraphic(new ImageView(image));
+                        hand1Pane.setVisible(true);
+                        hand1Image.setImage(image);
+                        hand1Image.setFitWidth(hand1Pane.getPrefWidth());
+                        hand1Image.setFitHeight(hand1Pane.getPrefHeight());
+                        hand1Image.setPreserveRatio(true);
+                        hand1Image.setSmooth(true);
+                        hand1Image.setCache(true);
                     }
                     if (i == 1) {
-                        hand2.setVisible(true);
-                        hand2.setGraphic(new ImageView(image));
+                        hand2Pane.setVisible(true);
+                        hand2Image.setImage(image);
+                        hand2Image.setFitWidth(hand2Pane.getPrefWidth());
+                        hand2Image.setFitHeight(hand2Pane.getPrefHeight());
+                        hand2Image.setPreserveRatio(true);
+                        hand2Image.setSmooth(true);
+                        hand2Image.setCache(true);
                     }
                     if (i == 2) {
-                        hand3.setVisible(true);
-                        hand3.setGraphic(new ImageView(image));
+                        hand3Pane.setVisible(true);
+                        hand3Image.setImage(image);
+                        hand3Image.setFitWidth(hand3Pane.getPrefWidth());
+                        hand3Image.setFitHeight(hand3Pane.getPrefHeight());
+                        hand3Image.setPreserveRatio(true);
+                        hand3Image.setSmooth(true);
+                        hand3Image.setCache(true);
                     }
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
@@ -1063,20 +1203,6 @@ public class GameRunningController extends GenericController {
                 }
             }
         }
-        // Set as front images
-        frontSideHand.clear();
-        for (int i = 1; i <= player.getHand().size(); i++) {
-            frontSideHand.put("hand" + i, true);
-        }
-    }
-
-
-    /**
-     *
-     */
-    private Card getCardHand(GameImmutable gameImmutable, String nickname, int index) {
-        Player player = getPlayer(gameImmutable, nickname);
-        return player.getHand().get(index);
     }
 
 
@@ -1109,9 +1235,10 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    public void actionHand1(ActionEvent actionEvent, GameImmutable gameImmutable, String nickname) {
-        hand1.setVisible(false);
-        Card card = getCardHand(gameImmutable, nickname, 0);
+    @FXML
+    public void actionHand1(MouseEvent mouseEvent) {
+        hand1Pane.setVisible(false);
+        Card card = this.hand.get("hand1");
         String frontSideImagePath = getFrontSideImagePath(card);
         String backSideImagePath = getBackSideImagePath(card);
         if (frontSideImagePath == null || backSideImagePath == null) {
@@ -1121,9 +1248,14 @@ public class GameRunningController extends GenericController {
             if (frontSideHand.get("hand1")) {
                 try {
                     Image image = new Image("file:" + backSideImagePath);
-                    hand1.setGraphic(new ImageView(image));
+                    hand1Image.setImage(image);
+                    hand1Image.setFitWidth(hand1Pane.getPrefWidth());
+                    hand1Image.setFitHeight(hand1Pane.getPrefHeight());
+                    hand1Image.setPreserveRatio(true);
+                    hand1Image.setSmooth(true);
+                    hand1Image.setCache(true);
                     frontSideHand.put("hand1", false);
-                    hand1.setVisible(true);
+                    hand1Pane.setVisible(true);
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
                     System.exit(1);
@@ -1131,9 +1263,14 @@ public class GameRunningController extends GenericController {
             } else {
                 try {
                     Image image = new Image("file:" + frontSideImagePath);
-                    hand1.setGraphic(new ImageView(image));
+                    hand1Image.setImage(image);
+                    hand1Image.setFitWidth(hand1Pane.getPrefWidth());
+                    hand1Image.setFitHeight(hand1Pane.getPrefHeight());
+                    hand1Image.setPreserveRatio(true);
+                    hand1Image.setSmooth(true);
+                    hand1Image.setCache(true);
                     frontSideHand.put("hand1", true);
-                    hand1.setVisible(true);
+                    hand1Pane.setVisible(true);
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
                     System.exit(1);
@@ -1146,9 +1283,10 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    public void actionHand2(ActionEvent actionEvent, GameImmutable gameImmutable, String nickname) {
-        hand2.setVisible(false);
-        Card card = getCardHand(gameImmutable, nickname, 1);
+    @FXML
+    public void actionHand2(MouseEvent mouseEvent) {
+        hand2Pane.setVisible(false);
+        Card card = this.hand.get("hand2");
         String frontSideImagePath = getFrontSideImagePath(card);
         String backSideImagePath = getBackSideImagePath(card);
         if (frontSideImagePath == null || backSideImagePath == null) {
@@ -1158,9 +1296,14 @@ public class GameRunningController extends GenericController {
             if (frontSideHand.get("hand2")) {
                 try {
                     Image image = new Image("file:" + backSideImagePath);
-                    hand2.setGraphic(new ImageView(image));
+                    hand2Image.setImage(image);
+                    hand2Image.setFitWidth(hand2Pane.getPrefWidth());
+                    hand2Image.setFitHeight(hand2Pane.getPrefHeight());
+                    hand2Image.setPreserveRatio(true);
+                    hand2Image.setSmooth(true);
+                    hand2Image.setCache(true);
                     frontSideHand.put("hand2", false);
-                    hand2.setVisible(true);
+                    hand2Pane.setVisible(true);
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
                     System.exit(1);
@@ -1168,9 +1311,14 @@ public class GameRunningController extends GenericController {
             } else {
                 try {
                     Image image = new Image("file:" + frontSideImagePath);
-                    hand2.setGraphic(new ImageView(image));
+                    hand2Image.setImage(image);
+                    hand2Image.setFitWidth(hand2Pane.getPrefWidth());
+                    hand2Image.setFitHeight(hand2Pane.getPrefHeight());
+                    hand2Image.setPreserveRatio(true);
+                    hand2Image.setSmooth(true);
+                    hand2Image.setCache(true);
                     frontSideHand.put("hand2", true);
-                    hand2.setVisible(true);
+                    hand2Pane.setVisible(true);
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
                     System.exit(1);
@@ -1183,9 +1331,10 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    public void actionHand3(ActionEvent actionEvent, GameImmutable gameImmutable, String nickname) {
-        hand3.setVisible(false);
-        Card card = getCardHand(gameImmutable, nickname, 2);
+    @FXML
+    public void actionHand3(MouseEvent mouseEvent) {
+        hand3Pane.setVisible(false);
+        Card card = this.hand.get("hand3");
         String frontSideImagePath = getFrontSideImagePath(card);
         String backSideImagePath = getBackSideImagePath(card);
         if (frontSideImagePath == null || backSideImagePath == null) {
@@ -1195,9 +1344,14 @@ public class GameRunningController extends GenericController {
             if (frontSideHand.get("hand3")) {
                 try {
                     Image image = new Image("file:" + backSideImagePath);
-                    hand3.setGraphic(new ImageView(image));
+                    hand3Image.setImage(image);
+                    hand3Image.setFitWidth(hand3Pane.getPrefWidth());
+                    hand3Image.setFitHeight(hand3Pane.getPrefHeight());
+                    hand3Image.setPreserveRatio(true);
+                    hand3Image.setSmooth(true);
+                    hand3Image.setCache(true);
                     frontSideHand.put("hand3", false);
-                    hand3.setVisible(true);
+                    hand3Pane.setVisible(true);
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
                     System.exit(1);
@@ -1205,9 +1359,14 @@ public class GameRunningController extends GenericController {
             } else {
                 try {
                     Image image = new Image("file:" + frontSideImagePath);
-                    hand3.setGraphic(new ImageView(image));
+                    hand3Image.setImage(image);
+                    hand3Image.setFitWidth(hand3Pane.getPrefWidth());
+                    hand3Image.setFitHeight(hand3Pane.getPrefHeight());
+                    hand3Image.setPreserveRatio(true);
+                    hand3Image.setSmooth(true);
+                    hand3Image.setCache(true);
                     frontSideHand.put("hand3", true);
-                    hand3.setVisible(true);
+                    hand3Pane.setVisible(true);
                 } catch (Exception e) {
                     showError("Error loading images", "There was an error loading the hand cards images.");
                     System.exit(1);
@@ -1235,13 +1394,5 @@ public class GameRunningController extends GenericController {
     }
 
 
-    // CAPIRE PERCHÉ È ERRORE (parametri?)
-    public void actionHand1(ActionEvent actionEvent) {
-    }
 
-    public void actionHand2(ActionEvent actionEvent) {
-    }
-
-    public void actionHand3(ActionEvent actionEvent) {
-    }
 }
