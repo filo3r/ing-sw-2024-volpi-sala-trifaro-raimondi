@@ -379,7 +379,7 @@ public class Player implements Serializable {
             game.getListener().removeListener(selfListener);
             game.getListener().notifyPlayerDisconnected(game, this.getNickname());
             // if someone disconnects when the game is starting, end the game
-            if((game.getStatus().equals(GameStatus.WAITING) || game.getStatus().equals(GameStatus.STARTING)) && game.getSize()>1){
+            if(game.getStatus().equals(GameStatus.STARTING)){
                 ArrayList<Player> winners = new ArrayList<>(game.getPlayers().stream().filter(p->p.getOnline()).toList());
                 game.setWinner(winners);
                 game.setStatus(GameStatus.ENDED);
@@ -390,7 +390,9 @@ public class Player implements Serializable {
             game.getListener().addListener(gameListener);
             game.getListener().notifyPlayerReconnected(game, this.getNickname());
         }
-        if(game.getStatus().equals(GameStatus.WAITING) && game.getPlayers().size() == 1) {
+        if(game.getStatus().equals(GameStatus.WAITING)) {
+            ArrayList<Player> winners = new ArrayList<>(game.getPlayers().stream().filter(p->p.getOnline()).toList());
+            game.setWinner(winners);
             game.setStatus(GameStatus.ENDED);
         }
     }

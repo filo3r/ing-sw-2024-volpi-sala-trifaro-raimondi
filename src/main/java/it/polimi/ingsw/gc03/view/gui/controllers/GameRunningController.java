@@ -1443,7 +1443,7 @@ public class GameRunningController extends GenericController {
             String imagePath = getFrontSideImagePath(player.getHand().get(i));
             if (imagePath != null) {
                 try {
-                    Image image = new Image(imagePath);
+                    Image image = new Image("file:"+imagePath);
                     if (i == 0) {
                         hand1Pane.setVisible(true);
                         hand1Image.setImage(image);
@@ -1472,7 +1472,7 @@ public class GameRunningController extends GenericController {
                         hand3Image.setCache(true);
                     }
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "1 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             } else {
@@ -1536,7 +1536,7 @@ public class GameRunningController extends GenericController {
                     frontSideHand.put("hand1", false);
                     hand1Pane.setVisible(true);
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "2 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             } else {
@@ -1551,7 +1551,7 @@ public class GameRunningController extends GenericController {
                     frontSideHand.put("hand1", true);
                     hand1Pane.setVisible(true);
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "3 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             }
@@ -1584,7 +1584,7 @@ public class GameRunningController extends GenericController {
                     frontSideHand.put("hand2", false);
                     hand2Pane.setVisible(true);
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "4 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             } else {
@@ -1599,7 +1599,7 @@ public class GameRunningController extends GenericController {
                     frontSideHand.put("hand2", true);
                     hand2Pane.setVisible(true);
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "5 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             }
@@ -1632,7 +1632,7 @@ public class GameRunningController extends GenericController {
                     frontSideHand.put("hand3", false);
                     hand3Pane.setVisible(true);
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "6 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             } else {
@@ -1647,7 +1647,7 @@ public class GameRunningController extends GenericController {
                     frontSideHand.put("hand3", true);
                     hand3Pane.setVisible(true);
                 } catch (Exception e) {
-                    showError("Error loading images", "There was an error loading the hand cards images.");
+                    showError("Error loading images", "7 There was an error loading the hand cards images.");
                     System.exit(1);
                 }
             }
@@ -1931,7 +1931,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image(imagePaths.get(j));
+                                Image image = new Image("file:"+ imagePaths.get(j));
                                 if (j == 0) {
                                     hand21Pane.setVisible(true);
                                     hand21Image.setImage(image);
@@ -1960,7 +1960,7 @@ public class GameRunningController extends GenericController {
                                     hand23Image.setCache(true);
                                 }
                             } catch (Exception e) {
-                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                showError("Error loading images", "8 There was an error loading the hand cards images.");
                                 System.exit(1);
                             }
                         } else {
@@ -1996,7 +1996,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image(imagePaths.get(j));
+                                Image image = new Image("file:"+imagePaths.get(j));
                                 if (j == 0) {
                                     hand31Pane.setVisible(true);
                                     hand31Image.setImage(image);
@@ -2025,7 +2025,7 @@ public class GameRunningController extends GenericController {
                                     hand33Image.setCache(true);
                                 }
                             } catch (Exception e) {
-                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                showError("Error loading images", "9 There was an error loading the hand cards images.");
                                 System.exit(1);
                             }
                         } else {
@@ -2065,7 +2065,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image(imagePaths.get(j));
+                                Image image = new Image("file:"+imagePaths.get(j));
                                 if (j == 0) {
                                     hand11Pane.setVisible(true);
                                     hand11Image.setImage(image);
@@ -2094,7 +2094,7 @@ public class GameRunningController extends GenericController {
                                     hand13Image.setCache(true);
                                 }
                             } catch (Exception e) {
-                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                showError("Error loading images", "10 There was an error loading the hand cards images.");
                                 System.exit(1);
                             }
                         } else {
@@ -2130,7 +2130,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image(imagePaths.get(j));
+                                Image image = new Image("file:"+imagePaths.get(j));
                                 if (j == 0) {
                                     hand21Pane.setVisible(true);
                                     hand21Image.setImage(image);
@@ -2159,7 +2159,7 @@ public class GameRunningController extends GenericController {
                                     hand23Image.setCache(true);
                                 }
                             } catch (Exception e) {
-                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                showError("Error loading images", "11 There was an error loading the hand cards images.");
                                 System.exit(1);
                             }
                         } else {
@@ -2195,7 +2195,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image(imagePaths.get(j));
+                                Image image = new Image("file:"+imagePaths.get(j));
                                 if (j == 0) {
                                     hand31Pane.setVisible(true);
                                     hand31Image.setImage(image);
@@ -2224,7 +2224,7 @@ public class GameRunningController extends GenericController {
                                     hand33Image.setCache(true);
                                 }
                             } catch (Exception e) {
-                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                showError("Error loading images", "12 There was an error loading the hand cards images.");
                                 System.exit(1);
                             }
                         } else {
@@ -2260,7 +2260,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image(imagePaths.get(j));
+                                Image image = new Image("file:"+imagePaths.get(j));
                                 if (j == 0) {
                                     hand41Pane.setVisible(true);
                                     hand41Image.setImage(image);
@@ -2289,7 +2289,7 @@ public class GameRunningController extends GenericController {
                                     hand43Image.setCache(true);
                                 }
                             } catch (Exception e) {
-                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                showError("Error loading images", "13 There was an error loading the hand cards images.");
                                 System.exit(1);
                             }
                         } else {

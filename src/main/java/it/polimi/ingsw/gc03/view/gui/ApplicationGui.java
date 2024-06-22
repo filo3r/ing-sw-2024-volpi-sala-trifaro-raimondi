@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -102,6 +103,51 @@ public class ApplicationGui extends Application {
             this.stage.setScene(activeScene.getScene());
             this.stage.show();
         }
+        try {
+            widthOld=stage.getScene().getWidth();
+            heightOld=stage.getScene().getHeight();
+            this.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+                rescale((double)newVal-16,heightOld);
+            });
+
+            this.stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+                rescale(widthOld,(double)newVal-39);
+            });
+            resizing=true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private boolean resizing=true;
+    private double widthOld, heightOld;
+    /**
+     * This method is used to rescale the scene.
+     */
+    public void rescale(double width, double heigh) {
+        if(resizing) {
+            double widthWindow = width;
+            double heightWindow = heigh;
+
+
+            double w = widthWindow / widthOld;
+            double h = heightWindow / heightOld;
+
+            widthOld = widthWindow;
+            heightOld = heightWindow;
+            Scale scale = new Scale(w, h, 0, 0);
+            try{
+                stage.getScene().lookup("#contentGroup").getTransforms().add(scale);
+            } catch (Exception e){
+
+            }
+            try{
+                stage.getScene().lookup("#content").getTransforms().add(scale);
+            } catch (Exception e){
+
+            }
+        }
     }
 
     public void showLobby(GameImmutable gameImmutable) {
@@ -172,6 +218,10 @@ public class ApplicationGui extends Application {
         controller.setSharedObjective(model);
         controller.setHand(model,nickname);
         controller.setPersonalObjective(model,nickname);
+        controller.setBoards(model);
+        controller.setPoints(model);
+        controller.setGameId(model.getIdGame());
+        controller.setTurnUsername(model);
     }
     public void showTurnUsername(GameImmutable model){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();

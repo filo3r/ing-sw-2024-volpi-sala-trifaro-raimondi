@@ -183,6 +183,8 @@ public class Gui extends UI {
 
     @Override
     protected void showAskIndex(GameImmutable model) {
+        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
+        Platform.runLater(()-> this.applicationGui.showGameRunning(model,nickname));
     }
 
     @Override
@@ -309,7 +311,6 @@ public class Gui extends UI {
     @Override
     protected void setNickname(String nickname) {
         if(this.nickname == null){
-            System.out.println("setNickname: " + nickname);
             this.nickname = nickname;
             this.applicationGui.setNickname(nickname);
         }
