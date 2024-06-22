@@ -1,26 +1,25 @@
 package it.polimi.ingsw.gc03.view.gui.controllers;
 
-import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
+import it.polimi.ingsw.gc03.model.enumerations.Color;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -252,7 +251,14 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane fungi1;
+    private Pane fungi1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView fungi1Image;
+
 
     /**
      *
@@ -264,7 +270,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane plant1;
+    private Pane plant1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView plant1Image;
 
     /**
      *
@@ -276,7 +288,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane animal1;
+    private Pane animal1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView animal1Image;
 
     /**
      *
@@ -288,7 +306,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane insect1;
+    private Pane insect1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView insect1Image;
 
     /**
      *
@@ -300,7 +324,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane quill1;
+    private Pane quill1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView quill1Image;
 
     /**
      *
@@ -312,7 +342,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane inkwell1;
+    private Pane inkwell1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView inkwell1Image;
 
     /**
      *
@@ -324,7 +360,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane manuscript1;
+    private Pane manuscript1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView manuscript1Image;
 
     /**
      *
@@ -336,7 +378,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane covered1;
+    private Pane covered1Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView covered1Image;
 
     /**
      *
@@ -348,19 +396,37 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane hand11;
+    private Pane hand11Pane;
 
     /**
      *
      */
     @FXML
-    private Pane hand12;
+    private ImageView hand11Image;
 
     /**
      *
      */
     @FXML
-    private Pane hand13;
+    private Pane hand12Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand12Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand13Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand13Image;
 
     /**
      *
@@ -384,7 +450,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane fungi2;
+    private Pane fungi2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView fungi2Image;
 
     /**
      *
@@ -396,7 +468,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane plant2;
+    private Pane plant2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView plant2Image;
 
     /**
      *
@@ -408,7 +486,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane animal2;
+    private Pane animal2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView animal2Image;
 
     /**
      *
@@ -420,7 +504,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane insect2;
+    private Pane insect2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView insect2Image;
 
     /**
      *
@@ -432,7 +522,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane quill2;
+    private Pane quill2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView quill2Image;
 
     /**
      *
@@ -444,7 +540,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane inkwell2;
+    private Pane inkwell2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView inkwell2Image;
 
     /**
      *
@@ -456,7 +558,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane manuscript2;
+    private Pane manuscript2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView manuscript2Image;
 
     /**
      *
@@ -468,7 +576,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane covered2;
+    private Pane covered2Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView covered2Image;
 
     /**
      *
@@ -480,19 +594,37 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane hand21;
+    private Pane hand21Pane;
 
     /**
      *
      */
     @FXML
-    private Pane hand22;
+    private ImageView hand21Image;
 
     /**
      *
      */
     @FXML
-    private Pane hand23;
+    private Pane hand22Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand22Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand23Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand23Image;
 
     /**
      *
@@ -516,7 +648,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane fungi3;
+    private Pane fungi3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView fungi3Image;
 
     /**
      *
@@ -528,7 +666,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane plant3;
+    private Pane plant3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView plant3Image;
 
     /**
      *
@@ -540,7 +684,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane animal3;
+    private Pane animal3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView animal3Image;
 
     /**
      *
@@ -552,7 +702,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane insect3;
+    private Pane insect3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView insect3Image;
 
     /**
      *
@@ -564,7 +720,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane quill3;
+    private Pane quill3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView quill3Image;
 
     /**
      *
@@ -576,7 +738,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane inkwell3;
+    private Pane inkwell3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView inkwell3Image;
 
     /**
      *
@@ -588,7 +756,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane manuscript3;
+    private Pane manuscript3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView manuscript3Image;
 
     /**
      *
@@ -600,7 +774,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane covered3;
+    private Pane covered3Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView covered3Image;
 
     /**
      *
@@ -612,19 +792,37 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane hand31;
+    private Pane hand31Pane;
 
     /**
      *
      */
     @FXML
-    private Pane hand32;
+    private ImageView hand31Image;
 
     /**
      *
      */
     @FXML
-    private Pane hand33;
+    private Pane hand32Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand32Image;
+
+    /**
+     *
+     */
+    @FXML
+    private Pane hand33Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand33Image;
 
     /**
      *
@@ -648,7 +846,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane fungi4;
+    private Pane fungi4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView fungi4Image;
 
     /**
      *
@@ -660,7 +864,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane plant4;
+    private Pane plant4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView plant4Image;
 
     /**
      *
@@ -672,7 +882,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane animal4;
+    private Pane animal4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView animal4Image;
 
     /**
      *
@@ -684,7 +900,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane insect4;
+    private Pane insect4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView insect4Image;
 
     /**
      *
@@ -696,7 +918,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane quill4;
+    private Pane quill4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView quill4Image;
 
     /**
      *
@@ -708,7 +936,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane inkwell4;
+    private Pane inkwell4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView inkwell4Image;
 
     /**
      *
@@ -720,7 +954,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane manuscript4;
+    private Pane manuscript4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView manuscript4Image;
 
     /**
      *
@@ -732,7 +972,13 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane covered4;
+    private Pane covered4Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView covered4Image;
 
     /**
      *
@@ -744,31 +990,37 @@ public class GameRunningController extends GenericController {
      *
      */
     @FXML
-    private Pane hand41;
+    private Pane hand41Pane;
 
     /**
      *
      */
     @FXML
-    private Pane hand42;
+    private ImageView hand41Image;
 
     /**
      *
      */
     @FXML
-    private Pane hand43;
+    private Pane hand42Pane;
 
     /**
      *
      */
     @FXML
-    private ListView<String> chat;
+    private ImageView hand42Image;
 
     /**
      *
      */
     @FXML
-    private ListView<String> latestEvent;
+    private Pane hand43Pane;
+
+    /**
+     *
+     */
+    @FXML
+    private ImageView hand43Image;
 
 
     /**
@@ -1392,23 +1644,669 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    private void setBoards(GameImmutable gameImmutable) {
+    public void setBoards(GameImmutable gameImmutable) {
         // Set visibility
         board1.setVisible(false);
         board2.setVisible(false);
         board3.setVisible(false);
         board4.setVisible(false);
         // Set images
+        setValuesImages();
+        // Set boards
+        setBoardsInformation(gameImmutable);
+    }
 
-        // Game size = 2
-        if (gameImmutable.getSize() == 2) {
 
+    /**
+     *
+     */
+    private void setValuesImages() {
+        String valuesImagePath = System.getProperty("user.dir") + File.separator + "src" +
+                File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
+                + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "gui" + File.separator + "images"
+                + File.separator + "values" + File.separator;
+        try {
+            Image fungiImage = new Image("file:" + valuesImagePath + "fungi.png");
+            fungi1Image.setImage(fungiImage);
+            fungi1Image.setFitWidth(fungi1Pane.getPrefWidth());
+            fungi1Image.setFitHeight(fungi1Pane.getPrefHeight());
+            fungi1Image.setPreserveRatio(true);
+            fungi1Image.setSmooth(true);
+            fungi1Image.setCache(true);
+            fungi2Image.setImage(fungiImage);
+            fungi2Image.setFitWidth(fungi2Pane.getPrefWidth());
+            fungi2Image.setFitHeight(fungi2Pane.getPrefHeight());
+            fungi2Image.setPreserveRatio(true);
+            fungi2Image.setSmooth(true);
+            fungi2Image.setCache(true);
+            fungi3Image.setImage(fungiImage);
+            fungi3Image.setFitWidth(fungi3Pane.getPrefWidth());
+            fungi3Image.setFitHeight(fungi3Pane.getPrefHeight());
+            fungi3Image.setPreserveRatio(true);
+            fungi3Image.setSmooth(true);
+            fungi3Image.setCache(true);
+            fungi4Image.setImage(fungiImage);
+            fungi4Image.setFitWidth(fungi4Pane.getPrefWidth());
+            fungi4Image.setFitHeight(fungi4Pane.getPrefHeight());
+            fungi4Image.setPreserveRatio(true);
+            fungi4Image.setSmooth(true);
+            fungi4Image.setCache(true);
+            Image plantImage = new Image("file:" + valuesImagePath + "plant.png");
+            plant1Image.setImage(plantImage);
+            plant1Image.setFitWidth(plant1Pane.getPrefWidth());
+            plant1Image.setFitHeight(plant1Pane.getPrefHeight());
+            plant1Image.setPreserveRatio(true);
+            plant1Image.setSmooth(true);
+            plant1Image.setCache(true);
+            plant2Image.setImage(plantImage);
+            plant2Image.setFitWidth(plant2Pane.getPrefWidth());
+            plant2Image.setFitHeight(plant2Pane.getPrefHeight());
+            plant2Image.setPreserveRatio(true);
+            plant2Image.setSmooth(true);
+            plant2Image.setCache(true);
+            plant3Image.setImage(plantImage);
+            plant3Image.setFitWidth(plant3Pane.getPrefWidth());
+            plant3Image.setFitHeight(plant3Pane.getPrefHeight());
+            plant3Image.setPreserveRatio(true);
+            plant3Image.setSmooth(true);
+            plant3Image.setCache(true);
+            plant4Image.setImage(plantImage);
+            plant4Image.setFitWidth(plant4Pane.getPrefWidth());
+            plant4Image.setFitHeight(plant4Pane.getPrefHeight());
+            plant4Image.setPreserveRatio(true);
+            plant4Image.setSmooth(true);
+            plant4Image.setCache(true);
+            Image animalImage = new Image("file:" + valuesImagePath + "animal.png");
+            animal1Image.setImage(animalImage);
+            animal1Image.setFitWidth(animal1Pane.getPrefWidth());
+            animal1Image.setFitHeight(animal1Pane.getPrefHeight());
+            animal1Image.setPreserveRatio(true);
+            animal1Image.setSmooth(true);
+            animal1Image.setCache(true);
+            animal2Image.setImage(animalImage);
+            animal2Image.setFitWidth(animal2Pane.getPrefWidth());
+            animal2Image.setFitHeight(animal2Pane.getPrefHeight());
+            animal2Image.setPreserveRatio(true);
+            animal2Image.setSmooth(true);
+            animal2Image.setCache(true);
+            animal3Image.setImage(animalImage);
+            animal3Image.setFitWidth(animal3Pane.getPrefWidth());
+            animal3Image.setFitHeight(animal3Pane.getPrefHeight());
+            animal3Image.setPreserveRatio(true);
+            animal3Image.setSmooth(true);
+            animal3Image.setCache(true);
+            animal4Image.setImage(animalImage);
+            animal4Image.setFitWidth(animal4Pane.getPrefWidth());
+            animal4Image.setFitHeight(animal4Pane.getPrefHeight());
+            animal4Image.setPreserveRatio(true);
+            animal4Image.setSmooth(true);
+            animal4Image.setCache(true);
+            Image insectImage = new Image("file:" + valuesImagePath + "insect.png");
+            insect1Image.setImage(insectImage);
+            insect1Image.setFitWidth(insect1Pane.getPrefWidth());
+            insect1Image.setFitHeight(insect1Pane.getPrefHeight());
+            insect1Image.setPreserveRatio(true);
+            insect1Image.setSmooth(true);
+            insect1Image.setCache(true);
+            insect2Image.setImage(insectImage);
+            insect2Image.setFitWidth(insect2Pane.getPrefWidth());
+            insect2Image.setFitHeight(insect2Pane.getPrefHeight());
+            insect2Image.setPreserveRatio(true);
+            insect2Image.setSmooth(true);
+            insect2Image.setCache(true);
+            insect3Image.setImage(insectImage);
+            insect3Image.setFitWidth(insect3Pane.getPrefWidth());
+            insect3Image.setFitHeight(insect3Pane.getPrefHeight());
+            insect3Image.setPreserveRatio(true);
+            insect3Image.setSmooth(true);
+            insect3Image.setCache(true);
+            insect4Image.setImage(insectImage);
+            insect4Image.setFitWidth(insect4Pane.getPrefWidth());
+            insect4Image.setFitHeight(insect4Pane.getPrefHeight());
+            insect4Image.setPreserveRatio(true);
+            insect4Image.setSmooth(true);
+            insect4Image.setCache(true);
+            Image quillImage = new Image("file:" + valuesImagePath + "quill.png");
+            quill1Image.setImage(quillImage);
+            quill1Image.setFitWidth(quill1Pane.getPrefWidth());
+            quill1Image.setFitHeight(quill1Pane.getPrefHeight());
+            quill1Image.setPreserveRatio(true);
+            quill1Image.setSmooth(true);
+            quill1Image.setCache(true);
+            quill2Image.setImage(quillImage);
+            quill2Image.setFitWidth(quill2Pane.getPrefWidth());
+            quill2Image.setFitHeight(quill2Pane.getPrefHeight());
+            quill2Image.setPreserveRatio(true);
+            quill2Image.setSmooth(true);
+            quill2Image.setCache(true);
+            quill3Image.setImage(quillImage);
+            quill3Image.setFitWidth(quill3Pane.getPrefWidth());
+            quill3Image.setFitHeight(quill3Pane.getPrefHeight());
+            quill3Image.setPreserveRatio(true);
+            quill3Image.setSmooth(true);
+            quill3Image.setCache(true);
+            quill4Image.setImage(quillImage);
+            quill4Image.setFitWidth(quill4Pane.getPrefWidth());
+            quill4Image.setFitHeight(quill4Pane.getPrefHeight());
+            quill4Image.setPreserveRatio(true);
+            quill4Image.setSmooth(true);
+            quill4Image.setCache(true);
+            Image inkwellImage = new Image("file:" + valuesImagePath + "inkwell.png");
+            inkwell1Image.setImage(inkwellImage);
+            inkwell1Image.setFitWidth(inkwell1Pane.getPrefWidth());
+            inkwell1Image.setFitHeight(inkwell1Pane.getPrefHeight());
+            inkwell1Image.setPreserveRatio(true);
+            inkwell1Image.setSmooth(true);
+            inkwell1Image.setCache(true);
+            inkwell2Image.setImage(inkwellImage);
+            inkwell2Image.setFitWidth(inkwell2Pane.getPrefWidth());
+            inkwell2Image.setFitHeight(inkwell2Pane.getPrefHeight());
+            inkwell2Image.setPreserveRatio(true);
+            inkwell2Image.setSmooth(true);
+            inkwell2Image.setCache(true);
+            inkwell3Image.setImage(inkwellImage);
+            inkwell3Image.setFitWidth(inkwell3Pane.getPrefWidth());
+            inkwell3Image.setFitHeight(inkwell3Pane.getPrefHeight());
+            inkwell3Image.setPreserveRatio(true);
+            inkwell3Image.setSmooth(true);
+            inkwell3Image.setCache(true);
+            inkwell4Image.setImage(inkwellImage);
+            inkwell4Image.setFitWidth(inkwell4Pane.getPrefWidth());
+            inkwell4Image.setFitHeight(inkwell4Pane.getPrefHeight());
+            inkwell4Image.setPreserveRatio(true);
+            inkwell4Image.setSmooth(true);
+            inkwell4Image.setCache(true);
+            Image manuscriptImage = new Image("file:" + valuesImagePath + "manuscript.png");
+            manuscript1Image.setImage(manuscriptImage);
+            manuscript1Image.setFitWidth(manuscript1Pane.getPrefWidth());
+            manuscript1Image.setFitHeight(manuscript1Pane.getPrefHeight());
+            manuscript1Image.setPreserveRatio(true);
+            manuscript1Image.setSmooth(true);
+            manuscript1Image.setCache(true);
+            manuscript2Image.setImage(manuscriptImage);
+            manuscript2Image.setFitWidth(manuscript2Pane.getPrefWidth());
+            manuscript2Image.setFitHeight(manuscript2Pane.getPrefHeight());
+            manuscript2Image.setPreserveRatio(true);
+            manuscript2Image.setSmooth(true);
+            manuscript2Image.setCache(true);
+            manuscript3Image.setImage(manuscriptImage);
+            manuscript3Image.setFitWidth(manuscript3Pane.getPrefWidth());
+            manuscript3Image.setFitHeight(manuscript3Pane.getPrefHeight());
+            manuscript3Image.setPreserveRatio(true);
+            manuscript3Image.setSmooth(true);
+            manuscript3Image.setCache(true);
+            manuscript4Image.setImage(manuscriptImage);
+            manuscript4Image.setFitWidth(manuscript4Pane.getPrefWidth());
+            manuscript4Image.setFitHeight(manuscript4Pane.getPrefHeight());
+            manuscript4Image.setPreserveRatio(true);
+            manuscript4Image.setSmooth(true);
+            manuscript4Image.setCache(true);
+            Image coveredImage = new Image("file:" + valuesImagePath + "covered.png");
+            covered1Image.setImage(coveredImage);
+            covered1Image.setFitWidth(covered1Pane.getPrefWidth());
+            covered1Image.setFitHeight(covered1Pane.getPrefHeight());
+            covered1Image.setPreserveRatio(true);
+            covered1Image.setSmooth(true);
+            covered1Image.setCache(true);
+            covered2Image.setImage(coveredImage);
+            covered2Image.setFitWidth(covered2Pane.getPrefWidth());
+            covered2Image.setFitHeight(covered2Pane.getPrefHeight());
+            covered2Image.setPreserveRatio(true);
+            covered2Image.setSmooth(true);
+            covered2Image.setCache(true);
+            covered3Image.setImage(coveredImage);
+            covered3Image.setFitWidth(covered3Pane.getPrefWidth());
+            covered3Image.setFitHeight(covered3Pane.getPrefHeight());
+            covered3Image.setPreserveRatio(true);
+            covered3Image.setSmooth(true);
+            covered3Image.setCache(true);
+            covered4Image.setImage(coveredImage);
+            covered4Image.setFitWidth(covered4Pane.getPrefWidth());
+            covered4Image.setFitHeight(covered4Pane.getPrefHeight());
+            covered4Image.setPreserveRatio(true);
+            covered4Image.setSmooth(true);
+            covered4Image.setCache(true);
+        } catch (Exception e) {
+            showError("Error loading images", "There was an error loading the values images.");
+            System.exit(1);
         }
     }
 
-    public void addMessages(List<ChatMessage> messages , String nickname){
 
+    /**
+     *
+     */
+    private void setBoardsInformation(GameImmutable gameImmutable) {
+        // Set boards' hands to invisible
+        hand11Pane.setVisible(false);
+        hand12Pane.setVisible(false);
+        hand13Pane.setVisible(false);
+        hand21Pane.setVisible(false);
+        hand22Pane.setVisible(false);
+        hand23Pane.setVisible(false);
+        hand31Pane.setVisible(false);
+        hand32Pane.setVisible(false);
+        hand33Pane.setVisible(false);
+        hand41Pane.setVisible(false);
+        hand42Pane.setVisible(false);
+        hand43Pane.setVisible(false);
+        // players <= 2
+        if (gameImmutable.getPlayers().size() <= 2) {
+            for (int i = 0; i < gameImmutable.getPlayers().size(); i++) {
+                // Set board 2
+                if (i == 0) {
+                    // Set color and nickname
+                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    color2.setStyle("-fx-background-color: " + color + ";");
+                    nickname2.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    // Set counters
+                    fungiCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    // Set hand images
+                    ArrayList<String> imagePaths = new ArrayList<>(3);
+                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                        String imagePath = getBackSideImagePath(card);
+                        imagePaths.add(imagePath);
+                    }
+                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                        if (imagePaths.get(j) != null) {
+                            try {
+                                Image image = new Image(imagePaths.get(j));
+                                if (j == 0) {
+                                    hand21Pane.setVisible(true);
+                                    hand21Image.setImage(image);
+                                    hand21Image.setFitWidth(hand21Pane.getPrefWidth());
+                                    hand21Image.setFitHeight(hand21Pane.getPrefHeight());
+                                    hand21Image.setPreserveRatio(true);
+                                    hand21Image.setSmooth(true);
+                                    hand21Image.setCache(true);
+                                }
+                                if (j == 1) {
+                                    hand22Pane.setVisible(true);
+                                    hand22Image.setImage(image);
+                                    hand22Image.setFitWidth(hand22Pane.getPrefWidth());
+                                    hand22Image.setFitHeight(hand22Pane.getPrefHeight());
+                                    hand22Image.setPreserveRatio(true);
+                                    hand22Image.setSmooth(true);
+                                    hand22Image.setCache(true);
+                                }
+                                if (j == 3) {
+                                    hand23Pane.setVisible(true);
+                                    hand23Image.setImage(image);
+                                    hand23Image.setFitWidth(hand23Pane.getPrefWidth());
+                                    hand23Image.setFitHeight(hand23Pane.getPrefHeight());
+                                    hand23Image.setPreserveRatio(true);
+                                    hand23Image.setSmooth(true);
+                                    hand23Image.setCache(true);
+                                }
+                            } catch (Exception e) {
+                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                System.exit(1);
+                            }
+                        } else {
+                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                                showError("Image path is null", "The image path for the hand card is null.");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    board2.setVisible(true);
+                }
+                // Set board 3
+                if (i == 1) {
+                    // Set color and nickname
+                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    color3.setStyle("-fx-background-color: " + color + ";");
+                    nickname3.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    // Set counters
+                    fungiCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    // Set hand images
+                    ArrayList<String> imagePaths = new ArrayList<>(3);
+                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                        String imagePath = getBackSideImagePath(card);
+                        imagePaths.add(imagePath);
+                    }
+                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                        if (imagePaths.get(j) != null) {
+                            try {
+                                Image image = new Image(imagePaths.get(j));
+                                if (j == 0) {
+                                    hand31Pane.setVisible(true);
+                                    hand31Image.setImage(image);
+                                    hand31Image.setFitWidth(hand31Pane.getPrefWidth());
+                                    hand31Image.setFitHeight(hand31Pane.getPrefHeight());
+                                    hand31Image.setPreserveRatio(true);
+                                    hand31Image.setSmooth(true);
+                                    hand31Image.setCache(true);
+                                }
+                                if (j == 1) {
+                                    hand32Pane.setVisible(true);
+                                    hand32Image.setImage(image);
+                                    hand32Image.setFitWidth(hand32Pane.getPrefWidth());
+                                    hand32Image.setFitHeight(hand32Pane.getPrefHeight());
+                                    hand32Image.setPreserveRatio(true);
+                                    hand32Image.setSmooth(true);
+                                    hand32Image.setCache(true);
+                                }
+                                if (j == 3) {
+                                    hand33Pane.setVisible(true);
+                                    hand33Image.setImage(image);
+                                    hand33Image.setFitWidth(hand33Pane.getPrefWidth());
+                                    hand33Image.setFitHeight(hand33Pane.getPrefHeight());
+                                    hand33Image.setPreserveRatio(true);
+                                    hand33Image.setSmooth(true);
+                                    hand33Image.setCache(true);
+                                }
+                            } catch (Exception e) {
+                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                System.exit(1);
+                            }
+                        } else {
+                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                                showError("Image path is null", "The image path for the hand card is null.");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    board3.setVisible(true);
+                }
+            }
+            // players > 2
+        } else {
+            for (int i = 0; i < gameImmutable.getPlayers().size(); i++) {
+                // Set board 1
+                if (i == 0) {
+                    // Set color and nickname
+                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    color1.setStyle("-fx-background-color: " + color + ";");
+                    nickname1.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    // Set counters
+                    fungiCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    // Set hand images
+                    ArrayList<String> imagePaths = new ArrayList<>(3);
+                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                        String imagePath = getBackSideImagePath(card);
+                        imagePaths.add(imagePath);
+                    }
+                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                        if (imagePaths.get(j) != null) {
+                            try {
+                                Image image = new Image(imagePaths.get(j));
+                                if (j == 0) {
+                                    hand11Pane.setVisible(true);
+                                    hand11Image.setImage(image);
+                                    hand11Image.setFitWidth(hand11Pane.getPrefWidth());
+                                    hand11Image.setFitHeight(hand11Pane.getPrefHeight());
+                                    hand11Image.setPreserveRatio(true);
+                                    hand11Image.setSmooth(true);
+                                    hand11Image.setCache(true);
+                                }
+                                if (j == 1) {
+                                    hand12Pane.setVisible(true);
+                                    hand12Image.setImage(image);
+                                    hand12Image.setFitWidth(hand12Pane.getPrefWidth());
+                                    hand12Image.setFitHeight(hand12Pane.getPrefHeight());
+                                    hand12Image.setPreserveRatio(true);
+                                    hand12Image.setSmooth(true);
+                                    hand12Image.setCache(true);
+                                }
+                                if (j == 3) {
+                                    hand13Pane.setVisible(true);
+                                    hand13Image.setImage(image);
+                                    hand13Image.setFitWidth(hand13Pane.getPrefWidth());
+                                    hand13Image.setFitHeight(hand13Pane.getPrefHeight());
+                                    hand13Image.setPreserveRatio(true);
+                                    hand13Image.setSmooth(true);
+                                    hand13Image.setCache(true);
+                                }
+                            } catch (Exception e) {
+                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                System.exit(1);
+                            }
+                        } else {
+                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                                showError("Image path is null", "The image path for the hand card is null.");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    board1.setVisible(true);
+                }
+                // Set board 2
+                if (i == 1) {
+                    // Set color and nickname
+                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    color2.setStyle("-fx-background-color: " + color + ";");
+                    nickname2.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    // Set counters
+                    fungiCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    // Set hand images
+                    ArrayList<String> imagePaths = new ArrayList<>(3);
+                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                        String imagePath = getBackSideImagePath(card);
+                        imagePaths.add(imagePath);
+                    }
+                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                        if (imagePaths.get(j) != null) {
+                            try {
+                                Image image = new Image(imagePaths.get(j));
+                                if (j == 0) {
+                                    hand21Pane.setVisible(true);
+                                    hand21Image.setImage(image);
+                                    hand21Image.setFitWidth(hand21Pane.getPrefWidth());
+                                    hand21Image.setFitHeight(hand21Pane.getPrefHeight());
+                                    hand21Image.setPreserveRatio(true);
+                                    hand21Image.setSmooth(true);
+                                    hand21Image.setCache(true);
+                                }
+                                if (j == 1) {
+                                    hand22Pane.setVisible(true);
+                                    hand22Image.setImage(image);
+                                    hand22Image.setFitWidth(hand22Pane.getPrefWidth());
+                                    hand22Image.setFitHeight(hand22Pane.getPrefHeight());
+                                    hand22Image.setPreserveRatio(true);
+                                    hand22Image.setSmooth(true);
+                                    hand22Image.setCache(true);
+                                }
+                                if (j == 3) {
+                                    hand23Pane.setVisible(true);
+                                    hand23Image.setImage(image);
+                                    hand23Image.setFitWidth(hand23Pane.getPrefWidth());
+                                    hand23Image.setFitHeight(hand23Pane.getPrefHeight());
+                                    hand23Image.setPreserveRatio(true);
+                                    hand23Image.setSmooth(true);
+                                    hand23Image.setCache(true);
+                                }
+                            } catch (Exception e) {
+                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                System.exit(1);
+                            }
+                        } else {
+                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                                showError("Image path is null", "The image path for the hand card is null.");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    board2.setVisible(true);
+                }
+                // Set board 3
+                if (i == 2) {
+                    // Set color and nickname
+                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    color3.setStyle("-fx-background-color: " + color + ";");
+                    nickname3.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    // Set counters
+                    fungiCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    // Set hand images
+                    ArrayList<String> imagePaths = new ArrayList<>(3);
+                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                        String imagePath = getBackSideImagePath(card);
+                        imagePaths.add(imagePath);
+                    }
+                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                        if (imagePaths.get(j) != null) {
+                            try {
+                                Image image = new Image(imagePaths.get(j));
+                                if (j == 0) {
+                                    hand31Pane.setVisible(true);
+                                    hand31Image.setImage(image);
+                                    hand31Image.setFitWidth(hand31Pane.getPrefWidth());
+                                    hand31Image.setFitHeight(hand31Pane.getPrefHeight());
+                                    hand31Image.setPreserveRatio(true);
+                                    hand31Image.setSmooth(true);
+                                    hand31Image.setCache(true);
+                                }
+                                if (j == 1) {
+                                    hand32Pane.setVisible(true);
+                                    hand32Image.setImage(image);
+                                    hand32Image.setFitWidth(hand32Pane.getPrefWidth());
+                                    hand32Image.setFitHeight(hand32Pane.getPrefHeight());
+                                    hand32Image.setPreserveRatio(true);
+                                    hand32Image.setSmooth(true);
+                                    hand32Image.setCache(true);
+                                }
+                                if (j == 3) {
+                                    hand33Pane.setVisible(true);
+                                    hand33Image.setImage(image);
+                                    hand33Image.setFitWidth(hand33Pane.getPrefWidth());
+                                    hand33Image.setFitHeight(hand33Pane.getPrefHeight());
+                                    hand33Image.setPreserveRatio(true);
+                                    hand33Image.setSmooth(true);
+                                    hand33Image.setCache(true);
+                                }
+                            } catch (Exception e) {
+                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                System.exit(1);
+                            }
+                        } else {
+                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                                showError("Image path is null", "The image path for the hand card is null.");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    board3.setVisible(true);
+                }
+                // Set board 4
+                if (i == 3) {
+                    // Set color and nickname
+                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    color4.setStyle("-fx-background-color: " + color + ";");
+                    nickname4.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    // Set counters
+                    fungiCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    // Set hand images
+                    ArrayList<String> imagePaths = new ArrayList<>(3);
+                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                        String imagePath = getBackSideImagePath(card);
+                        imagePaths.add(imagePath);
+                    }
+                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                        if (imagePaths.get(j) != null) {
+                            try {
+                                Image image = new Image(imagePaths.get(j));
+                                if (j == 0) {
+                                    hand41Pane.setVisible(true);
+                                    hand41Image.setImage(image);
+                                    hand41Image.setFitWidth(hand41Pane.getPrefWidth());
+                                    hand41Image.setFitHeight(hand41Pane.getPrefHeight());
+                                    hand41Image.setPreserveRatio(true);
+                                    hand41Image.setSmooth(true);
+                                    hand41Image.setCache(true);
+                                }
+                                if (j == 1) {
+                                    hand42Pane.setVisible(true);
+                                    hand42Image.setImage(image);
+                                    hand42Image.setFitWidth(hand42Pane.getPrefWidth());
+                                    hand42Image.setFitHeight(hand42Pane.getPrefHeight());
+                                    hand42Image.setPreserveRatio(true);
+                                    hand42Image.setSmooth(true);
+                                    hand42Image.setCache(true);
+                                }
+                                if (j == 3) {
+                                    hand43Pane.setVisible(true);
+                                    hand43Image.setImage(image);
+                                    hand43Image.setFitWidth(hand43Pane.getPrefWidth());
+                                    hand43Image.setFitHeight(hand43Pane.getPrefHeight());
+                                    hand43Image.setPreserveRatio(true);
+                                    hand43Image.setSmooth(true);
+                                    hand43Image.setCache(true);
+                                }
+                            } catch (Exception e) {
+                                showError("Error loading images", "There was an error loading the hand cards images.");
+                                System.exit(1);
+                            }
+                        } else {
+                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                                showError("Image path is null", "The image path for the hand card is null.");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    board4.setVisible(true);
+                }
+            }
+        }
     }
+
+
+    /**
+     *
+     */
+    private String getPlayerColor(Color color) {
+        if (color == Color.RED)
+            return "red";
+        if (color == Color.BLUE)
+            return "blue";
+        if (color == Color.GREEN)
+            return "green";
+        if (color == Color.YELLOW)
+            return "yellow";
+        return null;
+    }
+
 
 
 }

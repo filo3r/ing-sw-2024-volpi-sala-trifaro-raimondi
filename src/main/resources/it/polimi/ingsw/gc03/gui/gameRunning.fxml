@@ -17,24 +17,24 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="mainAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
-    <styleClass>
-        <String fx:value="backgroundInGame" />
-        <String fx:value="backgroundWelcome" />
-    </styleClass>
+   <styleClass>
+      <String fx:value="backgroundInGame" />
+      <String fx:value="backgroundWelcome" />
+   </styleClass>
    <children>
       <Pane prefHeight="950.0" prefWidth="1600.0">
          <children>
             <ScrollPane layoutX="276.0" layoutY="154.0" prefHeight="638.0" prefWidth="875.0">
                <content>
                   <GridPane prefHeight="636.0" prefWidth="872.0">
-                    <columnConstraints>
-                       <ColumnConstraints />
+                     <columnConstraints>
                         <ColumnConstraints />
-                    </columnConstraints>
-                    <rowConstraints>
-                       <RowConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
                         <RowConstraints />
-                    </rowConstraints>
+                        <RowConstraints />
+                     </rowConstraints>
                   </GridPane>
                </content>
             </ScrollPane>
@@ -113,14 +113,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="fungi1" fx:id="fungi1" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="fungi1" fx:id="fungi1Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="fungi1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCount1" fx:id="fungiCount1" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="quill1" fx:id="quill1" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="plant1" fx:id="plant1" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="quill1" fx:id="quill1Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="quill1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="plant1" fx:id="plant1Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="plant1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="quillCount1" fx:id="quillCount1" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -131,14 +140,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="inkwell1" fx:id="inkwell1" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="inkwell1" fx:id="inkwell1Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="inkwell1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCounter" fx:id="inkwellCount1" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="animal1" fx:id="animal1" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="manuscript1" fx:id="manuscript1" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="animal1" fx:id="animal1Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="animal1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="manuscript1" fx:id="manuscript1Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="manuscript1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="animalCount1" fx:id="animalCount1" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -149,21 +167,36 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="insect1" fx:id="insect1" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="insect1" fx:id="insect1Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="insect1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="insectCount1" fx:id="insectCount1" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="covered1" fx:id="covered1" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="covered1" fx:id="covered1Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="covered1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="coveredCount1" fx:id="coveredCount1" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="hand11" fx:id="hand11" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand12" fx:id="hand12" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand13" fx:id="hand13" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
+                  <Pane id="hand11" fx:id="hand11Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand11Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand12" fx:id="hand12Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand12Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand13" fx:id="hand13Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand13Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                </children></Pane>
             <ListView id="latestEvent" layoutX="10.0" layoutY="217.0" prefHeight="218.0" prefWidth="258.0" />
             <Text id="latestEventText" layoutX="10.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latest event" wrappingWidth="110.0847358722649">
@@ -198,14 +231,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="fungi2" fx:id="fungi2" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="fungi2" fx:id="fungi2Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="fungi2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCount2" fx:id="fungiCount2" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="quill2" fx:id="quill2" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="plant2" fx:id="plant2" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="quill2" fx:id="quill2Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="quill2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="plant2" fx:id="plant2Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="plant2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="quillCount2" fx:id="quillCount2" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -216,14 +258,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="inkwell2" fx:id="inkwell2" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="inkwell2" fx:id="inkwell2Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="inkwell2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="quillCount2" fx:id="inkwellCount2" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="animal2" fx:id="animal2" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="manuscript2" fx:id="manuscript2" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="animal2" fx:id="animal2Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="animal2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="manuscript2" fx:id="manuscript2Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="manuscript2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="animalCount2" fx:id="animalCount2" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -234,21 +285,36 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="insect2" fx:id="insect2" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="insect2" fx:id="insect2Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="insect2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="insectCount2" fx:id="insectCount2" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="covered2" fx:id="covered2" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="covered2" fx:id="covered2Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="covered2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="coveredCount2" fx:id="coveredCount2" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="hand21" fx:id="hand21" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand22" fx:id="hand22" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand23" fx:id="hand23" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
+                  <Pane id="hand21" fx:id="hand21Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand21Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand22" fx:id="hand22Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand22Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand23" fx:id="hand23Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand23Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                </children>
             </Pane>
             <Pane id="board3" fx:id="board3" layoutX="752.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
@@ -259,14 +325,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="fungi3" fx:id="fungi3" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="fungi3" fx:id="fungi3Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="fungi3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCount3" fx:id="fungiCount3" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="quill3" fx:id="quill3" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="plant3" fx:id="plant3" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="quill3" fx:id="quill3Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="quill3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="plant3" fx:id="plant3Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="plant3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCounter" fx:id="quillCount3" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -277,14 +352,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="inkwell3" fx:id="inkwell3" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="inkwell3" fx:id="inkwell3Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="inkwell3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="quillCount3" fx:id="inkwellCount3" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="animal3" fx:id="animal3" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="manuscript3" fx:id="manuscript3" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="animal3" fx:id="animal3Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="animal3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="manuscript3" fx:id="manuscript3Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="manuscript3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="animalCount3" fx:id="animalCount3" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -295,21 +379,36 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="insect3" fx:id="insect3" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="insect3" fx:id="insect3Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="insect3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="insectCount3" fx:id="insectCount3" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="covered3" fx:id="covered3" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="covered3" fx:id="covered3Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="covered3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="coveredCount3" fx:id="coveredCount3" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="hand31" fx:id="hand31" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand32" fx:id="hand32" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand33" fx:id="hand33" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
+                  <Pane id="hand31" fx:id="hand31Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand31Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand32" fx:id="hand32Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand32Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand33" fx:id="hand33Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand33Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                </children>
             </Pane>
             <Pane id="board4" fx:id="board4" layoutX="982.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
@@ -320,14 +419,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="fungi4" fx:id="fungi4" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="fungi4" fx:id="fungi4Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="fungi4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCount4" fx:id="fungiCount4" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="quill4" fx:id="quill4" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="plant4" fx:id="plant4" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="quill4" fx:id="quill4Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="quill4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="plant4" fx:id="plant4Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="plant4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="fungiCounter" fx:id="quillCount4" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -338,14 +446,23 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="inkwell4" fx:id="inkwell4" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="inkwell4" fx:id="inkwell4Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="inkwell4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="quillCount4" fx:id="inkwellCount4" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="animal4" fx:id="animal4" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
-                  <Pane id="manuscript4" fx:id="manuscript4" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="animal4" fx:id="animal4Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="animal4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="manuscript4" fx:id="manuscript4Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="manuscript4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="animalCount4" fx:id="animalCount4" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
@@ -356,21 +473,36 @@
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="insect4" fx:id="insect4" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="insect4" fx:id="insect4Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="insect4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="insectCount4" fx:id="insectCount4" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="covered4" fx:id="covered4" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red" />
+                  <Pane id="covered4" fx:id="covered4Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="covered4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                   <Text id="coveredCount4" fx:id="coveredCount4" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Pane id="hand41" fx:id="hand41" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand42" fx:id="hand42" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
-                  <Pane id="hand43" fx:id="hand43" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red" />
+                  <Pane id="hand41" fx:id="hand41Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand41Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand42" fx:id="hand42Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand42Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane id="hand43" fx:id="hand43Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: red">
+                     <children>
+                        <ImageView fx:id="hand43Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                </children>
             </Pane>
             <Text id="points" fx:id="points" layoutX="10.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
