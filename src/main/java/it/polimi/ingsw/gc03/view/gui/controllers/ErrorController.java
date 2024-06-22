@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 
 /**
@@ -38,9 +39,12 @@ public class ErrorController extends GenericController {
     public void actionClose(ActionEvent actionEvent) {
         if (isFatalError)
             System.exit(1);
-        else
-            getInputReaderGUI().addTxt("e");
+        else {
+            Stage stage = (Stage) buttonClose.getScene().getWindow();
+            stage.close();
+        }
     }
+
 
 
     /**

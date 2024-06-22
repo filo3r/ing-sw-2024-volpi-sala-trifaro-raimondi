@@ -1,12 +1,9 @@
 package it.polimi.ingsw.gc03.view.gui;
 
-import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.controllers.*;
-import it.polimi.ingsw.gc03.view.inputHandler.InputProcessor;
-import it.polimi.ingsw.gc03.view.inputHandler.InputReader;
 import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.Flow;
 import javafx.application.Application;
@@ -233,13 +230,13 @@ public class ApplicationGui extends Application {
 
 
     public void showError(String message){
-        //ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        //controller.setErrorText(message,false);
+        ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.ERROR)).toList().getFirst().getGenericController();
+        controller.setErrorText(message,false);
         System.err.println(message);
     }
 
     public void showFatalError(String message){
-        ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
+        ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.ERROR)).toList().getFirst().getGenericController();
         controller.setErrorText(message,true);
     }
 
@@ -269,4 +266,9 @@ public class ApplicationGui extends Application {
      controller.addMessages(model.getChat(),nickname);
     }
 
+    public Scene getErrorSceneForPopUp(){
+        Scene scene;
+        scene = scenes.stream().filter(x -> x.getSceneEnum().equals(SceneEnum.ERROR)).toList().getFirst().getScene();
+        return scene;
+    }
 }

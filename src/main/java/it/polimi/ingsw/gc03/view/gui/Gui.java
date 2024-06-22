@@ -247,11 +247,12 @@ public class Gui extends UI {
 
     @Override
     protected void showWinner(GameImmutable model) {
+        Platform.runLater(()->this.applicationGui.showWinner(model));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
     }
 
     @Override
     protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {
-
     }
 
     @Override
@@ -261,8 +262,13 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
-
+    protected void showReqNotRespected(GameImmutable model, ArrayList<Value> requirementsPlacement) {
+        StringBuilder req = new StringBuilder(" ");
+        for(Value v: requirementsPlacement){
+            req.append(v.name()+" ");
+        }
+        Platform.runLater(()->this.applicationGui.showError("You can't place the card because you dont have : "+req+" on your Codex" ));
+        Platform.runLater(()->this.applicationGui.openPopUps(this.applicationGui.getErrorSceneForPopUp()));
     }
 
     @Override
@@ -275,8 +281,8 @@ public class Gui extends UI {
 
     @Override
     protected void showInvalidNickname(String nickname) {
-        //Platform.runLater(()->this.applicationGui.showError("Invalid Nickname"));
-        //Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showError("Invalid Nickname"));
+        Platform.runLater(()->this.applicationGui.openPopUps((this.applicationGui.getErrorSceneForPopUp())));
     }
 
     @Override
