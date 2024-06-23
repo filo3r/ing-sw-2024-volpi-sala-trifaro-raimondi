@@ -309,6 +309,10 @@ public class Gui extends UI {
             this.nickname = nickname;
             this.applicationGui.setNickname(nickname);
         }
+        if(nickname == null){
+            this.nickname = null;
+            this.applicationGui.setNickname(null);
+        }
     }
 
     @Override
