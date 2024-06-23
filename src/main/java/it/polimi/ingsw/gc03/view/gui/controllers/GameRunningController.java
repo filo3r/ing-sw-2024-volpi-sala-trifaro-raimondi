@@ -79,750 +79,750 @@ public class GameRunningController extends GenericController {
     private Label points4;
 
     /**
-     *
+     * Pane to display the personal Objective card.
      */
     @FXML
     private Pane personalObjectivePane;
 
     /**
-     * Pane to display the personal Objective card.
+     * ImageView to display the personal Objective card.
      */
     @FXML
     private ImageView personalObjectiveImage;
 
     /**
-     *
+     * Pane to display the first shared Objective card.
      */
     @FXML
     private Pane sharedObjective1Pane;
 
     /**
-     * Pane to display the first shared Objective card.
+     * ImageView to display the first shared Objective card.
      */
     @FXML
     private ImageView sharedObjective1Image;
 
     /**
-     *
+     * Pane to display the second shared Objective card.
      */
     @FXML
     private Pane sharedObjective2Pane;
 
     /**
-     * Pane to display the second shared Objective card.
+     * ImageView to display the second shared Objective card.
      */
     @FXML
     private ImageView sharedObjective2Image;
 
     /**
-     *
+     * Pane to display the deck of Resource cards.
      */
     @FXML
     private Pane deckResourcePane;
 
     /**
-     * Button to display the deck of Resource cards.
+     * ImageView to display the deck of Resource cards.
      */
     @FXML
     private ImageView deckResourceImage;
 
     /**
-     *
+     * Pane to display the deck of Gold cards.
      */
     @FXML
     private Pane deckGoldPane;
 
     /**
-     * Button to display the deck of Gold cards.
+     * ImageView to display the deck of Gold cards.
      */
     @FXML
     private ImageView deckGoldImage;
 
     /**
-     *
+     * Pane to display the first displayed card.
      */
     @FXML
     private Pane displayed1Pane;
 
     /**
-     * Button to display the first displayed card.
+     * ImageView to display the first displayed card.
      */
     @FXML
     private ImageView displayed1Image;
 
     /**
-     *
+     * Pane to display the second displayed card.
      */
     @FXML
     private Pane displayed2Pane;
 
     /**
-     * Button to display the second displayed card.
+     * ImageView to display the second displayed card.
      */
     @FXML
     private ImageView displayed2Image;
 
     /**
-     *
+     * Pane to display the third displayed card.
      */
     @FXML
     private Pane displayed3Pane;
 
     /**
-     * Button to display the third displayed card.
+     * ImageView to display the third displayed card.
      */
     @FXML
     private ImageView displayed3Image;
 
     /**
-     *
+     * Pane to display the fourth displayed card.
      */
     @FXML
     private Pane displayed4Pane;
 
     /**
-     * Button to display the fourth displayed card.
+     * ImageView to display the fourth displayed card.
      */
     @FXML
     private ImageView displayed4Image;
 
     /**
-     *
+     * Pane to display the first hand card.
      */
     @FXML
     private Pane hand1Pane;
 
     /**
-     *
+     * ImageView to display the first hand card.
      */
     @FXML
     private ImageView hand1Image;
 
     /**
-     *
+     * Pane to display the second hand card.
      */
     @FXML
     private Pane hand2Pane;
 
     /**
-     *
+     * ImageView to display the second hand card.
      */
     @FXML
     private ImageView hand2Image;
 
     /**
-     *
+     * Pane to display the third hand card.
      */
     @FXML
     private Pane hand3Pane;
 
     /**
-     *
+     * ImageView to display the third hand card.
      */
     @FXML
     private ImageView hand3Image;
 
     /**
-     *
+     * A map to store the cards in the player's hand.
      */
     private HashMap<String, Card> hand = new HashMap<>(3);
 
     /**
-     *
+     * A map to store the front side visibility of the cards in the player's hand.
      */
     private HashMap<String, Boolean> frontSideHand = new HashMap<>(3);
 
     /**
-     *
+     * Pane to display the first board.
      */
     @FXML
     private Pane board1;
 
     /**
-     *
+     * Pane to display the first player's color.
      */
     @FXML
     private Pane color1;
 
     /**
-     *
+     * Text to display the first player's nickname.
      */
     @FXML
     private Text nickname1;
 
     /**
-     *
+     * Pane to display the first player's fungi.
      */
     @FXML
     private Pane fungi1Pane;
 
     /**
-     *
+     * ImageView to display the first player's fungi.
      */
     @FXML
     private ImageView fungi1Image;
 
 
     /**
-     *
+     * Text to display the first player's fungi count.
      */
     @FXML
     private Text fungiCount1;
 
     /**
-     *
+     * Pane to display the first player's plants.
      */
     @FXML
     private Pane plant1Pane;
 
     /**
-     *
+     * ImageView to display the first player's plants.
      */
     @FXML
     private ImageView plant1Image;
 
     /**
-     *
+     * Text to display the first player's plant count.
      */
     @FXML
     private Text plantCount1;
 
     /**
-     *
+     * Pane to display the first player's animals.
      */
     @FXML
     private Pane animal1Pane;
 
     /**
-     *
+     * ImageView to display the first player's animals.
      */
     @FXML
     private ImageView animal1Image;
 
     /**
-     *
+     * Text to display the first player's animal count.
      */
     @FXML
     private Text animalCount1;
 
     /**
-     *
+     * Pane to display the first player's insects.
      */
     @FXML
     private Pane insect1Pane;
 
     /**
-     *
+     * ImageView to display the first player's insects.
      */
     @FXML
     private ImageView insect1Image;
 
     /**
-     *
+     * Text to display the first player's insect count.
      */
     @FXML
     private Text insectCount1;
 
     /**
-     *
+     * Pane to display the first player's quills.
      */
     @FXML
     private Pane quill1Pane;
 
     /**
-     *
+     * ImageView to display the first player's quills.
      */
     @FXML
     private ImageView quill1Image;
 
     /**
-     *
+     * Text to display the first player's quill count.
      */
     @FXML
     private Text quillCount1;
 
     /**
-     *
+     * Pane to display the first player's inkwells.
      */
     @FXML
     private Pane inkwell1Pane;
 
     /**
-     *
+     * ImageView to display the first player's inkwells.
      */
     @FXML
     private ImageView inkwell1Image;
 
     /**
-     *
+     * Text to display the first player's inkwell count.
      */
     @FXML
     private Text inkwellCount1;
 
     /**
-     *
+     * Pane to display the first player's manuscripts.
      */
     @FXML
     private Pane manuscript1Pane;
 
     /**
-     *
+     * ImageView to display the first player's manuscripts.
      */
     @FXML
     private ImageView manuscript1Image;
 
     /**
-     *
+     * Text to display the first player's manuscript count.
      */
     @FXML
     private Text manuscriptCount1;
 
     /**
-     *
+     * Pane to display the first player's covered items.
      */
     @FXML
     private Pane covered1Pane;
 
     /**
-     *
+     * ImageView to display the first player's covered items.
      */
     @FXML
     private ImageView covered1Image;
 
     /**
-     *
+     * Text to display the first player's covered count.
      */
     @FXML
     private Text coveredCount1;
 
     /**
-     *
+     * Pane to display the first player's first hand card.
      */
     @FXML
     private Pane hand11Pane;
 
     /**
-     *
+     * ImageView to display the first player's first hand card.
      */
     @FXML
     private ImageView hand11Image;
 
     /**
-     *
+     * Pane to display the first player's second hand card.
      */
     @FXML
     private Pane hand12Pane;
 
     /**
-     *
+     * ImageView to display the first player's second hand card.
      */
     @FXML
     private ImageView hand12Image;
 
     /**
-     *
+     * Pane to display the first player's third hand card.
      */
     @FXML
     private Pane hand13Pane;
 
     /**
-     *
+     * ImageView to display the first player's third hand card.
      */
     @FXML
     private ImageView hand13Image;
 
     /**
-     *
+     * Pane to display the second board.
      */
     @FXML
     private Pane board2;
 
     /**
-     *
+     * Pane to display the second player's color.
      */
     @FXML
     private Pane color2;
 
     /**
-     *
+     * Text to display the second player's nickname.
      */
     @FXML
     private Text nickname2;
 
     /**
-     *
+     * Pane to display the second player's fungi.
      */
     @FXML
     private Pane fungi2Pane;
 
     /**
-     *
+     * ImageView to display the second player's fungi.
      */
     @FXML
     private ImageView fungi2Image;
 
     /**
-     *
+     * Text to display the second player's fungi count.
      */
     @FXML
     private Text fungiCount2;
 
     /**
-     *
+     * Pane to display the second player's plants.
      */
     @FXML
     private Pane plant2Pane;
 
     /**
-     *
+     * ImageView to display the second player's plants.
      */
     @FXML
     private ImageView plant2Image;
 
     /**
-     *
+     * Text to display the second player's plant count.
      */
     @FXML
     private Text plantCount2;
 
     /**
-     *
+     * Pane to display the second player's animals.
      */
     @FXML
     private Pane animal2Pane;
 
     /**
-     *
+     * ImageView to display the second player's animals.
      */
     @FXML
     private ImageView animal2Image;
 
     /**
-     *
+     * Text to display the second player's animal count.
      */
     @FXML
     private Text animalCount2;
 
     /**
-     *
+     * Pane to display the second player's insects.
      */
     @FXML
     private Pane insect2Pane;
 
     /**
-     *
+     * ImageView to display the second player's insects.
      */
     @FXML
     private ImageView insect2Image;
 
     /**
-     *
+     * Text to display the second player's insect count.
      */
     @FXML
     private Text insectCount2;
 
     /**
-     *
+     * Pane to display the second player's quills.
      */
     @FXML
     private Pane quill2Pane;
 
     /**
-     *
+     * ImageView to display the second player's quills.
      */
     @FXML
     private ImageView quill2Image;
 
     /**
-     *
+     * Text to display the second player's quill count.
      */
     @FXML
     private Text quillCount2;
 
     /**
-     *
+     * Pane to display the second player's inkwells.
      */
     @FXML
     private Pane inkwell2Pane;
 
     /**
-     *
+     * ImageView to display the second player's inkwells.
      */
     @FXML
     private ImageView inkwell2Image;
 
     /**
-     *
+     * Text to display the second player's inkwell count.
      */
     @FXML
     private Text inkwellCount2;
 
     /**
-     *
+     * Pane to display the second player's manuscripts.
      */
     @FXML
     private Pane manuscript2Pane;
 
     /**
-     *
+     * ImageView to display the second player's manuscripts.
      */
     @FXML
     private ImageView manuscript2Image;
 
     /**
-     *
+     * Text to display the second player's manuscript count.
      */
     @FXML
     private Text manuscriptCount2;
 
     /**
-     *
+     *  Pane to display the second player's covered items.
      */
     @FXML
     private Pane covered2Pane;
 
     /**
-     *
+     * ImageView to display the second player's covered items.
      */
     @FXML
     private ImageView covered2Image;
 
     /**
-     *
+     * Text to display the second player's covered count.
      */
     @FXML
     private Text coveredCount2;
 
     /**
-     *
+     * Pane to display the second player's first hand card.
      */
     @FXML
     private Pane hand21Pane;
 
     /**
-     *
+     * ImageView to display the second player's first hand card.
      */
     @FXML
     private ImageView hand21Image;
 
     /**
-     *
+     * Pane to display the second player's second hand card.
      */
     @FXML
     private Pane hand22Pane;
 
     /**
-     *
+     * ImageView to display the second player's second hand card.
      */
     @FXML
     private ImageView hand22Image;
 
     /**
-     *
+     * Pane to display the second player's third hand card.
      */
     @FXML
     private Pane hand23Pane;
 
     /**
-     *
+     * ImageView to display the second player's third hand card.
      */
     @FXML
     private ImageView hand23Image;
 
     /**
-     *
+     * Pane to display the third board.
      */
     @FXML
     private Pane board3;
 
     /**
-     *
+     * Pane to display the third player's color.
      */
     @FXML
     private Pane color3;
 
     /**
-     *
+     * Text to display the third player's nickname.
      */
     @FXML
     private Text nickname3;
 
     /**
-     *
+     * Pane to display the third player's fungi.
      */
     @FXML
     private Pane fungi3Pane;
 
     /**
-     *
+     * ImageView to display the third player's fungi.
      */
     @FXML
     private ImageView fungi3Image;
 
     /**
-     *
+     * Text to display the third player's fungi count.
      */
     @FXML
     private Text fungiCount3;
 
     /**
-     *
+     * Pane to display the third player's plants.
      */
     @FXML
     private Pane plant3Pane;
 
     /**
-     *
+     * ImageView to display the third player's plants.
      */
     @FXML
     private ImageView plant3Image;
 
     /**
-     *
+     * Text to display the third player's plant count.
      */
     @FXML
     private Text plantCount3;
 
     /**
-     *
+     * Pane to display the third player's animals.
      */
     @FXML
     private Pane animal3Pane;
 
     /**
-     *
+     * ImageView to display the third player's animals.
      */
     @FXML
     private ImageView animal3Image;
 
     /**
-     *
+     * Text to display the third player's animal count.
      */
     @FXML
     private Text animalCount3;
 
     /**
-     *
+     * Pane to display the third player's insects.
      */
     @FXML
     private Pane insect3Pane;
 
     /**
-     *
+     * ImageView to display the third player's insects.
      */
     @FXML
     private ImageView insect3Image;
 
     /**
-     *
-     */
+     * Text to display the third player's insect count.
+     * */
     @FXML
     private Text insectCount3;
 
     /**
-     *
+     * Pane to display the third player's quills.
      */
     @FXML
     private Pane quill3Pane;
 
     /**
-     *
+     * ImageView to display the third player's quills.
      */
     @FXML
     private ImageView quill3Image;
 
     /**
-     *
+     * Text to display the third player's quill count.
      */
     @FXML
     private Text quillCount3;
 
     /**
-     *
+     * Pane to display the third player's inkwells.
      */
     @FXML
     private Pane inkwell3Pane;
 
     /**
-     *
+     * ImageView to display the third player's inkwells.
      */
     @FXML
     private ImageView inkwell3Image;
 
     /**
-     *
+     * Text to display the third player's inkwell count.
      */
     @FXML
     private Text inkwellCount3;
 
     /**
-     *
+     * Pane to display the third player's manuscripts.
      */
     @FXML
     private Pane manuscript3Pane;
 
     /**
-     *
+     * ImageView to display the third player's manuscripts.
      */
     @FXML
     private ImageView manuscript3Image;
 
     /**
-     *
+     * Text to display the third player's manuscript count.
      */
     @FXML
     private Text manuscriptCount3;
 
     /**
-     *
+     * Pane to display the third player's covered items.
      */
     @FXML
     private Pane covered3Pane;
 
     /**
-     *
+     * ImageView to display the third player's covered items.
      */
     @FXML
     private ImageView covered3Image;
 
     /**
-     *
+     * Text to display the third player's covered count.
      */
     @FXML
     private Text coveredCount3;
 
     /**
-     *
+     * Pane to display the third player's first hand card.
      */
     @FXML
     private Pane hand31Pane;
 
     /**
-     *
+     * ImageView to display the third player's first hand card.
      */
     @FXML
     private ImageView hand31Image;
 
     /**
-     *
+     * Pane to display the third player's second hand card.
      */
     @FXML
     private Pane hand32Pane;
 
     /**
-     *
+     * ImageView to display the third player's second hand card.
      */
     @FXML
     private ImageView hand32Image;
 
     /**
-     *
+     * Pane to display the third player's third hand card.
      */
     @FXML
     private Pane hand33Pane;
 
     /**
-     *
+     * ImageView to display the third player's third hand card.
      */
     @FXML
     private ImageView hand33Image;
