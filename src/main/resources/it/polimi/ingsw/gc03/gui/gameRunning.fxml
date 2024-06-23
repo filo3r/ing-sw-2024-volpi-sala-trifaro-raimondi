@@ -198,7 +198,7 @@
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font></Text>
-            <TextField fx:id="chatMessage" layoutX="10.0" layoutY="758.0" prefHeight="36.0" prefWidth="258.0" text="Message">
+            <TextField fx:id="chatMessage" layoutX="10.0" layoutY="758.0" prefHeight="36.0" prefWidth="258.0" text="Message" onAction="#actionSend">
                <font>
                   <Font name="Arial" size="16.0" />
                </font></TextField>

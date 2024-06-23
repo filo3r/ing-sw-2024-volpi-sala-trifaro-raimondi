@@ -2327,7 +2327,7 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     *Adds a Message to the Chat ListView
      * @param message
      * @param nickname
      * @param gameImmutable
@@ -2344,7 +2344,7 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     *Adds an Event to the ListView
      * @param event
      * @param gameImmutable
      */
@@ -2354,7 +2354,7 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     *Sets the action for clicking the button,reads the chatMessage text and sends it to the decided receiver reading it from the ComboBox
      */
     public void actionSend() {
        String receiver = chatReceiver.getSelectionModel().getSelectedItem();
@@ -2369,7 +2369,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     *Reads the name of the players in the game and sets the possible receivers in a ComboBox
+     * Sets default on everyone
      * @param gameImmutable
      * @param nickname
      */
@@ -2381,33 +2382,23 @@ public class GameRunningController extends GenericController {
             }
         }
         chatReceiver.setValue("everyone");
+        idGame = gameImmutable.getIdGame();
     }
 
 
     /**
-     *
+     *Clears the Chat ListView
+     *       the Event ListView
+ *       and the Receivers ComboBox
+     *  if the gameId has changed
      * @param gameImmutable
      */
-    public void clearChat(GameImmutable gameImmutable) {
+    public void clear(GameImmutable gameImmutable) {
         if (idGame!= gameImmutable.getIdGame() || idGame==0) {
             chat.getItems().clear();
-        }
-        idGame = gameImmutable.getIdGame();
-    }
-
-
-    /**
-     *
-     * @param gameImmutable
-     */
-    public void clearEvents(GameImmutable gameImmutable){
-        if (idGame!= gameImmutable.getIdGame() || idGame==0) {
+            chatReceiver.getItems().clear();
             latestEvent.getItems().clear();
         }
-        idGame = gameImmutable.getIdGame();
     }
-
-
-
 
 }

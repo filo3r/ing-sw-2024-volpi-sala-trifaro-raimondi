@@ -223,16 +223,15 @@ public class ApplicationGui extends Application {
         controller.setPoints(gameImmutable);
         controller.setGameId(gameImmutable.getIdGame());
         controller.setTurnUsername(gameImmutable);
+        controller.clear(gameImmutable);
         controller.setReceivers(gameImmutable,nickname);
-        controller.clearChat(gameImmutable);
-        controller.clearEvents(gameImmutable);
+
     }
     public void showTurnUsername(GameImmutable gameImmutable){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setTurnUsername(gameImmutable);
     }
     /*
-
     public void showDrawnCard(GameImmutable model, String nickname){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setDrawnCard(model);
@@ -242,25 +241,15 @@ public class ApplicationGui extends Application {
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setAllCodex(model);
     }
-    public void showMessageInGame(ChatMessage message){
-        GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.setMessageToShow(message);
-    }
+
     public void showAskCoordinates(){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.showSelectionCoordinates();
     }
-   /* public void showMessages(GameImmutable model,String myNickname){
-        GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.setMessage(model.getChat(),myNickname);
-    }
-
-
     public void showPointsUpdate(GameImmutable model,Player player,int points){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
         controller.setPointsUpdated(model,player,points);
     }
-
      */
 
     public void show_askSideStarter(GameImmutable game, String nickname){

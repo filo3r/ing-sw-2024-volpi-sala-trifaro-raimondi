@@ -21,7 +21,7 @@
                       <Font name="Arial" size="22.0" />
                   </font>
               </Button>
-              <TextField fx:id="gameIdTextField" alignment="CENTER" layoutX="56.0" layoutY="85.0" prefHeight="50.0" prefWidth="500.0">
+              <TextField fx:id="gameIdTextField" alignment="CENTER" layoutX="56.0" layoutY="85.0" prefHeight="50.0" prefWidth="500.0" onAction="#actionEnter">
                   <font>
                       <Font name="Arial" size="22.0" />
                   </font>

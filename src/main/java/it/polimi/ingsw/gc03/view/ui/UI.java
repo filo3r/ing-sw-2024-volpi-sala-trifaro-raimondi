@@ -91,10 +91,10 @@ public abstract class UI {
     /**
      * Shows the players that have joined
      *
-     * @param gameGameImmutable model where events happen
+     * @param gameImmutable model where events happen
      * @param nick      player's nickname
      */
-    protected abstract void show_playerJoined(GameImmutable gameGameImmutable, String nick);
+    protected abstract void show_playerJoined(GameImmutable gameImmutable, String nick);
 
     /**
      * Show the message for next turn or reconnected player
@@ -107,9 +107,9 @@ public abstract class UI {
     /**
      * Message that shows the player's hand
      *
-     * @param gameGameImmutable the model that has the player hand that needs to be shown
+     * @param gameImmutable the model that has the player hand that needs to be shown
      */
-    protected abstract void show_playerHand(GameImmutable gameGameImmutable, String nickname);
+    protected abstract void show_playerHand(GameImmutable gameImmutable, String nickname);
 
     /**
      * Shows the message that has been sent

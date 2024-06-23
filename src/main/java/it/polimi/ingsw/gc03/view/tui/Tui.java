@@ -778,11 +778,11 @@ public class Tui extends UI {
     /**
      * Displays a notification that a player has joined the game.
      *
-     * @param gameGameImmutable the game instance.
+     * @param gameImmutable the game instance.
      * @param nick      the nickname of the player who joined.
      */
     @Override
-    protected void show_playerJoined(GameImmutable gameGameImmutable, String nick) {
+    protected void show_playerJoined(GameImmutable gameImmutable, String nick) {
         showNotification(nick + " joined the game");
     }
 
@@ -800,13 +800,13 @@ public class Tui extends UI {
     /**
      * Displays the player's hand.
      *
-     * @param gameGameImmutable the game instance.
+     * @param gameImmutable the game instance.
      * @param nickname  the nickname of the player.
      */
     @Override
-    protected void show_playerHand(GameImmutable gameGameImmutable, String nickname) {
+    protected void show_playerHand(GameImmutable gameImmutable, String nickname) {
         clearScreen(' ');
-        List<Card> playerHand = gameGameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getHand();
+        List<Card> playerHand = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getHand();
         int posX = 1093 - 27 - 13;
         for (Card card : playerHand) {
             if (card instanceof CardResource) {

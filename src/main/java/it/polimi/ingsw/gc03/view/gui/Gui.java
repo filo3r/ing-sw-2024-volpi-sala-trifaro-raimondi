@@ -101,7 +101,7 @@ public class Gui extends UI {
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
         Platform.runLater(()->this.applicationGui.showError(msgToVisualize));
-        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.openPopUps(this.applicationGui.getErrorSceneForPopUp()));
     }
 
     @Override
@@ -134,7 +134,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_playerHand(GameImmutable gameGameImmutable, String nickname) {
+    protected void show_playerHand(GameImmutable gameImmutable, String nickname) {
     }
 
     @Override
@@ -205,7 +205,7 @@ public class Gui extends UI {
     @Override
     protected void showInvalidInput() {
         Platform.runLater(()->this.applicationGui.showError("Invalid Input"));
-        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.openPopUps(this.applicationGui.getErrorSceneForPopUp()));
     }
 
 

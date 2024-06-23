@@ -564,30 +564,30 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user to choose a deck.
      *
-     * @param gameGameImmutable the game gameImmutable.
+     * @param gameImmutable the game gameImmutable.
      * @throws Exception if an error occurs during input.
      */
-    public void askToChooseADeck(GameImmutable gameGameImmutable) throws Exception {
-        ui.showDesk(gameGameImmutable, nickname);
+    public void askToChooseADeck(GameImmutable gameImmutable) throws Exception {
+        ui.showDesk(gameImmutable, nickname);
         ui.showAskToChooseADeck();
         String choice;
         try {
             choice = this.inputProcessor.getDataToProcess().popData();
             switch (choice) {
-                case "gD" -> drawCardFromDeck(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DECK_GOLD);
-                case "g1" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 0);
-                case "g2" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 1);
-                case "r1" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 0);
-                case "r2" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 1);
-                case "rD" -> drawCardFromDeck(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DECK_RESOURCE);
+                case "gD" -> drawCardFromDeck(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()), DeckType.DECK_GOLD);
+                case "g1" -> drawCardDisplayed(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 0);
+                case "g2" -> drawCardDisplayed(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 1);
+                case "r1" -> drawCardDisplayed(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 0);
+                case "r2" -> drawCardDisplayed(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 1);
+                case "rD" -> drawCardFromDeck(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()), DeckType.DECK_RESOURCE);
                 default -> {
                     ui.showInvalidInput();
-                    askToChooseADeck(gameGameImmutable);
+                    askToChooseADeck(gameImmutable);
                 }
             }
         } catch (NumberFormatException e) {
             ui.showInvalidInput();
-            askToChooseADeck(gameGameImmutable);
+            askToChooseADeck(gameImmutable);
         }
     }
 
@@ -987,12 +987,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when a player joins the game.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      */
     @Override
-    public void playerJoined(GameImmutable gameGameImmutable) {
-        events.add(gameGameImmutable, PLAYER_JOINED);
-        ui.show_playerJoined(gameGameImmutable, gameGameImmutable.getPlayers().get(gameGameImmutable.getPlayers().size() - 1).getNickname());
+    public void playerJoined(GameImmutable gameImmutable) {
+        events.add(gameImmutable, PLAYER_JOINED);
+        ui.show_playerJoined(gameImmutable, gameImmutable.getPlayers().get(gameImmutable.getPlayers().size() - 1).getNickname());
     }
 
     /**
@@ -1027,25 +1027,25 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when a player reconnects to the game.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      * @param nickPlayerReconnected the nickname of the player who reconnected
      */
     @Override
-    public void playerReconnected(GameImmutable gameGameImmutable, String nickPlayerReconnected) {
+    public void playerReconnected(GameImmutable gameImmutable, String nickPlayerReconnected) {
         lastPlayerReconnected = nickPlayerReconnected;
-        events.add(gameGameImmutable, PLAYER_RECONNECTED);
+        events.add(gameImmutable, PLAYER_RECONNECTED);
         ui.addLatestEvent(lastPlayerReconnected + " has reconnected!", gameImmutable);
     }
 
     /**
      * Handles when a chat message is sent.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      * @param msg the chat message
      */
     @Override
-    public void sentChatMessage(GameImmutable gameGameImmutable, ChatMessage msg) {
-        ui.addMessage(msg, gameGameImmutable);
+    public void sentChatMessage(GameImmutable gameImmutable, ChatMessage msg) {
+        ui.addMessage(msg, gameImmutable);
     }
 
     /**
@@ -1063,56 +1063,56 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when the game starts.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      */
     @Override
-    public void gameStarted(GameImmutable gameGameImmutable) {
-        events.add(gameGameImmutable, GAMESTARTED);
+    public void gameStarted(GameImmutable gameImmutable) {
+        events.add(gameImmutable, GAMESTARTED);
     }
 
     /**
      * Handles when the game ends.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      */
     @Override
-    public void gameEnded(GameImmutable gameGameImmutable) {
+    public void gameEnded(GameImmutable gameImmutable) {
         ended = true;
-        events.add(gameGameImmutable, GAMEENDED);
-        ui.show_gameEnded(gameGameImmutable);
+        events.add(gameImmutable, GAMEENDED);
+        ui.show_gameEnded(gameImmutable);
     }
 
     /**
      * Handles the next turn in the game.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      */
     @Override
-    public void nextTurn(GameImmutable gameGameImmutable) {
-        events.add(gameGameImmutable, NEXT_TURN);
+    public void nextTurn(GameImmutable gameImmutable) {
+        events.add(gameImmutable, NEXT_TURN);
         this.inputProcessor.getDataToProcess().popAllData();
     }
 
     /**
      * Handles when a player disconnects from the game.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      * @param nick the nickname of the player who disconnected
      */
     @Override
-    public void playerDisconnected(GameImmutable gameGameImmutable, String nick) {
+    public void playerDisconnected(GameImmutable gameImmutable, String nick) {
         ui.addLatestEvent(nick + " has just disconnected", gameImmutable);
     }
 
     /**
      * Handles when only one player is connected to the game.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      * @param secondsToWaitUntilGameEnded the number of seconds to wait until the game ends
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void onlyOnePlayerConnected(GameImmutable gameGameImmutable, int secondsToWaitUntilGameEnded) throws RemoteException {
+    public void onlyOnePlayerConnected(GameImmutable gameImmutable, int secondsToWaitUntilGameEnded) throws RemoteException {
         ui.addLatestEvent("Only one player is connected, waiting " + secondsToWaitUntilGameEnded + " seconds before calling Game Ended!", gameImmutable);
     }
 
@@ -1130,11 +1130,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when the last cycle of the game begins.
      *
-     * @param gameGameImmutable the game gameImmutable
+     * @param gameImmutable the game gameImmutable
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void lastCircle(GameImmutable gameGameImmutable) throws RemoteException {
+    public void lastCircle(GameImmutable gameImmutable) throws RemoteException {
         ui.addLatestEvent("Last cycle begins!", gameImmutable);
     }
 
