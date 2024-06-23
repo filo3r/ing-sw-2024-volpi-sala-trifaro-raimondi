@@ -279,16 +279,19 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case JOIN_UNABLE_NICKNAME_ALREADY_IN_USE -> {
                 ui.showInvalidNickname(nickname);
                 nickname = null;
+                ui.setNickname(null);
                 events.add(null, APP_MENU);
                 ui.addLatestEvent("WARNING> Nickname already used!", gameImmutable);
             }
             case JOIN_UNABLE_GAME_FULL -> {
                 nickname = null;
+                ui.setNickname(null);
                 events.add(null, APP_MENU);
                 ui.addLatestEvent("WARNING> Game is Full!", gameImmutable);
             }
             case ERROR_WHEN_ENTERING_GAME -> {
                 nickname = null;
+                ui.setNickname(null);
                 ui.show_returnToMenuMsg();
                 try {
                     this.inputProcessor.getDataToProcess().popData();
