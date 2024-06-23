@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
@@ -51,7 +51,7 @@ public class MainController implements MainControllerInterface, Serializable {
         try {
             GameController controller = new GameController();
             gameControllers.add(controller);
-            gameListener.gameCreated(new Model(controller.getGame()));
+            gameListener.gameCreated(new GameImmutable(controller.getGame()));
             joinSpecificGame(gameListener, firstPlayerNickname, controller.getGame().getIdGame());
             return controller;
         } catch (Exception e) {

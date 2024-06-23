@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import java.io.IOException;
 
@@ -11,9 +11,9 @@ import java.io.IOException;
 public class SocketServerMessageObjectiveCardChosen extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The chosen Objective card.
@@ -27,11 +27,11 @@ public class SocketServerMessageObjectiveCardChosen extends SocketServerGenericM
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      * @param cardObjective The chosen Objective card.
      */
-    public SocketServerMessageObjectiveCardChosen(Model model, CardObjective cardObjective, String nickname) {
-        this.model = model;
+    public SocketServerMessageObjectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) {
+        this.gameImmutable = gameImmutable;
         this.cardObjective = cardObjective;
         this.nickname = nickname;
     }
@@ -44,6 +44,6 @@ public class SocketServerMessageObjectiveCardChosen extends SocketServerGenericM
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.objectiveCardChosen(this.model, this.cardObjective, this.nickname);
+        gameListener.objectiveCardChosen(this.gameImmutable, this.cardObjective, this.nickname);
     }
 }

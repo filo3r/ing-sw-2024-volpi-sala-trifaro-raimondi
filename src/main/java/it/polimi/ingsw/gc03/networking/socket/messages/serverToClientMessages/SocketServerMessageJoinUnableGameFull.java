@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import java.io.IOException;
 
@@ -11,9 +11,9 @@ import java.io.IOException;
 public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The player that tried to join.
@@ -22,11 +22,11 @@ public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMe
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      * @param player The player that tried to join.
      */
-    public SocketServerMessageJoinUnableGameFull(Model model, Player player) {
-        this.model = model;
+    public SocketServerMessageJoinUnableGameFull(GameImmutable gameImmutable, Player player) {
+        this.gameImmutable = gameImmutable;
         this.player = player;
     }
 
@@ -38,6 +38,6 @@ public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMe
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.joinUnableGameFull(this.model, this.player);
+        gameListener.joinUnableGameFull(this.gameImmutable, this.player);
     }
 }

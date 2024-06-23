@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.view.gui.controllers;
 
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -29,12 +29,12 @@ public class CardStarterController extends GenericController {
 
     /**
      * Displays the Starter card images on the buttons.
-     * @param model The game model.
+     * @param gameImmutable The game gameImmutable.
      * @param nickname The nickname of the player.
      */
-    public void showCardStarter(Model model, String nickname) {
+    public void showCardStarter(GameImmutable gameImmutable, String nickname) {
         // Get player Starter card
-        Player player = getPlayer(model, nickname);
+        Player player = getPlayer(gameImmutable, nickname);
         String frontImagePath = null;
         String backImagePath = null;
         if (player != null) {
@@ -62,12 +62,12 @@ public class CardStarterController extends GenericController {
 
     /**
      * Get the player based on the nickname.
-     * @param model The game model.
+     * @param gameImmutable The game gameImmutable.
      * @param nickname The nickname of the player.
      * @return The player.
      */
-    private Player getPlayer(Model model, String nickname) {
-        for (Player player : model.getPlayers()) {
+    private Player getPlayer(GameImmutable gameImmutable, String nickname) {
+        for (Player player : gameImmutable.getPlayers()) {
             if (player.getNickname().equals(nickname))
                 return player;
         }

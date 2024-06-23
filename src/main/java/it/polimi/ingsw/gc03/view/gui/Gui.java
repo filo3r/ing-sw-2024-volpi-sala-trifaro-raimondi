@@ -95,7 +95,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_gameStarted(Model model) {
+    protected void show_gameStarted(GameImmutable gameImmutable) {
     }
 
     @Override
@@ -105,15 +105,15 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void show_gameEnded(Model model) {
-        Platform.runLater(()->this.applicationGui.showWinner(model));
+    protected void show_gameEnded(GameImmutable gameImmutable) {
+        Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
     }
 
     @Override
-    protected void show_playerJoined(Model model, String nickname) {
+    protected void show_playerJoined(GameImmutable gameImmutable, String nickname) {
         SceneEnum scene = null;
-        switch (model.getSize()){
+        switch (gameImmutable.getSize()){
             case 1,2 -> scene = SceneEnum.LOBBY2;
             case 3 -> scene = SceneEnum.LOBBY3;
             case 4 -> scene = SceneEnum.LOBBY4;
@@ -122,23 +122,23 @@ public class Gui extends UI {
         Platform.runLater(()->this.applicationGui.closePopUps());
         LobbyController lc = (LobbyController) this.applicationGui.getController(scene);
         Platform.runLater(()->lc.setUsername(this.nickname));
-        Platform.runLater(()->lc.setGameId(model.getIdGame()));
+        Platform.runLater(()->lc.setGameId(gameImmutable.getIdGame()));
         SceneEnum finalScene = scene;
         Platform.runLater(()-> this.applicationGui.setActiveScene(finalScene));
-        Platform.runLater(()->this.applicationGui.showLobby(model));
+        Platform.runLater(()->this.applicationGui.showLobby(gameImmutable));
     }
 
     @Override
-    protected void showNextTurn(Model model, String nickname) {
-        Platform.runLater(()->this.applicationGui.showTurnUsername(model));
+    protected void showNextTurn(GameImmutable gameImmutable, String nickname) {
+        Platform.runLater(()->this.applicationGui.showTurnUsername(gameImmutable));
     }
 
     @Override
-    protected void show_playerHand(Model gameModel, String nickname) {
+    protected void show_playerHand(GameImmutable gameGameImmutable, String nickname) {
     }
 
     @Override
-    protected void show_sentMessage(Model model, String nickname) {
+    protected void show_sentMessage(GameImmutable gameImmutable, String nickname) {
 
     }
 
@@ -153,19 +153,19 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void addLatestEvent(String input, Model model) {
+    protected void addLatestEvent(String input, GameImmutable gameImmutable) {
         latestEvents.add(input);
-        Platform.runLater(()->this.applicationGui.showLatestEvent(input,model));
+        Platform.runLater(()->this.applicationGui.showLatestEvent(input, gameImmutable));
     }
 
     @Override
-    protected int getLengthLongestMessage(Model model) {
+    protected int getLengthLongestMessage(GameImmutable gameImmutable) {
         return 0;
     }
 
     @Override
-    protected void addMessage(ChatMessage msg, Model model) {
-        Platform.runLater(()->this.applicationGui.showChat(msg,model));
+    protected void addMessage(ChatMessage msg, GameImmutable gameImmutable) {
+        Platform.runLater(()->this.applicationGui.showChat(msg, gameImmutable));
     }
 
     @Override
@@ -177,9 +177,9 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showAskIndex(Model model) {
+    protected void showAskIndex(GameImmutable gameImmutable) {
         Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
-        Platform.runLater(()-> this.applicationGui.showGameRunning(model,nickname));
+        Platform.runLater(()-> this.applicationGui.showGameRunning(gameImmutable,nickname));
     }
 
     @Override
@@ -189,7 +189,7 @@ public class Gui extends UI {
 
 
     @Override
-    protected void showAskCoordinates(Model model) {
+    protected void showAskCoordinates(GameImmutable gameImmutable) {
     }
 
     @Override
@@ -197,7 +197,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showCardCannotBePlaced(Model model, String nickname) {
+    protected void showCardCannotBePlaced(GameImmutable gameImmutable, String nickname) {
     }
 
 
@@ -210,18 +210,18 @@ public class Gui extends UI {
 
 
     @Override
-    protected void showCodex(Model model) {
+    protected void showCodex(GameImmutable gameImmutable) {
         Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
-        Platform.runLater(()-> this.applicationGui.showGameRunning(model,nickname));
+        Platform.runLater(()-> this.applicationGui.showGameRunning(gameImmutable,nickname));
     }
 
     @Override
-    protected void showAskSize(Model model) {
+    protected void showAskSize(GameImmutable gameImmutable) {
         Platform.runLater(()->{this.applicationGui.setActiveScene(SceneEnum.CHOOSE_SIZE);});
     }
 
     @Override
-    protected void show_sizeSetted(int size, Model model) {
+    protected void show_sizeSetted(int size, GameImmutable gameImmutable) {
         SceneEnum scene = null;
         switch (size) {
             case 2 -> scene = SceneEnum.LOBBY2;
@@ -231,35 +231,35 @@ public class Gui extends UI {
         Platform.runLater(()->this.applicationGui.closePopUps());
         LobbyController lc = (LobbyController) this.applicationGui.getController(scene);
         Platform.runLater(()-> lc.setUsername(this.nickname));
-        Platform.runLater(()-> lc.setGameId(model.getIdGame()));
+        Platform.runLater(()-> lc.setGameId(gameImmutable.getIdGame()));
         SceneEnum finalScene = scene;
         Platform.runLater(()-> this.applicationGui.setActiveScene(finalScene));
-        Platform.runLater(()->this.applicationGui.showLobby(model));
+        Platform.runLater(()->this.applicationGui.showLobby(gameImmutable));
     }
 
     @Override
-    protected void showCardAddedToHand(Model model, Card card) {
+    protected void showCardAddedToHand(GameImmutable gameImmutable, Card card) {
 
     }
 
     @Override
-    protected void showWinner(Model model) {
-        Platform.runLater(()->this.applicationGui.showWinner(model));
+    protected void showWinner(GameImmutable gameImmutable) {
+        Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
     }
 
     @Override
-    protected void showObjectiveChosen(Model model, CardObjective cardObjective, String nickname) {
+    protected void showObjectiveChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) {
     }
 
     @Override
-    protected void showObjectiveNotChosen(Model model) {
-        Platform.runLater(()->this.applicationGui.showObjectiveNotChosen(model));
+    protected void showObjectiveNotChosen(GameImmutable gameImmutable) {
+        Platform.runLater(()->this.applicationGui.showObjectiveNotChosen(gameImmutable));
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.CARD_OBJECTIVE));
     }
 
     @Override
-    protected void showReqNotRespected(Model model, ArrayList<Value> requirementsPlacement) {
+    protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
         StringBuilder req = new StringBuilder(" ");
         for(Value v: requirementsPlacement){
             req.append(v.name()+" ");
@@ -288,12 +288,12 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showAskSide(Model game, Card card) {
+    protected void showAskSide(GameImmutable game, Card card) {
 
     }
 
     @Override
-    protected void show_askSideStarter(Model game, String nickname) {
+    protected void show_askSideStarter(GameImmutable game, String nickname) {
         Platform.runLater(()->this.applicationGui.show_askSideStarter(game, nickname));
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.CARD_STARTER));
     }
@@ -312,7 +312,7 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void showDesk(Model model, String player) {
+    protected void showDesk(GameImmutable gameImmutable, String player) {
 
     }
 
@@ -322,7 +322,7 @@ public class Gui extends UI {
     }
 
     @Override
-    public void showChat(Model model) {
+    public void showChat(GameImmutable gameImmutable) {
 
     }
 

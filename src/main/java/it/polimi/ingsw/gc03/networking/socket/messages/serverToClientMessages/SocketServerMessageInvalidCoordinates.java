@@ -1,7 +1,8 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
+
 import java.io.IOException;
 
 /**
@@ -11,9 +12,9 @@ import java.io.IOException;
 public class SocketServerMessageInvalidCoordinates extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The row where the card wanted to be placed.
@@ -27,12 +28,12 @@ public class SocketServerMessageInvalidCoordinates extends SocketServerGenericMe
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      * @param row The row where the card wanted to be placed.
      * @param column TThe column where the card wanted to be placed.
      */
-    public SocketServerMessageInvalidCoordinates(Model model, int row, int column) {
-        this.model = model;
+    public SocketServerMessageInvalidCoordinates(GameImmutable gameImmutable, int row, int column) {
+        this.gameImmutable = gameImmutable;
         this.row = row;
         this.column = column;
     }
@@ -45,6 +46,6 @@ public class SocketServerMessageInvalidCoordinates extends SocketServerGenericMe
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.invalidCoordinates(this.model, this.row, this.column);
+        gameListener.invalidCoordinates(this.gameImmutable, this.row, this.column);
     }
 }

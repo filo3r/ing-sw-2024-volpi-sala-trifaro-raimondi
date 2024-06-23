@@ -13,7 +13,7 @@ import java.util.List;
  * It is used to provide clients with all the game information so they can view it but not modify it.
  * This approach maintains the integrity and flow of the game as managed by the server.
  */
-public class Model implements Serializable {
+public class GameImmutable implements Serializable {
 
     /**
      * Game's ID.
@@ -65,7 +65,7 @@ public class Model implements Serializable {
      * GameImmutable class constructor.
      * @param game The game instance to copy from.
      */
-    public Model(Game game) throws RemoteException {
+    public GameImmutable(Game game) throws RemoteException {
         this.idGame = game.getIdGame();
         this.size = game.getSize();
         this.status = game.getStatus();

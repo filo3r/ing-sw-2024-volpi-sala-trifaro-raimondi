@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 
 import java.io.IOException;
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class SocketServerMessageRequirementsPlacementNotRespected extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The requirements for card placement.
@@ -25,11 +25,11 @@ public class SocketServerMessageRequirementsPlacementNotRespected extends Socket
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      * @param requirementsPlacement The requirements for card placement.
      */
-    public SocketServerMessageRequirementsPlacementNotRespected(Model model, ArrayList<Value> requirementsPlacement) {
-        this.model = model;
+    public SocketServerMessageRequirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
+        this.gameImmutable = gameImmutable;
         this.requirementsPlacement = requirementsPlacement;
     }
 
@@ -41,6 +41,6 @@ public class SocketServerMessageRequirementsPlacementNotRespected extends Socket
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.requirementsPlacementNotRespected(this.model, this.requirementsPlacement);
+        gameListener.requirementsPlacementNotRespected(this.gameImmutable, this.requirementsPlacement);
     }
 }

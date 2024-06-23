@@ -1,23 +1,23 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 
 import java.io.IOException;
 
 public class SocketServerMessageGameCreated extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      */
-    public SocketServerMessageGameCreated(Model model) {
-        this.model = model;
+    public SocketServerMessageGameCreated(GameImmutable gameImmutable) {
+        this.gameImmutable = gameImmutable;
     }
 
     /**
@@ -28,6 +28,6 @@ public class SocketServerMessageGameCreated extends SocketServerGenericMessage {
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.gameCreated(this.model);
+        gameListener.gameCreated(this.gameImmutable);
     }
 }

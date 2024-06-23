@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.view.gui;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.controllers.*;
@@ -151,22 +151,22 @@ public class ApplicationGui extends Application {
         }
     }
 
-    public void showLobby(Model model) {
-        int gameSize = model.getSize();
+    public void showLobby(GameImmutable gameImmutable) {
+        int gameSize = gameImmutable.getSize();
         for (int i = 0; i < gameSize; i++) {
             Pane panePlayerLobby = (Pane) this.stage.getScene().getRoot().lookup("#pane" + (i + 1));
             if (panePlayerLobby != null) {
                 panePlayerLobby.setVisible(false);
             }
         }
-        for (Player p : model.getPlayers()) {
-            showPlayerInLobby(p.getNickname(), model);
+        for (Player p : gameImmutable.getPlayers()) {
+            showPlayerInLobby(p.getNickname(), gameImmutable);
         }
     }
 
-    private void showPlayerInLobby(String nickname, Model model) {
-        int playerIndex = model.getPlayers().indexOf(model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null))+1;
-        if (playerIndex <= model.getSize()) {
+    private void showPlayerInLobby(String nickname, GameImmutable gameImmutable) {
+        int playerIndex = gameImmutable.getPlayers().indexOf(gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).findFirst().orElse(null))+1;
+        if (playerIndex <= gameImmutable.getSize()) {
             SceneEnum sceneEnum = null;
             switch (playerIndex) {
                 case 1 -> sceneEnum = SceneEnum.LOBBY_PLAYER1;
@@ -211,25 +211,25 @@ public class ApplicationGui extends Application {
             popUpStage.hide();
         }
     }
-    public void showGameRunning(Model model, String nickname){
+    public void showGameRunning(GameImmutable gameImmutable, String nickname){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.setDeckGold(model);
-        controller.setDeckResource(model);
-        controller.setDisplayed(model);
-        controller.setSharedObjective(model);
-        controller.setHand(model,nickname);
-        controller.setPersonalObjective(model,nickname);
-        controller.setBoards(model);
-        controller.setPoints(model);
-        controller.setGameId(model.getIdGame());
-        controller.setTurnUsername(model);
-        controller.setReceivers(model,nickname);
-        controller.clearChat(model);
-        controller.clearEvents(model);
+        controller.setDeckGold(gameImmutable);
+        controller.setDeckResource(gameImmutable);
+        controller.setDisplayed(gameImmutable);
+        controller.setSharedObjective(gameImmutable);
+        controller.setHand(gameImmutable,nickname);
+        controller.setPersonalObjective(gameImmutable,nickname);
+        controller.setBoards(gameImmutable);
+        controller.setPoints(gameImmutable);
+        controller.setGameId(gameImmutable.getIdGame());
+        controller.setTurnUsername(gameImmutable);
+        controller.setReceivers(gameImmutable,nickname);
+        controller.clearChat(gameImmutable);
+        controller.clearEvents(gameImmutable);
     }
-    public void showTurnUsername(Model model){
+    public void showTurnUsername(GameImmutable gameImmutable){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.setTurnUsername(model);
+        controller.setTurnUsername(gameImmutable);
     }
     /*
 
@@ -263,19 +263,19 @@ public class ApplicationGui extends Application {
 
      */
 
-    public void show_askSideStarter(Model game, String nickname){
+    public void show_askSideStarter(GameImmutable game, String nickname){
         CardStarterController controller = (CardStarterController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.CARD_STARTER)).toList().getFirst().getGenericController();
         controller.showCardStarter(game, nickname);
     }
 
-    public void showObjectiveNotChosen(Model model){
+    public void showObjectiveNotChosen(GameImmutable gameImmutable){
         CardObjectiveController controller = (CardObjectiveController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.CARD_OBJECTIVE)).toList().getFirst().getGenericController();
-        controller.showCardObjective(model, this.nickname);
+        controller.showCardObjective(gameImmutable, this.nickname);
     }
 
-    public void showWinner(Model model){
+    public void showWinner(GameImmutable gameImmutable){
         WinnersController controller = (WinnersController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.WINNERS)).toList().getFirst().getGenericController();
-        controller.showPoints(model);
+        controller.showPoints(gameImmutable);
 
     }
     public void close(){
@@ -315,14 +315,14 @@ public class ApplicationGui extends Application {
         launch(args);
     }
 
-    public void showChat(ChatMessage message, Model model){
+    public void showChat(ChatMessage message, GameImmutable gameImmutable){
      GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-     controller.addMessages(message,nickname,model);
+     controller.addMessages(message,nickname, gameImmutable);
     }
 
-    public void showLatestEvent(String event, Model model){
+    public void showLatestEvent(String event, GameImmutable gameImmutable){
         GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
-        controller.addLatestEvents(event,model);
+        controller.addLatestEvents(event, gameImmutable);
     }
 
     public Scene getErrorSceneForPopUp(){

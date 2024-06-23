@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.view.ui.events;
 
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -25,11 +25,11 @@ public class EventList {
 
     /**
      * Adds a new event to the list
-     * @param model
+     * @param gameImmutable
      * @param type
      */
-    public synchronized void add(Model model, EventType type) {
-        lists.add(new Event(model, type));
+    public synchronized void add(GameImmutable gameImmutable, EventType type) {
+        lists.add(new Event(gameImmutable, type));
 
         if (type.equals(EventType.APP_MENU)) {
             joined = false;

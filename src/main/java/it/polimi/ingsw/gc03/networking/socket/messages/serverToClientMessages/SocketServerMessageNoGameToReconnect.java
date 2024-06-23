@@ -1,16 +1,16 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 
 import java.io.IOException;
 
 public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The player nickname.
@@ -19,10 +19,10 @@ public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMes
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      */
-    public SocketServerMessageNoGameToReconnect(Model model, String nickname) {
-        this.model = model;
+    public SocketServerMessageNoGameToReconnect(GameImmutable gameImmutable, String nickname) {
+        this.gameImmutable = gameImmutable;
         this.nickname = nickname;
     }
 
@@ -34,6 +34,6 @@ public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMes
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.noGameToReconnect(this.model, this.nickname);
+        gameListener.noGameToReconnect(this.gameImmutable, this.nickname);
     }
 }

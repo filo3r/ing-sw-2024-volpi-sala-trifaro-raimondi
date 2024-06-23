@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import java.io.IOException;
 
 /**
@@ -11,9 +11,9 @@ import java.io.IOException;
 public class SocketServerMessageSentChatMessage extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The message that has been sent.
@@ -23,11 +23,11 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      * @param chatMessage The message that has been sent.
      */
-    public SocketServerMessageSentChatMessage(Model model, ChatMessage chatMessage) {
-        this.model = model;
+    public SocketServerMessageSentChatMessage(GameImmutable gameImmutable, ChatMessage chatMessage) {
+        this.gameImmutable = gameImmutable;
         this.chatMessage = chatMessage;
     }
 
@@ -39,6 +39,6 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.sentChatMessage(this.model, this.chatMessage);
+        gameListener.sentChatMessage(this.gameImmutable, this.chatMessage);
     }
 }

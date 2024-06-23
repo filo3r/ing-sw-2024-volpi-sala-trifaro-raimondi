@@ -1,7 +1,8 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
+
 import java.io.IOException;
 
 /**
@@ -10,9 +11,9 @@ import java.io.IOException;
 public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage {
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model;
+    private GameImmutable gameImmutable;
 
     /**
      * The index.
@@ -21,11 +22,11 @@ public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage
 
     /**
      * Constructor of the class that creates the message.
-     * @param model The immutable game model.
+     * @param gameImmutable The immutable game gameImmutable.
      * @param index The index;
      */
-    public SocketServerMessageIndexNotValid(Model model, int index) {
-        this.model = model;
+    public SocketServerMessageIndexNotValid(GameImmutable gameImmutable, int index) {
+        this.gameImmutable = gameImmutable;
         this.index = index;
     }
 
@@ -37,6 +38,6 @@ public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.indexNotValid(this.model, this.index);
+        gameListener.indexNotValid(this.gameImmutable, this.index);
     }
 }

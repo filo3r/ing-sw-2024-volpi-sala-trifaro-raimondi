@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.view.ui;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Model;
+import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
@@ -18,7 +18,6 @@ import it.polimi.ingsw.gc03.view.gui.ApplicationGui;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
-import it.polimi.ingsw.gc03.view.ui.events.EventType;
 import it.polimi.ingsw.gc03.view.inputHandler.*;
 import it.polimi.ingsw.gc03.view.tui.Tui;
 
@@ -102,9 +101,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
     Event lastEvent = null;
 
     /**
-     * The immutable game model.
+     * The immutable game gameImmutable.
      */
-    private Model model = null;
+    private GameImmutable gameImmutable = null;
 
     /**
      * Constructs a new Flow object with the given UI and connection options, server IP address, and port.
@@ -155,7 +154,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                     lastEvent = event;
                     processEvent(event);
                     if (event.getModel() != null) {
-                        this.model = event.getModel();
+                        this.gameImmutable = event.getModel();
                     }
                 }
                 Thread.sleep(100);
@@ -197,9 +196,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
     }
 
     /**
-     * Updates the game state based on the event model.
+     * Updates the game state based on the event gameImmutable.
      *
-     * @param event the event containing the game model
+     * @param event the event containing the game gameImmutable
      * @throws Exception if an error occurs during updating
      */
     private void updateGameStateBasedOnModel(Event event) throws Exception {
@@ -219,11 +218,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles player reconnection.
      *
-     * @param event the event containing the game model
+     * @param event the event containing the game gameImmutable
      * @throws Exception if an error occurs during reconnection handling
      */
     private void handlePlayerReconnection(Event event) throws Exception {
-        Model gameImmutable = event.getModel();
+        GameImmutable gameImmutable = event.getModel();
         Player player = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
         ui.setNickname(player.getNickname());
         inputProcessor.setNickname(nickname);
@@ -232,11 +231,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 switch (player.getAction()) {
                     case FIRSTMOVES -> {
                         if (player.getCodex().getCardStarterInserted()) {
-                            askToChooseACardObjective(model);
+                            askToChooseACardObjective(this.gameImmutable);
                             if (ended)
                                 return;
                         } else {
-                            askToPlaceStarterOnCodex(model);
+                            askToPlaceStarterOnCodex(this.gameImmutable);
                             if (ended)
                                 return;
                         }
@@ -247,7 +246,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             case RUNNING, LASTROUND, ENDING -> {
                 switch (player.getAction()) {
                     case PLACE -> {
-                        askToPlaceCardOnCodex(model);
+                        askToPlaceCardOnCodex(this.gameImmutable);
                         if (ended)
                             return;
                     }
@@ -281,12 +280,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 ui.showInvalidNickname(nickname);
                 nickname = null;
                 events.add(null, APP_MENU);
-                ui.addLatestEvent("WARNING> Nickname already used!", model);
+                ui.addLatestEvent("WARNING> Nickname already used!", gameImmutable);
             }
             case JOIN_UNABLE_GAME_FULL -> {
                 nickname = null;
                 events.add(null, APP_MENU);
-                ui.addLatestEvent("WARNING> Game is Full!", model);
+                ui.addLatestEvent("WARNING> Game is Full!", gameImmutable);
             }
             case ERROR_WHEN_ENTERING_GAME -> {
                 nickname = null;
@@ -516,11 +515,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user for the game size.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @throws Exception if an error occurs during input.
      */
-    private void askGameSize(Model model) throws Exception {
-        ui.showAskSize(model);
+    private void askGameSize(GameImmutable gameImmutable) throws Exception {
+        ui.showAskSize(gameImmutable);
         boolean sizeValid = false;
         do {
             int size;
@@ -565,41 +564,41 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user to choose a deck.
      *
-     * @param gameModel the game model.
+     * @param gameGameImmutable the game gameImmutable.
      * @throws Exception if an error occurs during input.
      */
-    public void askToChooseADeck(Model gameModel) throws Exception {
-        ui.showDesk(gameModel, nickname);
+    public void askToChooseADeck(GameImmutable gameGameImmutable) throws Exception {
+        ui.showDesk(gameGameImmutable, nickname);
         ui.showAskToChooseADeck();
         String choice;
         try {
             choice = this.inputProcessor.getDataToProcess().popData();
             switch (choice) {
-                case "gD" -> drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DECK_GOLD);
-                case "g1" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 0);
-                case "g2" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 1);
-                case "r1" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 0);
-                case "r2" -> drawCardDisplayed(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 1);
-                case "rD" -> drawCardFromDeck(gameModel.getPlayers().get(gameModel.getCurrPlayer()), DeckType.DECK_RESOURCE);
+                case "gD" -> drawCardFromDeck(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DECK_GOLD);
+                case "g1" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 0);
+                case "g2" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_GOLD, 1);
+                case "r1" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 0);
+                case "r2" -> drawCardDisplayed(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DISPLAYED_RESOURCE, 1);
+                case "rD" -> drawCardFromDeck(gameGameImmutable.getPlayers().get(gameGameImmutable.getCurrPlayer()), DeckType.DECK_RESOURCE);
                 default -> {
                     ui.showInvalidInput();
-                    askToChooseADeck(gameModel);
+                    askToChooseADeck(gameGameImmutable);
                 }
             }
         } catch (NumberFormatException e) {
             ui.showInvalidInput();
-            askToChooseADeck(gameModel);
+            askToChooseADeck(gameGameImmutable);
         }
     }
 
     /**
      * Asks the user to choose a card objective.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @throws Exception if an error occurs during input.
      */
-    public void askToChooseACardObjective(Model model) throws Exception {
-        ui.showObjectiveNotChosen(model);
+    public void askToChooseACardObjective(GameImmutable gameImmutable) throws Exception {
+        ui.showObjectiveNotChosen(gameImmutable);
         boolean wrongIndex = true;
         do {
             int index = 3;
@@ -614,7 +613,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                         ui.showInvalidInput();
                     if (ended) return;
                 } while (index != 1 && index != 0 && !ended);
-                Player player = model.getPlayers().stream().filter(p -> p.getNickname().equals(this.nickname)).collect(Collectors.toList()).get(0);
+                Player player = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(this.nickname)).collect(Collectors.toList()).get(0);
                 if (index == 1 || index == 0) {
                     selectCardObjective(player, index);
                     wrongIndex = false;
@@ -628,17 +627,17 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user to place a card on the codex.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @throws Exception if an error occurs during input.
      */
-    public void askToPlaceCardOnCodex(Model model) throws Exception {
+    public void askToPlaceCardOnCodex(GameImmutable gameImmutable) throws Exception {
         Integer indexHand;
         do {
-            ui.showAskIndex(model);
+            ui.showAskIndex(gameImmutable);
             try {
                 indexHand = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
                 if (ended) return;
-                if (indexHand < 0 || indexHand >= model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().size()) {
+                if (indexHand < 0 || indexHand >= gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().size()) {
                     ui.show_wrongSelectionHandMsg();
                     indexHand = null;
                 }
@@ -648,29 +647,29 @@ public class Flow implements Runnable, ClientAction, GameListener {
             }
         } while (indexHand == null && !ended);
         if (!ended) {
-            askSide(model, model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().get(indexHand));
-            askCoordinates(model);
-            placeCardOnCodex(model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), indexHand, frontCard, row, col);
-            ui.showCodex(model);
+            askSide(gameImmutable, gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().get(indexHand));
+            askCoordinates(gameImmutable);
+            placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), indexHand, frontCard, row, col);
+            ui.showCodex(gameImmutable);
         }
     }
 
     /**
      * Asks the user to choose the side of the starter card.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @return the chosen side.
      * @throws InterruptedException if the thread is interrupted.
      */
-    public Side askSideStarter(Model model) throws InterruptedException {
-        ui.show_askSideStarter(model, nickname);
+    public Side askSideStarter(GameImmutable gameImmutable) throws InterruptedException {
+        ui.show_askSideStarter(gameImmutable, nickname);
         String choice;
         Side side = null;
         while (side == null && !ended) {
             choice = this.inputProcessor.getDataToProcess().popData();
             switch (choice) {
-                case "f" -> side = model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getCardStarter().getFrontStarter();
-                case "b" -> side = model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getCardStarter().getBackStarter();
+                case "f" -> side = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getCardStarter().getFrontStarter();
+                case "b" -> side = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getCardStarter().getBackStarter();
                 default -> ui.showInvalidInput();
             }
         }
@@ -680,21 +679,21 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user to place the starter card on the codex.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @throws Exception if an error occurs during input.
      */
-    public void askToPlaceStarterOnCodex(Model model) throws Exception {
+    public void askToPlaceStarterOnCodex(GameImmutable gameImmutable) throws Exception {
         Side side;
         do {
             try {
-                side = askSideStarter(model);
+                side = askSideStarter(gameImmutable);
                 if (ended) return;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         } while (side == null && !ended);
         if (!ended) {
-            Player player = model.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).findFirst().get();
+            Player player = gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).findFirst().get();
             placeStarterOnCodex(player, side);
         }
     }
@@ -702,13 +701,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user for the coordinates to place a card.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @throws InterruptedException if the thread is interrupted.
      */
-    public void askCoordinates(Model model) throws InterruptedException {
+    public void askCoordinates(GameImmutable gameImmutable) throws InterruptedException {
         boolean validInput = false;
         while (!validInput && !ended) {
-            ui.showAskCoordinates(model);
+            ui.showAskCoordinates(gameImmutable);
             String input = this.inputProcessor.getDataToProcess().popData();
             try {
                 String[] coordinates = input.split(" ");
@@ -728,12 +727,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Asks the user to choose the side of a card.
      *
-     * @param model the game model.
+     * @param gameImmutable the game gameImmutable.
      * @param card  the card to place.
      * @throws InterruptedException if the thread is interrupted.
      */
-    public void askSide(Model model, Card card) throws InterruptedException {
-        ui.showAskSide(model, card);
+    public void askSide(GameImmutable gameImmutable, Card card) throws InterruptedException {
+        ui.showAskSide(gameImmutable, card);
         String sideChosen;
         while (true && !ended) {
             sideChosen = this.inputProcessor.getDataToProcess().popData();
@@ -988,65 +987,65 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when a player joins the game.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      */
     @Override
-    public void playerJoined(Model gameModel) {
-        events.add(gameModel, PLAYER_JOINED);
-        ui.show_playerJoined(gameModel, gameModel.getPlayers().get(gameModel.getPlayers().size() - 1).getNickname());
+    public void playerJoined(GameImmutable gameGameImmutable) {
+        events.add(gameGameImmutable, PLAYER_JOINED);
+        ui.show_playerJoined(gameGameImmutable, gameGameImmutable.getPlayers().get(gameGameImmutable.getPlayers().size() - 1).getNickname());
     }
 
     /**
      * Handles when a player leaves the game.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param nick the nickname of the player leaving
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void playerLeft(Model model, String nick) throws RemoteException {
+    public void playerLeft(GameImmutable gameImmutable, String nick) throws RemoteException {
         if (nick.equals(nickname)) {
             ui.showYouLeft();
             this.youLeft();
         } else {
-            ui.addLatestEvent(nick + " has left the game!", model);
+            ui.addLatestEvent(nick + " has left the game!", gameImmutable);
         }
     }
 
     /**
      * Handles when a player is unable to join a full game.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param player the player trying to join
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void joinUnableGameFull(Model gameImmutable, Player player) throws RemoteException {
+    public void joinUnableGameFull(GameImmutable gameImmutable, Player player) throws RemoteException {
         events.add(null, JOIN_UNABLE_GAME_FULL);
     }
 
     /**
      * Handles when a player reconnects to the game.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      * @param nickPlayerReconnected the nickname of the player who reconnected
      */
     @Override
-    public void playerReconnected(Model gameModel, String nickPlayerReconnected) {
+    public void playerReconnected(GameImmutable gameGameImmutable, String nickPlayerReconnected) {
         lastPlayerReconnected = nickPlayerReconnected;
-        events.add(gameModel, PLAYER_RECONNECTED);
-        ui.addLatestEvent(lastPlayerReconnected + " has reconnected!", model);
+        events.add(gameGameImmutable, PLAYER_RECONNECTED);
+        ui.addLatestEvent(lastPlayerReconnected + " has reconnected!", gameImmutable);
     }
 
     /**
      * Handles when a chat message is sent.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      * @param msg the chat message
      */
     @Override
-    public void sentChatMessage(Model gameModel, ChatMessage msg) {
-        ui.addMessage(msg, gameModel);
+    public void sentChatMessage(GameImmutable gameGameImmutable, ChatMessage msg) {
+        ui.addMessage(msg, gameGameImmutable);
     }
 
     /**
@@ -1064,57 +1063,57 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when the game starts.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      */
     @Override
-    public void gameStarted(Model gameModel) {
-        events.add(gameModel, GAMESTARTED);
+    public void gameStarted(GameImmutable gameGameImmutable) {
+        events.add(gameGameImmutable, GAMESTARTED);
     }
 
     /**
      * Handles when the game ends.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      */
     @Override
-    public void gameEnded(Model gameModel) {
+    public void gameEnded(GameImmutable gameGameImmutable) {
         ended = true;
-        events.add(gameModel, GAMEENDED);
-        ui.show_gameEnded(gameModel);
+        events.add(gameGameImmutable, GAMEENDED);
+        ui.show_gameEnded(gameGameImmutable);
     }
 
     /**
      * Handles the next turn in the game.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      */
     @Override
-    public void nextTurn(Model gameModel) {
-        events.add(gameModel, NEXT_TURN);
+    public void nextTurn(GameImmutable gameGameImmutable) {
+        events.add(gameGameImmutable, NEXT_TURN);
         this.inputProcessor.getDataToProcess().popAllData();
     }
 
     /**
      * Handles when a player disconnects from the game.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      * @param nick the nickname of the player who disconnected
      */
     @Override
-    public void playerDisconnected(Model gameModel, String nick) {
-        ui.addLatestEvent(nick + " has just disconnected", model);
+    public void playerDisconnected(GameImmutable gameGameImmutable, String nick) {
+        ui.addLatestEvent(nick + " has just disconnected", gameImmutable);
     }
 
     /**
      * Handles when only one player is connected to the game.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      * @param secondsToWaitUntilGameEnded the number of seconds to wait until the game ends
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void onlyOnePlayerConnected(Model gameModel, int secondsToWaitUntilGameEnded) throws RemoteException {
-        ui.addLatestEvent("Only one player is connected, waiting " + secondsToWaitUntilGameEnded + " seconds before calling Game Ended!", model);
+    public void onlyOnePlayerConnected(GameImmutable gameGameImmutable, int secondsToWaitUntilGameEnded) throws RemoteException {
+        ui.addLatestEvent("Only one player is connected, waiting " + secondsToWaitUntilGameEnded + " seconds before calling Game Ended!", gameImmutable);
     }
 
     /**
@@ -1131,159 +1130,159 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when the last cycle of the game begins.
      *
-     * @param gameModel the game model
+     * @param gameGameImmutable the game gameImmutable
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void lastCircle(Model gameModel) throws RemoteException {
-        ui.addLatestEvent("Last cycle begins!", model);
+    public void lastCircle(GameImmutable gameGameImmutable) throws RemoteException {
+        ui.addLatestEvent("Last cycle begins!", gameImmutable);
     }
 
     /**
      * Handles when a card is positioned into the codex.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param row the row coordinate of the card
      * @param column the column coordinate of the card
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void positionedCardIntoCodex(Model model, int row, int column) throws RemoteException {
-        ui.addLatestEvent(model.getPlayers().get(model.getCurrPlayer()).getNickname() + " has placed a card on his Codex", model);
+    public void positionedCardIntoCodex(GameImmutable gameImmutable, int row, int column) throws RemoteException {
+        ui.addLatestEvent(gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname() + " has placed a card on his Codex", gameImmutable);
     }
 
     /**
      * Handles when a starter card is positioned into the codex.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param nickname the nickname of the player placing the starter card
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void positionedStarterCardIntoCodex(Model model, String nickname) throws RemoteException {
-        ui.addLatestEvent(nickname + " placed his starter card on the codex.", model);
+    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        ui.addLatestEvent(nickname + " placed his starter card on the codex.", gameImmutable);
     }
 
     /**
      * Handles when a player gains a point.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param player the player gaining the point
      * @param point the number of points gained
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void addedPoint(Model model, Player player, int point) throws RemoteException {
-        ui.addLatestEvent(player.getNickname() + " has gained " + point + " point(s) by placing his Card", model);
+    public void addedPoint(GameImmutable gameImmutable, Player player, int point) throws RemoteException {
+        ui.addLatestEvent(player.getNickname() + " has gained " + point + " point(s) by placing his Card", gameImmutable);
     }
 
     /**
      * Handles when a card objective is chosen.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param cardObjective the chosen card objective
      * @param nickname the nickname of the player choosing the card objective
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void objectiveCardChosen(Model model, CardObjective cardObjective, String nickname) throws RemoteException {
-        ui.showObjectiveChosen(model, cardObjective, nickname);
+    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException {
+        ui.showObjectiveChosen(gameImmutable, cardObjective, nickname);
     }
 
     /**
      * Handles when a card objective is not chosen.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void objectiveCardNotChosen(Model model) throws RemoteException {
-        events.add(model, CHOOSE_OBJECTIVE_CARD);
+    public void objectiveCardNotChosen(GameImmutable gameImmutable) throws RemoteException {
+        events.add(gameImmutable, CHOOSE_OBJECTIVE_CARD);
     }
 
     /**
      * Handles when a deck has no more cards.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param deck the deck that is empty
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void deckHasNoCards(Model model, ArrayList<? extends Card> deck) throws RemoteException {
+    public void deckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) throws RemoteException {
         boolean both = false;
-        if (model.getDesk().getDeckGold().isEmpty() && model.getDesk().getDeckResource().isEmpty()) {
-            ui.addLatestEvent("Resource Deck and GoldDeck are now Empty", model);
+        if (gameImmutable.getDesk().getDeckGold().isEmpty() && gameImmutable.getDesk().getDeckResource().isEmpty()) {
+            ui.addLatestEvent("Resource Deck and GoldDeck are now Empty", gameImmutable);
             both = true;
         }
-        if (model.getDesk().getDeckResource().isEmpty() && !both) {
-            ui.addLatestEvent("ResourceDeck is now Empty", model);
+        if (gameImmutable.getDesk().getDeckResource().isEmpty() && !both) {
+            ui.addLatestEvent("ResourceDeck is now Empty", gameImmutable);
         }
-        if (model.getDesk().getDeckGold().isEmpty() && !both) {
-            ui.addLatestEvent("GoldDeck is now Empty", model);
+        if (gameImmutable.getDesk().getDeckGold().isEmpty() && !both) {
+            ui.addLatestEvent("GoldDeck is now Empty", gameImmutable);
         }
     }
 
     /**
      * Handles when a card is added to the player's hand.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param card the card added to the hand
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void cardAddedToHand(Model model, Card card) throws RemoteException {
-        ui.showCardAddedToHand(model, card);
+    public void cardAddedToHand(GameImmutable gameImmutable, Card card) throws RemoteException {
+        ui.showCardAddedToHand(gameImmutable, card);
     }
 
     /**
      * Handles when end game conditions are reached.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void endGameConditionsReached(Model gameImmutable) throws RemoteException {
-        ui.addLatestEvent("EndGame Conditions have been reached", model);
+    public void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException {
+        ui.addLatestEvent("EndGame Conditions have been reached", this.gameImmutable);
     }
 
     /**
      * Handles when objective points are added.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param objectivePoint the number of objective points added
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void addedPointObjective(Model model, int objectivePoint) throws RemoteException {
-        ui.addLatestEvent("ObjectivePoints have been added", model);
+    public void addedPointObjective(GameImmutable gameImmutable, int objectivePoint) throws RemoteException {
+        ui.addLatestEvent("ObjectivePoints have been added", gameImmutable);
     }
 
     /**
      * Handles when a winner is declared.
      *
-     * @param model the game model
+     * @param gameImmutable the game gameImmutable
      * @param nickname the nickname of the winner
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void winnerDeclared(Model model, ArrayList<String> nickname) throws RemoteException {
+    public void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException {
         String text = "";
         for(int i = 0; i<nickname.size(); i++){
             text += nickname.get(i)+" ";
         }
-        ui.addLatestEvent(text + " won the game.", model);
+        ui.addLatestEvent(text + " won the game.", gameImmutable);
     }
 
     /**
      * Handles when invalid coordinates are provided.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param row the row coordinate
      * @param column the column coordinate
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void invalidCoordinates(Model gameImmutable, int row, int column) throws RemoteException {
+    public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
             ui.showCardCannotBePlaced(gameImmutable, nickname);
             events.add(gameImmutable, PLACE_CARD_ON_CODEX);
@@ -1293,12 +1292,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when placement requirements are not respected.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param requirementsPlacement the list of requirements not respected
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void requirementsPlacementNotRespected(Model gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
+    public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
             ui.showReqNotRespected(gameImmutable, requirementsPlacement);
             events.add(gameImmutable, PLACE_CARD_ON_CODEX);
@@ -1308,83 +1307,83 @@ public class Flow implements Runnable, ClientAction, GameListener {
     /**
      * Handles when an index is not valid.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param index the invalid index
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void indexNotValid(Model gameImmutable, int index) throws RemoteException {
+    public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
-            ui.addLatestEvent("Index is not valid", model);
+            ui.addLatestEvent("Index is not valid", this.gameImmutable);
         }
     }
 
     /**
      * Handles when a card is not added to the player's hand.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void cardNotAddedToHand(Model gameImmutable) throws RemoteException {
+    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
-            ui.addLatestEvent("You can't draw a card", model);
+            ui.addLatestEvent("You can't draw a card", this.gameImmutable);
         }
     }
 
     /**
      * Handles when the game size is updated.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param size the new size of the game
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void gameSizeUpdated(Model gameImmutable, int size) throws RemoteException {
+    public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
         ui.show_sizeSetted(size, gameImmutable);
     }
 
     /**
      * Handles when a card is drawn.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param nickname the nickname of the player drawing the card
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void drawCard(Model gameImmutable, String nickname) throws RemoteException {
+    public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
         events.add(gameImmutable, DRAW_CARD);
     }
 
     /**
      * Handles when there is no game to reconnect to.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @param nickname the nickname of the player trying to reconnect
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void noGameToReconnect(Model gameImmutable, String nickname) throws RemoteException {
+    public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException {
         events.add(null, APP_MENU);
-        ui.addLatestEvent("There are no available games you can reconnect to", model);
+        ui.addLatestEvent("There are no available games you can reconnect to", this.gameImmutable);
     }
 
     /**
      * Handles when a game is created.
      *
-     * @param gameImmutable the game model
+     * @param gameImmutable the game gameImmutable
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void gameCreated(Model gameImmutable) throws RemoteException {
+    public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
         events.add(gameImmutable, GAMECREATED);
-        ui.addLatestEvent("New game created", model);
+        ui.addLatestEvent("New game created", this.gameImmutable);
     }
 
     @Override
-    public void canNotPlaceCard(Model gameImmutable, String nickname) throws RemoteException {
+    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
-            ui.addLatestEvent("You can't place a card now", model);
+            ui.addLatestEvent("You can't place a card now", this.gameImmutable);
         }
     }
 }
