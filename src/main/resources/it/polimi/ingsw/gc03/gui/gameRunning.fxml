@@ -17,13 +17,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
+<AnchorPane fx:id="mainAnchor" layoutX="1.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
    <styleClass>
       <String fx:value="backgroundInGame" />
       <String fx:value="backgroundWelcome" />
    </styleClass>
    <children>
-      <Group fx:id="contentGroup" scaleX="0.8" scaleY="0.8">
+      <Group fx:id="contentGroup" scaleX="0.8" scaleY="0.8" translateX="-160.0" translateY="-95.0">
          <children>
             <Pane prefHeight="950.0" prefWidth="1600.0">
                <children>
