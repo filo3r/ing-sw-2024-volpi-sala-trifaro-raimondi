@@ -1931,7 +1931,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:"+ imagePaths.get(j));
+                                Image image = new Image("file:" + imagePaths.get(j));
                                 if (j == 0) {
                                     hand21Pane.setVisible(true);
                                     hand21Image.setImage(image);
@@ -1950,7 +1950,7 @@ public class GameRunningController extends GenericController {
                                     hand22Image.setSmooth(true);
                                     hand22Image.setCache(true);
                                 }
-                                if (j == 3) {
+                                if (j == 2) {
                                     hand23Pane.setVisible(true);
                                     hand23Image.setImage(image);
                                     hand23Image.setFitWidth(hand23Pane.getPrefWidth());
@@ -1996,7 +1996,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:"+imagePaths.get(j));
+                                Image image = new Image("file:" + imagePaths.get(j));
                                 if (j == 0) {
                                     hand31Pane.setVisible(true);
                                     hand31Image.setImage(image);
@@ -2015,7 +2015,7 @@ public class GameRunningController extends GenericController {
                                     hand32Image.setSmooth(true);
                                     hand32Image.setCache(true);
                                 }
-                                if (j == 3) {
+                                if (j == 2) {
                                     hand33Pane.setVisible(true);
                                     hand33Image.setImage(image);
                                     hand33Image.setFitWidth(hand33Pane.getPrefWidth());
@@ -2065,7 +2065,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:"+imagePaths.get(j));
+                                Image image = new Image("file:" + imagePaths.get(j));
                                 if (j == 0) {
                                     hand11Pane.setVisible(true);
                                     hand11Image.setImage(image);
@@ -2084,7 +2084,7 @@ public class GameRunningController extends GenericController {
                                     hand12Image.setSmooth(true);
                                     hand12Image.setCache(true);
                                 }
-                                if (j == 3) {
+                                if (j == 2) {
                                     hand13Pane.setVisible(true);
                                     hand13Image.setImage(image);
                                     hand13Image.setFitWidth(hand13Pane.getPrefWidth());
@@ -2130,7 +2130,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:"+imagePaths.get(j));
+                                Image image = new Image("file:" + imagePaths.get(j));
                                 if (j == 0) {
                                     hand21Pane.setVisible(true);
                                     hand21Image.setImage(image);
@@ -2149,7 +2149,7 @@ public class GameRunningController extends GenericController {
                                     hand22Image.setSmooth(true);
                                     hand22Image.setCache(true);
                                 }
-                                if (j == 3) {
+                                if (j == 2) {
                                     hand23Pane.setVisible(true);
                                     hand23Image.setImage(image);
                                     hand23Image.setFitWidth(hand23Pane.getPrefWidth());
@@ -2195,7 +2195,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:"+imagePaths.get(j));
+                                Image image = new Image("file:" + imagePaths.get(j));
                                 if (j == 0) {
                                     hand31Pane.setVisible(true);
                                     hand31Image.setImage(image);
@@ -2214,7 +2214,7 @@ public class GameRunningController extends GenericController {
                                     hand32Image.setSmooth(true);
                                     hand32Image.setCache(true);
                                 }
-                                if (j == 3) {
+                                if (j == 2) {
                                     hand33Pane.setVisible(true);
                                     hand33Image.setImage(image);
                                     hand33Image.setFitWidth(hand33Pane.getPrefWidth());
@@ -2260,7 +2260,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:"+imagePaths.get(j));
+                                Image image = new Image("file:" + imagePaths.get(j));
                                 if (j == 0) {
                                     hand41Pane.setVisible(true);
                                     hand41Image.setImage(image);
@@ -2279,7 +2279,7 @@ public class GameRunningController extends GenericController {
                                     hand42Image.setSmooth(true);
                                     hand42Image.setCache(true);
                                 }
-                                if (j == 3) {
+                                if (j == 2) {
                                     hand43Pane.setVisible(true);
                                     hand43Image.setImage(image);
                                     hand43Image.setFitWidth(hand43Pane.getPrefWidth());
