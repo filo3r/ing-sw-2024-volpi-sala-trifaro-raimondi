@@ -12,8 +12,10 @@ import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.security.interfaces.EdECKey;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -234,7 +236,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // check if the player is actually in the game
         if(!game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().isEmpty()){
             GameListener gameListener = game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getSelfListener();
-            gameListener.playerLeft(new Model(this.game), playerNickname);
+            gameListener.playerLeft(new GameImmutable(this.game), playerNickname);
             game.removeListener(gameListener);
             game.removePlayer(playerNickname);
         }
@@ -388,7 +390,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             checkFinalAction(playerFromController);
             updateCurrPlayer();
         } else {
-            playerFromController.getSelfListener().cardNotAddedToHand(new Model(game));
+            playerFromController.getSelfListener().cardNotAddedToHand(new GameImmutable(game));
         }
     }
 
@@ -411,7 +413,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             checkFinalAction(playerFromController);
             updateCurrPlayer();
         } else {
-            playerFromController.getSelfListener().cardNotAddedToHand(new Model(game));
+            playerFromController.getSelfListener().cardNotAddedToHand(new GameImmutable(game));
         }
     }
 
@@ -507,7 +509,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                     }
                 }
             } else {
-                playerFromController.getSelfListener().canNotPlaceCard(new Model(game), playerFromController.getNickname());
+                playerFromController.getSelfListener().canNotPlaceCard(new GameImmutable(game), playerFromController.getNickname());
                 throw new Exception("The player is not the current player or the game is not running or he's current action is not place, it's "+game.getPlayers().get(game.getCurrPlayer()).getNickname());
             }
         } else {
