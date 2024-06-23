@@ -33,6 +33,9 @@ public class CardObjectiveController extends GenericController {
      * @param nickname The nickname of the player.
      */
     public void showCardObjective(GameImmutable gameImmutable, String nickname) {
+        // Set visibility
+        firstCard.setVisible(false);
+        secondCard.setVisible(false);
         // Get player Objective cards
         Player player = getPlayer(gameImmutable, nickname);
         String firstImagePath = null;
@@ -49,6 +52,8 @@ public class CardObjectiveController extends GenericController {
                 // Set images to buttons
                 firstCard.setImage(firstImage);
                 secondCard.setImage(secondImage);
+                firstCard.setVisible(true);
+                secondCard.setVisible(true);
             } catch (Exception e) {
                 showError("Error loading images", "There was an error loading the Objective cards images.");
                 System.exit(1);

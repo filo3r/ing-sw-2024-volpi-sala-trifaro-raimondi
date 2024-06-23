@@ -33,6 +33,9 @@ public class CardStarterController extends GenericController {
      * @param nickname The nickname of the player.
      */
     public void showCardStarter(GameImmutable gameImmutable, String nickname) {
+        // Set visibility
+        frontSide.setVisible(false);
+        backSide.setVisible(false);
         // Get player Starter card
         Player player = getPlayer(gameImmutable, nickname);
         String frontImagePath = null;
@@ -49,6 +52,8 @@ public class CardStarterController extends GenericController {
                 // Set images to buttons
                 frontSide.setImage(frontImage);
                 backSide.setImage(backImage);
+                frontSide.setVisible(true);
+                backSide.setVisible(true);
             } catch (Exception e) {
                 showError("Error loading images", "There was an error loading the Starter card images.");
                 System.exit(1);
