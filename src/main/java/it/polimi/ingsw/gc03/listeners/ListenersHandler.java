@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.listeners;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Game;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
@@ -62,8 +62,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.playerJoined(gameImmutable);
+                Model model = new Model(game);
+                gameListener.playerJoined(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -81,8 +81,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.playerLeft(gameImmutable, nickname);
+                Model model = new Model(game);
+                gameListener.playerLeft(model, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -100,8 +100,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.joinUnableGameFull(gameImmutable, player);
+                Model model = new Model(game);
+                gameListener.joinUnableGameFull(model, player);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -119,8 +119,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.playerReconnected(gameImmutable, nickname);
+                Model model = new Model(game);
+                gameListener.playerReconnected(model, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -138,8 +138,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.playerDisconnected(gameImmutable, nickname);
+                Model model = new Model(game);
+                gameListener.playerDisconnected(model, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -157,8 +157,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.onlyOnePlayerConnected(gameImmutable, timer);
+                Model model = new Model(game);
+                gameListener.onlyOnePlayerConnected(model, timer);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -209,8 +209,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.gameStarted(gameImmutable);
+                Model model = new Model(game);
+                gameListener.gameStarted(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -227,8 +227,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.gameEnded(gameImmutable);
+                Model model = new Model(game);
+                gameListener.gameEnded(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -246,8 +246,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.sentChatMessage(gameImmutable, chatMessage);
+                Model model = new Model(game);
+                gameListener.sentChatMessage(model, chatMessage);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -264,8 +264,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.nextTurn(gameImmutable);
+                Model model = new Model(game);
+                gameListener.nextTurn(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -282,8 +282,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.lastCircle(gameImmutable);
+                Model model = new Model(game);
+                gameListener.lastCircle(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -302,8 +302,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.positionedCardIntoCodex(gameImmutable, row, column);
+                Model model = new Model(game);
+                gameListener.positionedCardIntoCodex(model, row, column);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -320,8 +320,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.positionedStarterCardIntoCodex(gameImmutable, nickname);
+                Model model = new Model(game);
+                gameListener.positionedStarterCardIntoCodex(model, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -340,8 +340,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.invalidCoordinates(gameImmutable, row, column);
+                Model model = new Model(game);
+                gameListener.invalidCoordinates(model, row, column);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -359,8 +359,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.requirementsPlacementNotRespected(gameImmutable, requirementsPlacement);
+                Model model = new Model(game);
+                gameListener.requirementsPlacementNotRespected(model, requirementsPlacement);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -379,8 +379,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.addedPoint(gameImmutable, player, point);
+                Model model = new Model(game);
+                gameListener.addedPoint(model, player, point);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -399,8 +399,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.objectiveCardChosen(gameImmutable, cardObjective, nickname);
+                Model model = new Model(game);
+                gameListener.objectiveCardChosen(model, cardObjective, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -417,8 +417,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.objectiveCardNotChosen(gameImmutable);
+                Model model = new Model(game);
+                gameListener.objectiveCardNotChosen(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -437,8 +437,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.indexNotValid(gameImmutable, index);
+                Model model = new Model(game);
+                gameListener.indexNotValid(model, index);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -456,8 +456,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.deckHasNoCards(gameImmutable, deck);
+                Model model = new Model(game);
+                gameListener.deckHasNoCards(model, deck);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -475,8 +475,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.cardAddedToHand(gameImmutable, card);
+                Model model = new Model(game);
+                gameListener.cardAddedToHand(model, card);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -493,8 +493,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.cardNotAddedToHand(gameImmutable);
+                Model model = new Model(game);
+                gameListener.cardNotAddedToHand(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -511,8 +511,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.endGameConditionsReached(gameImmutable);
+                Model model = new Model(game);
+                gameListener.endGameConditionsReached(model);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -531,8 +531,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.addedPointObjective(gameImmutable, objectivePoint);
+                Model model = new Model(game);
+                gameListener.addedPointObjective(model, objectivePoint);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -551,8 +551,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.winnerDeclared(gameImmutable, nickname);
+                Model model = new Model(game);
+                gameListener.winnerDeclared(model, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -570,8 +570,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.gameSizeUpdated(gameImmutable, size);
+                Model model = new Model(game);
+                gameListener.gameSizeUpdated(model, size);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -589,8 +589,8 @@ public class ListenersHandler {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
-                GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.drawCard(gameImmutable, nickname);
+                Model model = new Model(game);
+                gameListener.drawCard(model, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import java.io.IOException;
 
 /**
@@ -13,7 +13,7 @@ public class SocketServerMessagePositionedStarterCardIntoCodex extends SocketSer
     /**
      * The immutable game model.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * The nickname of the player who positioned the starter card
@@ -22,10 +22,10 @@ public class SocketServerMessagePositionedStarterCardIntoCodex extends SocketSer
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      */
-    public SocketServerMessagePositionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) {
-        this.gameImmutable = gameImmutable;
+    public SocketServerMessagePositionedStarterCardIntoCodex(Model model, String nickname) {
+        this.model = model;
         this.nickname = nickname;
     }
 
@@ -37,6 +37,6 @@ public class SocketServerMessagePositionedStarterCardIntoCodex extends SocketSer
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.positionedStarterCardIntoCodex(this.gameImmutable, this.nickname);
+        gameListener.positionedStarterCardIntoCodex(this.model, this.nickname);
     }
 }

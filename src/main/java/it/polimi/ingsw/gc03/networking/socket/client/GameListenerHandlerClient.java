@@ -2,7 +2,7 @@ package it.polimi.ingsw.gc03.networking.socket.client;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
@@ -33,67 +33,67 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
 
     /**
      * Handles the event when a player joins the game.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void playerJoined(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.playerJoined(gameImmutable);
+    public void playerJoined(Model model) throws RemoteException {
+        this.flow.playerJoined(model);
     }
 
     /**
      * Handles the event when a player leaves the game.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nickname of the player who left the game.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void playerLeft(GameImmutable gameImmutable, String nickname) throws RemoteException {
-        this.flow.playerLeft(gameImmutable, nickname);
+    public void playerLeft(Model model, String nickname) throws RemoteException {
+        this.flow.playerLeft(model, nickname);
     }
 
     /**
      * Handles the event when a player is unable to join a full game.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param player The player that tried to join.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void joinUnableGameFull(GameImmutable gameImmutable, Player player) throws RemoteException {
-        this.flow.joinUnableGameFull(gameImmutable, player);
+    public void joinUnableGameFull(Model model, Player player) throws RemoteException {
+        this.flow.joinUnableGameFull(model, player);
     }
 
     /**
      * Handles the event when a player reconnects to the game.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nickname of the player that has reconnected.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void playerReconnected(GameImmutable gameImmutable, String nickname) throws RemoteException {
-        this.flow.playerReconnected(gameImmutable, nickname);
+    public void playerReconnected(Model model, String nickname) throws RemoteException {
+        this.flow.playerReconnected(model, nickname);
     }
 
     /**
      * Handles the event when a player disconnects.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nickname of the player that has disconnected.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void playerDisconnected(GameImmutable gameImmutable, String nickname) throws RemoteException {
-        this.flow.playerDisconnected(gameImmutable, nickname);
+    public void playerDisconnected(Model model, String nickname) throws RemoteException {
+        this.flow.playerDisconnected(model, nickname);
     }
 
     /**
      * Handles the event when only one player is connected.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param timer The number of seconds to wait until the game ends.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void onlyOnePlayerConnected(GameImmutable gameImmutable, int timer) throws RemoteException {
-        this.flow.onlyOnePlayerConnected(gameImmutable, timer);
+    public void onlyOnePlayerConnected(Model model, int timer) throws RemoteException {
+        this.flow.onlyOnePlayerConnected(model, timer);
     }
 
     /**
@@ -118,260 +118,260 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
 
     /**
      * Handles the event when the game starts.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void gameStarted(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.gameStarted(gameImmutable);
+    public void gameStarted(Model model) throws RemoteException {
+        this.flow.gameStarted(model);
     }
 
     /**
      * Handles the event when the game ends.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void gameEnded(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.gameEnded(gameImmutable);
+    public void gameEnded(Model model) throws RemoteException {
+        this.flow.gameEnded(model);
     }
 
     /**
      * Handles the event when a message is sent.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param chatMessage The message that has been sent.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void sentChatMessage(GameImmutable gameImmutable, ChatMessage chatMessage) throws RemoteException {
-        this.flow.sentChatMessage(gameImmutable, chatMessage);
+    public void sentChatMessage(Model model, ChatMessage chatMessage) throws RemoteException {
+        this.flow.sentChatMessage(model, chatMessage);
     }
 
     /**
      * Handles the event for the next turn.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void nextTurn(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.nextTurn(gameImmutable);
+    public void nextTurn(Model model) throws RemoteException {
+        this.flow.nextTurn(model);
     }
 
     /**
      * Handles the event for the last circle.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void lastCircle(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.lastCircle(gameImmutable);
+    public void lastCircle(Model model) throws RemoteException {
+        this.flow.lastCircle(model);
     }
 
     /**
      * Handles the event when a card is positioned into the Codex.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param row The row where the card was placed.
      * @param column The column where the card was placed.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void positionedCardIntoCodex(GameImmutable gameImmutable, int row, int column) throws RemoteException {
-        this.flow.positionedCardIntoCodex(gameImmutable, row, column);
+    public void positionedCardIntoCodex(Model model, int row, int column) throws RemoteException {
+        this.flow.positionedCardIntoCodex(model, row, column);
     }
 
     /**
      * Handles the event when the Starter card is positioned into the codex.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException {
-        this.flow.positionedStarterCardIntoCodex(gameImmutable, nickname);
+    public void positionedStarterCardIntoCodex(Model model, String nickname) throws RemoteException {
+        this.flow.positionedStarterCardIntoCodex(model, nickname);
     }
 
     /**
      * Handles the event when invalid coordinates are provided.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param row The row where the card wanted to be placed.
      * @param column The column where the card wanted to be placed.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
-        this.flow.invalidCoordinates(gameImmutable, row, column);
+    public void invalidCoordinates(Model model, int row, int column) throws RemoteException {
+        this.flow.invalidCoordinates(model, row, column);
     }
 
     /**
      * Handles the event when the requirements for card placement are not respected.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param requirementsPlacement The requirements for card placement.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
-       this.flow.requirementsPlacementNotRespected(gameImmutable, requirementsPlacement);
+    public void requirementsPlacementNotRespected(Model model, ArrayList<Value> requirementsPlacement) throws RemoteException {
+       this.flow.requirementsPlacementNotRespected(model, requirementsPlacement);
     }
 
     /**
      * Handles the event when a point is added to a player.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param player The player that has added the points.
      * @param point The number of points that have been added.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void addedPoint(GameImmutable gameImmutable, Player player, int point) throws RemoteException {
-        this.flow.addedPoint(gameImmutable, player, point);
+    public void addedPoint(Model model, Player player, int point) throws RemoteException {
+        this.flow.addedPoint(model, player, point);
     }
 
     /**
      * Handles the event when the Objective card is chosen.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param cardObjective The chosen Objective card.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException {
-        this.flow.objectiveCardChosen(gameImmutable, cardObjective, nickname);
+    public void objectiveCardChosen(Model model, CardObjective cardObjective, String nickname) throws RemoteException {
+        this.flow.objectiveCardChosen(model, cardObjective, nickname);
     }
 
     /**
      * Handles the event when the Objective card is not chosen.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void objectiveCardNotChosen(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.objectiveCardNotChosen(gameImmutable);
+    public void objectiveCardNotChosen(Model model) throws RemoteException {
+        this.flow.objectiveCardNotChosen(model);
     }
 
     /**
      * Handles the event when an invalid index is provided.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param index The index.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
-        this.flow.indexNotValid(gameImmutable, index);
+    public void indexNotValid(Model model, int index) throws RemoteException {
+        this.flow.indexNotValid(model, index);
     }
 
     /**
      * Handles the event when a deck has no cards left.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param deck The deck without cards.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void deckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) throws RemoteException {
-        this.flow.deckHasNoCards(gameImmutable, deck);
+    public void deckHasNoCards(Model model, ArrayList<? extends Card> deck) throws RemoteException {
+        this.flow.deckHasNoCards(model, deck);
     }
 
     /**
      * Handles the event when a card is added to the player's hand.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param card The card that was added.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void cardAddedToHand(GameImmutable gameImmutable, Card card) throws RemoteException {
-        this.flow.cardAddedToHand(gameImmutable, card);
+    public void cardAddedToHand(Model model, Card card) throws RemoteException {
+        this.flow.cardAddedToHand(model, card);
     }
 
     /**
      * Handles the event when a card is not added to the player's hand.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.cardNotAddedToHand(gameImmutable);
+    public void cardNotAddedToHand(Model model) throws RemoteException {
+        this.flow.cardNotAddedToHand(model);
     }
 
     /**
      * Handles the event when the end game conditions are reached.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException {
+    public void endGameConditionsReached(Model model) throws RemoteException {
         //this.flow.endGameConditionReached(gameImmutable);
     }
 
     /**
      * Handles the event when objective points are added.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param objectivePoint The points obtained with Objective cards.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void addedPointObjective(GameImmutable gameImmutable, int objectivePoint) throws RemoteException {
-        this.flow.addedPointObjective(gameImmutable, objectivePoint);
+    public void addedPointObjective(Model model, int objectivePoint) throws RemoteException {
+        this.flow.addedPointObjective(model, objectivePoint);
     }
 
     /**
      * Handles the event when the winners are declared.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nicknames of the players who won.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException {
-        this.flow.winnerDeclared(gameImmutable, nickname);
+    public void winnerDeclared(Model model, ArrayList<String> nickname) throws RemoteException {
+        this.flow.winnerDeclared(model, nickname);
     }
 
     /**
      * Handles the event when the winners are declared.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param size The new game size.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
-        this.flow.gameSizeUpdated(gameImmutable, size);
+    public void gameSizeUpdated(Model model, int size) throws RemoteException {
+        this.flow.gameSizeUpdated(model, size);
     }
 
     /**
      * Handles the drawing of a card.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nickname of the player who has drawn a card.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
-        this.flow.drawCard(gameImmutable, nickname);
+    public void drawCard(Model model, String nickname) throws RemoteException {
+        this.flow.drawCard(model, nickname);
     }
 
     /**
      * Handles failure of reconnection.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nickname of the player who tried to reconnect to a game.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException{
-        this.flow.noGameToReconnect(gameImmutable, nickname);
+    public void noGameToReconnect(Model model, String nickname) throws RemoteException{
+        this.flow.noGameToReconnect(model, nickname);
     }
 
     /**
      * Handles the creation of a game.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void gameCreated(GameImmutable gameImmutable) throws RemoteException{
-        this.flow.gameCreated(gameImmutable);
+    public void gameCreated(Model model) throws RemoteException{
+        this.flow.gameCreated(model);
     }
 
     /**
      * Handles the failure of placing a card.
-     * @param gameImmutable The immutable game object.
+     * @param model The immutable game object.
      * @param nickname The nickname of the player who tried.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
-        this.flow.canNotPlaceCard(gameImmutable, nickname);
+    public void canNotPlaceCard(Model model, String nickname) throws RemoteException{
+        this.flow.canNotPlaceCard(model, nickname);
     }
 
 }

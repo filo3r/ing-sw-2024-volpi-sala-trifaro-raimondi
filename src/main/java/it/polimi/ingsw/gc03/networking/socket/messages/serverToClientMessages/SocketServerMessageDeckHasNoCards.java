@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import it.polimi.ingsw.gc03.model.card.Card;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class SocketServerMessageDeckHasNoCards extends SocketServerGenericMessag
     /**
      * The immutable game model.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * The deck without cards.
@@ -24,11 +24,11 @@ public class SocketServerMessageDeckHasNoCards extends SocketServerGenericMessag
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param deck The deck without cards.
      */
-    public SocketServerMessageDeckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) {
-        this.gameImmutable = gameImmutable;
+    public SocketServerMessageDeckHasNoCards(Model model, ArrayList<? extends Card> deck) {
+        this.model = model;
         this.deck = deck;
     }
 
@@ -40,6 +40,6 @@ public class SocketServerMessageDeckHasNoCards extends SocketServerGenericMessag
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.deckHasNoCards(this.gameImmutable, this.deck);
+        gameListener.deckHasNoCards(this.model, this.deck);
     }
 }

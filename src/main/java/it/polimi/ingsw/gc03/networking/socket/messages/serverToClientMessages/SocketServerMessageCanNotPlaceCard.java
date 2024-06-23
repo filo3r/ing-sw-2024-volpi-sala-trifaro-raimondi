@@ -1,8 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
-import it.polimi.ingsw.gc03.model.card.Card;
+import it.polimi.ingsw.gc03.model.Model;
 
 import java.io.IOException;
 
@@ -11,7 +10,7 @@ public class SocketServerMessageCanNotPlaceCard extends SocketServerGenericMessa
     /**
      * The immutable game model.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * The player's nickname.
@@ -20,11 +19,11 @@ public class SocketServerMessageCanNotPlaceCard extends SocketServerGenericMessa
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The player's nickname.
      */
-    public SocketServerMessageCanNotPlaceCard(GameImmutable gameImmutable, String nickname) {
-        this.gameImmutable = gameImmutable;
+    public SocketServerMessageCanNotPlaceCard(Model model, String nickname) {
+        this.model = model;
         this.nickname = nickname;
     }
 
@@ -36,6 +35,6 @@ public class SocketServerMessageCanNotPlaceCard extends SocketServerGenericMessa
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.canNotPlaceCard(this.gameImmutable, this.nickname);
+        gameListener.canNotPlaceCard(this.model, this.nickname);
     }
 }

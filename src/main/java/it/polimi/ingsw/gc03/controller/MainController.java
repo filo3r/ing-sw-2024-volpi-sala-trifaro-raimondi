@@ -1,13 +1,9 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
-import it.polimi.ingsw.gc03.model.Player;
+import it.polimi.ingsw.gc03.model.Model;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
-import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
-import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
-import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 
@@ -15,7 +11,6 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * MainController is a singleton that manages the creation and joining of games.
@@ -56,7 +51,7 @@ public class MainController implements MainControllerInterface, Serializable {
         try {
             GameController controller = new GameController();
             gameControllers.add(controller);
-            gameListener.gameCreated(new GameImmutable(controller.getGame()));
+            gameListener.gameCreated(new Model(controller.getGame()));
             joinSpecificGame(gameListener, firstPlayerNickname, controller.getGame().getIdGame());
             return controller;
         } catch (Exception e) {

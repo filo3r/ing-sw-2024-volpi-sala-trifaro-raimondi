@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.view.gui.controllers;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.CardGold;
@@ -9,20 +9,17 @@ import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.enumerations.Color;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -1037,6 +1034,14 @@ public class GameRunningController extends GenericController {
     @FXML
     private ListView<String> latestEvent;
 
+    @FXML
+    private ComboBox<String> chatReceiver;
+
+    @FXML
+    private TextField chatMessage;
+
+    private int idGame = 0;
+
     /**
      * Sets the game ID to be displayed in the scene.
      * @param gameId The game ID to be displayed.
@@ -1048,10 +1053,10 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the nickname of the player of the current turn to be displayed in the scene.
-     * @param gameImmutable The current state of the game, used to get the current player's nickname.
+     * @param model The current state of the game, used to get the current player's nickname.
      */
-    public void setTurnUsername(GameImmutable gameImmutable) {
-        this.turnUsername.setText("Turn: " + gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname());
+    public void setTurnUsername(Model model) {
+        this.turnUsername.setText("Turn: " + model.getPlayers().get(model.getCurrPlayer()).getNickname());
     }
 
 
@@ -1067,9 +1072,9 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the points for each player to be displayed in the scene.
-     * @param gameImmutable The current state of the game, used to get each player's points.
+     * @param model The current state of the game, used to get each player's points.
      */
-    public void setPoints(GameImmutable gameImmutable) {
+    public void setPoints(Model model) {
         this.points.setVisible(true);
         this.points.setText("Points");
         this.points1.setVisible(false);
@@ -1079,14 +1084,14 @@ public class GameRunningController extends GenericController {
         // Set points
         int i = 0;
         Label temp = null;
-        for (Player player : gameImmutable.getPlayers()) {
+        for (Player player : model.getPlayers()) {
             switch (i) {
                 case 0 -> temp = points1;
                 case 1 -> temp = points2;
                 case 2 -> temp = points3;
                 case 3 -> temp = points4;
             }
-            temp.setText(gameImmutable.getPlayers().get(i).getNickname() + ": " + gameImmutable.getPlayers().get(i).getCodex().getPointCodex());
+            temp.setText(model.getPlayers().get(i).getNickname() + ": " + model.getPlayers().get(i).getCodex().getPointCodex());
             temp.setVisible(true);
             i++;
         }
@@ -1095,12 +1100,12 @@ public class GameRunningController extends GenericController {
 
     /**
      * Get the player based on the nickname.
-     * @param gameImmutable The game model.
+     * @param model The game model.
      * @param nickname The nickname of the player.
      * @return The player.
      */
-    private Player getPlayer(GameImmutable gameImmutable, String nickname) {
-        for (Player player : gameImmutable.getPlayers()) {
+    private Player getPlayer(Model model, String nickname) {
+        for (Player player : model.getPlayers()) {
             if (player.getNickname().equals(nickname))
                 return player;
         }
@@ -1124,11 +1129,11 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the personal Objective image for the player.
-     * @param gameImmutable The current state of the game.
+     * @param model The current state of the game.
      * @param nickname The nickname of the player whose Objective card should be displayed.
      */
-    public void setPersonalObjective(GameImmutable gameImmutable, String nickname) {
-        Player player = getPlayer(gameImmutable, nickname);
+    public void setPersonalObjective(Model model, String nickname) {
+        Player player = getPlayer(model, nickname);
         String imagePath = null;
         if (player != null)
             imagePath = player.getCardObjective().get(0).getImage();
@@ -1146,7 +1151,7 @@ public class GameRunningController extends GenericController {
                 System.exit(1);
             }
         } else {
-            if (!(gameImmutable.getStatus().equals(GameStatus.STARTING) || gameImmutable.getStatus().equals(GameStatus.WAITING))) {
+            if (!(model.getStatus().equals(GameStatus.STARTING) || model.getStatus().equals(GameStatus.WAITING))) {
                 showError("Image path is null", "The image path for the Objective card is null.");
                 System.exit(1);
             }
@@ -1156,11 +1161,11 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the shared Objective images to be displayed in the scene.
-     * @param gameImmutable The current state of the game.
+     * @param model The current state of the game.
      */
-    public void setSharedObjective(GameImmutable gameImmutable) {
-        String imagePath1 = gameImmutable.getDesk().getDisplayedObjective().get(0).getImage();
-        String imagePath2 = gameImmutable.getDesk().getDisplayedObjective().get(1).getImage();
+    public void setSharedObjective(Model model) {
+        String imagePath1 = model.getDesk().getDisplayedObjective().get(0).getImage();
+        String imagePath2 = model.getDesk().getDisplayedObjective().get(1).getImage();
         if (imagePath1 != null && imagePath2 != null) {
             try {
                 // Card 1
@@ -1192,14 +1197,14 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the image for the deck of Resource cards.
-     * @param gameImmutable The current state of the game.
+     * @param model The current state of the game.
      */
-    public void setDeckResource(GameImmutable gameImmutable) {
-        if (gameImmutable.getDesk().getDeckResource().isEmpty()) {
+    public void setDeckResource(Model model) {
+        if (model.getDesk().getDeckResource().isEmpty()) {
             deckResourcePane.setVisible(false);
         } else {
             deckResourcePane.setVisible(true);
-            String imagePath = gameImmutable.getDesk().getDeckResource().get(0).getBackResource().getImage();
+            String imagePath = model.getDesk().getDeckResource().get(0).getBackResource().getImage();
             if (imagePath != null) {
                 try {
                     Image image = new Image("file:" + imagePath);
@@ -1214,7 +1219,7 @@ public class GameRunningController extends GenericController {
                     System.exit(1);
                 }
             } else {
-                if (!gameImmutable.getDesk().getDeckResource().isEmpty()) {
+                if (!model.getDesk().getDeckResource().isEmpty()) {
                     showError("Image path is null", "The image path for the Deck Resource is null.");
                     System.exit(1);
                 }
@@ -1235,14 +1240,14 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the image for the deck of Gold cards.
-     * @param gameImmutable The current state of the game.
+     * @param model The current state of the game.
      */
-    public void setDeckGold(GameImmutable gameImmutable) {
-        if (gameImmutable.getDesk().getDeckGold().isEmpty()) {
+    public void setDeckGold(Model model) {
+        if (model.getDesk().getDeckGold().isEmpty()) {
             deckGoldPane.setVisible(false);
         } else {
             deckGoldPane.setVisible(true);
-            String imagePath = gameImmutable.getDesk().getDeckGold().get(0).getBackGold().getImage();
+            String imagePath = model.getDesk().getDeckGold().get(0).getBackGold().getImage();
             if (imagePath != null) {
                 try {
                     Image image = new Image("file:" + imagePath);
@@ -1257,7 +1262,7 @@ public class GameRunningController extends GenericController {
                     System.exit(1);
                 }
             } else {
-                if (!gameImmutable.getDesk().getDeckGold().isEmpty()) {
+                if (!model.getDesk().getDeckGold().isEmpty()) {
                     showError("Image path is null", "The image path for the Deck Gold is null.");
                     System.exit(1);
                 }
@@ -1278,12 +1283,12 @@ public class GameRunningController extends GenericController {
 
     /**
      * Sets the images for the displayed cards.
-     * @param gameImmutable The current state of the game.
+     * @param model The current state of the game.
      */
-    public void setDisplayed(GameImmutable gameImmutable) {
+    public void setDisplayed(Model model) {
         // Displayed Resource
-        ArrayList<String> imagePathResource = new ArrayList<>(gameImmutable.getDesk().getDisplayedResource().size());
-        for (Card card : gameImmutable.getDesk().getDisplayedResource()) {
+        ArrayList<String> imagePathResource = new ArrayList<>(model.getDesk().getDisplayedResource().size());
+        for (Card card : model.getDesk().getDisplayedResource()) {
             if (card instanceof CardResource) {
                 CardResource cardResource = (CardResource) card;
                 String imagePath = cardResource.getFrontResource().getImage();
@@ -1295,8 +1300,8 @@ public class GameRunningController extends GenericController {
             }
         }
         // Displayed Gold
-        ArrayList<String> imagePathGold = new ArrayList<>(gameImmutable.getDesk().getDisplayedGold().size());
-        for (Card card : gameImmutable.getDesk().getDisplayedGold()) {
+        ArrayList<String> imagePathGold = new ArrayList<>(model.getDesk().getDisplayedGold().size());
+        for (Card card : model.getDesk().getDisplayedGold()) {
             if (card instanceof CardResource) {
                 CardResource cardResource = (CardResource) card;
                 String imagePath = cardResource.getFrontResource().getImage();
@@ -1310,7 +1315,7 @@ public class GameRunningController extends GenericController {
         // Load images Resource
         displayed1Pane.setVisible(false);
         displayed2Pane.setVisible(false);
-        for (int i = 0; i < gameImmutable.getDesk().getDisplayedResource().size(); i++) {
+        for (int i = 0; i < model.getDesk().getDisplayedResource().size(); i++) {
             if (imagePathResource.get(i) != null) {
                 try {
                     Image image = new Image("file:" + imagePathResource.get(i));
@@ -1337,7 +1342,7 @@ public class GameRunningController extends GenericController {
                     System.exit(1);
                 }
             } else {
-                if (i < gameImmutable.getDesk().getDisplayedResource().size()) {
+                if (i < model.getDesk().getDisplayedResource().size()) {
                     showError("Image path is null", "The image path for the displayed card is null.");
                     System.exit(1);
                 }
@@ -1346,7 +1351,7 @@ public class GameRunningController extends GenericController {
         // Load images Gold
         displayed3Pane.setVisible(false);
         displayed4Pane.setVisible(false);
-        for (int i = 0; i < gameImmutable.getDesk().getDisplayedGold().size(); i++) {
+        for (int i = 0; i < model.getDesk().getDisplayedGold().size(); i++) {
             if (imagePathGold.get(i) != null) {
                 try {
                     Image image = new Image("file:" + imagePathGold.get(i));
@@ -1373,7 +1378,7 @@ public class GameRunningController extends GenericController {
                     System.exit(1);
                 }
             } else {
-                if (i < gameImmutable.getDesk().getDisplayedGold().size()) {
+                if (i < model.getDesk().getDisplayedGold().size()) {
                     showError("Image path is null", "The image path for the displayed card is null.");
                     System.exit(1);
                 }
@@ -1425,12 +1430,12 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    public void setHand(GameImmutable gameImmutable, String nickname) {
+    public void setHand(Model model, String nickname) {
         hand1Pane.setVisible(false);
         hand2Pane.setVisible(false);
         hand3Pane.setVisible(false);
         // Get the player's hand
-        Player player = getPlayer(gameImmutable, nickname);
+        Player player = getPlayer(model, nickname);
         // Set hashmaps
         this.hand.clear();
         this.frontSideHand.clear();
@@ -1654,11 +1659,10 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      *
      */
-    public void setBoards(GameImmutable gameImmutable) {
+    public void setBoards(Model model) {
         // Set visibility
         board1.setVisible(false);
         board2.setVisible(false);
@@ -1667,7 +1671,7 @@ public class GameRunningController extends GenericController {
         // Set images
         setValuesImages();
         // Set boards
-        setBoardsInformation(gameImmutable);
+        setBoardsInformation(model);
     }
 
 
@@ -1890,7 +1894,7 @@ public class GameRunningController extends GenericController {
     /**
      *
      */
-    private void setBoardsInformation(GameImmutable gameImmutable) {
+    private void setBoardsInformation(Model model) {
         // Set boards' hands to invisible
         hand11Pane.setVisible(false);
         hand12Pane.setVisible(false);
@@ -1905,30 +1909,30 @@ public class GameRunningController extends GenericController {
         hand42Pane.setVisible(false);
         hand43Pane.setVisible(false);
         // players <= 2
-        if (gameImmutable.getPlayers().size() <= 2) {
-            for (int i = 0; i < gameImmutable.getPlayers().size(); i++) {
+        if (model.getPlayers().size() <= 2) {
+            for (int i = 0; i < model.getPlayers().size(); i++) {
                 // Set board 2
                 if (i == 0) {
                     // Set color and nickname
-                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    String color = getPlayerColor(model.getPlayers().get(i).getColor());
                     color2.setStyle("-fx-background-color: " + color + ";");
-                    nickname2.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    nickname2.setText(model.getPlayers().get(i).getNickname());
                     // Set counters
-                    fungiCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
-                    plantCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
-                    animalCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
-                    insectCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
-                    quillCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
-                    inkwellCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
-                    manuscriptCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
-                    coveredCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    fungiCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[7]));
                     // Set hand images
                     ArrayList<String> imagePaths = new ArrayList<>(3);
-                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                    for (Card card : model.getPlayers().get(i).getHand()) {
                         String imagePath = getBackSideImagePath(card);
                         imagePaths.add(imagePath);
                     }
-                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                    for (int j = 0; j < model.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
                                 Image image = new Image("file:" + imagePaths.get(j));
@@ -1964,7 +1968,7 @@ public class GameRunningController extends GenericController {
                                 System.exit(1);
                             }
                         } else {
-                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                            if (j < model.getPlayers().get(i).getHand().size()){
                                 showError("Image path is null", "The image path for the hand card is null.");
                                 System.exit(1);
                             }
@@ -1975,25 +1979,25 @@ public class GameRunningController extends GenericController {
                 // Set board 3
                 if (i == 1) {
                     // Set color and nickname
-                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    String color = getPlayerColor(model.getPlayers().get(i).getColor());
                     color3.setStyle("-fx-background-color: " + color + ";");
-                    nickname3.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    nickname3.setText(model.getPlayers().get(i).getNickname());
                     // Set counters
-                    fungiCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
-                    plantCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
-                    animalCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
-                    insectCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
-                    quillCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
-                    inkwellCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
-                    manuscriptCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
-                    coveredCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    fungiCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[7]));
                     // Set hand images
                     ArrayList<String> imagePaths = new ArrayList<>(3);
-                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                    for (Card card : model.getPlayers().get(i).getHand()) {
                         String imagePath = getBackSideImagePath(card);
                         imagePaths.add(imagePath);
                     }
-                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                    for (int j = 0; j < model.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
                                 Image image = new Image("file:" + imagePaths.get(j));
@@ -2029,7 +2033,7 @@ public class GameRunningController extends GenericController {
                                 System.exit(1);
                             }
                         } else {
-                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                            if (j < model.getPlayers().get(i).getHand().size()){
                                 showError("Image path is null", "The image path for the hand card is null.");
                                 System.exit(1);
                             }
@@ -2040,29 +2044,29 @@ public class GameRunningController extends GenericController {
             }
             // players > 2
         } else {
-            for (int i = 0; i < gameImmutable.getPlayers().size(); i++) {
+            for (int i = 0; i < model.getPlayers().size(); i++) {
                 // Set board 1
                 if (i == 0) {
                     // Set color and nickname
-                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    String color = getPlayerColor(model.getPlayers().get(i).getColor());
                     color1.setStyle("-fx-background-color: " + color + ";");
-                    nickname1.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    nickname1.setText(model.getPlayers().get(i).getNickname());
                     // Set counters
-                    fungiCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
-                    plantCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
-                    animalCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
-                    insectCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
-                    quillCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
-                    inkwellCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
-                    manuscriptCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
-                    coveredCount1.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    fungiCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount1.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[7]));
                     // Set hand images
                     ArrayList<String> imagePaths = new ArrayList<>(3);
-                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                    for (Card card : model.getPlayers().get(i).getHand()) {
                         String imagePath = getBackSideImagePath(card);
                         imagePaths.add(imagePath);
                     }
-                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                    for (int j = 0; j < model.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
                                 Image image = new Image("file:" + imagePaths.get(j));
@@ -2098,7 +2102,7 @@ public class GameRunningController extends GenericController {
                                 System.exit(1);
                             }
                         } else {
-                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                            if (j < model.getPlayers().get(i).getHand().size()){
                                 showError("Image path is null", "The image path for the hand card is null.");
                                 System.exit(1);
                             }
@@ -2109,25 +2113,25 @@ public class GameRunningController extends GenericController {
                 // Set board 2
                 if (i == 1) {
                     // Set color and nickname
-                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    String color = getPlayerColor(model.getPlayers().get(i).getColor());
                     color2.setStyle("-fx-background-color: " + color + ";");
-                    nickname2.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    nickname2.setText(model.getPlayers().get(i).getNickname());
                     // Set counters
-                    fungiCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
-                    plantCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
-                    animalCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
-                    insectCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
-                    quillCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
-                    inkwellCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
-                    manuscriptCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
-                    coveredCount2.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    fungiCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount2.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[7]));
                     // Set hand images
                     ArrayList<String> imagePaths = new ArrayList<>(3);
-                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                    for (Card card : model.getPlayers().get(i).getHand()) {
                         String imagePath = getBackSideImagePath(card);
                         imagePaths.add(imagePath);
                     }
-                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                    for (int j = 0; j < model.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
                                 Image image = new Image("file:" + imagePaths.get(j));
@@ -2163,7 +2167,7 @@ public class GameRunningController extends GenericController {
                                 System.exit(1);
                             }
                         } else {
-                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                            if (j < model.getPlayers().get(i).getHand().size()){
                                 showError("Image path is null", "The image path for the hand card is null.");
                                 System.exit(1);
                             }
@@ -2174,25 +2178,25 @@ public class GameRunningController extends GenericController {
                 // Set board 3
                 if (i == 2) {
                     // Set color and nickname
-                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    String color = getPlayerColor(model.getPlayers().get(i).getColor());
                     color3.setStyle("-fx-background-color: " + color + ";");
-                    nickname3.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    nickname3.setText(model.getPlayers().get(i).getNickname());
                     // Set counters
-                    fungiCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
-                    plantCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
-                    animalCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
-                    insectCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
-                    quillCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
-                    inkwellCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
-                    manuscriptCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
-                    coveredCount3.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    fungiCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount3.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[7]));
                     // Set hand images
                     ArrayList<String> imagePaths = new ArrayList<>(3);
-                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                    for (Card card : model.getPlayers().get(i).getHand()) {
                         String imagePath = getBackSideImagePath(card);
                         imagePaths.add(imagePath);
                     }
-                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                    for (int j = 0; j < model.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
                                 Image image = new Image("file:" + imagePaths.get(j));
@@ -2228,7 +2232,7 @@ public class GameRunningController extends GenericController {
                                 System.exit(1);
                             }
                         } else {
-                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                            if (j < model.getPlayers().get(i).getHand().size()){
                                 showError("Image path is null", "The image path for the hand card is null.");
                                 System.exit(1);
                             }
@@ -2239,25 +2243,25 @@ public class GameRunningController extends GenericController {
                 // Set board 4
                 if (i == 3) {
                     // Set color and nickname
-                    String color = getPlayerColor(gameImmutable.getPlayers().get(i).getColor());
+                    String color = getPlayerColor(model.getPlayers().get(i).getColor());
                     color4.setStyle("-fx-background-color: " + color + ";");
-                    nickname4.setText(gameImmutable.getPlayers().get(i).getNickname());
+                    nickname4.setText(model.getPlayers().get(i).getNickname());
                     // Set counters
-                    fungiCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[0]));
-                    plantCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[1]));
-                    animalCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[2]));
-                    insectCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[3]));
-                    quillCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[4]));
-                    inkwellCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[5]));
-                    manuscriptCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[6]));
-                    coveredCount4.setText(Integer.toString(gameImmutable.getPlayers().get(i).getCodex().getCounterCodex()[7]));
+                    fungiCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[0]));
+                    plantCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[1]));
+                    animalCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[2]));
+                    insectCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[3]));
+                    quillCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[4]));
+                    inkwellCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[5]));
+                    manuscriptCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[6]));
+                    coveredCount4.setText(Integer.toString(model.getPlayers().get(i).getCodex().getCounterCodex()[7]));
                     // Set hand images
                     ArrayList<String> imagePaths = new ArrayList<>(3);
-                    for (Card card : gameImmutable.getPlayers().get(i).getHand()) {
+                    for (Card card : model.getPlayers().get(i).getHand()) {
                         String imagePath = getBackSideImagePath(card);
                         imagePaths.add(imagePath);
                     }
-                    for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
+                    for (int j = 0; j < model.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
                                 Image image = new Image("file:" + imagePaths.get(j));
@@ -2293,7 +2297,7 @@ public class GameRunningController extends GenericController {
                                 System.exit(1);
                             }
                         } else {
-                            if (j < gameImmutable.getPlayers().get(i).getHand().size()){
+                            if (j < model.getPlayers().get(i).getHand().size()){
                                 showError("Image path is null", "The image path for the hand card is null.");
                                 System.exit(1);
                             }
@@ -2305,9 +2309,52 @@ public class GameRunningController extends GenericController {
         }
     }
 
-    public void addMessages(List<ChatMessage> messages , String nickname){
+    public void addMessages(ChatMessage message , String nickname, Model model){
+        String text = "["+ message.getTimestamp().getHour()+ ":" + message.getTimestamp().getMinute()+":" + message.getTimestamp().getSecond()+"] "
+                +message.getSender()+": "+message.getText();
+        if(message.getReceiver().equals("everyone")){
+            chat.getItems().add("\n"+ text);
+        }else if (message.getReceiver().equals(nickname) || message.getSender().equals(nickname)){
+            chat.getItems().add("\n"+ "[Private] " + text);
+        }
+    }
 
-     }
+    public void addLatestEvents(String event, Model model){
+        latestEvent.getItems().add("\n" + event);
+    }
+    public void actionSend(){
+       String receiver = chatReceiver.getSelectionModel().getSelectedItem();
+       if(receiver.equals("everyone")){
+           getInputReaderGUI().addTxt("m " +chatMessage.getText());
+       }
+       else{
+           getInputReaderGUI().addTxt("pm " +receiver+ " " + chatMessage.getText());
+       }
+       chatMessage.clear();
+    }
+    public void setReceivers(Model model,String nickname){
+        chatReceiver.getItems().add("everyone");
+        for(Player p: model.getPlayers()){
+            if(!p.getNickname().equals(nickname)) {
+                chatReceiver.getItems().add(p.getNickname());
+            }
+        }
+        chatReceiver.setValue("everyone");
+    }
+    public void clearChat(Model model){
+        if(idGame!=model.getIdGame() || idGame==0){
+            chat.getItems().clear();
+        }
+        idGame = model.getIdGame();
+    }
+
+    public void clearEvents(Model model){
+        if(idGame!=model.getIdGame() || idGame==0){
+            latestEvent.getItems().clear();
+        }
+        idGame = model.getIdGame();
+    }
+
     /**
      *
      */
@@ -2323,4 +2370,6 @@ public class GameRunningController extends GenericController {
         return null;
 
     }
+
+
 }

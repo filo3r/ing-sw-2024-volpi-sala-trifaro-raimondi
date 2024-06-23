@@ -1,12 +1,12 @@
 package it.polimi.ingsw.gc03.view.ui.events;
 
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 
 public class Event {
     /**
      * Immutable object of the game at the time of the event creation.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * Type of the event.
@@ -16,19 +16,19 @@ public class Event {
     /**
      * Event constructor class
      *
-     * @param gameImmutable
+     * @param model
      * @param type
      */
-    public Event(GameImmutable gameImmutable, EventType type) {
-        this.gameImmutable = gameImmutable;
+    public Event(Model model, EventType type) {
+        this.model = model;
         this.type = type;
     }
 
     /**
      * @return model
      */
-    public GameImmutable getModel() {
-        return gameImmutable;
+    public Model getModel() {
+        return model;
     }
 
     /**

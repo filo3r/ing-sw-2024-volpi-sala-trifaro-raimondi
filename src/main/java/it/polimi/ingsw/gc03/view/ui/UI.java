@@ -4,7 +4,6 @@ import it.polimi.ingsw.gc03.model.*;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +11,9 @@ import java.util.List;
 public abstract class UI {
 
     /**
-     * List of the important events.
+     * List of the latest events.
      */
-    protected List<String> importantEvents;
+    protected List<String> latestEvents;
 
     /**
      * Initialises GUI or TUI
@@ -73,7 +72,7 @@ public abstract class UI {
      *
      * @param model model where the game has started
      */
-    protected abstract void show_gameStarted(GameImmutable model);
+    protected abstract void show_gameStarted(Model model);
 
     /**
      * Shows error message when there are no games available for joining
@@ -87,7 +86,7 @@ public abstract class UI {
      *
      * @param model where the game is ended
      */
-    protected abstract void show_gameEnded(GameImmutable model);
+    protected abstract void show_gameEnded(Model model);
 
     /**
      * Shows the players that have joined
@@ -95,7 +94,7 @@ public abstract class UI {
      * @param gameModel model where events happen
      * @param nick      player's nickname
      */
-    protected abstract void show_playerJoined(GameImmutable gameModel, String nick);
+    protected abstract void show_playerJoined(Model gameModel, String nick);
 
     /**
      * Show the message for next turn or reconnected player
@@ -103,14 +102,14 @@ public abstract class UI {
      * @param model    model where events happen
      * @param nickname nick of reconnected player (or of the player that is now in turn)
      */
-    protected abstract void showNextTurn(GameImmutable model, String nickname);
+    protected abstract void showNextTurn(Model model, String nickname);
 
     /**
      * Message that shows the player's hand
      *
      * @param gameModel the model that has the player hand that needs to be shown
      */
-    protected abstract void show_playerHand(GameImmutable gameModel, String nickname);
+    protected abstract void show_playerHand(Model gameModel, String nickname);
 
     /**
      * Shows the message that has been sent
@@ -118,7 +117,7 @@ public abstract class UI {
      * @param model    the model where the message need to be shown
      * @param nickname the sender's nickname
      */
-    protected abstract void show_sentMessage(GameImmutable model, String nickname);
+    protected abstract void show_sentMessage(Model model, String nickname);
 
 
     /**
@@ -137,59 +136,59 @@ public abstract class UI {
     //----------------------
 
     /**
-     * Shows message on important event added
-     * @param input the string of the important event to add
+     * Shows message on latest event added
+     * @param input the string of the latest event to add
      */
-    protected abstract void addImportantEvent(String input);
+    protected abstract void addLatestEvent(String input, Model model);
 
     /**
      * @param model the model in which search for the longest message
      * @return the length of the longest message registered in chat
      */
-    protected abstract int getLengthLongestMessage(GameImmutable model);
+    protected abstract int getLengthLongestMessage(Model model);
 
     /**
      * @param msg   the message to add
      * @param model the model to which add the message
      */
-    protected abstract void addMessage(ChatMessage msg, GameImmutable model);
+    protected abstract void addMessage(ChatMessage msg, Model model);
 
     /**
-     * Resets the important events
+     * Resets the latest events
      */
-    protected abstract void resetImportantEvents();
+    protected abstract void resetLatestEvents();
 
     /**
      * Shows an error when there's no connection
      */
     protected abstract void show_noConnectionError();
 
-    protected abstract void showAskIndex(GameImmutable model);
+    protected abstract void showAskIndex(Model model);
 
     protected abstract void show_wrongSelectionHandMsg();
 
-    protected abstract void showAskCoordinates(GameImmutable model);
+    protected abstract void showAskCoordinates(Model model);
     protected abstract void showAskToChooseADeck();
 
-    protected abstract void showCardCannotBePlaced(GameImmutable model, String nickname);
+    protected abstract void showCardCannotBePlaced(Model model, String nickname);
 
     protected abstract void showInvalidInput();
 
-    protected abstract void showCodex(GameImmutable model);
+    protected abstract void showCodex(Model model);
 
-    protected abstract void showAskSize(GameImmutable model);
+    protected abstract void showAskSize(Model model);
 
-    protected abstract void show_sizeSetted(int size, GameImmutable gameImmutable);
+    protected abstract void show_sizeSetted(int size, Model model);
 
-    protected abstract void showCardAddedToHand(GameImmutable model, Card card);
+    protected abstract void showCardAddedToHand(Model model, Card card);
 
-    protected abstract void showWinner(GameImmutable model);
+    protected abstract void showWinner(Model model);
 
-    protected abstract void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname);
+    protected abstract void showObjectiveChosen(Model model, CardObjective cardObjective, String nickname);
 
-    protected abstract void showObjectiveNotChosen(GameImmutable model);
+    protected abstract void showObjectiveNotChosen(Model model);
 
-    protected abstract void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement);
+    protected abstract void showReqNotRespected(Model model, ArrayList<Value> requirementsPlacement);
 
     protected abstract void show_GameTitle();
 
@@ -197,17 +196,17 @@ public abstract class UI {
 
     protected abstract void showObjectiveChosen(Game game, Card card);
 
-    protected abstract void showAskSide(GameImmutable game, Card card);
+    protected abstract void showAskSide(Model game, Card card);
 
-    protected abstract void show_askSideStarter(GameImmutable game, String nickname);
+    protected abstract void show_askSideStarter(Model game, String nickname);
 
     protected abstract void setNickname(String nickname);
 
-    protected abstract void showDesk(GameImmutable gameImmutable, String nickname);
+    protected abstract void showDesk(Model model, String nickname);
 
     protected abstract void showYouLeft();
 
-    public abstract void showChat(GameImmutable gameImmutable);
+    public abstract void showChat(Model model);
 
     //public abstract void showDrawnCard(GameImmutable model);
 

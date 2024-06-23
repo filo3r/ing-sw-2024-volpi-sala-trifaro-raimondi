@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import java.io.IOException;
 
 /**
@@ -13,7 +13,7 @@ public class SocketServerMessageAddedPointObjective extends SocketServerGenericM
     /**
      * The immutable game model.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * The points obtained with Objective cards.
@@ -22,11 +22,11 @@ public class SocketServerMessageAddedPointObjective extends SocketServerGenericM
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param objectivePoint The points obtained with Objective cards.
      */
-    public SocketServerMessageAddedPointObjective(GameImmutable gameImmutable, int objectivePoint) {
-        this.gameImmutable = gameImmutable;
+    public SocketServerMessageAddedPointObjective(Model model, int objectivePoint) {
+        this.model = model;
         this.objectivePoint = objectivePoint;
     }
 
@@ -38,6 +38,6 @@ public class SocketServerMessageAddedPointObjective extends SocketServerGenericM
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.addedPointObjective(this.gameImmutable, this.objectivePoint);
+        gameListener.addedPointObjective(this.model, this.objectivePoint);
     }
 }

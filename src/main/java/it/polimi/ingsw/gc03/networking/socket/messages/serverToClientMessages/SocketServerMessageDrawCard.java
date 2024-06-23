@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ public class SocketServerMessageDrawCard extends SocketServerGenericMessage {
     /**
      * The immutable game model.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * The nickname of the player who has to draw a card.
@@ -19,11 +19,11 @@ public class SocketServerMessageDrawCard extends SocketServerGenericMessage {
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nickname of the player who has to draw a card.
      */
-    public SocketServerMessageDrawCard(GameImmutable gameImmutable, String nickname) {
-        this.gameImmutable = gameImmutable;
+    public SocketServerMessageDrawCard(Model model, String nickname) {
+        this.model = model;
         this.nickname = nickname;
     }
 
@@ -35,6 +35,6 @@ public class SocketServerMessageDrawCard extends SocketServerGenericMessage {
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.drawCard(this.gameImmutable, this.nickname);
+        gameListener.drawCard(this.model, this.nickname);
     }
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.view.gui.controllers;
 
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import it.polimi.ingsw.gc03.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,20 +50,20 @@ public class WinnersController extends GenericController {
 
     /**
      * Displays the players' rankings and highlights the winners.
-     * @param gameImmutable The game data containing players' scores and winners.
+     * @param model The game data containing players' scores and winners.
      */
-    public void showPoints(GameImmutable gameImmutable) {
+    public void showPoints(Model model) {
         player1.setVisible(false);
         player2.setVisible(false);
         player3.setVisible(false);
         player4.setVisible(false);
         buttonClose.setVisible(true);
         // Get players sorted by descending score
-        List<Player> sortedPlayers = gameImmutable.getPlayers().stream()
+        List<Player> sortedPlayers = model.getPlayers().stream()
                 .sorted(Comparator.comparingInt(Player::getScore).reversed())
                 .collect(Collectors.toUnmodifiableList());
         // Get the list of winners
-        List<Player> winners = gameImmutable.getWinner();
+        List<Player> winners = model.getWinner();
         // Show the ranking
         int i = 0;
         Label temp = null;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class SocketServerMessageWinnerDeclared extends SocketServerGenericMessag
     /**
      * The immutable game model.
      */
-    private GameImmutable gameImmutable;
+    private Model model;
 
     /**
      * The nicknames of the players who won.
@@ -23,11 +23,11 @@ public class SocketServerMessageWinnerDeclared extends SocketServerGenericMessag
 
     /**
      * Constructor of the class that creates the message.
-     * @param gameImmutable The immutable game model.
+     * @param model The immutable game model.
      * @param nickname The nicknames of the players who won.
      */
-    public SocketServerMessageWinnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) {
-        this.gameImmutable = gameImmutable;
+    public SocketServerMessageWinnerDeclared(Model model, ArrayList<String> nickname) {
+        this.model = model;
         this.nickname = nickname;
     }
 
@@ -39,6 +39,6 @@ public class SocketServerMessageWinnerDeclared extends SocketServerGenericMessag
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.winnerDeclared(this.gameImmutable, this.nickname);
+        gameListener.winnerDeclared(this.model, this.nickname);
     }
 }

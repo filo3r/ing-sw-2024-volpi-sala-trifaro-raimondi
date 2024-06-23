@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gc03.view.ui.events;
 
-import it.polimi.ingsw.gc03.model.GameImmutable;
+import it.polimi.ingsw.gc03.model.Model;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -28,7 +28,7 @@ public class EventList {
      * @param model
      * @param type
      */
-    public synchronized void add(GameImmutable model, EventType type) {
+    public synchronized void add(Model model, EventType type) {
         lists.add(new Event(model, type));
 
         if (type.equals(EventType.APP_MENU)) {

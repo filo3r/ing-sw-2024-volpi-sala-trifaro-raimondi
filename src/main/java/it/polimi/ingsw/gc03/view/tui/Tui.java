@@ -13,10 +13,8 @@ import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
-import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
-import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -107,11 +105,11 @@ public class Tui extends UI {
     /**
      * Method to display the codex of the player.
      *
-     * @param gameImmutable the immutable version of the game.
+     * @param model the immutable version of the game.
      */
-    protected void showCodex(GameImmutable gameImmutable) {
+    protected void showCodex(Model model) {
         clearScreen(' ');
-        Codex codex = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getCodex();
+        Codex codex = model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getCodex();
         translateCodexToScreenSim(codex);
         generateAvailablePositions(codex);
         refreshScreen(screenSimX, screenSimY);
@@ -400,16 +398,16 @@ public class Tui extends UI {
     /**
      * Method to show the desk, containing the decks, displayed cards and the public and private objectives.
      *
-     * @param gameImmutable the immutable object of the game.
+     * @param model the immutable object of the game.
      * @param nickname      the player's nickname.
      */
     @Override
-    protected void showDesk(GameImmutable gameImmutable, String nickname) {
+    protected void showDesk(Model model, String nickname) {
         // Clear the main screen
         clearScreen(' ');
 
-        Player player = gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst();
-        Desk desk = gameImmutable.getDesk();
+        Player player = model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst();
+        Desk desk = model.getDesk();
         Side topCardGold = desk.getDeckGold().getFirst().getBackGold();
         Side topCardResource = desk.getDeckResource().getFirst().getBackResource();
         ArrayList<Card> displayedResource = desk.getDisplayedResource();
@@ -592,7 +590,7 @@ public class Tui extends UI {
      *
      * @param game the game instance.
      */
-    public void showChat(GameImmutable game) {
+    public void showChat(Model game) {
         CharSpecial[][] screenSimBackup = new CharSpecial[729][2187];
         for (int i = 0; i < 729; i++) {
             for (int j = 0; j < 2187; j++) {
@@ -670,10 +668,10 @@ public class Tui extends UI {
     /**
      * Displays a message asking the user to choose the game size.
      *
-     * @param gameImmutable the game instance.
+     * @param model the game instance.
      */
     @Override
-    protected void showAskSize(GameImmutable gameImmutable) {
+    protected void showAskSize(Model model) {
         clearScreen(' ');
         generateTextOnScreen("Please choose the game size (2,3,4)", CharColor.WHITE, 1093-"Please choose the game size (2,3,4)".length()/2, 364);
         refreshScreen(1093, 364);
@@ -744,7 +742,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void show_gameStarted(GameImmutable model) {
+    protected void show_gameStarted(Model model) {
         clearScreen(' ');
         generateTextOnScreen("The game has started", CharColor.GOLD, 1093, 364);
         refreshScreen(1093, 364);
@@ -768,7 +766,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void show_gameEnded(GameImmutable model) {
+    protected void show_gameEnded(Model model) {
         clearScreen(' ');
         String text = "The game has ended";
         generateTextOnScreen(text, CharColor.GOLD, 1093 - text.length() / 2, 364);
@@ -784,7 +782,7 @@ public class Tui extends UI {
      * @param nick      the nickname of the player who joined.
      */
     @Override
-    protected void show_playerJoined(GameImmutable gameModel, String nick) {
+    protected void show_playerJoined(Model gameModel, String nick) {
         showNotification(nick + " joined the game");
     }
 
@@ -795,7 +793,7 @@ public class Tui extends UI {
      * @param nickname the nickname of the next player.
      */
     @Override
-    protected void showNextTurn(GameImmutable model, String nickname) {
+    protected void showNextTurn(Model model, String nickname) {
         showNotification("It's the turn of " + nickname);
     }
 
@@ -806,7 +804,7 @@ public class Tui extends UI {
      * @param nickname  the nickname of the player.
      */
     @Override
-    protected void show_playerHand(GameImmutable gameModel, String nickname) {
+    protected void show_playerHand(Model gameModel, String nickname) {
         clearScreen(' ');
         List<Card> playerHand = gameModel.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getHand();
         int posX = 1093 - 27 - 13;
@@ -831,7 +829,7 @@ public class Tui extends UI {
      * @param nickname the nickname of the player who sent the message.
      */
     @Override
-    protected void show_sentMessage(GameImmutable model, String nickname) {
+    protected void show_sentMessage(Model model, String nickname) {
         showNotification(model.getChat().getLast().getText());
     }
 
@@ -852,12 +850,12 @@ public class Tui extends UI {
     }
 
     /**
-     * Adds an important event to be displayed.
+     * Adds an latest event to be displayed.
      *
      * @param input the event message.
      */
     @Override
-    public void addImportantEvent(String input) {
+    public void addLatestEvent(String input,Model model) {
         showNotification(input);
     }
 
@@ -868,7 +866,7 @@ public class Tui extends UI {
      * @return the length of the longest message.
      */
     @Override
-    protected int getLengthLongestMessage(GameImmutable model) {
+    protected int getLengthLongestMessage(Model model) {
         return 0;
     }
 
@@ -879,7 +877,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void addMessage(ChatMessage msg, GameImmutable model) {
+    protected void addMessage(ChatMessage msg, Model model) {
         if (msg.getReceiver().equals(nickname) || msg.getReceiver().equals("everyone")) {
             personalChat.add(msg);
             showNotification("[CHAT] " + msg.getSender() + "→" + msg.getReceiver() + ": " + msg.getText());
@@ -887,22 +885,22 @@ public class Tui extends UI {
     }
 
     /**
-     * Resets the list of important events. (not used in the tui)
+     * Resets the list of latest events. (not used in the tui)
      */
     @Override
-    protected void resetImportantEvents() {
+    protected void resetLatestEvents() {
     }
 
     /**
      * Displays a notification that the game size has been updated.
      *
      * @param size          the new game size.
-     * @param gameImmutable the game instance.
+     * @param model the game instance.
      */
     @Override
-    protected void show_sizeSetted(int size, GameImmutable gameImmutable) {
+    protected void show_sizeSetted(int size, Model model) {
         clearScreen(' ');
-        String text = "Game size updated to " + size + ", game's id: " + gameImmutable.getIdGame();
+        String text = "Game size updated to " + size + ", game's id: " + model.getIdGame();
         generateTextOnScreen(text, CharColor.GOLD, 1093 - text.length() / 2, 364);
         refreshScreen(1093, 364);
     }
@@ -914,7 +912,7 @@ public class Tui extends UI {
      * @param card  the card added to the hand.
      */
     @Override
-    protected void showCardAddedToHand(GameImmutable model, Card card) {
+    protected void showCardAddedToHand(Model model, Card card) {
         showNotification("Card added to hand.");
     }
 
@@ -924,7 +922,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void showWinner(GameImmutable model) {
+    protected void showWinner(Model model) {
         clearScreen(' ');
         List<Player> winners = model.getWinner();
         String text = "";
@@ -946,7 +944,7 @@ public class Tui extends UI {
      * @param nickname      the nickname of the player who chose the objective.
      */
     @Override
-    protected void showObjectiveChosen(GameImmutable model, CardObjective cardObjective, String nickname) {
+    protected void showObjectiveChosen(Model model, CardObjective cardObjective, String nickname) {
         showNotification(nickname + " chose his personal objective");
     }
 
@@ -967,7 +965,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void showAskIndex(GameImmutable model) {
+    protected void showAskIndex(Model model) {
         clearScreen(' ');
         List<Card> playerHand = model.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).toList().getFirst().getHand();
         int posX = 1093 - 27 - 13;
@@ -1001,7 +999,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void showAskCoordinates(GameImmutable model) {
+    protected void showAskCoordinates(Model model) {
         clearScreen(' ');
         showCodex(model);
         showNotification("Please choose the coordinates where to place the card (x y): ");
@@ -1022,7 +1020,7 @@ public class Tui extends UI {
      * @param nickname the nickname of the player.
      */
     @Override
-    protected void showCardCannotBePlaced(GameImmutable model, String nickname) {
+    protected void showCardCannotBePlaced(Model model, String nickname) {
         showNotification("This position is not available!");
     }
 
@@ -1042,7 +1040,7 @@ public class Tui extends UI {
      * @param card  the card to place.
      */
     @Override
-    protected void showAskSide(GameImmutable model, Card card) {
+    protected void showAskSide(Model model, Card card) {
         clearScreen(' ');
         int posX = 1093 - 13;
         if (card instanceof CardResource) {
@@ -1064,7 +1062,7 @@ public class Tui extends UI {
      * @param model the game instance.
      */
     @Override
-    protected void showObjectiveNotChosen(GameImmutable model) {
+    protected void showObjectiveNotChosen(Model model) {
         clearScreen(' ');
         String text = "Choose your personal objective (0: the first one, 1: the second one)";
         generateTextOnScreen(text, CharColor.WHITE, 1093 - text.length() / 2, 364 - 6);
@@ -1096,11 +1094,11 @@ public class Tui extends UI {
     /**
      * Displays a notification that the requirements for card placement were not respected.
      *
-     * @param gameImmutable         the game instance.
+     * @param model         the game instance.
      * @param requirementsPlacement the list of requirements not respected.
      */
     @Override
-    protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
+    protected void showReqNotRespected(Model model, ArrayList<Value> requirementsPlacement) {
         String text = "Requirements not respected try to place another Card.";
         showNotification(text);
     }
@@ -1112,7 +1110,7 @@ public class Tui extends UI {
      * @param nickname the nickname of the player.
      */
     @Override
-    protected void show_askSideStarter(GameImmutable game, String nickname) {
+    protected void show_askSideStarter(Model game, String nickname) {
         clearScreen(' ');
         this.nickname = nickname;
         String text = "Please choose a side of the starter card (f: front, b: back)";

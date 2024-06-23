@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
+<AnchorPane fx:id="mainAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
    <styleClass>
       <String fx:value="backgroundInGame" />
       <String fx:value="backgroundWelcome" />
@@ -198,22 +188,22 @@
                         <ImageView fx:id="hand13Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
                      </children></Pane>
                </children></Pane>
-            <ListView id="latestEvent" layoutX="10.0" layoutY="217.0" prefHeight="218.0" prefWidth="258.0" />
+            <ListView fx:id="latestEvent" editable="false" layoutX="10.0" layoutY="217.0" prefHeight="218.0" prefWidth="258.0" />
             <Text id="latestEventText" layoutX="10.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latest event" wrappingWidth="110.0847358722649">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font></Text>
-            <ListView id="chat" layoutX="10.0" layoutY="500.0" prefHeight="218.0" prefWidth="258.0" />
+            <ListView fx:id="chat" editable="false" layoutX="10.0" layoutY="500.0" prefHeight="218.0" prefWidth="258.0" />
             <Text id="chatText" layoutX="10.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chat" wrappingWidth="92.08172993020275">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font></Text>
-            <TextField id="chatMessage" layoutX="10.0" layoutY="758.0" prefHeight="36.0" prefWidth="258.0" text="Message">
+            <TextField fx:id="chatMessage" layoutX="10.0" layoutY="758.0" prefHeight="36.0" prefWidth="258.0" text="Message">
                <font>
                   <Font name="Arial" size="16.0" />
                </font></TextField>
-            <ComboBox id="chatReceiver" layoutX="48.0" layoutY="725.0" prefWidth="175.0" />
-            <Button id="send" layoutX="100.0" layoutY="800.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Send" textAlignment="CENTER">
+            <ComboBox fx:id="chatReceiver" layoutX="48.0" layoutY="725.0" prefWidth="175.0" />
+            <Button id="send" layoutX="100.0" layoutY="800.0" mnemonicParsing="false" onAction="#actionSend" prefHeight="25.0" prefWidth="60.0" text="Send" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
