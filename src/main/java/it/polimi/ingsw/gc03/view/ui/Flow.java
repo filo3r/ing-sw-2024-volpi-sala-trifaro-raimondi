@@ -645,26 +645,43 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws Exception if an error occurs during input.
      */
     public void askToPlaceCardOnCodex(GameImmutable gameImmutable) throws Exception {
-        Integer indexHand;
-        do {
-            ui.showAskIndex(gameImmutable);
-            try {
-                indexHand = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
-                if (ended) return;
-                if (indexHand < 0 || indexHand >= gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().size()) {
-                    ui.show_wrongSelectionHandMsg();
+        if(ui instanceof Gui){
+            ui.showCodex(gameImmutable);
+            String res = inputProcessor.getDataToProcess().popData();
+            String[] parts = res.split(" ");
+            String side = parts[1];
+            int posHand = Integer.parseInt(parts[2]);
+            int row = Integer.parseInt(parts[3]);
+            int col = Integer.parseInt(parts[4]);
+            boolean sideBool;
+            if(side.equals("true")){
+                sideBool = true;
+            } else {
+                sideBool = false;
+            }
+            placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), posHand, sideBool, row, col);
+        } else {
+            Integer indexHand;
+            do {
+                ui.showAskIndex(gameImmutable);
+                try {
+                    indexHand = Integer.parseInt(this.inputProcessor.getDataToProcess().popData());
+                    if (ended) return;
+                    if (indexHand < 0 || indexHand >= gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().size()) {
+                        ui.show_wrongSelectionHandMsg();
+                        indexHand = null;
+                    }
+                } catch (NumberFormatException e) {
+                    ui.showInvalidInput();
                     indexHand = null;
                 }
-            } catch (NumberFormatException e) {
-                ui.showInvalidInput();
-                indexHand = null;
+            } while (indexHand == null && !ended);
+            if (!ended) {
+                askSide(gameImmutable, gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().get(indexHand));
+                askCoordinates(gameImmutable);
+                placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), indexHand, frontCard, row, col);
+                ui.showCodex(gameImmutable);
             }
-        } while (indexHand == null && !ended);
-        if (!ended) {
-            askSide(gameImmutable, gameImmutable.getPlayers().stream().filter(p -> p.getNickname().equals(nickname)).collect(Collectors.toList()).get(0).getHand().get(indexHand));
-            askCoordinates(gameImmutable);
-            placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), indexHand, frontCard, row, col);
-            ui.showCodex(gameImmutable);
         }
     }
 
@@ -876,6 +893,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws Exception {
         try {
+            System.out.println("ECCE");
             clientActions.placeCardOnCodex(player, index, frontCard, col, row);
         } catch (IOException e) {
             noConnectionError();

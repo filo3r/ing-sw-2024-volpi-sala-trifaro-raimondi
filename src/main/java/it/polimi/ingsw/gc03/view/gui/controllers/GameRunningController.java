@@ -2479,7 +2479,7 @@ public class GameRunningController extends GenericController {
                     // Get the index of the dragged hand
                     String handIndex = dragboard.getString();
                     // Configure actions for Flow
-                    getInputReaderGUI().addTxt(handIndex);
+                    //getInputReaderGUI().addTxt(handIndex);
                     boolean frontSide = true;
                     switch (handIndex) {
                         case "0":
@@ -2492,11 +2492,19 @@ public class GameRunningController extends GenericController {
                             frontSide = this.frontSideHand.get("hand3");
                             break;
                     }
-                    if (frontSide)
-                        getInputReaderGUI().addTxt("f");
-                    else
-                        getInputReaderGUI().addTxt("b");
-                    getInputReaderGUI().addTxt(colStr + " " + rowStr);
+                    String command = "";
+                    if (frontSide) {
+                        command += "PLACECARDGUI true";
+                    } else {
+                        command += "PLACECARDGUI false";
+                    }
+//                    if (frontSide)
+//                        getInputReaderGUI().addTxt("f");
+//                    else
+//                        getInputReaderGUI().addTxt("b");
+                    command += " " + handIndex + " " + colStr + " " + rowStr;
+                    getInputReaderGUI().addTxt(command);
+                    //getInputReaderGUI().addTxt(colStr + " " + rowStr);
                     success = true;
                 }
             }

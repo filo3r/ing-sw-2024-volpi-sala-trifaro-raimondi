@@ -105,7 +105,6 @@ public class ApplicationGui extends Application {
 
     public void setActiveScene(SceneEnum scene) {
         this.stage.setTitle("Codex - " + scene.name());
-        System.out.println(scene.name());
         if (!scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().isEmpty()) {
             Scenes activeScene = scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().getFirst();
             switch (scene) {
@@ -277,7 +276,7 @@ public class ApplicationGui extends Application {
         controller.setTurnUsername(gameImmutable);
         controller.clear(gameImmutable);
         controller.setReceivers(gameImmutable,nickname);
-
+        controller.setCodex(gameImmutable, nickname);
     }
 
     /**

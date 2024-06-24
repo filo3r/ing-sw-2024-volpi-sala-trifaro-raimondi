@@ -19,8 +19,6 @@ public class Gui extends UI {
     private InputReaderGUI inputReaderGUI;
     private String nickname = null;
 
-    private boolean started = false;
-
     public Gui(ApplicationGui applicationGui, InputReaderGUI inputReaderGUI){
         this.applicationGui = applicationGui;
         this.inputReaderGUI = inputReaderGUI;
@@ -154,6 +152,8 @@ public class Gui extends UI {
 
     @Override
     protected void show_noConnectionError() {
+        Platform.runLater(()->this.applicationGui.showError("Connection error!"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
     @Override
@@ -174,10 +174,14 @@ public class Gui extends UI {
 
     @Override
     protected void showAskToChooseADeck() {
+        Platform.runLater(()->this.applicationGui.showError("Please, choose a card to draw"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
     @Override
     protected void showCardCannotBePlaced(GameImmutable gameImmutable, String nickname) {
+        Platform.runLater(()->this.applicationGui.showError("You can't place a card here!"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
 
