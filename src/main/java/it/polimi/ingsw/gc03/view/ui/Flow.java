@@ -760,14 +760,14 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.showInvalidInput();
     }
 
-    /**
-     * Print a text in the terminal.
-     *
-     * @param text The text to print.
-     */
-    public void terminalPrint(String text){
-        AsyncPrint.asyncPrint(text+"\n");
-    }
+//    /**
+//     * Print a text in the terminal.
+//     *
+//     * @param text The text to print.
+//     */
+//    public void terminalPrint(String text){
+//        AsyncPrint.asyncPrint(text+"\n");
+//    }
 
     /**
      * Displays a notification for no connection error.
