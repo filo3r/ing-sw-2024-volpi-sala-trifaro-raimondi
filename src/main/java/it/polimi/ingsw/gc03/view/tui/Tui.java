@@ -544,8 +544,8 @@ public class Tui extends UI {
                 "                                                                        \n" +
                 "                                                                        \n" +
                 "                                                                        \n");
-        asyncPrint(sb);
-        asyncPrint("\nPress enter to continue...\n\n");
+        asyncPrint(sb+
+        "\nPress enter to continue...\n\n");
     }
 
     /**
