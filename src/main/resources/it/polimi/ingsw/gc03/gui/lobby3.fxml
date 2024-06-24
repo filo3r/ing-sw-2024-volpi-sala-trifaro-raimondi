@@ -6,13 +6,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="backgroundLobby" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.LobbyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="backgroundLobby" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.LobbyController">
     <children>
         <Pane fx:id="content" prefHeight="755.0" prefWidth="1325.0">
             <children>
                 <Pane prefHeight="747.0" prefWidth="1289.0" stylesheets="@style.css">
                <children>
-                      <Text fill="WHITE" layoutX="32.0" layoutY="709.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:" textAlignment="CENTER" wrappingWidth="179.66716154871494">
+                      <Text fill="#8f8f8f" layoutX="32.0" layoutY="709.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:" textAlignment="CENTER" wrappingWidth="179.66716154871494">
                           <font>
                               <Font name="Arial Black" size="30.0" />
                           </font>

@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="backgroundLobby" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.LobbyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="backgroundLobby" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.LobbyController">
     <children>
         <Pane fx:id="content" prefHeight="755.0" prefWidth="1325.0">
             <children>
@@ -28,12 +28,12 @@
                         </Text>
                     </children>
                 </Pane>
-                <Text fill="WHITE" layoutX="40.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:" textAlignment="CENTER" wrappingWidth="179.66716154871494">
+                <Text fill="#8f8f8f" layoutX="40.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:" textAlignment="CENTER" wrappingWidth="179.66716154871494">
                     <font>
                         <Font name="Arial Black" size="30.0" />
                     </font>
                 </Text>
-                <Text fx:id="nickname" fill="WHITE" layoutX="225.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="179.66716154871494">
+                <Text fx:id="nickname" fill="#8f8f8f" layoutX="225.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="179.66716154871494">
                     <font>
                         <Font name="Arial Black" size="30.0" />
                     </font>

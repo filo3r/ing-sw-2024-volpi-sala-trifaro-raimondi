@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.ChooseSizeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.ChooseSizeController">
     <children>
         <Pane fx:id="content" prefHeight="755.0" prefWidth="1325.0">
             <children>
-                <Pane prefHeight="747.0" prefWidth="1289.0" stylesheets="@style.css" />
-                <Pane layoutX="30.0" layoutY="20.0" maxHeight="634.0" maxWidth="1261.0" opacity="0.8" prefHeight="634.0" prefWidth="1261.0" style="-fx-background-color: black; -fx-border-radius: 10 10 0 0; -fx-border-width: 5;">
+                <Pane prefHeight="747.0" prefWidth="1289.0" stylesheets="@style.css">
+               <children>
+                  <ImageView fitHeight="1069.0" fitWidth="1425.0" layoutX="-86.0" layoutY="-265.0">
+                     <image>
+                        <Image url="@images/background.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+                <Pane layoutX="30.0" layoutY="20.0" maxHeight="634.0" maxWidth="1261.0" opacity="0.8" prefHeight="634.0" prefWidth="1261.0" style="-fx-background-color: black; -fx-border-width: 10; -fx-background-radius: 20;">
                     <cursor>
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
