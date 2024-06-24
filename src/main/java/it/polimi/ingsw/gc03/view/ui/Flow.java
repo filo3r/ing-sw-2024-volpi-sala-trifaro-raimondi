@@ -892,8 +892,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws Exception {
+        System.err.print("[debug print] placeCardOnCodex("+nickname+" "+index+" "+(frontCard ? "front" : "back")+" "+row+" "+col+") ");
         try {
-            System.out.println("ECCE");
             clientActions.placeCardOnCodex(player, index, frontCard, col, row);
         } catch (IOException e) {
             noConnectionError();
