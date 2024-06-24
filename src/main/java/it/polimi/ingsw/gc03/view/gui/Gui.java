@@ -7,15 +7,19 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.view.gui.controllers.LobbyController;
 import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.UI;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 public class Gui extends UI {
 
     private ApplicationGui applicationGui;
     private InputReaderGUI inputReaderGUI;
     private String nickname = null;
+
+    private boolean started = false;
 
     public Gui(ApplicationGui applicationGui, InputReaderGUI inputReaderGUI){
         this.applicationGui = applicationGui;
@@ -26,6 +30,7 @@ public class Gui extends UI {
     @Override
     protected void init() {
         latestEvents = new ArrayList<>();
+        Platform.runLater(()->this.applicationGui.setupGUIInputController(this.inputReaderGUI));
     }
 
     @Override
@@ -38,28 +43,6 @@ public class Gui extends UI {
 
     }
 
-    /*
-    protected Image getFrontCardImage(Card card) throws IOException {
-        String idCard = card.getIdCard();
-        String imagePath ="/it.polimi.ingsw.gc03/images/cards_front/"+ idCard +".png";
-        InputStream inputStream = getClass().getResourceAsStream(imagePath);
-        return new Image(inputStream);
-    }
-
-    protected Image getBackCardImage(Card card) throws IOException{
-        String idCard = card.getIdCard();
-        String imagePath = "/it.polimi.ingsw.gc03/images/cards_back/"+ idCard +".png";
-        InputStream inputStream = getClass().getResourceAsStream(imagePath);
-        return new Image(inputStream);
-    }
-
-    protected Image getPlateauScore() throws IOException {
-        String imagePath = "/it.polimi.ingsw.gc03/images/plateau_score.png";
-        InputStream inputStream = getClass().getResourceAsStream(imagePath);
-        return new Image(inputStream);
-    }
-    */
-
     @Override
     protected void show_menuOptions() {
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.MENU));
@@ -67,17 +50,14 @@ public class Gui extends UI {
 
     @Override
     protected void show_creatingNewGameMsg(String nickname) {
-
     }
 
     @Override
     protected void show_joiningFirstAvailableMsg(String nickname) {
-
     }
 
     @Override
     protected void show_joiningToGameIdMsg(int idGame, String nickname) {
-
     }
 
     @Override
@@ -101,13 +81,13 @@ public class Gui extends UI {
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
         Platform.runLater(()->this.applicationGui.showError(msgToVisualize));
-        Platform.runLater(()->this.applicationGui.openPopUps(this.applicationGui.getErrorSceneForPopUp()));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
     @Override
     protected void show_gameEnded(GameImmutable gameImmutable) {
-        Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
-        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
+        //Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
+        //Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
     }
 
     @Override
@@ -205,7 +185,7 @@ public class Gui extends UI {
     @Override
     protected void showInvalidInput() {
         Platform.runLater(()->this.applicationGui.showError("Invalid Input"));
-        Platform.runLater(()->this.applicationGui.openPopUps(this.applicationGui.getErrorSceneForPopUp()));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
 
@@ -245,7 +225,7 @@ public class Gui extends UI {
     @Override
     protected void showWinner(GameImmutable gameImmutable) {
         Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
-        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.WINNERS));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.WINNERS));
     }
 
     @Override
@@ -265,21 +245,20 @@ public class Gui extends UI {
             req.append(v.name()+" ");
         }
         Platform.runLater(()->this.applicationGui.showError("You can't place the card because you dont have : "+req+" on your Codex" ));
-        Platform.runLater(()->this.applicationGui.openPopUps(this.applicationGui.getErrorSceneForPopUp()));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
     @Override
     protected void show_GameTitle() {
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.GAME_TITLE));
-        Platform.runLater(()->this.applicationGui.setupGUIInputController(this.inputReaderGUI));
-        Platform.runLater(()->this.applicationGui.createNewWindowWithStyle());
+        Platform.runLater(()->this.applicationGui.createNewWindow());
 
     }
 
     @Override
     protected void showInvalidNickname(String nickname) {
         Platform.runLater(()->this.applicationGui.showError("Invalid Nickname"));
-        Platform.runLater(()->this.applicationGui.openPopUps((this.applicationGui.getErrorSceneForPopUp())));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
     @Override

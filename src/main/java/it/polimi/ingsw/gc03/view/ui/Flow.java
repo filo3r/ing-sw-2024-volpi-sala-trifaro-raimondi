@@ -145,8 +145,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void run() {
-        events.add(null, APP_MENU);
-        ui.show_GameTitle();
+        events.add(null, GAME_TITLE);
         while (!Thread.interrupted()) {
             try {
                 Event event = events.pop();
@@ -269,6 +268,18 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     private void statusNotInAGame(Event event) throws Exception {
         switch (event.getType()) {
+            case GAME_TITLE -> {
+                ui.show_GameTitle();
+                String input;
+                try {
+                    input = this.inputProcessor.getDataToProcess().popData();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                switch (input) {
+                    default-> events.add(null,APP_MENU);
+                }
+            }
             case APP_MENU -> {
                 boolean selectionOk;
                 ended = false;

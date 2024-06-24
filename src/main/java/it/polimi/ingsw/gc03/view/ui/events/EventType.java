@@ -23,5 +23,6 @@ public enum EventType {
     COMMON_CARDS_EXTRACTED,
     PLAYER_LEFT,
     GAMECREATED,
-    SHOW_CHAT
+    SHOW_CHAT,
+    GAME_TITLE
 }

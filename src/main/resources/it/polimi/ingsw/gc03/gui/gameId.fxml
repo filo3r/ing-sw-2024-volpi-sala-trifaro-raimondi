@@ -11,7 +11,7 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #263340;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameIdController">
     <children>
         <Pane prefHeight="740.0" prefWidth="1279.0" styleClass="backgroundNickname" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <Pane maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0" style="-fx-background-color: black; -fx-border-radius: 10 10 0 0; -fx-border-width: 5;" AnchorPane.leftAnchor="334.0" AnchorPane.rightAnchor="334.0" AnchorPane.topAnchor="183.0">
+        <Pane maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0" style="-fx-background-color: black; -fx-border-radius: 10 10 0 0; -fx-border-width: 5;" AnchorPane.leftAnchor="334.0" AnchorPane.rightAnchor="334.0" AnchorPane.topAnchor="183.0" AnchorPane.bottomAnchor="183.0">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor>

@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,6 +97,8 @@ public class WinnersController extends GenericController {
      */
     public void actionClose(ActionEvent actionEvent) {
         getInputReaderGUI().addTxt("leave");
+        Stage stage = (Stage) buttonClose.getScene().getWindow();
+        stage.close();
     }
 
 

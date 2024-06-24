@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="378.0" style="-fx-background-color: #263340;" xmlns="http://javafx.com/javafx/19">
-    <children>
-        <Pane prefHeight="356.0" prefWidth="378.0" style="-fx-background-color: transparent;" styleClass="gameTitle" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-15.0" />
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="829.0" style="-fx-background-color: #263340;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameTitleController">
+   <children>
+      <Pane prefHeight="620.0" prefWidth="829.0">
+         <children>
+            <ImageView fitHeight="620.0" fitWidth="1041.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/title_screen.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="startToPlayButton" contentDisplay="CENTER" ellipsisString="" layoutX="-1.0" mnemonicParsing="false" prefHeight="620.0" prefWidth="829.0" style="-fx-background-color: transparent;" text="Press to Start..." textFill="#fff503" onMouseClicked="#actionStart" onKeyPressed="#actionStart">
+               <font>
+                  <Font name="Yu Gothic Bold" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
-
