@@ -10,6 +10,7 @@ import it.polimi.ingsw.gc03.view.ui.Flow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -102,17 +103,25 @@ public class ApplicationGui extends Application {
                 }
             }
             this.stage.setScene(activeScene.getScene());
+            Node nodeGroup = stage.getScene().lookup("#contentGroup");
+            if(nodeGroup != null){
+                nodeGroup.getTransforms().clear();
+            }
+            Node node = stage.getScene().lookup("#content");
+            if(node != null){
+                node.getTransforms().clear();
+            }
             this.stage.show();
         }
         try {
             widthOld=stage.getScene().getWidth();
             heightOld=stage.getScene().getHeight();
             this.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-                rescale((double)newVal-16,heightOld);
+                rescale((double)newVal,heightOld);
             });
 
             this.stage.heightProperty().addListener((obs, oldVal, newVal) -> {
-                rescale(widthOld,(double)newVal-39);
+                rescale(widthOld,(double)newVal);
             });
             resizing=true;
         } catch (Exception e) {
@@ -123,6 +132,7 @@ public class ApplicationGui extends Application {
 
     private boolean resizing=true;
     private double widthOld, heightOld;
+
     /**
      * This method is used to rescale the scene.
      */
@@ -139,6 +149,7 @@ public class ApplicationGui extends Application {
             heightOld = heightWindow;
             Scale scale = new Scale(w, h, 0, 0);
             try{
+
                 stage.getScene().lookup("#contentGroup").getTransforms().add(scale);
             } catch (Exception e){
 
