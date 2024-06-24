@@ -8,14 +8,18 @@ import it.polimi.ingsw.gc03.model.card.CardGold;
 import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.enumerations.Color;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
+import it.polimi.ingsw.gc03.model.side.Side;
+import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.view.tui.Coords;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1034,13 +1038,35 @@ public class GameRunningController extends GenericController {
     @FXML
     private ListView<String> latestEvent;
 
+    /**
+     *
+     */
     @FXML
     private ComboBox<String> chatReceiver;
 
+    /**
+     *
+     */
     @FXML
     private TextField chatMessage;
 
+    /**
+     *
+     */
     private int idGame = 0;
+
+    /**
+     *
+     */
+    @FXML
+    private GridPane codexGrid;
+
+    /**
+     *
+     */
+    @FXML
+    private ScrollPane codexScroll;
+
 
     /**
      * Sets the game ID to be displayed in the scene.
@@ -2389,7 +2415,7 @@ public class GameRunningController extends GenericController {
     /**
      *Clears the Chat ListView
      *       the Event ListView
- *       and the Receivers ComboBox
+     *       and the Receivers ComboBox
      *  if the gameId has changed
      * @param gameImmutable
      */
@@ -2400,5 +2426,109 @@ public class GameRunningController extends GenericController {
             latestEvent.getItems().clear();
         }
     }
+
+
+    /**
+     *
+     */
+    public void setCodex(GameImmutable gameImmutable, String nickname) {
+        Player player = getPlayer(gameImmutable, nickname);
+        for (Coords coords : player.getCodex().getCodexFillOrder()) {
+            Side side = player.getCodex().getSideAt(coords.getX(), coords.getY());
+            String imagePath = side.getImage();
+            Image image = new Image("file:" + imagePath);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(201.15);
+            imageView.setFitHeight(134.1);
+            imageView.setPreserveRatio(false);
+            codexGrid.add(imageView, coords.getY(), coords.getX());
+        }
+    }
+
+
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     */
+    @FXML
+    public void initialize() {
+        // Make the hands draggable and assign their respective indices
+        makeHandDraggable(this.hand1Image, "0");
+        makeHandDraggable(this.hand2Image, "1");
+        makeHandDraggable(this.hand3Image, "2");
+        // Set drag over event handler for the GridPane
+        this.codexGrid.setOnDragOver(event -> {
+            if (event.getGestureSource() != this.codexGrid && event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+        });
+        // Set drag dropped event handler for the GridPane
+        this.codexGrid.setOnDragDropped(event -> {
+            Dragboard dragboard = event.getDragboard();
+            boolean success = false;
+            if (dragboard.hasString()) {
+                // Calculate the column and row based on the mouse position
+                double offsetX = event.getX() + this.codexScroll.getHvalue() * (this.codexGrid.getWidth() - this.codexScroll.getViewportBounds().getWidth());
+                double offsetY = event.getY() + this.codexScroll.getVvalue() * (this.codexGrid.getHeight() - this.codexScroll.getViewportBounds().getHeight());
+                int col = (int) (offsetX / (this.codexGrid.getWidth() / this.codexGrid.getColumnCount()));
+                int row = (int) (offsetY / (this.codexGrid.getHeight() / this.codexGrid.getRowCount()));
+                // Check if the cell satisfies the condition
+                if ((row % 2 == 0 && col % 2 == 0) || (row % 2 != 0 && col % 2 != 0)) {
+                    String colStr = String.valueOf(col);
+                    String rowStr = String.valueOf(row);
+                    // Get the index of the dragged hand
+                    String handIndex = dragboard.getString();
+                    // Configure actions for Flow
+                    getInputReaderGUI().addTxt(handIndex);
+                    boolean frontSide = true;
+                    switch (handIndex) {
+                        case "0":
+                            frontSide = this.frontSideHand.get("hand1");
+                            break;
+                        case "1":
+                            frontSide = this.frontSideHand.get("hand2");
+                            break;
+                        case "2":
+                            frontSide = this.frontSideHand.get("hand3");
+                            break;
+                    }
+                    if (frontSide)
+                        getInputReaderGUI().addTxt("f");
+                    else
+                        getInputReaderGUI().addTxt("b");
+                    getInputReaderGUI().addTxt(colStr + " " + rowStr);
+                    success = true;
+                }
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
+
+
+    /**
+     * Makes the specified ImageView draggable and associates it with a given index.
+     * @param handImage The ImageView to be made draggable.
+     * @param index The index associated with the ImageView.
+     */
+    private void makeHandDraggable(ImageView handImage, String index) {
+        // Set an event handler for when a drag is detected on the ImageView
+        handImage.setOnDragDetected(event -> {
+            // Start a drag-and-drop operation with the MOVE transfer mode
+            Dragboard dragboard = handImage.startDragAndDrop(TransferMode.MOVE);
+            // Create a ClipboardContent object to hold the data to be transferred
+            ClipboardContent clipboardContent = new ClipboardContent();
+            // Put the index (converted to a string) into the ClipboardContent
+            clipboardContent.putString(index);
+            // Set the content of the Dragboard with the ClipboardContent data
+            dragboard.setContent(clipboardContent);
+            // Consume the event, indicating that it has been handled
+            event.consume();
+        });
+        // Set an event handler for when the drag-and-drop operation is done
+        handImage.setOnDragDone(DragEvent::consume);
+    }
+
+
 
 }

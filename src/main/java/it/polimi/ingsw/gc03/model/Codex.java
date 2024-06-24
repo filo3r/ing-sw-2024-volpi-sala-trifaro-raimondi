@@ -5,6 +5,7 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
+import it.polimi.ingsw.gc03.view.tui.Coords;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -64,6 +65,11 @@ public class Codex implements Serializable {
     private boolean cardStarterInserted;
 
     /**
+     * List that collects the order in which the codex is created.
+     */
+    private ArrayList<Coords> codexFillOrder;
+
+    /**
      * Constructor for the Codex class.
      */
     public Codex() {
@@ -78,6 +84,7 @@ public class Codex implements Serializable {
         this.minColumn = 0;
         this.maxColumn = 81;
         this.cardStarterInserted = false;
+        this.codexFillOrder = new ArrayList<>();
     }
 
     /**
@@ -461,6 +468,9 @@ public class Codex implements Serializable {
         this.maxRow = 40;
         this.minColumn = 40;
         this.maxColumn = 40;
+        // Update codexFillOrder
+        Coords coords = new Coords(40, 40);
+        this.codexFillOrder.add(coords);
         game.getListener().notifyPositionedStarterCardIntoCodex(game, nickname);
         // Check if everybody has already placed their starter card, in case notify everybody to choose their personal objective
         boolean everybodyPlacedTheirStarter = true;
@@ -525,6 +535,9 @@ public class Codex implements Serializable {
                 updateCounterCodex(side);
                 calculatePointCodex(game, side);
                 this.counterCodex[7] = 0;
+                // Update codexFillOrder
+                Coords coords = new Coords(row, column);
+                this.codexFillOrder.add(coords);
                 game.getListener().notifyPositionedCardIntoCodex(game, row, column);
                 return true;
             }
@@ -578,6 +591,20 @@ public class Codex implements Serializable {
     public void setCodex(Side[][] codex) {
         this.codex = codex;
     }
+
+    /**
+     * Method to retrieve the Side at a specific position in the codex.
+     * @param row The row of the desired Side.
+     * @param column The column of the desired Side.
+     * @return The Side at the specified position, or null if the position is empty or out of bounds.
+     */
+    public Side getSideAt(int row, int column) {
+        if (row < 0 || row >= 81 || column < 0 || column >= 81)
+            return null;
+        else
+            return this.codex[row][column];
+    }
+
 
     /**
      * Method to retrieve the counterCodex.
@@ -689,5 +716,21 @@ public class Codex implements Serializable {
      */
     public void setCardStarterInserted(boolean cardStarterInserted) {
         this.cardStarterInserted = cardStarterInserted;
+    }
+
+    /**
+     * Method to retrieve the codexFillOrder.
+     * @return The codexFillOrder.
+     */
+    public ArrayList<Coords> getCodexFillOrder() {
+        return this.codexFillOrder;
+    }
+
+    /**
+     * Method to set the codexFillOrder.
+     * @param codexFillOrder The codexFillOrder to set.
+     */
+    public void setCodexFillOrder(ArrayList<Coords> codexFillOrder) {
+        this.codexFillOrder = codexFillOrder;
     }
 }
