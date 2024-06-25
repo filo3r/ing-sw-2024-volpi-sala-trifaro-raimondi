@@ -25,7 +25,6 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Transform;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -834,240 +833,240 @@ public class GameRunningController extends GenericController {
     private ImageView hand33Image;
 
     /**
-     *
+     * Pane to display the fourth board.
      */
     @FXML
     private Pane board4;
 
     /**
-     *
+     * Pane to display the fourth player's color.
      */
     @FXML
     private Pane color4;
 
     /**
-     *
+     * Text to display the fourth player's nickname.
      */
     @FXML
     private Text nickname4;
 
     /**
-     *
+     * Pane to display the fourth player's fungi.
      */
     @FXML
     private Pane fungi4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's fungi.
      */
     @FXML
     private ImageView fungi4Image;
 
     /**
-     *
+     * Text to display the fourth player's fungi count.
      */
     @FXML
     private Text fungiCount4;
 
     /**
-     *
+     * Pane to display the fourth player's plants.
      */
     @FXML
     private Pane plant4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's plants.
      */
     @FXML
     private ImageView plant4Image;
 
     /**
-     *
+     * Text to display the fourth player's plant count.
      */
     @FXML
     private Text plantCount4;
 
     /**
-     *
+     * Pane to display the fourth player's animals.
      */
     @FXML
     private Pane animal4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's animals.
      */
     @FXML
     private ImageView animal4Image;
 
     /**
-     *
+     * Text to display the fourth player's animal count.
      */
     @FXML
     private Text animalCount4;
 
     /**
-     *
+     * Pane to display the fourth player's insects.
      */
     @FXML
     private Pane insect4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's insects.
      */
     @FXML
     private ImageView insect4Image;
 
     /**
-     *
+     * Text to display the fourth player's insect count.
      */
     @FXML
     private Text insectCount4;
 
     /**
-     *
+     * Pane to display the fourth player's quills.
      */
     @FXML
     private Pane quill4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's quills.
      */
     @FXML
     private ImageView quill4Image;
 
     /**
-     *
+     * Text to display the fourth player's quill count.
      */
     @FXML
     private Text quillCount4;
 
     /**
-     *
+     * Pane to display the fourth player's inkwells.
      */
     @FXML
     private Pane inkwell4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's inkwells.
      */
     @FXML
     private ImageView inkwell4Image;
 
     /**
-     *
+     * Text to display the fourth player's inkwell count.
      */
     @FXML
     private Text inkwellCount4;
 
     /**
-     *
+     * Pane to display the fourth player's manuscripts.
      */
     @FXML
     private Pane manuscript4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's manuscripts.
      */
     @FXML
     private ImageView manuscript4Image;
 
     /**
-     *
+     * Text to display the fourth player's manuscript count.
      */
     @FXML
     private Text manuscriptCount4;
 
     /**
-     *
+     * Pane to display the fourth player's covered items.
      */
     @FXML
     private Pane covered4Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's covered items.
      */
     @FXML
     private ImageView covered4Image;
 
     /**
-     *
+     * Text to display the fourth player's covered count.
      */
     @FXML
     private Text coveredCount4;
 
     /**
-     *
+     * Pane to display the fourth player's first hand card.
      */
     @FXML
     private Pane hand41Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's first hand card.
      */
     @FXML
     private ImageView hand41Image;
 
     /**
-     *
+     * Pane to display the fourth player's second hand card.
      */
     @FXML
     private Pane hand42Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's second hand card.
      */
     @FXML
     private ImageView hand42Image;
 
     /**
-     *
+     * Pane to display the fourth player's third hand card.
      */
     @FXML
     private Pane hand43Pane;
 
     /**
-     *
+     * ImageView to display the fourth player's third hand card.
      */
     @FXML
     private ImageView hand43Image;
 
     /**
-     *
+     * ListView to display chat messages.
      */
     @FXML
     private ListView<String> chat;
 
     /**
-     *
+     * ListView to display the latest events.
      */
     @FXML
     private ListView<String> latestEvent;
 
     /**
-     *
+     * ComboBox to select the receiver of the chat message.
      */
     @FXML
     private ComboBox<String> chatReceiver;
 
     /**
-     *
+     * TextField to input chat messages.
      */
     @FXML
     private TextField chatMessage;
 
     /**
-     *
+     * The game ID.
      */
     private int idGame = 0;
 
     /**
-     *
+     * The GridPane to display the codex.
      */
     @FXML
     private GridPane codexGrid;
 
     /**
-     *
+     * The ScrollPane for the codex.
      */
     @FXML
     private ScrollPane codexScroll;
@@ -1261,7 +1260,7 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the deck Resource button.
-     * @param mouseEvent
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionDeckResource(MouseEvent mouseEvent) {
@@ -1304,7 +1303,7 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the deck Gold button.
-     * @param mouseEvent
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionDeckGold(MouseEvent mouseEvent) {
@@ -1420,7 +1419,7 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the first displayed button.
-     * @param mouseEvent
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionDisplayed1(MouseEvent mouseEvent) {
@@ -1430,7 +1429,7 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the second displayed button.
-     * @param mouseEvent
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionDisplayed2(MouseEvent mouseEvent) {
@@ -1440,7 +1439,7 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the third displayed button.
-     * @param mouseEvent
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionDisplayed3(MouseEvent mouseEvent) {
@@ -1450,7 +1449,7 @@ public class GameRunningController extends GenericController {
 
     /**
      * Handles the action of clicking the fourth displayed button.
-     * @param mouseEvent
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionDisplayed4(MouseEvent mouseEvent) {
@@ -1459,7 +1458,9 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the hand images for the player.
+     * @param gameImmutable The current state of the game.
+     * @param nickname The nickname of the player.
      */
     public void setHand(GameImmutable gameImmutable, String nickname) {
         hand1Pane.setVisible(false);
@@ -1522,7 +1523,9 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Returns the front side image path of a card.
+     * @param card The card.
+     * @return The front side image path.
      */
     private String getFrontSideImagePath(Card card) {
         if (card instanceof CardResource)
@@ -1535,7 +1538,9 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Returns the back side image path of a card.
+     * @param card The card.
+     * @return The back side image path.
      */
     private String getBackSideImagePath(Card card) {
         if (card instanceof CardResource)
@@ -1548,7 +1553,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Handles the action of clicking the first hand card.
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionHand1(MouseEvent mouseEvent) {
@@ -1596,7 +1602,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Handles the action of clicking the second hand card.
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionHand2(MouseEvent mouseEvent) {
@@ -1644,7 +1651,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Handles the action of clicking the third hand card.
+     * @param mouseEvent The mouse event.
      */
     @FXML
     public void actionHand3(MouseEvent mouseEvent) {
@@ -1690,8 +1698,10 @@ public class GameRunningController extends GenericController {
         }
     }
 
+
     /**
-     *
+     * Sets the boards information to be displayed in the scene.
+     * @param gameImmutable The current state of the game.
      */
     public void setBoards(GameImmutable gameImmutable) {
         // Set visibility
@@ -1707,7 +1717,7 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the images for the board items.
      */
     private void setValuesImages() {
         String valuesImagePath = System.getProperty("user.dir") + File.separator + "src" +
@@ -1923,7 +1933,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the boards information for each player.
+     * @param gameImmutable The current state of the game.
      */
     private void setBoardsInformation(GameImmutable gameImmutable) {
         // Set boards' hands to invisible
@@ -2342,7 +2353,9 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Returns the color of a player as a string.
+     * @param color The color enumeration.
+     * @return The color as a string.
      */
     private String getPlayerColor(Color color) {
         if (color == Color.RED)
@@ -2358,10 +2371,10 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *Adds a Message to the Chat ListView
-     * @param message
-     * @param nickname
-     * @param gameImmutable
+     * Adds a message to the chat ListView.
+     * @param message The chat message.
+     * @param nickname The player's nickname.
+     * @param gameImmutable The current state of the game.
      */
     public void addMessages(ChatMessage message , String nickname, GameImmutable gameImmutable) {
         String text = "["+ message.getTimestamp().getHour()+ ":" + message.getTimestamp().getMinute()+":" + message.getTimestamp().getSecond()+"] "
@@ -2375,9 +2388,9 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *Adds an Event to the ListView
-     * @param event
-     * @param gameImmutable
+     * Adds an event to the latest events ListView.
+     * @param event The event description.
+     * @param gameImmutable The current state of the game.
      */
     public void addLatestEvents(String event, GameImmutable gameImmutable) {
         latestEvent.getItems().add("\n" + event);
@@ -2385,7 +2398,7 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *Sets the action for clicking the button,reads the chatMessage text and sends it to the decided receiver reading it from the ComboBox
+     * Sends the chat message to the selected receiver.
      */
     public void actionSend() {
        String receiver = chatReceiver.getSelectionModel().getSelectedItem();
@@ -2400,10 +2413,10 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *Reads the name of the players in the game and sets the possible receivers in a ComboBox
-     * Sets default on everyone
-     * @param gameImmutable
-     * @param nickname
+     * Sets the possible receivers in the chat receiver ComboBox.
+     * Sets the default receiver to "everyone".
+     * @param gameImmutable The current state of the game.
+     * @param nickname The player's nickname.
      */
     public void setReceivers(GameImmutable gameImmutable, String nickname) {
         chatReceiver.getItems().add("everyone");
@@ -2418,11 +2431,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *Clears the Chat ListView
-     *       the Event ListView
-     *       and the Receivers ComboBox
-     *  if the gameId has changed
-     * @param gameImmutable
+     * Clears the chat ListView, event ListView, and receivers ComboBox if the game ID has changed.
+     * @param gameImmutable The current state of the game.
      */
     public void clear(GameImmutable gameImmutable) {
         if (idGame!= gameImmutable.getIdGame() || idGame==0) {
@@ -2434,7 +2444,9 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the codex for the player.
+     * @param gameImmutable The current state of the game.
+     * @param nickname The player's nickname.
      */
     public void setCodex(GameImmutable gameImmutable, String nickname) {
         Player player = getPlayer(gameImmutable, nickname);
@@ -2454,7 +2466,8 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     * Initializes the controller class.
+     * This method is automatically called after the FXML file has been loaded.
      */
     @FXML
     public void initialize() {
@@ -2505,7 +2518,7 @@ public class GameRunningController extends GenericController {
 
 
     /**
-     *
+     * Sets the cell IDs for the grid.
      */
     private void setGridCellIds() {
         for (int row = 0; row < codexGrid.getRowCount(); row++) {
@@ -2545,7 +2558,6 @@ public class GameRunningController extends GenericController {
         // Set an event handler for when the drag-and-drop operation is done
         handImage.setOnDragDone(DragEvent::consume);
     }
-
 
 
 }
