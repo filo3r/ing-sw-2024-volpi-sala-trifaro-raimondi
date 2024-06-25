@@ -13,8 +13,10 @@ import it.polimi.ingsw.gc03.view.tui.Coords;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -22,6 +24,8 @@ import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+import javafx.scene.transform.Transform;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -2530,6 +2534,11 @@ public class GameRunningController extends GenericController {
             clipboardContent.putString(index);
             // Set the content of the Dragboard with the ClipboardContent data
             dragboard.setContent(clipboardContent);
+            // Sets the drag view for the Dragboard to the specified image.
+            SnapshotParameters snapshotParameters = new SnapshotParameters();
+            snapshotParameters.setTransform(Transform.scale(0.75, 0.75));
+            WritableImage dragView = handImage.snapshot(snapshotParameters, null);
+            dragboard.setDragView(dragView);
             // Consume the event, indicating that it has been handled
             event.consume();
         });
