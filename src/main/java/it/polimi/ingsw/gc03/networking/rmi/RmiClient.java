@@ -91,10 +91,10 @@ public class RmiClient implements ClientAction {
         this.gameController = null;
         this.gameListenerHandlerClient = new GameListenerHandlerClient(flow);
         this.flow = flow;
-        pingExecutor.scheduleAtFixedRate(() -> sendPing(nicknameClient), 0, 2, TimeUnit.SECONDS);
-        connectToServer();
         this.ip = ip;
         this.port = port;
+        connectToServer();
+        pingExecutor.scheduleAtFixedRate(() -> sendPing(nicknameClient), 0, 2, TimeUnit.SECONDS);
     }
 
     /**
@@ -140,6 +140,7 @@ public class RmiClient implements ClientAction {
      * @throws NotBoundException If a name in the registry was not found.
      */
     private void connectToGameServer() throws RemoteException, NotBoundException {
+        System.setProperty("java.rmi.server.hostname", this.ip);
         this.rmiRegistry = LocateRegistry.getRegistry(this.ip, this.port);
         this.mainController = (MainControllerInterface) this.rmiRegistry.lookup("RMIServer");
     }
