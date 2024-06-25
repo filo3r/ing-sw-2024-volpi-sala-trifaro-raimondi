@@ -151,6 +151,7 @@ public class Gui extends UI {
 
     @Override
     protected void showAskIndex(GameImmutable gameImmutable) {
+        Platform.runLater(()->this.applicationGui.setActionIsPlace());
         Platform.runLater(()->this.applicationGui.showError("Please, place a card from your hand \nby dragging it on the grid"));
         Platform.runLater(()-> this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
@@ -167,6 +168,7 @@ public class Gui extends UI {
 
     @Override
     protected void showAskToChooseADeck() {
+        Platform.runLater(()->this.applicationGui.setActionIsDraw());
         Platform.runLater(()->this.applicationGui.showError("Please, choose a card to draw"));
         Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }

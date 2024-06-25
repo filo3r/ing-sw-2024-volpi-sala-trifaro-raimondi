@@ -1072,6 +1072,7 @@ public class GameRunningController extends GenericController {
     private ScrollPane codexScroll;
 
 
+
     /**
      * Sets the game ID to be displayed in the scene.
      * @param gameId The game ID to be displayed.
@@ -2561,5 +2562,21 @@ public class GameRunningController extends GenericController {
         handImage.setOnDragDone(DragEvent::consume);
     }
 
+    public void actionIsPlace(){
+        displayed1Image.setMouseTransparent(true);
+        displayed2Image.setMouseTransparent(true);
+        displayed3Image.setMouseTransparent(true);
+        displayed4Image.setMouseTransparent(true);
+        deckGoldImage.setMouseTransparent(true);
+        deckResourceImage.setMouseTransparent(true);
+    }
+    public void actionIsDraw(){
+        displayed1Image.setMouseTransparent(false);
+        displayed2Image.setMouseTransparent(false);
+        displayed3Image.setMouseTransparent(false);
+        displayed4Image.setMouseTransparent(false);
+        deckGoldImage.setMouseTransparent(false);
+        deckResourceImage.setMouseTransparent(false);
+    }
 
 }

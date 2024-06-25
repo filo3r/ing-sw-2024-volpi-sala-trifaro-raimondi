@@ -404,4 +404,13 @@ public class ApplicationGui extends Application {
         controller.addLatestEvents(event, gameImmutable);
     }
 
+    public void setActionIsDraw(){
+        GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
+        controller.actionIsDraw();
+    }
+    public void setActionIsPlace(){
+        GameRunningController controller = (GameRunningController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.GAME_RUNNING)).toList().getFirst().getGenericController();
+        controller.actionIsPlace();
+    }
+
 }
