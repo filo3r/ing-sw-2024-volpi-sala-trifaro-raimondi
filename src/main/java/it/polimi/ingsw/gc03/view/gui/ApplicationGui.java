@@ -243,6 +243,7 @@ public class ApplicationGui extends Application {
         popUpStage = new Stage();
         popUpStage.setResizable(false);
         popUpStage.setScene(activeScene);
+        popUpStage.initStyle(StageStyle.UNDECORATED);
         popUpStage.show();
         popUpStage.setX(stage.getX()+(stage.getWidth()-activeScene.getWidth())*0.5);
         popUpStage.setY(stage.getY()+(stage.getHeight()-activeScene.getHeight())*0.5);
