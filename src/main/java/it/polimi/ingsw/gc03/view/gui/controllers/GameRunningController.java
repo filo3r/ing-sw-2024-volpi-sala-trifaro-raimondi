@@ -1170,7 +1170,7 @@ public class GameRunningController extends GenericController {
             imagePath = player.getCardObjective().get(0).getImage();
         if (imagePath != null) {
             try {
-                Image image = new Image("file:" + imagePath);
+                Image image = new Image(getClass().getResourceAsStream(imagePath));
                 personalObjectiveImage.setImage(image);
                 personalObjectiveImage.setFitWidth(personalObjectivePane.getPrefWidth());
                 personalObjectiveImage.setFitHeight(personalObjectivePane.getPrefHeight());
@@ -1200,7 +1200,7 @@ public class GameRunningController extends GenericController {
         if (imagePath1 != null && imagePath2 != null) {
             try {
                 // Card 1
-                Image image1 = new Image("file:" + imagePath1);
+                Image image1 = new Image(getClass().getResourceAsStream(imagePath1));
                 sharedObjective1Image.setImage(image1);
                 sharedObjective1Image.setFitWidth(sharedObjective1Pane.getPrefWidth());
                 sharedObjective1Image.setFitHeight(sharedObjective1Pane.getPrefHeight());
@@ -1208,7 +1208,7 @@ public class GameRunningController extends GenericController {
                 sharedObjective1Image.setSmooth(true);
                 sharedObjective1Image.setCache(true);
                 // Card 2
-                Image image2 = new Image("file:" + imagePath2);
+                Image image2 = new Image(getClass().getResourceAsStream(imagePath2));
                 sharedObjective2Image.setImage(image2);
                 sharedObjective2Image.setFitWidth(sharedObjective2Pane.getPrefWidth());
                 sharedObjective2Image.setFitHeight(sharedObjective2Pane.getPrefHeight());
@@ -1281,7 +1281,7 @@ public class GameRunningController extends GenericController {
             String imagePath = gameImmutable.getDesk().getDeckGold().get(0).getBackGold().getImage();
             if (imagePath != null) {
                 try {
-                    Image image = new Image("file:" + imagePath);
+                    Image image = new Image(getClass().getResourceAsStream(imagePath));
                     deckGoldImage.setImage(image);
                     deckGoldImage.setFitWidth(deckGoldPane.getPrefWidth());
                     deckGoldImage.setFitHeight(deckGoldPane.getPrefHeight());
@@ -1385,7 +1385,7 @@ public class GameRunningController extends GenericController {
         for (int i = 0; i < gameImmutable.getDesk().getDisplayedGold().size(); i++) {
             if (imagePathGold.get(i) != null) {
                 try {
-                    Image image = new Image("file:" + imagePathGold.get(i));
+                    Image image = new Image(getClass().getResourceAsStream(imagePathGold.get(i)));
                     if (i == 0) {
                         displayed3Pane.setVisible(true);
                         displayed3Image.setImage(image);
@@ -1481,7 +1481,7 @@ public class GameRunningController extends GenericController {
             String imagePath = getFrontSideImagePath(player.getHand().get(i));
             if (imagePath != null) {
                 try {
-                    Image image = new Image("file:"+imagePath);
+                    Image image = new Image(getClass().getResourceAsStream(imagePath));
                     if (i == 0) {
                         hand1Pane.setVisible(true);
                         hand1Image.setImage(image);
@@ -1569,7 +1569,7 @@ public class GameRunningController extends GenericController {
         } else {
             if (frontSideHand.get("hand1")) {
                 try {
-                    Image image = new Image("file:" + backSideImagePath);
+                    Image image = new Image(getClass().getResourceAsStream(backSideImagePath));
                     hand1Image.setImage(image);
                     hand1Image.setFitWidth(hand1Pane.getPrefWidth());
                     hand1Image.setFitHeight(hand1Pane.getPrefHeight());
@@ -1584,7 +1584,7 @@ public class GameRunningController extends GenericController {
                 }
             } else {
                 try {
-                    Image image = new Image("file:" + frontSideImagePath);
+                    Image image = new Image(getClass().getResourceAsStream(frontSideImagePath));
                     hand1Image.setImage(image);
                     hand1Image.setFitWidth(hand1Pane.getPrefWidth());
                     hand1Image.setFitHeight(hand1Pane.getPrefHeight());
@@ -1618,7 +1618,7 @@ public class GameRunningController extends GenericController {
         } else {
             if (frontSideHand.get("hand2")) {
                 try {
-                    Image image = new Image("file:" + backSideImagePath);
+                    Image image = new Image(getClass().getResourceAsStream(backSideImagePath));
                     hand2Image.setImage(image);
                     hand2Image.setFitWidth(hand2Pane.getPrefWidth());
                     hand2Image.setFitHeight(hand2Pane.getPrefHeight());
@@ -1633,7 +1633,7 @@ public class GameRunningController extends GenericController {
                 }
             } else {
                 try {
-                    Image image = new Image("file:" + frontSideImagePath);
+                    Image image = new Image(getClass().getResourceAsStream(frontSideImagePath));
                     hand2Image.setImage(image);
                     hand2Image.setFitWidth(hand2Pane.getPrefWidth());
                     hand2Image.setFitHeight(hand2Pane.getPrefHeight());
@@ -1667,7 +1667,7 @@ public class GameRunningController extends GenericController {
         } else {
             if (frontSideHand.get("hand3")) {
                 try {
-                    Image image = new Image("file:" + backSideImagePath);
+                    Image image = new Image(getClass().getResourceAsStream(backSideImagePath));
                     hand3Image.setImage(image);
                     hand3Image.setFitWidth(hand3Pane.getPrefWidth());
                     hand3Image.setFitHeight(hand3Pane.getPrefHeight());
@@ -1682,7 +1682,7 @@ public class GameRunningController extends GenericController {
                 }
             } else {
                 try {
-                    Image image = new Image("file:" + frontSideImagePath);
+                    Image image = new Image(getClass().getResourceAsStream(frontSideImagePath));
                     hand3Image.setImage(image);
                     hand3Image.setFitWidth(hand3Pane.getPrefWidth());
                     hand3Image.setFitHeight(hand3Pane.getPrefHeight());
@@ -1721,12 +1721,9 @@ public class GameRunningController extends GenericController {
      * Sets the images for the board items.
      */
     private void setValuesImages() {
-        String valuesImagePath = System.getProperty("user.dir") + File.separator + "src" +
-                File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-                + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "gui" + File.separator + "images"
-                + File.separator + "values" + File.separator;
+        String valuesImagePath = "/it/polimi/ingsw/gc03/gui/images/value/";
         try {
-            Image fungiImage = new Image("file:" + valuesImagePath + "fungi.png");
+            Image fungiImage = new Image(getClass().getResourceAsStream(valuesImagePath + "fungi.png"));
             fungi1Image.setImage(fungiImage);
             fungi1Image.setFitWidth(fungi1Pane.getPrefWidth());
             fungi1Image.setFitHeight(fungi1Pane.getPrefHeight());
@@ -1751,7 +1748,7 @@ public class GameRunningController extends GenericController {
             fungi4Image.setPreserveRatio(true);
             fungi4Image.setSmooth(true);
             fungi4Image.setCache(true);
-            Image plantImage = new Image("file:" + valuesImagePath + "plant.png");
+            Image plantImage = new Image(getClass().getResourceAsStream(valuesImagePath + "plant.png"));
             plant1Image.setImage(plantImage);
             plant1Image.setFitWidth(plant1Pane.getPrefWidth());
             plant1Image.setFitHeight(plant1Pane.getPrefHeight());
@@ -1776,7 +1773,7 @@ public class GameRunningController extends GenericController {
             plant4Image.setPreserveRatio(true);
             plant4Image.setSmooth(true);
             plant4Image.setCache(true);
-            Image animalImage = new Image("file:" + valuesImagePath + "animal.png");
+            Image animalImage = new Image(getClass().getResourceAsStream(valuesImagePath + "animal.png"));
             animal1Image.setImage(animalImage);
             animal1Image.setFitWidth(animal1Pane.getPrefWidth());
             animal1Image.setFitHeight(animal1Pane.getPrefHeight());
@@ -1801,7 +1798,7 @@ public class GameRunningController extends GenericController {
             animal4Image.setPreserveRatio(true);
             animal4Image.setSmooth(true);
             animal4Image.setCache(true);
-            Image insectImage = new Image("file:" + valuesImagePath + "insect.png");
+            Image insectImage = new Image(getClass().getResourceAsStream(valuesImagePath + "insect.png"));
             insect1Image.setImage(insectImage);
             insect1Image.setFitWidth(insect1Pane.getPrefWidth());
             insect1Image.setFitHeight(insect1Pane.getPrefHeight());
@@ -1826,7 +1823,7 @@ public class GameRunningController extends GenericController {
             insect4Image.setPreserveRatio(true);
             insect4Image.setSmooth(true);
             insect4Image.setCache(true);
-            Image quillImage = new Image("file:" + valuesImagePath + "quill.png");
+            Image quillImage = new Image(getClass().getResourceAsStream(valuesImagePath + "quill.png"));
             quill1Image.setImage(quillImage);
             quill1Image.setFitWidth(quill1Pane.getPrefWidth());
             quill1Image.setFitHeight(quill1Pane.getPrefHeight());
@@ -1851,7 +1848,7 @@ public class GameRunningController extends GenericController {
             quill4Image.setPreserveRatio(true);
             quill4Image.setSmooth(true);
             quill4Image.setCache(true);
-            Image inkwellImage = new Image("file:" + valuesImagePath + "inkwell.png");
+            Image inkwellImage = new Image(getClass().getResourceAsStream(valuesImagePath + "inkwell.png"));
             inkwell1Image.setImage(inkwellImage);
             inkwell1Image.setFitWidth(inkwell1Pane.getPrefWidth());
             inkwell1Image.setFitHeight(inkwell1Pane.getPrefHeight());
@@ -1876,7 +1873,7 @@ public class GameRunningController extends GenericController {
             inkwell4Image.setPreserveRatio(true);
             inkwell4Image.setSmooth(true);
             inkwell4Image.setCache(true);
-            Image manuscriptImage = new Image("file:" + valuesImagePath + "manuscript.png");
+            Image manuscriptImage = new Image(getClass().getResourceAsStream(valuesImagePath + "manuscript.png"));
             manuscript1Image.setImage(manuscriptImage);
             manuscript1Image.setFitWidth(manuscript1Pane.getPrefWidth());
             manuscript1Image.setFitHeight(manuscript1Pane.getPrefHeight());
@@ -1901,7 +1898,7 @@ public class GameRunningController extends GenericController {
             manuscript4Image.setPreserveRatio(true);
             manuscript4Image.setSmooth(true);
             manuscript4Image.setCache(true);
-            Image coveredImage = new Image("file:" + valuesImagePath + "covered.png");
+            Image coveredImage = new Image(getClass().getResourceAsStream(valuesImagePath + "covered.png"));
             covered1Image.setImage(coveredImage);
             covered1Image.setFitWidth(covered1Pane.getPrefWidth());
             covered1Image.setFitHeight(covered1Pane.getPrefHeight());
@@ -1978,7 +1975,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:" + imagePaths.get(j));
+                                Image image = new Image(getClass().getResourceAsStream(imagePaths.get(j)));
                                 if (j == 0) {
                                     hand21Pane.setVisible(true);
                                     hand21Image.setImage(image);
@@ -2043,7 +2040,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:" + imagePaths.get(j));
+                                Image image = new Image(getClass().getResourceAsStream(imagePaths.get(j)));
                                 if (j == 0) {
                                     hand31Pane.setVisible(true);
                                     hand31Image.setImage(image);
@@ -2112,7 +2109,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:" + imagePaths.get(j));
+                                Image image = new Image(getClass().getResourceAsStream(imagePaths.get(j)));
                                 if (j == 0) {
                                     hand11Pane.setVisible(true);
                                     hand11Image.setImage(image);
@@ -2177,7 +2174,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:" + imagePaths.get(j));
+                                Image image = new Image(getClass().getResourceAsStream(imagePaths.get(j)));
                                 if (j == 0) {
                                     hand21Pane.setVisible(true);
                                     hand21Image.setImage(image);
@@ -2242,7 +2239,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:" + imagePaths.get(j));
+                                Image image = new Image(getClass().getResourceAsStream(imagePaths.get(j)));
                                 if (j == 0) {
                                     hand31Pane.setVisible(true);
                                     hand31Image.setImage(image);
@@ -2307,7 +2304,7 @@ public class GameRunningController extends GenericController {
                     for (int j = 0; j < gameImmutable.getPlayers().get(i).getHand().size(); j++) {
                         if (imagePaths.get(j) != null) {
                             try {
-                                Image image = new Image("file:" + imagePaths.get(j));
+                                Image image = new Image(getClass().getResourceAsStream(imagePaths.get(j)));
                                 if (j == 0) {
                                     hand41Pane.setVisible(true);
                                     hand41Image.setImage(image);
@@ -2459,7 +2456,7 @@ public class GameRunningController extends GenericController {
         for (Coords coords : player.getCodex().getCodexFillOrder()) {
             Side side = player.getCodex().getSideAt(coords.getX(), coords.getY());
             String imagePath = side.getImage();
-            Image image = new Image("file:" + imagePath);
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(201.15);
             imageView.setFitHeight(134.1);
