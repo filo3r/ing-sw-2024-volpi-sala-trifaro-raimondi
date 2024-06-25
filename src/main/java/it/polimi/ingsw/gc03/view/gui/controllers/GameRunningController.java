@@ -9,7 +9,6 @@ import it.polimi.ingsw.gc03.model.card.CardResource;
 import it.polimi.ingsw.gc03.model.enumerations.Color;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.side.Side;
-import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 import it.polimi.ingsw.gc03.view.tui.Coords;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -19,10 +18,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -2455,6 +2454,8 @@ public class GameRunningController extends GenericController {
      */
     @FXML
     public void initialize() {
+        // Set cell IDs
+        setGridCellIds();
         // Make the hands draggable and assign their respective indices
         makeHandDraggable(this.hand1Image, "0");
         makeHandDraggable(this.hand2Image, "1");
@@ -2471,50 +2472,45 @@ public class GameRunningController extends GenericController {
             Dragboard dragboard = event.getDragboard();
             boolean success = false;
             if (dragboard.hasString()) {
-                // Calculate the column and row based on the mouse position
-                double offsetX = event.getX() + this.codexScroll.getHvalue() * (this.codexGrid.getWidth() - this.codexScroll.getViewportBounds().getWidth());
-                double offsetY = event.getY() + this.codexScroll.getVvalue() * (this.codexGrid.getHeight() - this.codexScroll.getViewportBounds().getHeight());
-                int col = (int) (offsetX / (this.codexGrid.getWidth() / this.codexGrid.getColumnCount()));
-                int row = (int) (offsetY / (this.codexGrid.getHeight() / this.codexGrid.getRowCount()));
-                // Check if the cell satisfies the condition
-                if ((row % 2 == 0 && col % 2 == 0) || (row % 2 != 0 && col % 2 != 0)) {
-                    String colStr = String.valueOf(col);
-                    String rowStr = String.valueOf(row);
-                    // Get the index of the dragged hand
-                    String handIndex = dragboard.getString();
-                    // Configure actions for Flow
-                    //getInputReaderGUI().addTxt(handIndex);
-                    boolean frontSide = true;
-                    switch (handIndex) {
-                        case "0":
-                            frontSide = this.frontSideHand.get("hand1");
-                            break;
-                        case "1":
-                            frontSide = this.frontSideHand.get("hand2");
-                            break;
-                        case "2":
-                            frontSide = this.frontSideHand.get("hand3");
-                            break;
+                // Find the node at the drop location
+                Node targetNode = event.getPickResult().getIntersectedNode();
+                // Trace your way back until you find a node with an ID
+                while (targetNode != null && !(targetNode instanceof Pane) && targetNode.getId() == null) {
+                    targetNode = targetNode.getParent();
+                }
+                if (targetNode != null && targetNode.getId() != null && targetNode.getId().startsWith("cell_")) {
+                    String cellId = targetNode.getId();
+                    String[] parts = cellId.split("_");
+                    int row = Integer.parseInt(parts[1]);
+                    int col = Integer.parseInt(parts[2]);
+                    // Check if the cell satisfies the condition
+                    if ((row % 2 == 0 && col % 2 == 0) || (row % 2 != 0 && col % 2 != 0)) {
+                        String handIndex = dragboard.getString();
+                        boolean frontSide = this.frontSideHand.get("hand" + (Integer.parseInt(handIndex) + 1));
+                        String command = frontSide ? "PLACECARDGUI true" : "PLACECARDGUI false";
+                        command += " " + handIndex + " " + col + " " + row;
+                        getInputReaderGUI().addTxt(command);
+                        success = true;
                     }
-                    String command = "";
-                    if (frontSide) {
-                        command += "PLACECARDGUI true";
-                    } else {
-                        command += "PLACECARDGUI false";
-                    }
-//                    if (frontSide)
-//                        getInputReaderGUI().addTxt("f");
-//                    else
-//                        getInputReaderGUI().addTxt("b");
-                    command += " " + handIndex + " " + colStr + " " + rowStr;
-                    getInputReaderGUI().addTxt(command);
-                    //getInputReaderGUI().addTxt(colStr + " " + rowStr);
-                    success = true;
                 }
             }
             event.setDropCompleted(success);
             event.consume();
         });
+    }
+
+
+    /**
+     *
+     */
+    private void setGridCellIds() {
+        for (int row = 0; row < codexGrid.getRowCount(); row++) {
+            for (int col = 0; col < codexGrid.getColumnCount(); col++) {
+                Pane cellPane = new Pane();
+                cellPane.setId("cell_" + row + "_" + col);
+                codexGrid.add(cellPane, col, row);
+            }
+        }
     }
 
 
