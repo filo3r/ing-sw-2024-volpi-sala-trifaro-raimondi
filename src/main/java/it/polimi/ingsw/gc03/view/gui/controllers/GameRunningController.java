@@ -12,6 +12,8 @@ import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
 import it.polimi.ingsw.gc03.view.tui.Coords;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -2441,6 +2443,8 @@ public class GameRunningController extends GenericController {
             imageView.setFitWidth(201.15);
             imageView.setFitHeight(134.1);
             imageView.setPreserveRatio(false);
+            codexGrid.setHalignment(imageView, HPos.CENTER);
+            codexGrid.setValignment(imageView, VPos.CENTER);
             codexGrid.add(imageView, coords.getY(), coords.getX());
         }
     }
