@@ -489,12 +489,12 @@ public class ListenersHandler {
      * Notifies that a card was not added to his hand.
      * @param game The current game.
      */
-    public synchronized void notifyCardNotAddedToHand(Game game) {
+    public synchronized void notifyCardNotAddedToHand(Game game, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
         for (GameListener gameListener : this.gameListeners) {
             try {
                 GameImmutable gameImmutable = new GameImmutable(game);
-                gameListener.cardNotAddedToHand(gameImmutable);
+                gameListener.cardNotAddedToHand(gameImmutable, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
@@ -591,6 +591,42 @@ public class ListenersHandler {
             try {
                 GameImmutable gameImmutable = new GameImmutable(game);
                 gameListener.drawCard(gameImmutable, nickname);
+            } catch (RemoteException e) {
+                AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
+                gameListenersToRemove.add(gameListener);
+            }
+        }
+        this.gameListeners.removeAll(gameListenersToRemove);
+    }
+
+    /**
+     * Notifies that a game has been created
+     * @param game The current game.
+     */
+    public synchronized void notifyGameCreated(Game game) {
+        ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
+        for (GameListener gameListener : this.gameListeners) {
+            try {
+                GameImmutable gameImmutable = new GameImmutable(game);
+                gameListener.gameCreated(gameImmutable);
+            } catch (RemoteException e) {
+                AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
+                gameListenersToRemove.add(gameListener);
+            }
+        }
+        this.gameListeners.removeAll(gameListenersToRemove);
+    }
+
+    /**
+     * Notifies that a player tried to place a card when he couldn't.
+     * @param game The current game.
+     */
+    public synchronized void notifyCanNotPlaceCard(Game game, String nickname) {
+        ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
+        for (GameListener gameListener : this.gameListeners) {
+            try {
+                GameImmutable gameImmutable = new GameImmutable(game);
+                gameListener.canNotPlaceCard(gameImmutable, nickname);
             } catch (RemoteException e) {
                 AsyncLogger.log(Level.WARNING, "[LISTENER] Disconnection has been detected.");
                 gameListenersToRemove.add(gameListener);
