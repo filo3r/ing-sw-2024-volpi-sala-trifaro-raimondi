@@ -236,7 +236,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         // check if the player is actually in the game
         if(!game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().isEmpty()){
             GameListener gameListener = game.getPlayers().stream().filter(p->p.getNickname().equals(playerNickname)).toList().getFirst().getSelfListener();
-            gameListener.playerLeft(new GameImmutable(this.game), playerNickname);
+            game.getListener().notifyPlayerLeft(game, playerNickname);
             game.removeListener(gameListener);
             game.removePlayer(playerNickname);
         }
@@ -390,7 +390,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             checkFinalAction(playerFromController);
             updateCurrPlayer();
         } else {
-            playerFromController.getSelfListener().cardNotAddedToHand(new GameImmutable(game));
+            game.getListener().notifyCardNotAddedToHand(game, player.getNickname());
         }
     }
 
@@ -413,7 +413,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             checkFinalAction(playerFromController);
             updateCurrPlayer();
         } else {
-            playerFromController.getSelfListener().cardNotAddedToHand(new GameImmutable(game));
+            game.getListener().notifyCardNotAddedToHand(game, player.getNickname());
         }
     }
 
@@ -509,7 +509,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
                     }
                 }
             } else {
-                playerFromController.getSelfListener().canNotPlaceCard(new GameImmutable(game), playerFromController.getNickname());
+                game.getListener().notifyCanNotPlaceCard(game, playerFromController.getNickname());
                 throw new Exception("The player is not the current player or the game is not running or he's current action is not place, it's "+game.getPlayers().get(game.getCurrPlayer()).getNickname());
             }
         } else {

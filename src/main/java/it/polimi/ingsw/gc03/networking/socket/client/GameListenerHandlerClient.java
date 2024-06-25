@@ -284,8 +284,8 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
-        this.flow.cardNotAddedToHand(gameImmutable);
+    public void cardNotAddedToHand(GameImmutable gameImmutable, String nickname) throws RemoteException {
+        this.flow.cardNotAddedToHand(gameImmutable, nickname);
     }
 
     /**

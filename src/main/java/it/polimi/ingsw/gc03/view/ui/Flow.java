@@ -1357,7 +1357,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws RemoteException if a remote error occurs
      */
     @Override
-    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
+    public void cardNotAddedToHand(GameImmutable gameImmutable, String nickname) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
             ui.addLatestEvent("You can't draw a card", this.gameImmutable);
         }

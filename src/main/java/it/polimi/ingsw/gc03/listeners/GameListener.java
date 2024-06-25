@@ -223,7 +223,7 @@ public interface GameListener extends Remote {
      * @param gameImmutable The immutable game gameImmutable.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException;
+    void cardNotAddedToHand(GameImmutable gameImmutable, String nickname) throws RemoteException;
 
 
     /**

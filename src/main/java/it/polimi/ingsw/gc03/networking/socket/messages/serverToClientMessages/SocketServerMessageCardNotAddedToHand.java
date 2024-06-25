@@ -16,11 +16,17 @@ public class SocketServerMessageCardNotAddedToHand extends SocketServerGenericMe
     private GameImmutable gameImmutable;
 
     /**
+     * The nickname of the player.
+     */
+    private String nickname;
+
+    /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game gameImmutable.
      */
-    public SocketServerMessageCardNotAddedToHand(GameImmutable gameImmutable) {
+    public SocketServerMessageCardNotAddedToHand(GameImmutable gameImmutable, String nickname) {
         this.gameImmutable = gameImmutable;
+        this.nickname = nickname;
     }
 
     /**
@@ -31,6 +37,6 @@ public class SocketServerMessageCardNotAddedToHand extends SocketServerGenericMe
      */
     @Override
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
-        gameListener.cardNotAddedToHand(this.gameImmutable);
+        gameListener.cardNotAddedToHand(this.gameImmutable, this.nickname);
     }
 }

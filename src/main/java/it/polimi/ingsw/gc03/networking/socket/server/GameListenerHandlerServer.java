@@ -390,9 +390,9 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void cardNotAddedToHand(GameImmutable gameImmutable) throws RemoteException {
+    public void cardNotAddedToHand(GameImmutable gameImmutable, String nickname) throws RemoteException {
         try {
-            SocketServerMessageCardNotAddedToHand message = new SocketServerMessageCardNotAddedToHand(gameImmutable);
+            SocketServerMessageCardNotAddedToHand message = new SocketServerMessageCardNotAddedToHand(gameImmutable, nickname);
             this.outputStream.writeObject(message);
             completeTransmission();
         } catch (IOException e) {}
