@@ -351,7 +351,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @param player The player whose action is to be updated based on the game's state.
      */
     private synchronized void checkFinalAction(Player player) {
-        if (player.getScore() >= Game.STOP_POINT_GAME && !game.getStatus().equals(GameStatus.ENDING)) {
+        if (player.getCodex().getPointCodex() >= Game.STOP_POINT_GAME && !game.getStatus().equals(GameStatus.ENDING)) {
             if(game.getStatus().equals(GameStatus.RUNNING) || game.getStatus().equals(GameStatus.HALTED)){
                 game.setStatus(GameStatus.ENDING);
                 lastStatus = GameStatus.ENDING;
