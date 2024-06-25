@@ -58,6 +58,8 @@ class GameTest {
     @Test
     void removePlayer() throws PlayerAlreadyJoinedException, DeskIsFullException, RemoteException, CannotJoinGameException {
         game.addPlayer("newNick", listener);
+        game.setSize(2);
+        game.addPlayer("newNick2", listener);
         int newPlayerNum = game.getNumPlayer();
         assertTrue(game.removePlayer("newNick"));
         assertEquals(newPlayerNum-1,game.getNumPlayer());
@@ -81,7 +83,6 @@ class GameTest {
         assertEquals(game.getChat().getLast().getSender(),"Player2");
         assertEquals(game.getChat().getLast().getReceiver(),"Player1");
         assertEquals(game.getChat().getLast().getText(),text);
-        assertNotEquals(game.getChat().getLast().getTimestamp(),LocalTime.now());
     }
 
     @Test

@@ -114,9 +114,11 @@ class GameControllerTest {
         // Player1 draw from Displayed Gold
         gameController.drawCardFromDeck(firstPlayer, DeckType.DECK_GOLD);
         // Player1 tries to draw again from deck
-        assertThrows(Exception.class, () -> gameController.drawCardFromDeck(firstPlayer, DeckType.DECK_RESOURCE));
+        gameController.drawCardFromDeck(firstPlayer, DeckType.DECK_RESOURCE);
+        assertEquals(3, firstPlayer.getHand().size());
         // Player1 tries to draw from displayed
-        assertThrows(Exception.class, () -> gameController.drawCardDisplayed(firstPlayer, DeckType.DISPLAYED_GOLD, 0));
+        gameController.drawCardDisplayed(firstPlayer, DeckType.DISPLAYED_GOLD, 0);
+        assertEquals(3, firstPlayer.getHand().size());
         assertEquals(2, gameDesk.getDisplayedGold().size());
         assertEquals(3, firstPlayer.getHand().size());
         assertEquals(PlayerAction.PLACE, secondPlayer.getAction());

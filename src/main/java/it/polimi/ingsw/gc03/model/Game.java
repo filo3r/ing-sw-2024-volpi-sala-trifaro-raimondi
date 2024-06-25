@@ -189,6 +189,7 @@ public class Game implements Serializable {
      */
     private void decideWinner() throws RemoteException {
         if (this.getStatus().equals(GameStatus.ENDED)) {
+            this.winner.clear();
             // If the game ended because there was only one player connected, the last player won.
             if(this.getOnlinePlayers().size()==1){
                 this.winner.addAll(this.getOnlinePlayers());
