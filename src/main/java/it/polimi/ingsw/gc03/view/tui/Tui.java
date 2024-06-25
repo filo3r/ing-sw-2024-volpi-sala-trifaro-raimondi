@@ -884,14 +884,6 @@ public class Tui extends UI {
             showNotification("[CHAT] " + msg.getSender() + "→" + msg.getReceiver() + ": " + msg.getText());
         }
     }
-
-    /**
-     * Resets the list of latest events. (not used in the tui)
-     */
-    @Override
-    protected void resetLatestEvents() {
-    }
-
     /**
      * Displays a notification that the game size has been updated.
      *

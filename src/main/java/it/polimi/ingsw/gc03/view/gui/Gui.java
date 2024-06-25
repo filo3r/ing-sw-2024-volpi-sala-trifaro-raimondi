@@ -27,7 +27,6 @@ public class Gui extends UI {
 
     @Override
     protected void init() {
-        latestEvents = new ArrayList<>();
         Platform.runLater(()->this.applicationGui.setupGUIInputController(this.inputReaderGUI));
     }
 
@@ -127,12 +126,10 @@ public class Gui extends UI {
 
     @Override
     protected void show_returnToMenuMsg() {
-
     }
 
     @Override
     protected void addLatestEvent(String input, GameImmutable gameImmutable) {
-        latestEvents.add(input);
         Platform.runLater(()->this.applicationGui.showLatestEvent(input, gameImmutable));
     }
 
@@ -147,10 +144,6 @@ public class Gui extends UI {
     }
 
     @Override
-    protected void resetLatestEvents() {
-    }
-
-    @Override
     protected void show_noConnectionError() {
         Platform.runLater(()->this.applicationGui.showError("Connection error!"));
         Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
@@ -158,8 +151,8 @@ public class Gui extends UI {
 
     @Override
     protected void showAskIndex(GameImmutable gameImmutable) {
-        Platform.runLater(()-> this.applicationGui.setActiveScene(SceneEnum.GAME_RUNNING));
-        Platform.runLater(()-> this.applicationGui.showGameRunning(gameImmutable,nickname));
+        Platform.runLater(()->this.applicationGui.showError("Please, place a card from your hand \nby dragging it on the grid"));
+        Platform.runLater(()-> this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
     @Override
@@ -244,11 +237,7 @@ public class Gui extends UI {
 
     @Override
     protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
-        StringBuilder req = new StringBuilder(" ");
-        for(Value v: requirementsPlacement){
-            req.append(v.name()+" ");
-        }
-        Platform.runLater(()->this.applicationGui.showError("You can't place the card because you dont have : "+req+" on your Codex" ));
+        Platform.runLater(()->this.applicationGui.showError("You can't place the card because you dont have enough resources on your Codex" ));
         Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
     }
 
@@ -305,7 +294,7 @@ public class Gui extends UI {
 
     @Override
     protected void showYouLeft() {
-
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.MENU));
     }
 
     @Override

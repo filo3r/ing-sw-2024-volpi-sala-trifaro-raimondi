@@ -2419,14 +2419,16 @@ public class GameRunningController extends GenericController {
      * @param nickname The player's nickname.
      */
     public void setReceivers(GameImmutable gameImmutable, String nickname) {
-        chatReceiver.getItems().add("everyone");
-        for (Player p: gameImmutable.getPlayers()){
-            if (!p.getNickname().equals(nickname)) {
-                chatReceiver.getItems().add(p.getNickname());
+        if(idGame!=gameImmutable.getIdGame()) {
+            chatReceiver.getItems().add("everyone");
+            for (Player p : gameImmutable.getPlayers()) {
+                if (!p.getNickname().equals(nickname)) {
+                    chatReceiver.getItems().add(p.getNickname());
+                }
             }
+            chatReceiver.setValue("everyone");
+            idGame = gameImmutable.getIdGame();
         }
-        chatReceiver.setValue("everyone");
-        idGame = gameImmutable.getIdGame();
     }
 
 

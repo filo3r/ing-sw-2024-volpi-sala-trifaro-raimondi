@@ -417,7 +417,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     public void youLeft() {
         ended = true;
-        ui.resetLatestEvents();
         events.add(null, APP_MENU);
         this.inputProcessor.setNickname(null);
         this.inputProcessor.setIdGame(null);
@@ -647,6 +646,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     public void askToPlaceCardOnCodex(GameImmutable gameImmutable) throws Exception {
         if(ui instanceof Gui){
             ui.showCodex(gameImmutable);
+            ui.showAskIndex(gameImmutable);
             String res = inputProcessor.getDataToProcess().popData();
             String[] parts = res.split(" ");
             String side = parts[1];

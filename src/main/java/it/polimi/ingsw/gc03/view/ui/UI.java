@@ -11,11 +11,6 @@ import java.util.List;
 public abstract class UI {
 
     /**
-     * List of the latest events.
-     */
-    protected List<String> latestEvents;
-
-    /**
      * Initialises GUI or TUI
      */
     protected abstract void init();
@@ -152,11 +147,6 @@ public abstract class UI {
      * @param gameImmutable the gameImmutable to which add the message
      */
     protected abstract void addMessage(ChatMessage msg, GameImmutable gameImmutable);
-
-    /**
-     * Resets the latest events
-     */
-    protected abstract void resetLatestEvents();
 
     /**
      * Shows an error when there's no connection
