@@ -2452,6 +2452,9 @@ public class GameRunningController extends GenericController {
      * @param nickname The player's nickname.
      */
     public void setCodex(GameImmutable gameImmutable, String nickname) {
+        // Clean all grid cells
+        clearImageViewsFromGridPane(codexGrid);
+        // Insert the image into the cells
         Player player = getPlayer(gameImmutable, nickname);
         for (Coords coords : player.getCodex().getCodexFillOrder()) {
             Side side = player.getCodex().getSideAt(coords.getX(), coords.getY());
@@ -2465,6 +2468,15 @@ public class GameRunningController extends GenericController {
             codexGrid.setValignment(imageView, VPos.CENTER);
             codexGrid.add(imageView, coords.getY(), coords.getX());
         }
+    }
+
+
+    /**
+     * Clears all ImageView nodes from the given GridPane.
+     * @param gridPane The GridPane from which ImageView nodes will be removed.
+     */
+    private void clearImageViewsFromGridPane(GridPane gridPane) {
+        gridPane.getChildren().removeIf(node -> node instanceof ImageView);
     }
 
 
@@ -2562,6 +2574,10 @@ public class GameRunningController extends GenericController {
         handImage.setOnDragDone(DragEvent::consume);
     }
 
+
+    /**
+     * Sets all relevant ImageViews to be mouse transparent, making them non-interactive.
+     */
     public void actionIsPlace(){
         displayed1Image.setMouseTransparent(true);
         displayed2Image.setMouseTransparent(true);
@@ -2570,6 +2586,11 @@ public class GameRunningController extends GenericController {
         deckGoldImage.setMouseTransparent(true);
         deckResourceImage.setMouseTransparent(true);
     }
+
+
+    /**
+     * Sets all relevant ImageViews to be mouse interactive, making them responsive to user input.
+     */
     public void actionIsDraw(){
         displayed1Image.setMouseTransparent(false);
         displayed2Image.setMouseTransparent(false);
@@ -2578,5 +2599,6 @@ public class GameRunningController extends GenericController {
         deckGoldImage.setMouseTransparent(false);
         deckResourceImage.setMouseTransparent(false);
     }
+
 
 }
