@@ -10,6 +10,6 @@ import java.util.concurrent.Semaphore;
 public class GameTitleController extends GenericController {
 
     public void actionStart(){
-        getInputReaderGUI().addTxt("0110010011010010110111101100011011000010110111001100101");
+        getInputReaderGUI().addTxt("Hi");
     }
 }
