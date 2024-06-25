@@ -96,18 +96,12 @@ public class Desk implements Serializable {
     /**
      * Path to the front images folder.
      */
-    private static final String IMAGE_PATH_FRONT = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "gui" + File.separator + "images" + File.separator +
-            "cards" + File.separator + "frontSide" + File.separator;
+    private static final String IMAGE_PATH_FRONT = "/it/polimi/ingsw/gc03/gui/images/cards/frontSide/";
 
     /**
      * Path to the back images folder.
      */
-    private static final String IMAGE_PATH_BACK = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "gui" + File.separator + "images" + File.separator +
-            "cards" + File.separator + "backSide" + File.separator;
+    private static final String IMAGE_PATH_BACK = "/it/polimi/ingsw/gc03/gui/images/cards/backSide/";
 
     /**
      * Number of Starter cards.
