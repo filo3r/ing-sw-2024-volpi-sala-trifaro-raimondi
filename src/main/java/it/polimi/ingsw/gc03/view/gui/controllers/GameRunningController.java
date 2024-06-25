@@ -2553,7 +2553,7 @@ public class GameRunningController extends GenericController {
             SnapshotParameters snapshotParameters = new SnapshotParameters();
             snapshotParameters.setTransform(Transform.scale(0.75, 0.75));
             WritableImage dragView = handImage.snapshot(snapshotParameters, null);
-            dragboard.setDragView(dragView);
+            dragboard.setDragView(dragView, dragView.getWidth()/2 ,dragView.getHeight()/2);
             // Consume the event, indicating that it has been handled
             event.consume();
         });
