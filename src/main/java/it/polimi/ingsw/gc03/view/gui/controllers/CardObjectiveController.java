@@ -47,8 +47,8 @@ public class CardObjectiveController extends GenericController {
         // Load images
         if (firstImagePath != null && secondImagePath != null) {
             try {
-                Image firstImage = new Image("file:" + firstImagePath);
-                Image secondImage = new Image("file:" + secondImagePath);
+                Image firstImage = new Image(getClass().getResourceAsStream(firstImagePath));
+                Image secondImage = new Image(getClass().getResourceAsStream(secondImagePath));
                 // Set images to buttons
                 firstCard.setImage(firstImage);
                 secondCard.setImage(secondImage);

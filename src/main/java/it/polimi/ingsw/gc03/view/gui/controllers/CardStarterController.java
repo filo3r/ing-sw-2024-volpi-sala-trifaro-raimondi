@@ -47,8 +47,8 @@ public class CardStarterController extends GenericController {
         // Load images
         if (frontImagePath != null && backImagePath != null) {
             try {
-                Image frontImage = new Image("file:" + frontImagePath);
-                Image backImage = new Image("file:" + backImagePath);
+                Image frontImage = new Image(getClass().getResourceAsStream(frontImagePath));
+                Image backImage = new Image(getClass().getResourceAsStream(backImagePath));
                 // Set images to buttons
                 frontSide.setImage(frontImage);
                 backSide.setImage(backImage);
