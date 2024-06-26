@@ -49,7 +49,7 @@ public class InputProcessor extends Thread{
      * Parses the data contained in the buffer
      */
     public void run() {
-        String txt = null;
+        String txt;
         while (!this.isInterrupted()) {
 
             // Popping data from the buffer sync

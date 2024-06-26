@@ -396,9 +396,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * Handles events when the game state has ended.
      *
      * @param event the event to process
-     * @throws NotBoundException, IOException, InterruptedException if an error occurs during processing
      */
-    private void statusEnded(Event event) throws NotBoundException, IOException, InterruptedException {
+    private void statusEnded(Event event) {
         switch (event.getType()) {
             case GAMEENDED -> {
                 ui.showWinner(event.getModel());
@@ -418,6 +417,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     public void youLeft() {
         ended = true;
+        inputProcessor.getDataToProcess().popAllData();
+        events.clearEventQueue();
         events.add(null, APP_MENU);
         this.inputProcessor.setNickname(null);
         this.inputProcessor.setIdGame(null);
@@ -646,7 +647,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     public void askToPlaceCardOnCodex(GameImmutable gameImmutable) throws Exception {
         if(ui instanceof Gui){
-            ui.showCodex(gameImmutable);
+            try {
+                ui.showCodex(gameImmutable);
             ui.showAskIndex(gameImmutable);
             String res = inputProcessor.getDataToProcess().popData();
             String[] parts = res.split(" ");
@@ -661,6 +663,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
                 sideBool = false;
             }
             placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), posHand, sideBool, row, col);
+            } catch (Exception e){
+            }
         } else {
             Integer indexHand;
             do {
@@ -1111,6 +1115,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void gameEnded(GameImmutable gameImmutable) {
         ended = true;
+        inputProcessor.getDataToProcess().popAllData();
+        events.clearEventQueue();
         events.add(gameImmutable, GAMEENDED);
         ui.show_gameEnded(gameImmutable);
     }
