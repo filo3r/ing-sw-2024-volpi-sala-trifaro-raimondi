@@ -1,7 +1,6 @@
 package it.polimi.ingsw.gc03.view.gui;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
-import it.polimi.ingsw.gc03.model.Game;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.view.OptionSelection;
@@ -22,7 +21,6 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 public class ApplicationGui extends Application {
     private Flow flow;
@@ -104,7 +102,7 @@ public class ApplicationGui extends Application {
      */
 
     public void setActiveScene(SceneEnum scene) {
-        this.stage.setTitle("Codex - " + scene.name());
+        this.stage.setTitle("Codex - "+nickname+" - " + scene.name());
         if (!scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().isEmpty()) {
             Scenes activeScene = scenes.stream().filter(x -> x.getSceneEnum().equals(scene)).toList().getFirst();
             switch (scene) {
@@ -114,7 +112,7 @@ public class ApplicationGui extends Application {
                     this.stage.centerOnScreen();
 
                 }
-                case ERROR, GAME_RUNNING -> {
+                case POPUP, GAME_RUNNING -> {
                     this.closePopUps();
                 }
                 case MENU -> {
@@ -342,9 +340,10 @@ public class ApplicationGui extends Application {
      * Sets the ERROR scene
      * @param message
      */
-    public void showError(String message){
-        ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.ERROR)).toList().getFirst().getGenericController();
-        controller.setErrorText(message,false);
+    public void showPopup(String message, String label){
+        PopupController controller = (PopupController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.POPUP)).toList().getFirst().getGenericController();
+        controller.setText(message,false);
+        controller.setLabel(label);
         System.err.println(message);
     }
 
@@ -353,10 +352,10 @@ public class ApplicationGui extends Application {
      * @param message
      */
     public void showFatalError(String message){
-        ErrorController controller = (ErrorController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.ERROR)).toList().getFirst().getGenericController();
-        controller.setErrorText(message,true);
+        PopupController controller = (PopupController) scenes.stream().filter(x->x.getSceneEnum().equals(SceneEnum.POPUP)).toList().getFirst().getGenericController();
+        controller.setText(message,true);
+        controller.setLabel("FatalError");
     }
-
     /**
      * Creates a new window
      */

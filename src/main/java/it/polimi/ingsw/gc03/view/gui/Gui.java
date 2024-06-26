@@ -7,11 +7,9 @@ import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.view.gui.controllers.LobbyController;
 import it.polimi.ingsw.gc03.view.inputHandler.InputReaderGUI;
 import it.polimi.ingsw.gc03.view.ui.UI;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
 
 public class Gui extends UI {
 
@@ -77,8 +75,9 @@ public class Gui extends UI {
 
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
-        Platform.runLater(()->this.applicationGui.showError(msgToVisualize));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup(msgToVisualize,"ERROR"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
+
     }
 
     @Override
@@ -145,15 +144,15 @@ public class Gui extends UI {
 
     @Override
     protected void show_noConnectionError() {
-        Platform.runLater(()->this.applicationGui.showError("Connection error!"));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showFatalError("Connection error!"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
     @Override
     protected void showAskIndex(GameImmutable gameImmutable) {
         Platform.runLater(()->this.applicationGui.setActionIsPlace());
-        Platform.runLater(()->this.applicationGui.showError("Please, place a card from your hand \nby dragging it on the grid"));
-        Platform.runLater(()-> this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup("Please, place a card from your hand \n     by dragging it on the grid","Prompt"));
+        Platform.runLater(()-> this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
     @Override
@@ -169,22 +168,22 @@ public class Gui extends UI {
     @Override
     protected void showAskToChooseADeck() {
         Platform.runLater(()->this.applicationGui.setActionIsDraw());
-        Platform.runLater(()->this.applicationGui.showError("Please, choose a card to draw"));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup("Please, choose a card to draw","Prompt"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
     @Override
     protected void showCardCannotBePlaced(GameImmutable gameImmutable, String nickname) {
-        Platform.runLater(()->this.applicationGui.showError("You can't place a card here!"));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup("You can't place a card here!","Prompt"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
 
 
     @Override
     protected void showInvalidInput() {
-        Platform.runLater(()->this.applicationGui.showError("Invalid Input"));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup("Invalid Input","ERROR"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
 
@@ -239,8 +238,8 @@ public class Gui extends UI {
 
     @Override
     protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
-        Platform.runLater(()->this.applicationGui.showError("You can't place the card because you dont have enough resources on your Codex" ));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup("You can't place the card because you dont have enough resources on your Codex","ERROR"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
     @Override
@@ -252,8 +251,8 @@ public class Gui extends UI {
 
     @Override
     protected void showInvalidNickname(String nickname) {
-        Platform.runLater(()->this.applicationGui.showError("Invalid Nickname"));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.ERROR));
+        Platform.runLater(()->this.applicationGui.showPopup("Invalid Nickname","ERROR"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
     }
 
     @Override
@@ -296,7 +295,7 @@ public class Gui extends UI {
 
     @Override
     protected void showYouLeft() {
-        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.MENU));
+        Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.NICKNAME));
     }
 
     @Override

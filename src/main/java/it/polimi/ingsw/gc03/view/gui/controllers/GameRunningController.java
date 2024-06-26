@@ -2385,6 +2385,7 @@ public class GameRunningController extends GenericController {
         }else if (message.getReceiver().equals(nickname) || message.getSender().equals(nickname)) {
             chat.getItems().add("\n"+ "[Private] " + text);
         }
+        chat.scrollTo(chat.getItems().size()-1);
     }
 
 
@@ -2395,6 +2396,7 @@ public class GameRunningController extends GenericController {
      */
     public void addLatestEvents(String event, GameImmutable gameImmutable) {
         latestEvent.getItems().add("\n" + event);
+        latestEvent.scrollTo(latestEvent.getItems().size()-1);
     }
 
 

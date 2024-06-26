@@ -78,7 +78,7 @@ public enum SceneEnum {
     /**
      * ERROR is the scene displayed in case an error occurs.
      */
-    ERROR("/it/polimi/ingsw/gc03/gui/error.fxml"),
+    POPUP("/it/polimi/ingsw/gc03/gui/popup.fxml"),
 
     /**
      * GAME_TITLE is the scene of the game logo

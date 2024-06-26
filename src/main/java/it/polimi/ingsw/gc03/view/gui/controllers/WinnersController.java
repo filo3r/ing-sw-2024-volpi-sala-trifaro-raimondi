@@ -96,7 +96,7 @@ public class WinnersController extends GenericController {
      * @param actionEvent The action event triggered by the user.
      */
     public void actionClose(ActionEvent actionEvent) {
-        getInputReaderGUI().addTxt("leave");
+        //getInputReaderGUI().addTxt("leave");
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();
     }

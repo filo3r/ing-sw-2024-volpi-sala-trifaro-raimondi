@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="mainAnchor" layoutX="1.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
    <styleClass>
@@ -392,7 +381,7 @@
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="chatMessage" layoutX="10.0" layoutY="758.0" onAction="#actionSend" prefHeight="36.0" prefWidth="258.0" text="Message">
+                  <TextField fx:id="chatMessage" layoutX="10.0" layoutY="758.0" onAction="#actionSend" prefHeight="36.0" prefWidth="258.0" promptText="Message Here...">
                      <font>
                         <Font name="Arial" size="16.0" />
                      </font>
