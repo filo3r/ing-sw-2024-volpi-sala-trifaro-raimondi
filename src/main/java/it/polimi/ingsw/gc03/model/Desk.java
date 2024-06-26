@@ -62,36 +62,9 @@ public class Desk implements Serializable {
     private ArrayList<CardObjective> displayedObjective;
 
     /**
-     * File with information about Starter cards.
+     * Path to json files.
      */
-    private static final String FILE_CARD_STARTER = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
-            "fileCardStarter.json";
-
-    /**
-     * File with information about Resource cards.
-     */
-    private static final String FILE_CARD_RESOURCE = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
-            "fileCardResource.json";
-
-    /**
-     * File with information about Gold cards.
-     */
-    private static final String FILE_CARD_GOLD = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
-            "fileCardGold.json";
-
-    /**
-     * File with information about Objective cards.
-     */
-    private static final String FILE_CARD_OBJECTIVE = System.getProperty("user.dir") + File.separator + "src" +
-            File.separator + "main" + File.separator + "resources" + File.separator + "it" + File.separator + "polimi"
-            + File.separator + "ingsw" + File.separator + "gc03" + File.separator + "json" + File.separator +
-            "fileCardObjective.json";
+    private static final String FILE_JSON = "/it/polimi/ingsw/gc03/json/";
 
     /**
      * Path to the front images folder.
@@ -156,10 +129,9 @@ public class Desk implements Serializable {
      */
     private boolean createDeckStarter() {
         this.deckStarter = new ArrayList<>(NUM_CARD_STARTER);
-        try {
-            // Load the JSON file containing the Starter cards
-            InputStream inputStream = new FileInputStream(FILE_CARD_STARTER);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        // Load the JSON file containing the Starter cards
+        try (InputStream inputStream = getClass().getResourceAsStream(FILE_JSON + "fileCardStarter.json");
+             InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
             // Use Gson to parse the JSON data
             Gson gson = new Gson();
             Type starterCardType = new TypeToken<ArrayList<CardStarter>>(){}.getType();
@@ -176,10 +148,10 @@ public class Desk implements Serializable {
             return true;
         } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_STARTER, e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_JSON + "fileCardStarter.json", e);
         } catch (IOException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_STARTER, e);
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_JSON + "fileCardStarter.json", e);
         }
         return false;
     }
@@ -190,10 +162,9 @@ public class Desk implements Serializable {
      */
     private boolean createDeckResource() {
         this.deckResource = new ArrayList<>(NUM_CARD_RESOURCE);
-        try {
-            // Load the JSON file containing the Resource cards
-            InputStream inputStream = new FileInputStream(FILE_CARD_RESOURCE);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        // Load the JSON file containing the Resource cards
+        try (InputStream inputStream = getClass().getResourceAsStream(FILE_JSON + "fileCardResource.json");
+             InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
             // Use Gson to parse the JSON data
             Gson gson = new Gson();
             Type resourceCardType = new TypeToken<ArrayList<CardResource>>(){}.getType();
@@ -210,10 +181,10 @@ public class Desk implements Serializable {
             return true;
         } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_RESOURCE, e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_JSON + "fileCardResource.json", e);
         } catch (IOException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_RESOURCE, e);
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_JSON + "fileCardResource.json", e);
         }
         return false;
     }
@@ -224,10 +195,9 @@ public class Desk implements Serializable {
      */
     private boolean createDeckGold() {
         this.deckGold = new ArrayList<>(NUM_CARD_GOLD);
-        try {
-            // Load the JSON file containing the Gold cards
-            InputStream inputStream = new FileInputStream(FILE_CARD_GOLD);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        // Load the JSON file containing the Gold cards
+        try (InputStream inputStream = getClass().getResourceAsStream(FILE_JSON + "fileCardGold.json");
+             InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
             // Use Gson to parse the JSON data
             Gson gson = new Gson();
             Type goldCardType = new TypeToken<ArrayList<CardGold>>(){}.getType();
@@ -244,10 +214,10 @@ public class Desk implements Serializable {
             return true;
         } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_GOLD, e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_JSON + "fileCardGold.json", e);
         } catch (IOException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_GOLD, e);
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_JSON + "fileCardGold.json", e);
         }
         return false;
     }
@@ -258,10 +228,9 @@ public class Desk implements Serializable {
      */
     private boolean createDeckObjective() {
         this.deckObjective = new ArrayList<>(NUM_CARD_OBJECTIVE);
-        try {
-            // Load the JSON file containing the Objective cards
-            InputStream inputStream = new FileInputStream(FILE_CARD_OBJECTIVE);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        // Load the JSON file containing the Objective cards
+        try (InputStream inputStream = getClass().getResourceAsStream(FILE_JSON + "fileCardObjective.json");
+             InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
             // Create GsonBuilder and register the adapter
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(CalculateScoreStrategy.class, new CalculateScoreStrategyAdapter());
@@ -280,10 +249,10 @@ public class Desk implements Serializable {
             return true;
         } catch (FileNotFoundException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Could not find the file: " + FILE_CARD_OBJECTIVE, e);
+            logger.log(Level.SEVERE, "Could not find the file: " + FILE_JSON + "fileCardObjective.json", e);
         } catch (IOException e) {
             // Log the exception using the logger
-            logger.log(Level.SEVERE, "Error reading the file: " + FILE_CARD_OBJECTIVE, e);
+            logger.log(Level.SEVERE, "Error reading the file: " + FILE_JSON + "fileCardObjective.json", e);
         }
         return false;
     }
