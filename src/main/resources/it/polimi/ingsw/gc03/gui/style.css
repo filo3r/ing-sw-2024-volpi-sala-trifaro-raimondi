@@ -1,5 +1,8 @@
-.gameTitle{
+.gameTitle {
     -fx-background-image: url("images/background.png");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
+}
+.gameRunning {
+    -fx-background-color: #d8d3b1;
 }

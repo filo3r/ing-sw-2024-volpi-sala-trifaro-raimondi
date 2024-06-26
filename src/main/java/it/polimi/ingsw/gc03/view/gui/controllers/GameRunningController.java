@@ -1238,7 +1238,7 @@ public class GameRunningController extends GenericController {
             String imagePath = gameImmutable.getDesk().getDeckResource().get(0).getBackResource().getImage();
             if (imagePath != null) {
                 try {
-                    Image image = new Image("file:" + imagePath);
+                    Image image = new Image(getClass().getResourceAsStream(imagePath));
                     deckResourceImage.setImage(image);
                     deckResourceImage.setFitWidth(deckResourcePane.getPrefWidth());
                     deckResourceImage.setFitHeight(deckResourcePane.getPrefHeight());
@@ -1349,7 +1349,7 @@ public class GameRunningController extends GenericController {
         for (int i = 0; i < gameImmutable.getDesk().getDisplayedResource().size(); i++) {
             if (imagePathResource.get(i) != null) {
                 try {
-                    Image image = new Image("file:" + imagePathResource.get(i));
+                    Image image = new Image(getClass().getResourceAsStream(imagePathResource.get(i)));
                     if (i == 0) {
                         displayed1Pane.setVisible(true);
                         displayed1Image.setImage(image);
@@ -1721,7 +1721,7 @@ public class GameRunningController extends GenericController {
      * Sets the images for the board items.
      */
     private void setValuesImages() {
-        String valuesImagePath = "/it/polimi/ingsw/gc03/gui/images/value/";
+        String valuesImagePath = "/it/polimi/ingsw/gc03/gui/images/values/";
         try {
             Image fungiImage = new Image(getClass().getResourceAsStream(valuesImagePath + "fungi.png"));
             fungi1Image.setImage(fungiImage);
