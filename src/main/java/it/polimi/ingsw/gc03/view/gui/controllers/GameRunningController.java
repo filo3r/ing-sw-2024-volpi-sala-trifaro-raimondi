@@ -2595,6 +2595,7 @@ public class GameRunningController extends GenericController {
         for (int row = 0; row < codexGrid.getRowCount(); row++) {
             for (int col = 0; col < codexGrid.getColumnCount(); col++) {
                 Pane cellPane = new Pane();
+                // Set id
                 cellPane.setId("cell_" + row + "_" + col);
                 codexGrid.add(cellPane, col, row);
             }
