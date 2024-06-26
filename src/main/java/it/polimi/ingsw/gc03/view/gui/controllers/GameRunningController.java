@@ -2532,6 +2532,8 @@ public class GameRunningController extends GenericController {
 
         // Make the ScrollPane moveable with the mouse
         makeScrollPaneDraggable(codexScroll);
+        codexScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        codexScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
 
