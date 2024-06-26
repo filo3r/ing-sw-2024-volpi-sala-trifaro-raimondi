@@ -10,8 +10,11 @@ import it.polimi.ingsw.gc03.model.enumerations.Color;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.view.tui.Coords;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
@@ -2524,6 +2527,60 @@ public class GameRunningController extends GenericController {
                 }
             }
             event.setDropCompleted(success);
+            event.consume();
+        });
+
+        // Make the ScrollPane moveable with the mouse
+        makeScrollPaneDraggable(codexScroll);
+    }
+
+
+    /**
+     * Makes the specified ScrollPane draggable using mouse events.
+     * @param scrollPane The ScrollPane to be made draggable.
+     */
+    private void makeScrollPaneDraggable(ScrollPane scrollPane) {
+        // ObjectProperty to store the last mouse position
+        final ObjectProperty<Point2D> lastMousePosition = new SimpleObjectProperty<>();
+        // Event handler for mouse press event on the ScrollPane
+        scrollPane.setOnMousePressed(event -> {
+            // Store the current mouse position
+            lastMousePosition.set(new Point2D(event.getSceneX(), event.getSceneY()));
+            event.consume();
+        });
+        // Event handler for mouse drag event on the ScrollPane
+        scrollPane.setOnMouseDragged(event -> {
+            if (lastMousePosition.get() != null) {
+                // Calculate the distance the mouse has moved
+                double deltaX = event.getSceneX() - lastMousePosition.get().getX();
+                double deltaY = event.getSceneY() - lastMousePosition.get().getY();
+                // Update the last mouse position
+                lastMousePosition.set(new Point2D(event.getSceneX(), event.getSceneY()));
+                // Adjust the ScrollPane's horizontal and vertical scroll values
+                scrollPane.setHvalue(scrollPane.getHvalue() - deltaX / scrollPane.getContent().getBoundsInLocal().getWidth());
+                scrollPane.setVvalue(scrollPane.getVvalue() - deltaY / scrollPane.getContent().getBoundsInLocal().getHeight());
+            }
+            event.consume();
+        });
+        // Ensure the content within the ScrollPane does not interfere with the drag
+        // Event handler for mouse press event on the content of the ScrollPane
+        scrollPane.getContent().setOnMousePressed(event -> {
+            // Store the current mouse position
+            lastMousePosition.set(new Point2D(event.getSceneX(), event.getSceneY()));
+            event.consume();
+        });
+        // Event handler for mouse drag event on the content of the ScrollPane
+        scrollPane.getContent().setOnMouseDragged(event -> {
+            if (lastMousePosition.get() != null) {
+                // Calculate the distance the mouse has moved
+                double deltaX = event.getSceneX() - lastMousePosition.get().getX();
+                double deltaY = event.getSceneY() - lastMousePosition.get().getY();
+                // Update the last mouse position
+                lastMousePosition.set(new Point2D(event.getSceneX(), event.getSceneY()));
+                // Adjust the ScrollPane's horizontal and vertical scroll values
+                scrollPane.setHvalue(scrollPane.getHvalue() - deltaX / scrollPane.getContent().getBoundsInLocal().getWidth());
+                scrollPane.setVvalue(scrollPane.getVvalue() - deltaY / scrollPane.getContent().getBoundsInLocal().getHeight());
+            }
             event.consume();
         });
     }

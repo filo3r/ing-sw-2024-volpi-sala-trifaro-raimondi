@@ -294,7 +294,7 @@ public class RmiClient implements ClientAction {
     }
 
     /**
-     * Periodical ping from the client to ther server.
+     * Periodical ping from the client to the server.
      * @param player The nickname of the client.
      * @throws RemoteException If an error occurs in remote communication.
      */
