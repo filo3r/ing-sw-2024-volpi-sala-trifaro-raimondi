@@ -7,6 +7,7 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
+import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
@@ -206,7 +207,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
             default -> {
                 switch (event.getModel().getStatus()) {
                     case WAITING, HALTED -> statusWait(event);
-                    case STARTING, RUNNING, LASTROUND -> statusRunning(event);
+                    case STARTING, RUNNING, LASTROUND, ENDING -> statusRunning(event);
                     case ENDED -> statusEnded(event);
                     default -> throw new IllegalStateException("Unexpected value: " + event.getModel().getStatus());
                 }
