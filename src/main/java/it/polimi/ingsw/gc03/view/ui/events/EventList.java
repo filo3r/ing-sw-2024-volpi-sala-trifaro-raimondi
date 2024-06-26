@@ -12,11 +12,6 @@ public class EventList {
     private Queue<Event> lists;
 
     /**
-     * If the player has joined a game.
-     */
-    private boolean joined = false;
-
-    /**
      * Init
      */
     public EventList() {
@@ -31,11 +26,6 @@ public class EventList {
     public synchronized void add(GameImmutable gameImmutable, EventType type) {
         lists.add(new Event(gameImmutable, type));
 
-        if (type.equals(EventType.APP_MENU)) {
-            joined = false;
-        } else {
-            joined = true;
-        }
     }
 
     /**
@@ -59,13 +49,8 @@ public class EventList {
     }
 
     /**
-     *
-     * @return true if the player has joined the game, false if not
+     * Clears the event list
      */
-    public synchronized boolean isJoined() {
-        return joined;
-    }
-
     public void clearEventQueue() {
         while (!lists.isEmpty()) {
             lists.poll();
