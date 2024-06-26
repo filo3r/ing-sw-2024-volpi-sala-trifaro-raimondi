@@ -21,6 +21,7 @@ import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.inputHandler.*;
 import it.polimi.ingsw.gc03.view.tui.Tui;
+import javafx.scene.SubScene;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -408,6 +409,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
                     throw new RuntimeException(e);
                 }
                 this.leaveGame(nickname);
+                this.youLeft();
             }
         }
     }
@@ -1115,8 +1117,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void gameEnded(GameImmutable gameImmutable) {
         ended = true;
-        inputProcessor.getDataToProcess().popAllData();
-        events.clearEventQueue();
         events.add(gameImmutable, GAMEENDED);
         ui.show_gameEnded(gameImmutable);
     }

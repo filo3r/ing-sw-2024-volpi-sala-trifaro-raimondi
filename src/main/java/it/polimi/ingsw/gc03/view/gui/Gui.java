@@ -83,8 +83,7 @@ public class Gui extends UI {
     @Override
     protected void show_gameEnded(GameImmutable gameImmutable) {
         Platform.runLater(()->this.applicationGui.setActiveScene(SceneEnum.NICKNAME));
-        Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
-        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.WINNERS));
+        inputReaderGUI.addTxt("\n");
     }
 
     @Override
@@ -225,6 +224,7 @@ public class Gui extends UI {
     protected void showWinner(GameImmutable gameImmutable) {
         Platform.runLater(()->this.applicationGui.showWinner(gameImmutable));
         Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.WINNERS));
+        inputReaderGUI.addTxt("\n");
     }
 
     @Override

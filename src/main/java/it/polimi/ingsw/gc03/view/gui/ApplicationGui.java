@@ -108,9 +108,7 @@ public class ApplicationGui extends Application {
             switch (scene) {
                 case GAME_TITLE -> {
                     this.stage.initStyle(StageStyle.UNDECORATED);
-                    this.stage.setAlwaysOnTop(true);
-                    this.stage.centerOnScreen();
-
+                    this.stage.setAlwaysOnTop(false);
                 }
                 case POPUP, GAME_RUNNING -> {
                     this.closePopUps();
