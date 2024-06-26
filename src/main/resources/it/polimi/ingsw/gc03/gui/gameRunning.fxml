@@ -28,9 +28,9 @@
          <children>
             <Pane fx:id="gameRunning" prefHeight="950.0" prefWidth="1600.0" styleClass="gameRunning">
                <children>
-                  <ScrollPane fx:id="codexScroll" hvalue="0.5" layoutX="276.0" layoutY="154.0" prefHeight="638.0" prefWidth="875.0" vvalue="0.5">
+                  <ScrollPane fx:id="codexScroll" hvalue="0.5" layoutX="276.0" layoutY="154.0" prefHeight="638.0" prefWidth="875.0" vvalue="0.5" styleClass="gameRunning">
                      <content>
-                        <GridPane fx:id="codexGrid" gridLinesVisible="true" prefHeight="638.0" prefWidth="875.0">
+                        <GridPane fx:id="codexGrid" gridLinesVisible="true" prefHeight="638.0" prefWidth="875.0" styleClass="gameRunning">
                           <columnConstraints>
                              <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
                              <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
