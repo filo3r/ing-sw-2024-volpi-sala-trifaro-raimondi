@@ -19,8 +19,10 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The ApplicationGui class represents the main GUI application for the game,
@@ -106,8 +108,6 @@ public class ApplicationGui extends Application {
         this.stage.setTitle("CodeX");
         getScene();
         root = new StackPane();
-        // Set icon
-        this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/ingsw/gc03/gui/images/other/icon_javafx.png")));
     }
 
     /**
@@ -203,6 +203,13 @@ public class ApplicationGui extends Application {
             throw new RuntimeException(e);
         }
 
+        InputStream iconStream = ApplicationGui.class.getResourceAsStream("/it/polimi/ingsw/gc03/gui/images/icons/icon_128x128.png");
+        if (iconStream != null) {
+            Image icon = new Image(iconStream);
+            stage.getIcons().add(icon);
+        } else {
+            System.err.println("No icon found");
+        }
     }
 
     /**
