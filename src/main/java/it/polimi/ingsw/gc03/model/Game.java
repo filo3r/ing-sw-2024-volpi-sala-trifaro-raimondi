@@ -71,7 +71,7 @@ public class Game implements Serializable {
     /**
      * Points needed for a player to stop the game.
      */
-    public static final int STOP_POINT_GAME = 3;
+    public static final int STOP_POINT_GAME = 20;
 
     /**
      * Listener handler
