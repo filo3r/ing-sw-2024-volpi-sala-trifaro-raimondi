@@ -13,6 +13,7 @@ import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
+import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.UI;
 
 import java.util.ArrayList;
@@ -796,6 +797,12 @@ public class Tui extends UI {
     @Override
     protected void showNextTurn(GameImmutable gameImmutable, String nickname) {
         showNotification("It's the turn of " + nickname);
+        StringBuilder scores = new StringBuilder();
+        scores.append("Points: ");
+        for(Player p: gameImmutable.getPlayers()){
+            scores.append(p.getNickname()).append(": ").append(p.getCodex().getPointCodex()).append(" ");
+        }
+        showNotification(scores.toString());
     }
 
     /**
@@ -906,7 +913,7 @@ public class Tui extends UI {
      */
     @Override
     protected void showCardAddedToHand(GameImmutable gameImmutable, Card card) {
-        showNotification("Card added to hand.");
+        //showNotification("Card added to hand.");
     }
 
     /**
