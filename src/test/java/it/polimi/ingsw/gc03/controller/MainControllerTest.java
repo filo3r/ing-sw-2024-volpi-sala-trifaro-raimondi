@@ -99,8 +99,8 @@ class MainControllerTest {
         gc.drawCardDisplayed(p2, DeckType.DISPLAYED_RESOURCE, 0);
 
         gc.placeCardOnCodex(p1, 0, false, 41, 41);
+        p1.getCodex().setPointCodex(21);
         // Simulate end game condition. (GameStatus is now ending after this turn ends, the last turn will start).
-        p1.setScore(22);
         gc.drawCardDisplayed(p1, DeckType.DISPLAYED_RESOURCE, 0);
         assertEquals(GameStatus.ENDING, gc.getGame().getStatus());
         gc.placeCardOnCodex(p2, 0, false, 41, 41);
