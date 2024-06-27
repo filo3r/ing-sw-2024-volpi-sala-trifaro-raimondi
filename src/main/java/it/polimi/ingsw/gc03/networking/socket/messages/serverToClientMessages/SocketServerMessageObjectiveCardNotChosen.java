@@ -33,4 +33,5 @@ public class SocketServerMessageObjectiveCardNotChosen extends SocketServerGener
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.objectiveCardNotChosen(this.gameImmutable);
     }
+
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.model.side.back;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -40,7 +39,6 @@ public class BackSide extends Side implements Serializable {
         return center;
     }
 
-
     /**
      * Setter method to set the values contained in the center.
      * @param center The values to be set in the center.
@@ -48,4 +46,5 @@ public class BackSide extends Side implements Serializable {
     public void setCenter(ArrayList<Value> center) {
         this.center = center;
     }
+
 }

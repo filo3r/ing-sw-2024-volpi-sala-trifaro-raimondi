@@ -28,7 +28,6 @@ public enum Color implements Serializable {
      */
     YELLOW;
 
-
     /**
      * Method for creating an ArrayList of Color values.
      * @return An ArrayList of Color values.
@@ -41,4 +40,5 @@ public enum Color implements Serializable {
         colors.add(Color.YELLOW);
         return colors;
     }
+
 }

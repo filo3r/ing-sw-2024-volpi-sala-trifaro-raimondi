@@ -14,10 +14,10 @@ public class CardNotFoundException extends Exception {
 
     /**
      * Constructs a CardNotFoundException with a specified error message.
-     *
-     * @param message the detail message
+     * @param message The detail message.
      */
     public CardNotFoundException(String message) {
         super(message);
     }
+
 }

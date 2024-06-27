@@ -21,7 +21,6 @@ public class SocketClientMessagePing extends SocketClientGenericMessage {
         this.messageType = MessageType.PING;
     }
 
-
     /**
      * Executes the message.
      * @param gameListener The game listener to be notified about game events.
@@ -44,4 +43,5 @@ public class SocketClientMessagePing extends SocketClientGenericMessage {
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         return;
     }
+
 }

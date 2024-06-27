@@ -42,4 +42,5 @@ public class SocketServerMessageDeckHasNoCards extends SocketServerGenericMessag
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.deckHasNoCards(this.gameImmutable, this.deck);
     }
+
 }

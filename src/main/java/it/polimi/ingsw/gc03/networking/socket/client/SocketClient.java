@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.networking.socket.client;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -62,8 +60,10 @@ public class SocketClient implements ClientAction {
      */
     private Flow flow;
 
+    /**
+     * Scheduled executor service for sending periodic pings to the server.
+     */
     private final ScheduledExecutorService pingExecutor;
-
 
     /**
      * Constructor for SocketClient.
@@ -110,6 +110,7 @@ public class SocketClient implements ClientAction {
     /**
      * Continuously processes messages received from the server.
      * This method runs in a separate thread managed by ExecutorService.
+     * @throws InterruptedException If the thread is interrupted while processing messages.
      */
     private void processMessages() throws InterruptedException {
         try {
@@ -315,6 +316,7 @@ public class SocketClient implements ClientAction {
 
     /**
      * This method is used to write the message that the client sends as a ping to the output stream.
+     * @param player The nickname of the player sending the ping.
      */
     @Override
     public void sendPing(String player) {
@@ -343,4 +345,5 @@ public class SocketClient implements ClientAction {
         this.outputStream.writeObject(message);
         completeTransmission();
     }
+
 }

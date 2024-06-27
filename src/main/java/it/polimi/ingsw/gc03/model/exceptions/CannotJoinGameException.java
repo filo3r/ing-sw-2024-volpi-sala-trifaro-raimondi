@@ -14,10 +14,10 @@ public class CannotJoinGameException extends Exception {
 
     /**
      * Constructs a CannotJoinGameException with a specified error message.
-     *
-     * @param message the detail message
+     * @param message The detail message.
      */
     public CannotJoinGameException(String message) {
         super(message);
     }
+
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.model.side.front;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
 
 /**
@@ -23,4 +22,5 @@ public class FrontStarter extends Side implements Serializable {
                         Value bottomRightCorner) {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner);
     }
+
 }

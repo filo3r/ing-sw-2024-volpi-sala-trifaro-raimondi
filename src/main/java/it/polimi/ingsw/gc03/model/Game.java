@@ -6,7 +6,6 @@ import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.CannotJoinGameException;
 import it.polimi.ingsw.gc03.model.exceptions.DeskIsFullException;
 import it.polimi.ingsw.gc03.model.exceptions.PlayerAlreadyJoinedException;
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
@@ -81,6 +80,7 @@ public class Game implements Serializable {
     /**
      * Game class constructor.
      * @param idGame The game's ID.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public Game(int idGame) throws RemoteException {
         listenersHandler = new ListenersHandler();
@@ -98,7 +98,12 @@ public class Game implements Serializable {
     /**
      * Method for adding a player to the game.
      * @param nickname The player's nickname.
+     * @param listener The game listener.
      * @return A boolean indicating whether a player has been added to the game or not.
+     * @throws DeskIsFullException If the game is already full and no more players can join.
+     * @throws PlayerAlreadyJoinedException If a player with the same nickname has already joined the game.
+     * @throws RemoteException If there is an issue with remote communication.
+     * @throws CannotJoinGameException If the game is not in a state that allows new players to join.
      */
     public boolean addPlayer(String nickname, GameListener listener) throws DeskIsFullException, PlayerAlreadyJoinedException, RemoteException, CannotJoinGameException {
         Player player = new Player(nickname, this.numPlayer, this.desk, this, listener);
@@ -128,6 +133,7 @@ public class Game implements Serializable {
      * Method for removing a player from the game.
      * @param nickname The player's nickname.
      * @return A Boolean value indicating whether a player has been removed from the game.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public boolean removePlayer(String nickname) throws RemoteException {
         if( players.stream().anyMatch(p->p.getNickname().equals(nickname)) && this.players.remove(players.stream().filter(p->p.getNickname().equals(nickname)).findAny().get())){
@@ -150,8 +156,10 @@ public class Game implements Serializable {
 
     /**
      * Method to add a message to the game chat.
+     * @param receiver The nickname of the player receiving the message.
      * @param sender The nickname of the player who wrote the message.
      * @param text The text of the message.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public void addMessage(String receiver, String sender, String text) throws RemoteException {
         LocalTime time = LocalTime.now();
@@ -186,6 +194,7 @@ public class Game implements Serializable {
 
     /**
      * Method for determining who won the game.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     private void decideWinner() throws RemoteException {
         if (this.getStatus().equals(GameStatus.ENDED)) {
@@ -274,6 +283,7 @@ public class Game implements Serializable {
     /**
      * Method to set the size of the game.
      * @param size The size of the game.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public void setSize(int size) throws RemoteException {
         this.size = size;
@@ -409,6 +419,7 @@ public class Game implements Serializable {
     /**
      * Method to get the winner of the game.
      * @return The winner or the winners of the game.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public ArrayList<Player> getWinner() throws RemoteException {
         // If the winner has not yet been determined
@@ -429,30 +440,35 @@ public class Game implements Serializable {
     }
 
     /**
-     * @param lis adds the listener to the list
+     * Adds a listener to the list of game listeners.
+     * @param lis The listener to be added.
      */
     public void addListener(GameListener lis) {
         listenersHandler.addListener(lis);
     }
 
     /**
-     * @param lis remove the listener from the list
+     * Removes a listener from the list of game listeners.
+     * @param lis The listener to be removed.
      */
     public void removeListener(GameListener lis) {
         listenersHandler.removeListener(lis);
     }
 
     /**
-     * @return the list of listeners
+     * Gets the ListenersHandler that manages the game listeners.
+     * @return The ListenersHandler that manages the game listeners.
      */
     public ListenersHandler getListener() {
         return listenersHandler;
     }
 
     /**
-     * @return the list of listeners
+     * Gets the list of game listeners.
+     * @return An ArrayList of GameListener objects representing the game listeners.
      */
     public ArrayList<GameListener> getListeners() {
         return listenersHandler.getGameListeners();
     }
+
 }

@@ -14,10 +14,10 @@ public class NoMoreCardException extends Exception {
 
     /**
      * Constructs a NoMoreCardException with a specified error message.
-     *
-     * @param message the detail message
+     * @param message The detail message.
      */
     public NoMoreCardException(String message) {
         super(message);
     }
+
 }

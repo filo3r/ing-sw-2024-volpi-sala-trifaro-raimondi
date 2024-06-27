@@ -14,10 +14,10 @@ public class PlayerAlreadyJoinedException extends Exception {
 
     /**
      * Constructs a PlayerAlreadyJoinedException with a specified error message.
-     *
-     * @param message the detail message
+     * @param message The detail message.
      */
     public PlayerAlreadyJoinedException(String message) {
         super(message);
     }
+
 }

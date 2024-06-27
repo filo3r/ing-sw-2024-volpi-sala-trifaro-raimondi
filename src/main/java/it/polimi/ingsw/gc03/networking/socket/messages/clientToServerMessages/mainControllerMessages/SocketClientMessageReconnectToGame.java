@@ -47,4 +47,5 @@ public class SocketClientMessageReconnectToGame extends SocketClientGenericMessa
      */
     @Override
     public void execute(GameControllerInterface gameController) throws RemoteException {}
+
 }

@@ -23,4 +23,5 @@ public enum MessageType {
      * These are periodic signals sent to ensure that the connection is still active and responsive.
      */
     PING
+
 }

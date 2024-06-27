@@ -28,9 +28,8 @@ public class SocketClientMessagePlaceStarterOnCodex extends SocketClientGenericM
     /**
      * Constructs a new message that requires the placement of the Starter card into the Codex.
      * This message is flagged to be processed by the game controller of the application.
-     *
      * @param player The player representing the client.
-     * @param side   The side of the Starter card to be placed into the Codex.
+     * @param side The side of the Starter card to be placed into the Codex.
      */
     public SocketClientMessagePlaceStarterOnCodex(Player player, Side side) {
         this.nicknameClient = player.getNickname();
@@ -41,8 +40,7 @@ public class SocketClientMessagePlaceStarterOnCodex extends SocketClientGenericM
 
     /**
      * Executes the message.
-     *
-     * @param gameListener   The game listener to be notified about game events.
+     * @param gameListener The game listener to be notified about game events.
      * @param mainController The main controller.
      * @return The game controller.
      * @throws RemoteException If an error occurs in remote communication.
@@ -54,13 +52,13 @@ public class SocketClientMessagePlaceStarterOnCodex extends SocketClientGenericM
 
     /**
      * Executes the message.
-     *
      * @param gameController The game controller.
      * @throws RemoteException If an error occurs in remote communication.
-     * @throws Exception       If an exception occurs.
+     * @throws Exception If an exception occurs.
      */
     @Override
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.placeStarterOnCodex(this.player, this.side);
     }
+
 }

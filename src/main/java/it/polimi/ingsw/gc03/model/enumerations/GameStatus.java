@@ -6,6 +6,7 @@ import java.io.Serializable;
  * This enumeration class represents the available statuses of the game.
  */
 public enum GameStatus implements Serializable {
+
     /**
      * Game's waiting for the first player to set the Game size and players to join.
      */
@@ -40,4 +41,5 @@ public enum GameStatus implements Serializable {
      * Game's ended.
      */
     ENDED
+
 }

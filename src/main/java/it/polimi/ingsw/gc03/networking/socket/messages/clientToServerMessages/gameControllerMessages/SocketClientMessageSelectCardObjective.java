@@ -59,4 +59,5 @@ public class SocketClientMessageSelectCardObjective extends SocketClientGenericM
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.selectCardObjective(this.player, this.cardObjective);
     }
+
 }

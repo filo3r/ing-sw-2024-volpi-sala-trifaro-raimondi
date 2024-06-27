@@ -41,4 +41,5 @@ public class SocketServerMessageCardAddedToHand extends SocketServerGenericMessa
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.cardAddedToHand(this.gameImmutable, this.card);
     }
+
 }

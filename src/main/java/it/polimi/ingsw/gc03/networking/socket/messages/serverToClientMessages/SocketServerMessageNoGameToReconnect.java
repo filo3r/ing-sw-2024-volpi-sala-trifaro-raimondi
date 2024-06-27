@@ -2,9 +2,11 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 
+/**
+ * This class is used to send a message from the server to the client to inform that there is no game to reconnect.
+ */
 public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMessage {
 
     /**
@@ -20,6 +22,7 @@ public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMes
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game gameImmutable.
+     * @param nickname The nickname of the player.
      */
     public SocketServerMessageNoGameToReconnect(GameImmutable gameImmutable, String nickname) {
         this.gameImmutable = gameImmutable;
@@ -36,4 +39,5 @@ public class SocketServerMessageNoGameToReconnect extends SocketServerGenericMes
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.noGameToReconnect(this.gameImmutable, this.nickname);
     }
+
 }

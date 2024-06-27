@@ -315,6 +315,7 @@ public class ListenersHandler {
     /**
      * Notifies that the Starter card was placed into the Codex.
      * @param game The current game.
+     * @param nickname The nickname of the player.
      */
     public synchronized void notifyPositionedStarterCardIntoCodex(Game game, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
@@ -392,8 +393,8 @@ public class ListenersHandler {
     /**
      * Notifies that the Objective card was chosen correctly.
      * @param game The current game.
-     *
      * @param cardObjective The chosen Objective card.
+     * @param nickname The nickname of the player.
      */
     public synchronized void notifyObjectiveCardChosen(Game game, CardObjective cardObjective, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
@@ -426,7 +427,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies that the index is invalid.
@@ -488,6 +488,7 @@ public class ListenersHandler {
     /**
      * Notifies that a card was not added to his hand.
      * @param game The current game.
+     * @param nickname The nickname of the player.
      */
     public synchronized void notifyCardNotAddedToHand(Game game, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
@@ -521,7 +522,6 @@ public class ListenersHandler {
         this.gameListeners.removeAll(gameListenersToRemove);
     }
 
-
     /**
      * Notifies that the points obtained with the Objective cards have been calculated.
      * @param game The current game.
@@ -540,7 +540,6 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
-
 
     /**
      * Notifies which players won the game.
@@ -620,6 +619,7 @@ public class ListenersHandler {
     /**
      * Notifies that a player tried to place a card when he couldn't.
      * @param game The current game.
+     * @param nickname The nickname of the player.
      */
     public synchronized void notifyCanNotPlaceCard(Game game, String nickname) {
         ArrayList<GameListener> gameListenersToRemove = new ArrayList<>();
@@ -634,4 +634,5 @@ public class ListenersHandler {
         }
         this.gameListeners.removeAll(gameListenersToRemove);
     }
+
 }

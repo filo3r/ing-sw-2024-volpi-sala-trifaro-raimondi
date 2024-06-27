@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -43,4 +42,5 @@ public class SocketServerMessageRequirementsPlacementNotRespected extends Socket
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.requirementsPlacementNotRespected(this.gameImmutable, this.requirementsPlacement);
     }
+
 }

@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 
 /**
@@ -41,4 +40,5 @@ public class SocketServerMessageAddedPointObjective extends SocketServerGenericM
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.addedPointObjective(this.gameImmutable, this.objectivePoint);
     }
+
 }

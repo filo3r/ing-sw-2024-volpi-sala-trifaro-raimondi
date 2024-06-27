@@ -7,7 +7,6 @@ module it.polimi.ingsw.gc03 {
     requires java.desktop;
     requires jdk.compiler;
 
-
     exports it.polimi.ingsw.gc03.model.exceptions;
     opens it.polimi.ingsw.gc03.model.exceptions to javafx.fxml;
     exports it.polimi.ingsw.gc03.model.card;
@@ -31,4 +30,5 @@ module it.polimi.ingsw.gc03 {
     exports it.polimi.ingsw.gc03.view.gui to javafx.graphics;
     exports it.polimi.ingsw.gc03.view.gui.controllers to javafx.fxml;
     opens it.polimi.ingsw.gc03.view.gui.controllers to javafx.fxml;
+
 }

@@ -37,7 +37,6 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
      */
     private static boolean isRmiServerRunning = false;
 
-
     /**
      * Constructor to create an RMI Server.
      * @throws RemoteException If an error occurs in remote communication.
@@ -194,4 +193,5 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
         }
         return gameController;
     }
+
 }

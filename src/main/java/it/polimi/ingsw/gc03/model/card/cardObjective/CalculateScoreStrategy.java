@@ -17,4 +17,5 @@ public interface CalculateScoreStrategy {
      * @return The calculated points.
      */
     int calculateScore(Codex codex, int point, ArrayList<Value> parameters);
+
 }

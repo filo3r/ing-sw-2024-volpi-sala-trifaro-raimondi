@@ -251,6 +251,7 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
     /**
      * This method is used to write on the output stream the message that the Starter card was placed into the Codex.
      * @param gameImmutable The immutable game gameImmutable.
+     * @param nickname The nickname of the player.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
@@ -314,6 +315,7 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
      * This method is used to write on the output stream the message that the Objective card was chosen correctly.
      * @param gameImmutable The immutable game gameImmutable.
      * @param cardObjective The chosen Objective card.
+     * @param nickname The nickname of the player.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
@@ -387,6 +389,7 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
     /**
      * This method is used to write on the output stream the message that a card was not added to his hand.
      * @param gameImmutable The immutable game gameImmutable.
+     * @param nickname The nickname of the player.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
@@ -515,6 +518,5 @@ public class GameListenerHandlerServer implements GameListener, Serializable {
             completeTransmission();
         } catch (IOException e) {}
     }
-
 
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.model.side.front;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
 
 /**
@@ -46,4 +45,5 @@ public class FrontResource extends Side implements Serializable {
     public void setPoint(int point) {
         this.point = point;
     }
+
 }

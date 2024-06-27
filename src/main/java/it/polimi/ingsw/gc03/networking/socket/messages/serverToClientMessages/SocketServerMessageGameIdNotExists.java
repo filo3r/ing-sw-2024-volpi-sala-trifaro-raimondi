@@ -31,4 +31,5 @@ public class SocketServerMessageGameIdNotExists extends SocketServerGenericMessa
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.gameIdNotExists(this.gameId);
     }
+
 }

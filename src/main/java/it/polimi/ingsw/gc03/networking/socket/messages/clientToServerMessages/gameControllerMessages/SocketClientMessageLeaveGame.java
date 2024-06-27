@@ -5,9 +5,11 @@ import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
-
 import java.rmi.RemoteException;
 
+/**
+ * This class is used to send a message from the client to the server to indicate the intent to leave the game.
+ */
 public class SocketClientMessageLeaveGame extends SocketClientGenericMessage {
 
     /**
@@ -47,5 +49,5 @@ public class SocketClientMessageLeaveGame extends SocketClientGenericMessage {
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.leaveGame(this.nickname);
     }
-}
 
+}

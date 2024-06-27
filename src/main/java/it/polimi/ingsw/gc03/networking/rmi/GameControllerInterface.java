@@ -2,12 +2,10 @@ package it.polimi.ingsw.gc03.networking.rmi;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
  * The GameControllerInterface defines the contract for controlling the gameplay flow of a match,
@@ -25,7 +23,6 @@ public interface GameControllerInterface extends Remote {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     void placeStarterOnCodex(Player player, Side side) throws RemoteException, Exception;
-
 
     /**
      * This method places a card in the Codex.
@@ -94,4 +91,5 @@ public interface GameControllerInterface extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void leaveGame(String playerNickname) throws RemoteException;
+
 }

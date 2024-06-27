@@ -6,7 +6,6 @@ import it.polimi.ingsw.gc03.model.side.back.BackSide;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.view.tui.Coords;
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -176,6 +175,7 @@ public class Codex implements Serializable {
      * @param row The insertion row.
      * @param column The insertion column.
      * @return A boolean indicating whether the card can be inserted.
+     * @throws IllegalStateException If the specified row or column is out of bounds.
      */
     private boolean checkPreviousCardNULL(int row, int column) throws IllegalStateException {
         try {
@@ -273,6 +273,7 @@ public class Codex implements Serializable {
      * @param side The side of the card that you want to insert into the codex.
      * @param row The row to insert the side of the card.
      * @param column The column to insert the side of the card.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     private void insertSide(Side side, int row, int column) throws RemoteException {
         this.codex[row][column] = side;
@@ -407,6 +408,7 @@ public class Codex implements Serializable {
 
     /**
      * Method for updating points made by inserting cards into the codex.
+     * @param game The game.
      * @param side The side of the inserted card.
      */
     private void calculatePointCodex(Game game, Side side) {
@@ -459,6 +461,9 @@ public class Codex implements Serializable {
     /**
      * Method for inserting the Starter card into the codex.
      * @param side The side of the card to insert.
+     * @param game The game.
+     * @param nickname The nickname of the player.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public void insertStarterIntoCodex(Side side, Game game, String nickname) throws RemoteException {
         this.codex[40][40] = side;
@@ -542,7 +547,6 @@ public class Codex implements Serializable {
                 return true;
             }
         } catch (Exception e) {
-            //System.err.println("A player tried to place a card in an impossible position in the game "+game.getIdGame()+": "+e.getMessage());
             return false;
         }
     }
@@ -553,6 +557,7 @@ public class Codex implements Serializable {
      * @param row The row in which to simulate the insertion of the side of the card.
      * @param column The column in which to simulate the insertion of the side of the card.
      * @return A boolean indicating whether the card could be inserted in that position.
+     * @throws Exception If an error occurs.
      */
     public boolean simulateInsertIntoCodex(Side side, int row, int column) throws Exception {
         // Check if the coordinates are valid and if they are free
@@ -604,7 +609,6 @@ public class Codex implements Serializable {
         else
             return this.codex[row][column];
     }
-
 
     /**
      * Method to retrieve the counterCodex.
@@ -733,4 +737,5 @@ public class Codex implements Serializable {
     public void setCodexFillOrder(ArrayList<Coords> codexFillOrder) {
         this.codexFillOrder = codexFillOrder;
     }
+
 }

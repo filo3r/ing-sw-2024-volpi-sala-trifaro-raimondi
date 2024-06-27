@@ -3,21 +3,18 @@ package it.polimi.ingsw.gc03.networking.rmi;
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncLogger;
 import it.polimi.ingsw.gc03.networking.socket.client.ClientAction;
 import it.polimi.ingsw.gc03.networking.socket.client.GameListenerHandlerClient;
 import it.polimi.ingsw.gc03.view.ui.Flow;
-
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -65,7 +62,7 @@ public class RmiClient implements ClientAction {
     private Flow flow;
 
     /**
-     * ping Executor to periodically send a ping message to the server
+     * Ping Executor to periodically send a ping message to the server.
      */
     private final ScheduledExecutorService pingExecutor = Executors.newSingleThreadScheduledExecutor();
 
@@ -82,6 +79,8 @@ public class RmiClient implements ClientAction {
     /**
      * Class constructor.
      * Creates, starts, and connects an RMI Client to the server.
+     * @param ip The server ip.
+     * @param port The server port.
      * @param flow The Flow object that handles UI and game flow actions.
      */
     public RmiClient(String ip, int port, Flow flow) {
@@ -99,7 +98,7 @@ public class RmiClient implements ClientAction {
 
     /**
      * Setups the connection to the RMI server.
-     * @throws RemoteException   If an error occurs in remote communication.
+     * @throws RemoteException If an error occurs in remote communication.
      * @throws NotBoundException If a name in the registry was not found.
      */
     private void setupConnection() throws RemoteException, NotBoundException {
@@ -296,7 +295,6 @@ public class RmiClient implements ClientAction {
     /**
      * Periodical ping from the client to the server.
      * @param player The nickname of the client.
-     * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
     public void sendPing(String player) {
@@ -305,9 +303,9 @@ public class RmiClient implements ClientAction {
                 this.gameController.ping(player);
             }
         } catch (RemoteException e) {
-            //System.err.println("Error pinging server: " + e.getMessage());
             pingExecutor.shutdown();
             flow.noConnectionError();
         }
     }
+
 }

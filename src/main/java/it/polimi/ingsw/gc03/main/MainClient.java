@@ -6,7 +6,6 @@ import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.Flow;
 import javafx.application.Application;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -38,7 +37,6 @@ public class MainClient {
      * Port for the RMI server.
      */
     private final static int RMI_PORT = 1099;
-
 
     /**
      * The main method for the client application.
@@ -91,30 +89,6 @@ public class MainClient {
 
             }
         }
-    }
-
-    /**
-     * Retrieves the local IP addresses of the machine.
-     * @return A list of local IP addresses.
-     */
-    private static List<String> getLocalIpAddress() {
-        List<String> ipAddresses = new ArrayList<>();
-        try {
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-            while (networkInterfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = networkInterfaces.nextElement();
-                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
-                while (inetAddresses.hasMoreElements()) {
-                    InetAddress inetAddress = inetAddresses.nextElement();
-                    if (inetAddress.isSiteLocalAddress() && !inetAddress.isLoopbackAddress()) {
-                        ipAddresses.add(inetAddress.getHostAddress());
-                    }
-                }
-            }
-        } catch (SocketException e) {
-
-        }
-        return ipAddresses;
     }
 
     /**
@@ -253,4 +227,5 @@ public class MainClient {
             }
         }
     }
+
 }

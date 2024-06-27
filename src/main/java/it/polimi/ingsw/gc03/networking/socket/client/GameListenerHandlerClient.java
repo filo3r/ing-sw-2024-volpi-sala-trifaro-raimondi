@@ -8,7 +8,6 @@ import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.view.ui.Flow;
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -182,6 +181,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     /**
      * Handles the event when the Starter card is positioned into the codex.
      * @param gameImmutable The immutable game gameImmutable.
+     * @param nickname The nickname of the player.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
@@ -228,6 +228,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * Handles the event when the Objective card is chosen.
      * @param gameImmutable The immutable game gameImmutable.
      * @param cardObjective The chosen Objective card.
+     * @param nickname The nickname of the player.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
@@ -281,6 +282,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
     /**
      * Handles the event when a card is not added to the player's hand.
      * @param gameImmutable The immutable game gameImmutable.
+     * @param nickname The nickname of the player.
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
@@ -349,7 +351,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException{
+    public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException {
         this.flow.noGameToReconnect(gameImmutable, nickname);
     }
 
@@ -359,7 +361,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void gameCreated(GameImmutable gameImmutable) throws RemoteException{
+    public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
         this.flow.gameCreated(gameImmutable);
     }
 
@@ -370,7 +372,7 @@ public class GameListenerHandlerClient implements GameListener, Serializable {
      * @throws RemoteException If an error occurs in remote communication.
      */
     @Override
-    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException{
+    public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
         this.flow.canNotPlaceCard(gameImmutable, nickname);
     }
 

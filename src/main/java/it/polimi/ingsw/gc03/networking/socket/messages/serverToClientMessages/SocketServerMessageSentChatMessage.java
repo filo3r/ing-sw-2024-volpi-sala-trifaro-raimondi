@@ -20,7 +20,6 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
      */
     private ChatMessage chatMessage;
 
-
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game gameImmutable.
@@ -41,4 +40,5 @@ public class SocketServerMessageSentChatMessage extends SocketServerGenericMessa
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.sentChatMessage(this.gameImmutable, this.chatMessage);
     }
+
 }

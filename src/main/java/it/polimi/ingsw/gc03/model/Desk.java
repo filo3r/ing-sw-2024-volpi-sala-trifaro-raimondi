@@ -11,7 +11,6 @@ import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategy;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CalculateScoreStrategyAdapter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
-
 import java.io.*;
 import java.lang.reflect.Type;
 import java.rmi.RemoteException;
@@ -113,6 +112,7 @@ public class Desk implements Serializable {
 
     /**
      * Constructor of the Desk class.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public Desk(Game game) throws RemoteException {
         // Create decks of cards
@@ -259,6 +259,7 @@ public class Desk implements Serializable {
 
     /**
      * Method for initializing visible cards.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     private void initializeDisplayedCard() throws RemoteException {
         // Resource cards
@@ -471,4 +472,5 @@ public class Desk implements Serializable {
     public void setDisplayedObjective(ArrayList<CardObjective> displayedObjective) {
         this.displayedObjective = displayedObjective;
     }
+
 }

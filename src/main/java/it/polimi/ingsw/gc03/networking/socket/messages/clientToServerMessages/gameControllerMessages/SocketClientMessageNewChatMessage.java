@@ -52,4 +52,5 @@ public class SocketClientMessageNewChatMessage extends SocketClientGenericMessag
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.sendChatMessage(this.chatMessage);
     }
+
 }

@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 
 /**
@@ -47,4 +46,5 @@ public class SocketServerMessagePositionedCardIntoCodex extends SocketServerGene
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.positionedCardIntoCodex(this.gameImmutable, this.row, this.column);
     }
+
 }

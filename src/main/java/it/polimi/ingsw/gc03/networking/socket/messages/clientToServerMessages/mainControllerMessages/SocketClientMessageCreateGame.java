@@ -43,4 +43,5 @@ public class SocketClientMessageCreateGame extends SocketClientGenericMessage {
      */
     @Override
     public void execute(GameControllerInterface gameController) throws RemoteException {}
+
 }

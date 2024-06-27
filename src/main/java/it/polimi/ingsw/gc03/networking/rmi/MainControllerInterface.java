@@ -45,4 +45,5 @@ public interface MainControllerInterface extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     GameControllerInterface reconnectToGame(GameListener gameListener, String nickname) throws RemoteException;
+
 }

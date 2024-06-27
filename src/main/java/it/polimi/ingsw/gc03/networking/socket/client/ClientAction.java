@@ -2,13 +2,11 @@ package it.polimi.ingsw.gc03.networking.socket.client;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.model.side.Side;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
  * This class represents the actions that a client can perform within the game.
@@ -133,4 +131,5 @@ public interface ClientAction {
      * @throws Exception If an abnormal condition has occurred during the execution of the action.
      */
     void gameSizeUpdated(int size) throws RemoteException, Exception;
+
 }

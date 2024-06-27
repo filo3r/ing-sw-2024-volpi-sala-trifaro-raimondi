@@ -62,4 +62,5 @@ public class CardStarter extends Card implements Serializable {
     public void setBackStarter(BackStarter backStarter) {
         this.backStarter=backStarter;
     }
+
 }

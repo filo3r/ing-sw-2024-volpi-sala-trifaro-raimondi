@@ -1,12 +1,10 @@
 package it.polimi.ingsw.gc03.controller;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
-import it.polimi.ingsw.gc03.model.GameImmutable;
 import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.exceptions.NoSuchGameException;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -17,7 +15,14 @@ import java.util.List;
  */
 public class MainController implements MainControllerInterface, Serializable {
 
+    /**
+     * The singleton instance of MainController.
+     */
     private static MainController instance = null;
+
+    /**
+     * List of game controllers managing individual games.
+     */
     private List<GameController> gameControllers;
 
     /**
@@ -29,8 +34,7 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Retrieves the singleton instance of the MainController.
-     *
-     * @return the singleton instance of MainController
+     * @return The singleton instance of MainController.
      */
     public synchronized static MainController getInstance() {
         if (instance == null) {
@@ -41,11 +45,10 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Creates a new game and adds the first player to it.
-     *
-     * @param gameListener       the first player's listener for game events
-     * @param firstPlayerNickname the nickname of the first player
-     * @return the created GameControllerInterface
-     * @throws RemoteException if there is a remote communication error
+     * @param gameListener The first player's listener for game events.
+     * @param firstPlayerNickname The nickname of the first player.
+     * @return The created GameControllerInterface.
+     * @throws RemoteException If there is a remote communication error.
      */
     public synchronized GameControllerInterface createGame(GameListener gameListener, String firstPlayerNickname) throws RemoteException {
         try {
@@ -62,11 +65,10 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Add a player to the first available game that has waiting status and available slots.
-     *
-     * @param listener       the player's listener for game events
-     * @param playerNickname the nickname of the player
-     * @return the GameControllerInterface for the game joined
-     * @throws RemoteException if there is a remote communication error
+     * @param listener The player's listener for game events.
+     * @param playerNickname The nickname of the player.
+     * @return The GameControllerInterface for the game joined.
+     * @throws RemoteException If there is a remote communication error.
      */
     public synchronized GameControllerInterface joinFirstAvailableGame(GameListener listener, String playerNickname) throws RemoteException {
             List<GameController> GCs = gameControllers.stream()
@@ -77,12 +79,11 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Adds a player to a specific game by its ID.
-     *
-     * @param listener       the listener for game events
-     * @param playerNickname the nickname of the player
-     * @param id             the ID of the game to join
-     * @return the GameControllerInterface for the game joined
-     * @throws RemoteException if there is a remote communication error
+     * @param listener The listener for game events.
+     * @param playerNickname The nickname of the player.
+     * @param id The ID of the game to join.
+     * @return The GameControllerInterface for the game joined.
+     * @throws RemoteException If there is a remote communication error.
      */
     public synchronized GameControllerInterface joinSpecificGame(GameListener listener, String playerNickname, int id) throws RemoteException {
         try {
@@ -99,12 +100,11 @@ public class MainController implements MainControllerInterface, Serializable {
     /**
      * Adds a player to the first element of the passed GameController list.
      * If no game is available, a new game is created.
-     *
-     * @param playerNickname the nickname of the player
-     * @param listener       the player's listener for game events
-     * @param GCs            the list of GameControllers
-     * @return the GameControllerInterface for the game joined or created
-     * @throws RemoteException if there is a remote communication error
+     * @param playerNickname The nickname of the player.
+     * @param listener The player's listener for game events.
+     * @param GCs The list of GameControllers.
+     * @return The GameControllerInterface for the game joined or created.
+     * @throws RemoteException If there is a remote communication error.
      */
     private GameControllerInterface addPlayerToGame(String playerNickname, GameListener listener, List<GameController> GCs) throws RemoteException {
         if (!GCs.isEmpty()) {
@@ -122,11 +122,10 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Reconnects a player to an ongoing game they were previously in.
-     *
-     * @param gameListener   the player's listener for game events
-     * @param playerNickname the nickname of the player
-     * @return the GameControllerInterface for the game reconnected to
-     * @throws RemoteException if there is a remote communication error
+     * @param gameListener The player's listener for game events.
+     * @param playerNickname The nickname of the player.
+     * @return The GameControllerInterface for the game reconnected to.
+     * @throws RemoteException If there is a remote communication error.
      */
     public synchronized GameControllerInterface reconnectToGame(GameListener gameListener, String playerNickname) throws RemoteException {
         List<GameController> GCs = gameControllers.stream()
@@ -153,9 +152,8 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Deletes a game by its ID.
-     *
-     * @param idGame the ID of the game to delete
-     * @throws NoSuchGameException if the game with the specified ID does not exist
+     * @param idGame The ID of the game to delete.
+     * @throws NoSuchGameException If the game with the specified ID does not exist.
      */
     public synchronized void deleteGame(int idGame) throws NoSuchGameException {
         List<GameController> gameToRemove = gameControllers.stream()
@@ -170,8 +168,7 @@ public class MainController implements MainControllerInterface, Serializable {
 
     /**
      * Returns the list of GameControllers.
-     *
-     * @return the list of GameControllers
+     * @return The list of GameControllers.
      */
     public List<GameController> getGameControllers() {
         return gameControllers;
@@ -183,4 +180,5 @@ public class MainController implements MainControllerInterface, Serializable {
     public static void resetInstance() {
         instance = null;
     }
+
 }

@@ -25,7 +25,6 @@ public class CardResource extends Card implements Serializable {
      */
     private BackResource backResource;
 
-
     /**
      * Constructor for the CardResource class.
      * @param idCard The unique identifier of the card.
@@ -87,4 +86,5 @@ public class CardResource extends Card implements Serializable {
     public void setBackResource(BackResource backResource){
         this.backResource=backResource;
     }
+
 }

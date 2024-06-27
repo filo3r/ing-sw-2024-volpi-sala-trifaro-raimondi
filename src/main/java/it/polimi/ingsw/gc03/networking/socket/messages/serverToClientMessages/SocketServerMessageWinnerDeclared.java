@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,7 +19,6 @@ public class SocketServerMessageWinnerDeclared extends SocketServerGenericMessag
      * The nicknames of the players who won.
      */
     private ArrayList<String> nickname;
-
 
     /**
      * Constructor of the class that creates the message.
@@ -42,4 +40,5 @@ public class SocketServerMessageWinnerDeclared extends SocketServerGenericMessag
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.winnerDeclared(this.gameImmutable, this.nickname);
     }
+
 }

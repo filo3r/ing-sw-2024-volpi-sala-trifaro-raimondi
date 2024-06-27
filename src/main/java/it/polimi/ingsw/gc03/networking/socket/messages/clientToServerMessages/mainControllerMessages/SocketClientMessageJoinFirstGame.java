@@ -43,4 +43,5 @@ public class SocketClientMessageJoinFirstGame extends SocketClientGenericMessage
      */
     @Override
     public void execute(GameControllerInterface gameController) throws RemoteException {}
+
 }

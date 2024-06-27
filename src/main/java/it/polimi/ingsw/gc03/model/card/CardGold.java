@@ -55,7 +55,6 @@ public class CardGold extends Card implements Serializable {
         this.kingdom = kingdom;
     }
 
-
     /**
      * Getter method to retrieve the front side of the card.
      * @return The front side of the card.
@@ -87,4 +86,5 @@ public class CardGold extends Card implements Serializable {
     public void setBackGold(BackGold backGold){
         this.backGold=backGold;
     }
+
 }

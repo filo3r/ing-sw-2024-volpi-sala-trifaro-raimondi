@@ -71,4 +71,5 @@ public abstract class SocketClientGenericMessage implements Serializable {
     public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
     }
+
 }

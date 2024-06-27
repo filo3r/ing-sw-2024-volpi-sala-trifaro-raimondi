@@ -36,7 +36,6 @@ public class MainServer {
      */
     private static String serverIpAddress;
 
-
     /**
      * Main method to start the server.
      * @param args Command line arguments.
@@ -83,7 +82,6 @@ public class MainServer {
         AsyncLogger.log(Level.INFO, "[SERVER] Server socket initialized and listening for connections.");
     }
 
-
     /**
      * Clears the console.
      * @throws IOException If an I/O error occurs.
@@ -102,7 +100,6 @@ public class MainServer {
             }
         }
     }
-
 
     /**
      * Retrieves the local IP addresses of the machine.
@@ -128,7 +125,6 @@ public class MainServer {
         return ipAddresses;
     }
 
-
     /**
      * Prompts the user to enter the server's IP address.
      * @return The server's IP address entered by the user.
@@ -149,7 +145,6 @@ public class MainServer {
         return input;
     }
 
-
     /**
      * Validates an IPv4 address.
      * @param ip The IP address to validate.
@@ -164,6 +159,5 @@ public class MainServer {
         else
             return ip.matches(IPV4_PATTERN);
     }
-
 
 }

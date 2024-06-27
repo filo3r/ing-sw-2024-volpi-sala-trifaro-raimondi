@@ -47,4 +47,5 @@ public class SocketServerMessageAddedPoint extends SocketServerGenericMessage {
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.addedPoint(this.gameImmutable, this.player, this.point);
     }
+
 }

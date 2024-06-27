@@ -32,4 +32,5 @@ public class SocketServerMessageLastCircle extends SocketServerGenericMessage {
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.lastCircle(this.gameImmutable);
     }
+
 }
