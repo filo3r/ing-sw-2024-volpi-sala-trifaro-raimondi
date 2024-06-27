@@ -40,5 +40,5 @@ public class InputReaderTUI extends Thread implements InputReader {
     public InputQueue getQueue(){
         return inputQueue;
     }
-}
 
+}

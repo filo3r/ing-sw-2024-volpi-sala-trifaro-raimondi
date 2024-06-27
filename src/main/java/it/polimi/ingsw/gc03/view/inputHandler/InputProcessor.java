@@ -2,39 +2,42 @@ package it.polimi.ingsw.gc03.view.inputHandler;
 
 import it.polimi.ingsw.gc03.model.ChatMessage;
 import it.polimi.ingsw.gc03.view.ui.Flow;
-
 import java.time.LocalTime;
 
 /**
  * The InputProcessor class processes input commands and messages, managing the game flow and interactions.
  */
-public class InputProcessor extends Thread{
+public class InputProcessor extends Thread {
+
     /**
      * The buffer from which I pop the data
      */
     private final InputQueue inputQueue;
+
     /**
      * The data to process
      */
     private final InputQueue dataToProcess;
+
     /**
      * The game flow
      */
     private final Flow flow;
+
     /**
      * The player
      */
     private String nickname;
+
     /**
      * The game id
      */
     private Integer gameId;
 
     /**
-     * Init class
-     *
-     * @param inputQueue
-     * @param flow
+     * Initializes the InputProcessor class.
+     * @param inputQueue The input queue from which data is popped.
+     * @param flow The game flow.
      */
     public InputProcessor(InputQueue inputQueue, Flow flow) {
         this.inputQueue = inputQueue;
@@ -46,7 +49,7 @@ public class InputProcessor extends Thread{
     }
 
     /**
-     * Parses the data contained in the buffer
+     * Parses the data contained in the buffer.
      */
     public void run() {
         String txt;
@@ -109,25 +112,24 @@ public class InputProcessor extends Thread{
     }
 
     /**
-     * Sets the game id to the param passed
-     *
-     * @param gameId game id to set
+     * Sets the game ID.
+     * @param gameId The game ID to set.
      */
     public void setIdGame(Integer gameId) {
         this.gameId = gameId;
     }
 
     /**
-     * Sets the player
-     *
-     * @param nickname The player's nickname.
+     * Sets the player's nickname.
+     * @param nickname The player's nickname to set.
      */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
     /**
-     * @return data to process
+     * Returns the data to be processed.
+     * @return The data to be processed.
      */
     public InputQueue getDataToProcess() {
         return dataToProcess;

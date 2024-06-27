@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.view.tui;
 
-
 import java.io.Serializable;
 
 /**
@@ -17,7 +16,6 @@ public class Coords implements Serializable {
      * The y-coordinate.
      */
     int y;
-
 
     /**
      * Constructs a Coords object with the specified x and y coordinates.
@@ -44,4 +42,5 @@ public class Coords implements Serializable {
     public int getY() {
         return y;
     }
+
 }

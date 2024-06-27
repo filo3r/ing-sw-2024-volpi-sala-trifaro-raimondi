@@ -388,4 +388,5 @@ public class SideView {
         }
         return color;
     }
+
 }

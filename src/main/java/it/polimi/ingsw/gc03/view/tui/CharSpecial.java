@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.view.tui;
 
-
 /**
  * Class representing a special character with a specific color.
  */
@@ -16,7 +15,6 @@ public class CharSpecial {
      */
     char c;
 
-
     /**
      * Constructs a CharSpecial with the specified color and character.
      * @param color The color of the character.
@@ -27,4 +25,5 @@ public class CharSpecial {
         this.c = c;
 
     }
+
 }

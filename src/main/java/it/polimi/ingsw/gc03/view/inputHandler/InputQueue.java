@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.view.inputHandler;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-
 /**
  * A thread-safe queue to handle input data for processing.
  */
@@ -59,4 +58,5 @@ public class InputQueue {
             }
         }
     }
+
 }

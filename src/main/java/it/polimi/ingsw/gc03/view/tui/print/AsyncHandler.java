@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.view.tui.print;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -14,7 +13,6 @@ public class AsyncHandler {
      * The executor service for managing asynchronous tasks.
      */
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
-
 
     /**
      * Submits a Runnable task for execution by the executor service.
@@ -39,4 +37,5 @@ public class AsyncHandler {
             Thread.currentThread().interrupt();
         }
     }
+
 }

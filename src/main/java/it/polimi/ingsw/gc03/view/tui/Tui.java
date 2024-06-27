@@ -13,9 +13,7 @@ import it.polimi.ingsw.gc03.model.side.back.BackStarter;
 import it.polimi.ingsw.gc03.model.side.front.FrontGold;
 import it.polimi.ingsw.gc03.model.side.front.FrontResource;
 import it.polimi.ingsw.gc03.model.side.front.FrontStarter;
-import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.UI;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +21,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
 import static it.polimi.ingsw.gc03.view.tui.print.AsyncPrint.*;
 
 /**
@@ -88,8 +85,7 @@ public class Tui extends UI {
 
     /**
      * Class constructor.
-     *
-     * @param width  The width of the screen.
+     * @param width The width of the screen.
      * @param height The height of the screen.
      */
     public Tui(int width, int height) {
@@ -105,8 +101,7 @@ public class Tui extends UI {
 
     /**
      * Method to display the codex of the player.
-     *
-     * @param gameImmutable the immutable version of the game.
+     * @param gameImmutable The immutable version of the game.
      */
     protected void showCodex(GameImmutable gameImmutable) {
         clearScreen(' ');
@@ -118,6 +113,8 @@ public class Tui extends UI {
 
     /**
      * Method to move around the codex.
+     * @param x The number of units to move horizontally.
+     * @param y The number of units to move vertically.
      */
     public void moveScreenView(int x, int y) {
         screenSimX -= x;
@@ -127,9 +124,8 @@ public class Tui extends UI {
 
     /**
      * Method to resize the screen width and height.
-     *
-     * @param width  the new screen's width.
-     * @param height the new screen's height.
+     * @param width The new screen's width.
+     * @param height The new screen's height.
      */
     public void resizeScreenView(int width, int height) {
         this.screenHeight = height;
@@ -154,9 +150,8 @@ public class Tui extends UI {
 
     /**
      * Method to refresh the terminal screen.
-     *
-     * @param centerX the position of the X coordinate's center of the screen that will be displayed.
-     * @param centerY the position of the Y coordinate's center of the screen that will be displayed.
+     * @param centerX The position of the X coordinate's center of the screen that will be displayed.
+     * @param centerY The position of the Y coordinate's center of the screen that will be displayed.
      */
     public void refreshScreen(int centerX, int centerY) {
         getScreenToPrint(centerX, centerY);
@@ -172,8 +167,7 @@ public class Tui extends UI {
 
     /**
      * Method to delete all the chars on the screen.
-     *
-     * @param fillChar the char that will used as background.
+     * @param fillChar The char that will used as background.
      */
     public void clearScreen(char fillChar) {
         for (int i = 0; i < 729; i++) {
@@ -218,10 +212,9 @@ public class Tui extends UI {
 
     /**
      * Method to add a Side of a card on the screenSim.
-     *
      * @param side The card's side to display.
-     * @param row  The row on the codex of the card.
-     * @param col  The col on the codex of the card.
+     * @param row The row on the codex of the card.
+     * @param col The col on the codex of the card.
      */
     public void showSide(Side side, int row, int col) {
         CharSpecial[][] sideArray = new SideView().getSideView(side);
@@ -239,9 +232,8 @@ public class Tui extends UI {
     }
 
     /**
-     * Method to put the codex on the screenSim
-     *
-     * @param codex the codex to show.
+     * Method to put the codex on the screenSim.
+     * @param codex The codex to show.
      */
     private void translateCodexToScreenSim(Codex codex) {
         if (!codex.getCardStarterInserted()) {
@@ -257,10 +249,9 @@ public class Tui extends UI {
 
     /**
      * Recursive method to display on the screenSim in a "three-path".
-     *
      * @param codex The codex.
-     * @param i     The i index of the recursive method.
-     * @param j     The j index of the recursive method.
+     * @param i The i index of the recursive method.
+     * @param j The j index of the recursive method.
      */
     private void recursiveShowSide(Side[][] codex, int i, int j) {
         if (i < 0 || i >= 81 || j < 0 || j >= 81 || visited[i][j] || codex[i][j] == null) {
@@ -281,8 +272,7 @@ public class Tui extends UI {
 
     /**
      * Method to generate on the screenSim the available position to place cards on the codex.
-     *
-     * @param codex the codex.
+     * @param codex The codex.
      */
     private void generateAvailablePositions(Codex codex) {
         Iterator<Coords> occupiedPositionsIterator = occupiedPositions.iterator();
@@ -325,11 +315,10 @@ public class Tui extends UI {
 
     /**
      * Method to show a text on the screen.
-     *
-     * @param text  The text to show.
+     * @param text The text to show.
      * @param color The color of the text.
-     * @param x     The x position on the screen.
-     * @param y     The y position on the screen.
+     * @param x The x position on the screen.
+     * @param y The y position on the screen.
      */
     private void generateTextOnScreen(String text, CharColor color, int x, int y) {
         for (int i = 0; i < text.length(); i++) {
@@ -339,9 +328,8 @@ public class Tui extends UI {
 
     /**
      * Method used to get the screenToPrint from the middleScreen.
-     *
-     * @param x the top left x position of the screen.
-     * @param y the top left y position of the screen.
+     * @param x The top left x position of the screen.
+     * @param y The top left y position of the screen.
      */
     private void getScreenToPrint(int x, int y) {
         if (y + screenHeight > 729) {
@@ -379,9 +367,8 @@ public class Tui extends UI {
 
     /**
      * Method to get the Ansi code from the enumeration.
-     *
-     * @param color the color to get.
-     * @return the String of the code.
+     * @param color The color to get.
+     * @return The String of the code.
      */
     private static String getAnsiCode(CharColor color) {
         String ansiCode = switch (color) {
@@ -398,9 +385,8 @@ public class Tui extends UI {
 
     /**
      * Method to show the desk, containing the decks, displayed cards and the public and private objectives.
-     *
-     * @param gameImmutable the immutable object of the game.
-     * @param nickname      the player's nickname.
+     * @param gameImmutable The immutable object of the game.
+     * @param nickname The player's nickname.
      */
     @Override
     protected void showDesk(GameImmutable gameImmutable, String nickname) {
@@ -552,8 +538,7 @@ public class Tui extends UI {
 
     /**
      * Method to show that the chosen nickname is not valid.
-     *
-     * @param nickname the invalid nickname.
+     * @param nickname The invalid nickname.
      */
     @Override
 
@@ -563,9 +548,8 @@ public class Tui extends UI {
 
     /**
      * Method to show that a personal objective has been chosen.
-     *
-     * @param game the game instance.
-     * @param card the chosen card.
+     * @param game The game instance.
+     * @param card The chosen card.
      */
     @Override
     protected void showObjectiveChosen(Game game, Card card) {
@@ -577,8 +561,7 @@ public class Tui extends UI {
 
     /**
      * Displays a notification message.
-     *
-     * @param message the message to display.
+     * @param message The message to display.
      */
     public void showNotification(String message) {
         message+="\n";
@@ -590,8 +573,7 @@ public class Tui extends UI {
 
     /**
      * Displays the chat messages on the screen.
-     *
-     * @param game the game instance.
+     * @param game The game instance.
      */
     public void showChat(GameImmutable game) {
         CharSpecial[][] screenSimBackup = new CharSpecial[729][2187];
@@ -622,30 +604,18 @@ public class Tui extends UI {
         }
     }
 
+    /**
+     * Displays a notification that a player has disconnected.
+     * @param nickname The nickname of the player who disconnected.
+     */
     @Override
-    public void showPlayerDisconnected(String nickname) {
-
-    }
-
-    // @Override
-    //public void showDrawnCard(GameImmutable model) {
-      //  AsyncPrint.asyncPrint(model.getPlayers().get(model.getCurrPlayer()-1).getHand().getLast().getIdCard());
-    //}
-
-    //@Override
-    //public void showPoints(GameImmutable model) {
-    //    for(int i=0;i<model.getPlayers().size();i++){
-    //        AsyncPrint.asyncPrint("\n" + model.getPlayers().get(i).getNickname()+" has " + model.getPlayers().get(i).getCodex().getPointCodex() + " points.\n");
-    //    }
-    //}
+    public void showPlayerDisconnected(String nickname) {}
 
     /**
      * Method not used in the TUI.
      */
     @Override
-    public void init() {
-
-    }
+    public void init() {}
 
     /**
      * Displays the menu options.
@@ -663,8 +633,7 @@ public class Tui extends UI {
 
     /**
      * Displays a message indicating that a new game is being created.
-     *
-     * @param nickname the nickname of the player creating the game.
+     * @param nickname The nickname of the player creating the game.
      */
     @Override
     protected void show_creatingNewGameMsg(String nickname) {
@@ -675,8 +644,7 @@ public class Tui extends UI {
 
     /**
      * Displays a message asking the user to choose the game size.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void showAskSize(GameImmutable gameImmutable) {
@@ -687,8 +655,7 @@ public class Tui extends UI {
 
     /**
      * Displays a message showing that the player is joining the first available game.
-     *
-     * @param nickname the nickname of the player.
+     * @param nickname The nickname of the player.
      */
     @Override
     protected void show_joiningFirstAvailableMsg(String nickname) {
@@ -698,10 +665,9 @@ public class Tui extends UI {
     }
 
     /**
-     *  Displays a message showing that the player is joining a specific game.
-     *
-     * @param idGame   the ID of the game.
-     * @param nickname the nickname of the player.
+     * Displays a message showing that the player is joining a specific game.
+     * @param idGame The ID of the game.
+     * @param nickname The nickname of the player.
      */
     @Override
     protected void show_joiningToGameIdMsg(int idGame, String nickname) {
@@ -733,8 +699,7 @@ public class Tui extends UI {
 
     /**
      * Displays a greeting with the chosen nickname.
-     *
-     * @param nickname the chosen nickname.
+     * @param nickname The chosen nickname.
      */
     @Override
     protected void show_chosenNickname(String nickname) {
@@ -746,8 +711,7 @@ public class Tui extends UI {
 
     /**
      * Displays a message indicating that the game has started.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void show_gameStarted(GameImmutable gameImmutable) {
@@ -758,8 +722,7 @@ public class Tui extends UI {
 
     /**
      * Displays a message indicating that there are no available games to join.
-     *
-     * @param msgToVisualize the message to display.
+     * @param msgToVisualize The message to display.
      */
     @Override
     protected void show_noAvailableGamesToJoin(String msgToVisualize) {
@@ -770,8 +733,7 @@ public class Tui extends UI {
 
     /**
      * Displays a message indicating that the game has ended.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void show_gameEnded(GameImmutable gameImmutable) {
@@ -785,9 +747,8 @@ public class Tui extends UI {
 
     /**
      * Displays a notification that a player has joined the game.
-     *
-     * @param gameImmutable the game instance.
-     * @param nick      the nickname of the player who joined.
+     * @param gameImmutable The game instance.
+     * @param nick The nickname of the player who joined.
      */
     @Override
     protected void show_playerJoined(GameImmutable gameImmutable, String nick) {
@@ -796,9 +757,8 @@ public class Tui extends UI {
 
     /**
      * Displays a notification indicating the next player's turn.
-     *
-     * @param gameImmutable    the game instance.
-     * @param nickname the nickname of the next player.
+     * @param gameImmutable The game instance.
+     * @param nickname The nickname of the next player.
      */
     @Override
     protected void showNextTurn(GameImmutable gameImmutable, String nickname) {
@@ -813,9 +773,8 @@ public class Tui extends UI {
 
     /**
      * Displays the player's hand.
-     *
-     * @param gameImmutable the game instance.
-     * @param nickname  the nickname of the player.
+     * @param gameImmutable The game instance.
+     * @param nickname The nickname of the player.
      */
     @Override
     protected void show_playerHand(GameImmutable gameImmutable, String nickname) {
@@ -838,9 +797,8 @@ public class Tui extends UI {
 
     /**
      * Displays the last sent chat message.
-     *
-     * @param gameImmutable    the game instance.
-     * @param nickname the nickname of the player who sent the message.
+     * @param gameImmutable The game instance.
+     * @param nickname The nickname of the player who sent the message.
      */
     @Override
     protected void show_sentMessage(GameImmutable gameImmutable, String nickname) {
@@ -864,9 +822,9 @@ public class Tui extends UI {
     }
 
     /**
-     * Adds an latest event to be displayed.
-     *
-     * @param input the event message.
+     * Adds the latest event to be displayed.
+     * @param input The event message.
+     * @param gameImmutable The immutable game state.
      */
     @Override
     public void addLatestEvent(String input, GameImmutable gameImmutable) {
@@ -874,10 +832,9 @@ public class Tui extends UI {
     }
 
     /**
-     * Returns the length of the longest message in the game's chat. (not used in the tui)
-     *
-     * @param gameImmutable the game instance.
-     * @return the length of the longest message.
+     * Returns the length of the longest message in the game's chat (not used in the tui).
+     * @param gameImmutable The game instance.
+     * @return The length of the longest message.
      */
     @Override
     protected int getLengthLongestMessage(GameImmutable gameImmutable) {
@@ -886,9 +843,8 @@ public class Tui extends UI {
 
     /**
      * Adds a chat message to the personal chat and displays a notification.
-     *
-     * @param msg   the chat message.
-     * @param gameImmutable the game instance.
+     * @param msg The chat message.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void addMessage(ChatMessage msg, GameImmutable gameImmutable) {
@@ -897,11 +853,11 @@ public class Tui extends UI {
             showNotification("[CHAT] " + msg.getSender() + "→" + msg.getReceiver() + ": " + msg.getText());
         }
     }
+
     /**
      * Displays a notification that the game size has been updated.
-     *
-     * @param size          the new game size.
-     * @param gameImmutable the game instance.
+     * @param size The new game size.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void show_sizeSetted(int size, GameImmutable gameImmutable) {
@@ -913,9 +869,8 @@ public class Tui extends UI {
 
     /**
      * Displays a notification that a card has been added to the player's hand.
-     *
-     * @param gameImmutable the game instance.
-     * @param card  the card added to the hand.
+     * @param gameImmutable The game instance.
+     * @param card The card added to the hand.
      */
     @Override
     protected void showCardAddedToHand(GameImmutable gameImmutable, Card card) {
@@ -924,8 +879,7 @@ public class Tui extends UI {
 
     /**
      * Displays the winner of the game.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void showWinner(GameImmutable gameImmutable) {
@@ -944,10 +898,9 @@ public class Tui extends UI {
 
     /**
      * Displays a notification that a player has chosen their personal objective.
-     *
-     * @param gameImmutable         the game instance.
-     * @param cardObjective the card objective chosen.
-     * @param nickname      the nickname of the player who chose the objective.
+     * @param gameImmutable The game instance.
+     * @param cardObjective The card objective chosen.
+     * @param nickname The nickname of the player who chose the objective.
      */
     @Override
     protected void showObjectiveChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) {
@@ -967,8 +920,7 @@ public class Tui extends UI {
 
     /**
      * Prompts the user to choose the index of a card from their hand.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void showAskIndex(GameImmutable gameImmutable) {
@@ -1001,8 +953,7 @@ public class Tui extends UI {
 
     /**
      * Prompts the user to choose coordinates to place a card.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void showAskCoordinates(GameImmutable gameImmutable) {
@@ -1021,15 +972,13 @@ public class Tui extends UI {
 
     /**
      * Displays a notification that the card cannot be placed.
-     *
-     * @param gameImmutable    the game instance.
-     * @param nickname the nickname of the player.
+     * @param gameImmutable The game instance.
+     * @param nickname The nickname of the player.
      */
     @Override
     protected void showCardCannotBePlaced(GameImmutable gameImmutable, String nickname) {
         showNotification("This position is not available!");
     }
-
 
     /**
      * Displays a notification for invalid input.
@@ -1041,9 +990,8 @@ public class Tui extends UI {
 
     /**
      * Prompts the user to choose the side of a card.
-     *
-     * @param gameImmutable the game instance.
-     * @param card  the card to place.
+     * @param gameImmutable The game instance.
+     * @param card The card to place.
      */
     @Override
     protected void showAskSide(GameImmutable gameImmutable, Card card) {
@@ -1064,8 +1012,7 @@ public class Tui extends UI {
 
     /**
      * Prompts the user to choose their personal objective.
-     *
-     * @param gameImmutable the game instance.
+     * @param gameImmutable The game instance.
      */
     @Override
     protected void showObjectiveNotChosen(GameImmutable gameImmutable) {
@@ -1099,9 +1046,8 @@ public class Tui extends UI {
 
     /**
      * Displays a notification that the requirements for card placement were not respected.
-     *
-     * @param gameImmutable         the game instance.
-     * @param requirementsPlacement the list of requirements not respected.
+     * @param gameImmutable The game instance.
+     * @param requirementsPlacement The list of requirements not respected.
      */
     @Override
     protected void showReqNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) {
@@ -1111,9 +1057,8 @@ public class Tui extends UI {
 
     /**
      * Prompts the user to choose a side of the starter card.
-     *
-     * @param game     the game instance.
-     * @param nickname the nickname of the player.
+     * @param game The game instance.
+     * @param nickname The nickname of the player.
      */
     @Override
     protected void show_askSideStarter(GameImmutable game, String nickname) {
@@ -1145,11 +1090,11 @@ public class Tui extends UI {
 
     /**
      * Sets the player's nickname.
-     *
-     * @param nickname the player's nickname.
+     * @param nickname The player's nickname.
      */
     @Override
     protected void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 }

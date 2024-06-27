@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-
 /**
  * Controller for handling the selection of the Objective card.
  */
@@ -25,7 +24,6 @@ public class CardObjectiveController extends GenericController {
      */
     @FXML
     private ImageView secondCard;
-
 
     /**
      * Displays the Objective cards images on the buttons.
@@ -64,7 +62,6 @@ public class CardObjectiveController extends GenericController {
         }
     }
 
-
     /**
      * Get the player based on the nickname.
      * @param gameImmutable The game gameImmutable.
@@ -79,7 +76,6 @@ public class CardObjectiveController extends GenericController {
         return null;
     }
 
-
     /**
      * Show an error message in an alert dialog.
      * @param title The title of the alert.
@@ -93,7 +89,6 @@ public class CardObjectiveController extends GenericController {
         alert.showAndWait();
     }
 
-
     /**
      * Handles the click event for the first Objective card.
      * @param mouseEvent The mouse event triggered by the user.
@@ -104,7 +99,6 @@ public class CardObjectiveController extends GenericController {
         secondCard.setVisible(false);
     }
 
-
     /**
      * Handles the click event for the second Objective card.
      * @param mouseEvent The mouse event triggered by the user.
@@ -114,6 +108,5 @@ public class CardObjectiveController extends GenericController {
         getInputReaderGUI().addTxt("1");
         firstCard.setVisible(false);
     }
-
 
 }

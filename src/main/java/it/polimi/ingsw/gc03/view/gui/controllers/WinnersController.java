@@ -8,11 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 /**
  * Controller class for displaying the winners in the GUI.
@@ -48,7 +46,6 @@ public class WinnersController extends GenericController {
      */
     @FXML
     private Button buttonClose;
-
 
     /**
      * Displays the players' rankings and highlights the winners.
@@ -89,17 +86,16 @@ public class WinnersController extends GenericController {
         }
     }
 
-
     /**
      * Handles the action event for closing the winners display.
      * Sends an error acknowledgment command to the input reader.
      * @param actionEvent The action event triggered by the user.
      */
+    @FXML
     public void actionClose(ActionEvent actionEvent) {
         //getInputReaderGUI().addTxt("leave");
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();
     }
-
 
 }
