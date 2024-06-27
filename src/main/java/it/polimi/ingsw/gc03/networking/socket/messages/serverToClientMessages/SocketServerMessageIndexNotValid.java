@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 
 /**
@@ -40,4 +39,5 @@ public class SocketServerMessageIndexNotValid extends SocketServerGenericMessage
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.indexNotValid(this.gameImmutable, this.index);
     }
+
 }

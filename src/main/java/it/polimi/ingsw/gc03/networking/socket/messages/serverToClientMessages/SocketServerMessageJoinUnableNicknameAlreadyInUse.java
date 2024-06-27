@@ -33,4 +33,5 @@ public class SocketServerMessageJoinUnableNicknameAlreadyInUse extends SocketSer
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.joinUnableNicknameAlreadyInUse(this.player);
     }
+
 }

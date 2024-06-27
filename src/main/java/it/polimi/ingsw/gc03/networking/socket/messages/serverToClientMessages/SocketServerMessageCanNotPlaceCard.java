@@ -2,9 +2,11 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 
+/**
+ * This class is used to send a message from the server to the client to inform that a card cannot be placed.
+ */
 public class SocketServerMessageCanNotPlaceCard extends SocketServerGenericMessage{
 
     /**
@@ -37,4 +39,5 @@ public class SocketServerMessageCanNotPlaceCard extends SocketServerGenericMessa
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.canNotPlaceCard(this.gameImmutable, this.nickname);
     }
+
 }

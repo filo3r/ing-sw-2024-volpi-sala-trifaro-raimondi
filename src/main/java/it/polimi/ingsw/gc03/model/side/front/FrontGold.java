@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.model.side.front;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -93,4 +92,5 @@ public class FrontGold extends Side implements Serializable {
     public void setRequirementPlacement(ArrayList<Value> requirementPlacement) {
         this.requirementPlacement = requirementPlacement;
     }
+
 }

@@ -32,4 +32,5 @@ public class SocketServerMessagePlayerJoined extends SocketServerGenericMessage 
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.playerJoined(this.gameImmutable);
     }
+
 }

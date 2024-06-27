@@ -56,4 +56,5 @@ public enum Value implements Serializable {
      * The value is covered.
      */
     COVERED
+
 }

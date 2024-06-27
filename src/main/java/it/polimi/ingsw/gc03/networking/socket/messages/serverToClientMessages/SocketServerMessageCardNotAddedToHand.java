@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.networking.socket.messages.serverToClientMessages;
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.GameImmutable;
-
 import java.io.IOException;
 
 /**
@@ -23,6 +22,7 @@ public class SocketServerMessageCardNotAddedToHand extends SocketServerGenericMe
     /**
      * Constructor of the class that creates the message.
      * @param gameImmutable The immutable game gameImmutable.
+     * @param nickname The nickname of the player.
      */
     public SocketServerMessageCardNotAddedToHand(GameImmutable gameImmutable, String nickname) {
         this.gameImmutable = gameImmutable;
@@ -39,4 +39,5 @@ public class SocketServerMessageCardNotAddedToHand extends SocketServerGenericMe
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.cardNotAddedToHand(this.gameImmutable, this.nickname);
     }
+
 }

@@ -2,7 +2,6 @@ package it.polimi.ingsw.gc03.model.side;
 
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
 
 /**
@@ -153,4 +152,5 @@ public class Side implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
 }

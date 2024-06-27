@@ -21,4 +21,5 @@ public class BackGold extends BackSide {
     public BackGold(Kingdom kingdom, Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner, ArrayList<Value> center) {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner, center);
     }
+
 }

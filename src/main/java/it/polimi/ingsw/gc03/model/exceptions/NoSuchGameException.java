@@ -14,10 +14,10 @@ public class NoSuchGameException extends Exception {
 
     /**
      * Constructs a NoSuchGameException with a specified error message.
-     *
-     * @param message the detail message
+     * @param message The detail message.
      */
     public NoSuchGameException(String message) {
         super(message);
     }
+
 }

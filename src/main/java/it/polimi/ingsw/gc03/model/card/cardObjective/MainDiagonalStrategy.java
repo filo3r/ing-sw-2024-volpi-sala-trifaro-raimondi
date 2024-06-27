@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Kingdom;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -57,4 +56,5 @@ public class MainDiagonalStrategy implements CalculateScoreStrategy, Serializabl
         }
         return pointCalculated;
     }
+
 }

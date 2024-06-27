@@ -8,11 +8,9 @@ import it.polimi.ingsw.gc03.model.card.CardStarter;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.*;
 import it.polimi.ingsw.gc03.model.side.back.BackSide;
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
 import static it.polimi.ingsw.gc03.model.enumerations.Color.createColorArrayList;
 
 /**
@@ -111,6 +109,10 @@ public class Player implements Serializable {
      * @param nickname Player's nickname.
      * @param number Player's number.
      * @param desk The game desk.
+     * @param game The game.
+     * @param gameListener The game listener.
+     * @throws RemoteException If there is an issue with remote communication.
+     *
      */
     public Player(String nickname, int number, Desk desk, Game game, GameListener gameListener) throws RemoteException {
         selfListener = gameListener;
@@ -143,6 +145,7 @@ public class Player implements Serializable {
     /**
      * Method for making the player choose his Objective card.
      * @param index The index of the card the player wants to keep.
+     * @param game The game.
      * @return A boolean indicating whether the operation was successful or not.
      */
     public boolean selectObjectiveCard(int index, Game game) {
@@ -369,8 +372,9 @@ public class Player implements Serializable {
 
     /**
      * Method to set the player's online status.
-     *
+     * @param game The game.
      * @param online The player's online status.
+     * @param gameListener The game listener.
      */
     public void setOnline(Game game, boolean online, GameListener gameListener) {
         boolean oldOnline = this.online;
@@ -424,6 +428,7 @@ public class Player implements Serializable {
     /**
      * Method to set the player's action.
      * @param action The player's action.
+     * @param game The game.
      */
     public void setAction(PlayerAction action, Game game) {
         PlayerAction oldAction = this.action;
@@ -449,16 +454,18 @@ public class Player implements Serializable {
 
     /**
      * Remove a card to the player's hand.
-     * @param CardPositionInHand The position of the card in the player's hand.
+     * @param cardPositionInHand The position of the card in the player's hand.
      */
-    public void removeCardFromHand(int CardPositionInHand){
-        this.hand.remove(CardPositionInHand);
+    public void removeCardFromHand(int cardPositionInHand){
+        this.hand.remove(cardPositionInHand);
     }
 
     /**
-     * @return the player self listener
+     * Gets the self listener for the player.
+     * @return The GameListener associated with the player.
      */
     public GameListener getSelfListener() {
         return selfListener;
     }
+
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.model.card.cardObjective;
 import com.google.gson.annotations.JsonAdapter;
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,13 +14,13 @@ public class RequirementStrategy implements CalculateScoreStrategy, Serializable
 
     /**
      * Method for calculating points.
+     * The method does not implement the case where a set has some equal values and some different values.
+     * Not required by Objective cards in this version of the game.
      * @param codex The codex on which points must be calculated.
      * @param point The points of the card.
      * @param parameters Parameters used to calculate the points.
      * @return The calculated points.
      */
-    // The method does not implement the case where a set has some equal values and some different values.
-    // Not required by Objective cards in this version of the game.
     @Override
     public int calculateScore(Codex codex, int point, ArrayList<Value> parameters) {
         int index;
@@ -83,4 +82,5 @@ public class RequirementStrategy implements CalculateScoreStrategy, Serializable
                 return -1;
         }
     }
+
 }

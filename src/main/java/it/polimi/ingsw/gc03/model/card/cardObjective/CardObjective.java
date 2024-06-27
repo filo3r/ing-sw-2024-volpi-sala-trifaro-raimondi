@@ -3,8 +3,6 @@ package it.polimi.ingsw.gc03.model.card.cardObjective;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.Codex;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
-
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -41,7 +39,6 @@ public class CardObjective extends Card implements Serializable {
      * Image of the card.
      */
     private String image;
-
 
     /**
      * Constructor for the CardObjective class.
@@ -151,4 +148,5 @@ public class CardObjective extends Card implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
 }

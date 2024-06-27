@@ -22,7 +22,6 @@ public interface GameListener extends Remote {
      */
     void playerJoined(GameImmutable gameImmutable) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that a player has left the game.
      * @param gameImmutable The immutable game gameImmutable.
@@ -30,7 +29,6 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void playerLeft(GameImmutable gameImmutable, String nickname) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that a player tried to join a full game.
@@ -40,7 +38,6 @@ public interface GameListener extends Remote {
      */
     void joinUnableGameFull(GameImmutable gameImmutable, Player player) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that a player has reconnected to the game.
      * @param gameImmutable The immutable game gameImmutable.
@@ -48,7 +45,6 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void playerReconnected(GameImmutable gameImmutable, String nickname) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that a player has disconnected.
@@ -58,7 +54,6 @@ public interface GameListener extends Remote {
      */
     void playerDisconnected(GameImmutable gameImmutable, String nickname) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that only one player is connected.
      * @param gameImmutable The immutable game gameImmutable.
@@ -67,14 +62,12 @@ public interface GameListener extends Remote {
      */
     void onlyOnePlayerConnected(GameImmutable gameImmutable, int timer) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that a player tried to use a nickname that is already in use.
      * @param player The player that tried to use the nickname.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void joinUnableNicknameAlreadyInUse(Player player) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that the game id doesn't exist.
@@ -83,7 +76,6 @@ public interface GameListener extends Remote {
      */
     void gameIdNotExists(int gameId) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the game has started.
      * @param gameImmutable The immutable game gameImmutable.
@@ -91,14 +83,12 @@ public interface GameListener extends Remote {
      */
     void gameStarted(GameImmutable gameImmutable) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the game has ended.
      * @param gameImmutable The immutable game gameImmutable.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void gameEnded(GameImmutable gameImmutable) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that a message has been sent.
@@ -108,7 +98,6 @@ public interface GameListener extends Remote {
      */
     void sentChatMessage(GameImmutable gameImmutable, ChatMessage chatMessage) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the next turn triggered.
      * @param gameImmutable The immutable game gameImmutable.
@@ -116,14 +105,12 @@ public interface GameListener extends Remote {
      */
     void nextTurn(GameImmutable gameImmutable) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the last circle has started.
      * @param gameImmutable The immutable game gameImmutable.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void lastCircle(GameImmutable gameImmutable) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that the card was placed into the Codex.
@@ -134,7 +121,6 @@ public interface GameListener extends Remote {
      */
     void positionedCardIntoCodex(GameImmutable gameImmutable, int row, int column) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the Starter card was placed into the Codex.
      * @param gameImmutable The immutable game gameImmutable.
@@ -142,7 +128,6 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that the coordinates where he wants to insert the card are not valid.
@@ -153,7 +138,6 @@ public interface GameListener extends Remote {
      */
     void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the positioning requirements are not respected.
      * @param gameImmutable The immutable game gameImmutable.
@@ -161,7 +145,6 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that the points have been added.
@@ -172,7 +155,6 @@ public interface GameListener extends Remote {
      */
     void addedPoint(GameImmutable gameImmutable, Player player, int point) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the Objective card was chosen correctly.
      * @param gameImmutable The immutable game gameImmutable.
@@ -182,14 +164,12 @@ public interface GameListener extends Remote {
      */
     void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the Objective card was not chosen correctly.
      * @param gameImmutable The immutable game gameImmutable.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void objectiveCardNotChosen(GameImmutable gameImmutable) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that the index is invalid.
@@ -199,7 +179,6 @@ public interface GameListener extends Remote {
      */
     void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that a deck has no cards.
      * @param gameImmutable The immutable game gameImmutable.
@@ -207,7 +186,6 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void deckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that a card has been successfully added to his hand.
@@ -217,14 +195,12 @@ public interface GameListener extends Remote {
      */
     void cardAddedToHand(GameImmutable gameImmutable, Card card) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that a card was not added to his hand.
      * @param gameImmutable The immutable game gameImmutable.
      * @throws RemoteException If an error occurs in remote communication.
      */
     void cardNotAddedToHand(GameImmutable gameImmutable, String nickname) throws RemoteException;
-
 
     /**
      * This method is used to inform the client that the conditions to end the game have been reached.
@@ -233,7 +209,6 @@ public interface GameListener extends Remote {
      */
     void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException;
 
-
     /**
      * This method is used to inform the client that the points obtained with the Objective cards have been calculated.
      * @param gameImmutable The immutable game gameImmutable.
@@ -241,7 +216,6 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void addedPointObjective(GameImmutable gameImmutable, int objectivePoint) throws RemoteException;
-
 
     /**
      * This method is used to inform the client which players won the game.
@@ -289,9 +263,5 @@ public interface GameListener extends Remote {
      * @throws RemoteException If an error occurs in remote communication.
      */
     void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException;
-
-    // Additional methods may be necessary
-    // For other methods you have to create the respective message in serverToClientMessages package and method in ListenersHandler
-
 
 }

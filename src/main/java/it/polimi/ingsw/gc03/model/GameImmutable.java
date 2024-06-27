@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 /**
  * This class represents the Game class, but made immutable.
  * It is used to provide clients with all the game information so they can view it but not modify it.
@@ -60,10 +59,10 @@ public class GameImmutable implements Serializable {
      */
     private final List<Player> winner;
 
-
     /**
      * GameImmutable class constructor.
      * @param game The game instance to copy from.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public GameImmutable(Game game) throws RemoteException {
         this.idGame = game.getIdGame();
@@ -148,4 +147,5 @@ public class GameImmutable implements Serializable {
     public List<Player> getWinner() {
         return winner;
     }
+
 }

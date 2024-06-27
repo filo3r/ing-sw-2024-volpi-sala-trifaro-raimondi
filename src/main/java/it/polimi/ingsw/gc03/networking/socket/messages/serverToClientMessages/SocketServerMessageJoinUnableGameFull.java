@@ -40,4 +40,5 @@ public class SocketServerMessageJoinUnableGameFull extends SocketServerGenericMe
     public void execute(GameListener gameListener) throws IOException, InterruptedException {
         gameListener.joinUnableGameFull(this.gameImmutable, this.player);
     }
+
 }

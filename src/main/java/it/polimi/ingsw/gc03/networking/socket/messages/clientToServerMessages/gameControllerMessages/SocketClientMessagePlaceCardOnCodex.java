@@ -39,7 +39,6 @@ public class SocketClientMessagePlaceCardOnCodex extends SocketClientGenericMess
      */
     private int col;
 
-
     /**
      * Constructs a new message that requires the placement of the card into the Codex.
      * This message is flagged to be processed by the game controller of the application.
@@ -81,4 +80,5 @@ public class SocketClientMessagePlaceCardOnCodex extends SocketClientGenericMess
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.placeCardOnCodex(this.player, this.index, this.frontCard, this.row, this.col);
     }
+
 }

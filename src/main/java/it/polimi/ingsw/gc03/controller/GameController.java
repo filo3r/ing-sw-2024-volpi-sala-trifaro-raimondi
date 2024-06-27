@@ -11,11 +11,8 @@ import it.polimi.ingsw.gc03.model.enumerations.PlayerAction;
 import it.polimi.ingsw.gc03.model.exceptions.*;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
-
-import java.awt.*;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.security.interfaces.EdECKey;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -105,6 +102,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
     /**
      * Handles player timeout by setting the player to offline and removing their listener.
      * @param player The player who timed out.
+     * @throws Exception If an error occurs.
      */
     private void handlePlayerTimeout(Player player) throws Exception {
         if(player.getOnline()){
@@ -163,7 +161,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
     }
 
-
     /**
      * The method handles a specific scenario where the game is stopped and only one player remains online.
      * @return True if someone reconnected in time, false if no one reconnected in time.
@@ -187,7 +184,6 @@ public class GameController implements GameControllerInterface, Runnable, Serial
         }
         return false; // Someone reconnected in time, the game resumes.
     }
-
 
     /**
      * Method for stopping the previously started timer and canceling any associated tasks.
@@ -402,7 +398,7 @@ public class GameController implements GameControllerInterface, Runnable, Serial
      * @param player The player who is drawing the card.
      * @param deck The displayed deck from which the card is drawn.
      * @param index The index of the card in the displayed deck that the player wishes to draw.
-     * @throws Exception If the player's current action is not DRAW or if the game state does not allow drawing a card.
+     * @throws RemoteException If there is an issue with remote communication.
      */
     public synchronized void drawCardDisplayed(Player player, DeckType deck, int index) throws RemoteException {
         // Check that the player is authorized to draw
@@ -527,9 +523,9 @@ public class GameController implements GameControllerInterface, Runnable, Serial
 
     /**
      * The main game loop that handles different game statuses and manages online player interactions.
-     * This method runs continuously until the thread is interrupted, checking game status and adjusting the game flow
-     * accordingly.
-     * @throws RuntimeException if an error occurs during the game deletion process, encapsulating the original
+     * This method runs continuously until the thread is interrupted. It checks the game status and adjusts the game flow
+     * accordingly, handling player connectivity and game state transitions.
+     * @throws RuntimeException If an error occurs during the game deletion process, encapsulating the original
      *                          NoSuchGameException.
      */
     @Override
@@ -568,4 +564,5 @@ public class GameController implements GameControllerInterface, Runnable, Serial
             }
         }
     }
+
 }

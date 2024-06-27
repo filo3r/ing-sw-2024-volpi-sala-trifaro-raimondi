@@ -5,7 +5,6 @@ import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
-
 import java.rmi.RemoteException;
 
 /**
@@ -22,7 +21,6 @@ public class SocketClientMessageSetGameSize extends SocketClientGenericMessage {
      * The game id.
      */
     private int idGame;
-
 
     /**
      * Constructs a new message that requires the change of the size of the game.
@@ -57,4 +55,5 @@ public class SocketClientMessageSetGameSize extends SocketClientGenericMessage {
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.updateGameSize(this.size);
     }
+
 }

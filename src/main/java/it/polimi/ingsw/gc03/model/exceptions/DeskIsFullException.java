@@ -14,10 +14,10 @@ public class DeskIsFullException extends Exception {
 
     /**
      * Constructs a DeskIsFullException with a specified error message.
-     *
-     * @param message the detail message
+     * @param message The detail message
      */
     public DeskIsFullException(String message) {
         super(message);
     }
+
 }

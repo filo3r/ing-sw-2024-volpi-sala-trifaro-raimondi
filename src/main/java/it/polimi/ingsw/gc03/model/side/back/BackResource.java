@@ -21,4 +21,5 @@ public class BackResource extends BackSide {
     public BackResource(Kingdom kingdom, Value topLeftCorner, Value bottomLeftCorner, Value topRightCorner, Value bottomRightCorner, ArrayList<Value> center) {
         super(kingdom, topLeftCorner, bottomLeftCorner, topRightCorner, bottomRightCorner, center);
     }
+
 }

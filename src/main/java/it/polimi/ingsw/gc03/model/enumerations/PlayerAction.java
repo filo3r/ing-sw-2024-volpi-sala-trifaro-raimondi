@@ -6,6 +6,7 @@ import java.io.Serializable;
  * This is the enumeration of the available player's statuses (or actions).
  */
 public enum PlayerAction implements Serializable {
+
     /**
      * This is the first action a player has to do: place the starter card and choose an objective.
      */
@@ -36,4 +37,5 @@ public enum PlayerAction implements Serializable {
      * because he has done his turn in the GameStatus.LASTROUND.
      */
     ENDED
+
 }

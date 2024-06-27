@@ -63,7 +63,6 @@ public class ClientHandler implements Runnable {
      */
     private final ExecutorService gameLogicExecutor = Executors.newSingleThreadExecutor();
 
-
     /**
      * Constructs a handler for a specific client socket.
      * @param socketClient The socket connected to the client.
@@ -84,6 +83,7 @@ public class ClientHandler implements Runnable {
      * it sets the nickname to null, indicating no valid controller is associated.
      * @param controller The GameController instance to set. This controller may be null if the previous execution did
      *                   not result in a valid controller.
+     * @param message The message containing the nickname client.
      */
     private void updateGameControllerAndNickname(GameControllerInterface controller, SocketClientGenericMessage message) {
         this.gameController = controller;
@@ -181,4 +181,5 @@ public class ClientHandler implements Runnable {
             shutdownGameLogicExecutor();
         }
     }
+
 }

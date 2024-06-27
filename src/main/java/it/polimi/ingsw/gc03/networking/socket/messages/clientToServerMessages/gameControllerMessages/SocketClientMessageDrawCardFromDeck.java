@@ -2,14 +2,12 @@ package it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.g
 
 import it.polimi.ingsw.gc03.listeners.GameListener;
 import it.polimi.ingsw.gc03.model.Player;
-import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
 import it.polimi.ingsw.gc03.networking.rmi.GameControllerInterface;
 import it.polimi.ingsw.gc03.networking.rmi.MainControllerInterface;
 import it.polimi.ingsw.gc03.networking.socket.messages.MessageType;
 import it.polimi.ingsw.gc03.networking.socket.messages.clientToServerMessages.SocketClientGenericMessage;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
  * This class is used to send a message from the client to the server to indicate the intent to draw a card from a
@@ -62,4 +60,5 @@ public class SocketClientMessageDrawCardFromDeck extends SocketClientGenericMess
     public void execute(GameControllerInterface gameController) throws RemoteException, Exception {
         gameController.drawCardFromDeck(this.player, this.deck);
     }
+
 }

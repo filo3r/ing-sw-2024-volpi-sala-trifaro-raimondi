@@ -18,4 +18,5 @@ public abstract class SocketServerGenericMessage implements Serializable {
      * @throws InterruptedException If the thread running the method is interrupted.
      */
     public abstract void execute(GameListener gameListener) throws IOException, InterruptedException;
+
 }
