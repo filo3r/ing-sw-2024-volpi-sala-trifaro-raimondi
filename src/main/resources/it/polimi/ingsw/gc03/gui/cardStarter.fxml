@@ -7,12 +7,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="backgroundLobby" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.CardStarterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="755.0" prefWidth="1322.0" styleClass="backgroundLobby" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.CardStarterController">
     <children>
         <Pane fx:id="content" prefHeight="755.0" prefWidth="1325.0">
             <children>
                 <Pane prefHeight="747.0" prefWidth="1322.0" stylesheets="@style.css" />
-                <Pane layoutX="0" layoutY="0" opacity="0.8" prefHeight="755.0" prefWidth="1322.0" styleClass="choosePagesPanel">
+                <Pane layoutX="0" layoutY="0" prefHeight="755.0" prefWidth="1322.0" styleClass="choosePagesPanel">
                     <cursor>
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
