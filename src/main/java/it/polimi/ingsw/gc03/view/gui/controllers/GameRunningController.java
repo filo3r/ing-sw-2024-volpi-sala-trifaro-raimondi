@@ -2405,10 +2405,10 @@ public class GameRunningController extends GenericController {
      */
     public void actionSend() {
        String receiver = chatReceiver.getSelectionModel().getSelectedItem();
-       if (receiver.equals("everyone")) {
+       if (receiver.equals("everyone") && !chatMessage.getText().isEmpty()) {
            getInputReaderGUI().addTxt("m " + chatMessage.getText());
        }
-       else {
+       else if(!chatMessage.getText().isEmpty()){
            getInputReaderGUI().addTxt("pm " + receiver + " " + chatMessage.getText());
        }
        chatMessage.clear();
