@@ -186,7 +186,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * @throws Exception If an error occurs during processing.
      */
     private void processEvent(Event event) throws Exception {
-        System.out.println(event.getType());
         if (event.getType().equals(PLAYER_RECONNECTED) && nickname.equals(lastPlayerReconnected)) {
             handlePlayerReconnection(event);
         } else if (event.getModel() != null) {
@@ -862,7 +861,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
      */
     @Override
     public void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws Exception {
-        System.err.print("[debug print] placeCardOnCodex("+nickname+" "+index+" "+(frontCard ? "front" : "back")+" "+row+" "+col+") ");
         try {
             clientActions.placeCardOnCodex(player, index, frontCard, col, row);
         } catch (IOException e) {

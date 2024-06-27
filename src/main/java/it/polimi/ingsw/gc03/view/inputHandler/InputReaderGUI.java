@@ -31,7 +31,6 @@ public class InputReaderGUI implements InputReader{
      * @param txt Text to add to the buffer.
      */
     public synchronized void addTxt(String txt){
-        System.out.println(txt);
         inputQueue.addData(txt);
     }
 
