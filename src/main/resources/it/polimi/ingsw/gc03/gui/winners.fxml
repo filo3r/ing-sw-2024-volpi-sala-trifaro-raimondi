@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="584.0" prefWidth="950.0" styleClass="backgroundInfo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.WinnersController">
+<AnchorPane prefHeight="584.0" prefWidth="950.0" styleClass="backgroundInfo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.WinnersController">
     <children>
         <Pane fx:id="content" layoutX="-10.0" prefHeight="587.0" prefWidth="962.0" style="-fx-background-color: #283618;">
             <children>

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="286.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.LobbyPlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="286.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.LobbyPlayerController">
     <children>
       <Pane layoutY="67.0" prefHeight="351.0" prefWidth="286.0" style="-fx-background-color: #283618;" stylesheets="@style.css" />
       <Pane layoutY="-1.0" maxHeight="353.0" maxWidth="611.0" prefHeight="68.0" prefWidth="286.0" style="-fx-background-color: #283618;">
