@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -105,6 +106,8 @@ public class ApplicationGui extends Application {
         this.stage.setTitle("CodeX");
         getScene();
         root = new StackPane();
+        // Set icon
+        this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/it/polimi/ingsw/gc03/gui/images/other/icon_javafx.png")));
     }
 
     /**
