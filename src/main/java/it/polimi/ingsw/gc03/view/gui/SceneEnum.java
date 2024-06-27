@@ -68,7 +68,7 @@ public enum SceneEnum {
     /**
      * GAME_RUNNING is the scene displayed during the actual execution of the game.
      */
-    GAME_RUNNING("/it/polimi/ingsw/gc03/gui/gameRunning.fxml"),
+    GAME_RUNNING("/it/polimi/ingsw/gc03/gui/gameRunning2.fxml"),
 
     /**
      * WINNERS is the final scene where the players' scores and the winners of the game are displayed.

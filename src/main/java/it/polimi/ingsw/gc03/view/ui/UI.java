@@ -198,6 +198,8 @@ public abstract class UI {
 
     public abstract void showChat(GameImmutable gameImmutable);
 
+    public abstract void showPlayerDisconnected(String nickname);
+
     //public abstract void showDrawnCard(GameImmutable model);
 
 

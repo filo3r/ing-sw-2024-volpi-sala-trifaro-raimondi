@@ -18,7 +18,7 @@
                   <Image url="@images/title_screen.png" />
                </image>
             </ImageView>
-                <Button alignment="CENTER" layoutX="154.0" layoutY="334.0" mnemonicParsing="false" onAction="#actionCreateGame" prefHeight="86.0" prefWidth="450.0" style="-fx-font-size: 22;" styleClass="record-sales" stylesheets="@style.css" text="Create a new game">
+                <Button alignment="CENTER" layoutX="154.0" layoutY="334.0" mnemonicParsing="false" onAction="#actionCreateGame" prefHeight="86.0" prefWidth="450.0" styleClass="game-button" stylesheets="@style.css" text="Create a new game">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -26,7 +26,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button alignment="CENTER" layoutX="154.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionJoinFirstAvailableGame" prefHeight="86.0" prefWidth="450.0" styleClass="record-sales2" stylesheets="@style.css" text="Join to a random game">
+                <Button alignment="CENTER" layoutX="154.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionJoinFirstAvailableGame" prefHeight="86.0" prefWidth="450.0" styleClass="game-button" stylesheets="@style.css" text="Join to a random game">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -34,7 +34,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="TOP" layoutX="704.0" layoutY="334.0" mnemonicParsing="false" onAction="#actionJoinSpecificGame" prefHeight="86.0" prefWidth="450.0" styleClass="record-sales3" stylesheets="@style.css" text="Join to specific Game">
+                <Button alignment="CENTER" contentDisplay="TOP" layoutX="704.0" layoutY="334.0" mnemonicParsing="false" onAction="#actionJoinSpecificGame" prefHeight="86.0" prefWidth="450.0" styleClass="game-button" stylesheets="@style.css" text="Join to specific Game">
                     <font>
                         <Font size="22.0" />
                     </font>
@@ -42,7 +42,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button alignment="CENTER" layoutX="704.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionReconnectToGame" prefHeight="86.0" prefWidth="450.0" styleClass="record-sales4" stylesheets="@style.css" text="Reconnect">
+                <Button alignment="CENTER" layoutX="704.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionReconnectToGame" prefHeight="86.0" prefWidth="450.0" styleClass="game-button" stylesheets="@style.css" text="Reconnect">
                     <font>
                         <Font size="22.0" />
                     </font>

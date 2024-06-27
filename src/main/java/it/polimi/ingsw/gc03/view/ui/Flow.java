@@ -495,9 +495,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
      * Asks the user to select a game option.
      *
      * @return true if a valid option is selected, false otherwise.
-     * @throws Exception if an error occurs during selection.
      */
-    private boolean askSelectGame() throws Exception {
+    private boolean askSelectGame(){
         askNickname();
         String optionChoose;
         ended = false;
@@ -1141,6 +1140,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
     @Override
     public void playerDisconnected(GameImmutable gameImmutable, String nick) {
         ui.addLatestEvent(nick + " has just disconnected", gameImmutable);
+        ui.showPlayerDisconnected(nick);
     }
 
     /**

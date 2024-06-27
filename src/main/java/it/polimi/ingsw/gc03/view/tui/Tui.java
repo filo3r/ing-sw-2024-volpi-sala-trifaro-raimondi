@@ -545,6 +545,7 @@ public class Tui extends UI {
                 "                                                                        \n" +
                 "                                                                        \n" +
                 "                                                                        \n");
+        sb.append("To play with the TUI those are the commands:\n'move x y' to move around the codex\n'resize x y' to resize the view on the terminal (you'll still have to zoom out)\n'leave' to leave the game\n'pm Player message' to send Player a private message\n'm message' to send a message to everyone");
         asyncPrint(sb+
         "\nPress enter to continue...\n\n");
     }
@@ -621,7 +622,12 @@ public class Tui extends UI {
         }
     }
 
-   // @Override
+    @Override
+    public void showPlayerDisconnected(String nickname) {
+
+    }
+
+    // @Override
     //public void showDrawnCard(GameImmutable model) {
       //  AsyncPrint.asyncPrint(model.getPlayers().get(model.getCurrPlayer()-1).getHand().getLast().getIdCard());
     //}

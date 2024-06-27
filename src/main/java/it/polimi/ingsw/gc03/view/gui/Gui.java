@@ -304,6 +304,12 @@ public class Gui extends UI {
 
     }
 
+    @Override
+    public void showPlayerDisconnected(String nickname) {
+        Platform.runLater(()->this.applicationGui.showPopup(nickname+" has disconnected!","DISCONNECTION!"));
+        Platform.runLater(()->this.applicationGui.openPopUps(SceneEnum.POPUP));
+    }
+
     //@Override
     // public void showDrawnCard(GameImmutable model) {
     //}

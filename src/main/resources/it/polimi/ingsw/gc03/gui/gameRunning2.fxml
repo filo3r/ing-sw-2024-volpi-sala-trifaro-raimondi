@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainAnchor" layoutX="1.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
+   <styleClass>
+      <String fx:value="backgroundInGame" />
+      <String fx:value="backgroundWelcome" />
+   </styleClass>
+   <children>
+      <Group fx:id="contentGroup" scaleX="0.8" scaleY="0.8" translateX="-160.0" translateY="-95.0">
+         <children>
+            <Pane fx:id="gameRunning" layoutX="-10.0" prefHeight="950.0" prefWidth="1640.0" style="-fx-background-color: #283618;">
+               <children>
+                  <ScrollPane fx:id="codexScroll" hvalue="0.5" layoutX="276.0" layoutY="154.0" prefHeight="638.0" prefWidth="875.0" styleClass="gameRunning" vvalue="0.5">
+                     <content>
+                        <GridPane fx:id="codexGrid" gridLinesVisible="false" prefHeight="638.0" prefWidth="875.0" styleClass="gameRunning">
+                          <columnConstraints>
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                             <ColumnConstraints maxWidth="156.585049" minWidth="156.585049" prefWidth="156.585049" />
+                          </columnConstraints>
+                          <rowConstraints>
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                             <RowConstraints maxHeight="80.01435" minHeight="80.01435" prefHeight="80.01435" />
+                          </rowConstraints>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+                  <Text id="gameId" fx:id="gameId" fill="#fefae0" layoutX="1340.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game ID: 0000000000" textAlignment="RIGHT" wrappingWidth="250.26141801153562">
+                     <font>
+                        <Font name="Arial Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text id="turnUsername" fx:id="turnUsername" fill="#fefae0" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn: username" wrappingWidth="253.6565873452996">
+                     <font>
+                        <Font name="Arial Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Pane id="personalObjective" fx:id="personalObjectivePane" layoutX="1272.0" layoutY="654.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="personalObjectiveImage" fitHeight="134.1" fitWidth="201.15" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="hand1Pane" layoutX="360.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="hand1Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionHand1" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="hand2Pane" layoutX="605.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="hand2Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionHand2" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="hand3Pane" layoutX="850.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="hand3Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionHand3" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="displayed4Pane" layoutX="1385.0" layoutY="506.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="displayed4Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionDisplayed4" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="displayed2Pane" layoutX="1160.0" layoutY="506.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="displayed2Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionDisplayed2" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="displayed1Pane" layoutX="1160.0" layoutY="351.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView id="displayed1" fx:id="displayed1Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionDisplayed1" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="displayed3Pane" layoutX="1385.0" layoutY="351.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="displayed3Image" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionDisplayed3" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane id="deckResource" fx:id="deckResourcePane" layoutX="1160.0" layoutY="192.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="deckResourceImage" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionDeckResource" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="deckGoldPane" layoutX="1385.0" layoutY="192.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="deckGoldImage" fitHeight="134.1" fitWidth="201.15" onMouseClicked="#actionDeckGold" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane id="sharedObjective1" fx:id="sharedObjective1Pane" layoutX="1160.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="sharedObjective1Image" fitHeight="134.1" fitWidth="201.15" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane id="sharedObjective2" fx:id="sharedObjective2Pane" layoutX="1385.0" layoutY="800.0" prefHeight="134.1" prefWidth="201.15" styleClass="gameRunning">
+                     <children>
+                        <ImageView fx:id="sharedObjective2Image" fitHeight="134.1" fitWidth="201.15" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Pane id="board1" fx:id="board1" layoutX="292.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
+                     <children>
+                        <Pane id="color1" fx:id="color1" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
+                        <Text id="nickname1" fx:id="nickname1" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="fungi1" fx:id="fungi1Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="fungi1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCount1" fx:id="fungiCount1" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="quill1" fx:id="quill1Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="quill1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="plant1" fx:id="plant1Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="plant1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="quillCount1" fx:id="quillCount1" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="plantCount1" fx:id="plantCount1" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="inkwell1" fx:id="inkwell1Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color:transparent">
+                           <children>
+                              <ImageView fx:id="inkwell1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCounter" fx:id="inkwellCount1" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="animal1" fx:id="animal1Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="animal1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="manuscript1" fx:id="manuscript1Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="manuscript1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="animalCount1" fx:id="animalCount1" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="manuscriptCount1" fx:id="manuscriptCount1" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="insect1" fx:id="insect1Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="insect1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="insectCount1" fx:id="insectCount1" fill="#fefae0" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="covered1" fx:id="covered1Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="covered1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="coveredCount1" fx:id="coveredCount1" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="hand11" fx:id="hand11Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand11Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand12" fx:id="hand12Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand12Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand13" fx:id="hand13Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand13Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <ListView fx:id="latestEvent" editable="false" layoutX="10.0" layoutY="217.0" prefHeight="218.0" prefWidth="258.0" styleClass="game-label" stylesheets="@style.css" />
+                  <Text id="latestEventText" fill="#fefae0" layoutX="10.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latest event" wrappingWidth="110.0847358722649">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <ListView fx:id="chat" editable="false" layoutX="10.0" layoutY="500.0" prefHeight="218.0" prefWidth="258.0" styleClass="game-label" stylesheets="@style.css" />
+                  <Text id="chatText" fill="#fefae0" layoutX="10.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chat" wrappingWidth="92.08172993020275">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="chatMessage" layoutX="10.0" layoutY="800.0" onAction="#actionSend" prefHeight="36.0" prefWidth="258.0" promptText="Message Here..." styleClass="game-label" stylesheets="@style.css">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </TextField>
+                  <ComboBox fx:id="chatReceiver" layoutX="48.0" layoutY="725.0" prefWidth="175.0" styleClass="game-button" stylesheets="@style.css" />
+                  <Button id="send" layoutX="79.0" layoutY="873.0" mnemonicParsing="false" onAction="#actionSend" prefHeight="51.0" prefWidth="88.0" styleClass="game-button" stylesheets="@style.css" text="Send" textAlignment="CENTER">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button id="leave" fx:id="leave" layoutX="1481.0" layoutY="48.0" mnemonicParsing="false" onAction="#actionLeave" styleClass="game-button" text="Leave" textAlignment="CENTER">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font>
+                  </Button>
+                  <Pane id="board2" fx:id="board2" layoutX="522.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
+                     <children>
+                        <Pane id="color2" fx:id="color2" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
+                        <Text id="nickname2" fx:id="nickname2" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="fungi2" fx:id="fungi2Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="fungi2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCount2" fx:id="fungiCount2" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="quill2" fx:id="quill2Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="quill2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="plant2" fx:id="plant2Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="plant2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="quillCount2" fx:id="quillCount2" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="plantCount2" fx:id="plantCount2" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="inkwell2" fx:id="inkwell2Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: rtransparent">
+                           <children>
+                              <ImageView fx:id="inkwell2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="quillCount2" fx:id="inkwellCount2" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="animal2" fx:id="animal2Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="animal2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="manuscript2" fx:id="manuscript2Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="manuscript2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="animalCount2" fx:id="animalCount2" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="manuscriptCount2" fx:id="manuscriptCount2" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="insect2" fx:id="insect2Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="insect2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="insectCount2" fx:id="insectCount2" fill="#fefae0" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="covered2" fx:id="covered2Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="covered2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="coveredCount2" fx:id="coveredCount2" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="hand21" fx:id="hand21Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand21Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand22" fx:id="hand22Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand22Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand23" fx:id="hand23Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand23Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane id="board3" fx:id="board3" layoutX="752.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
+                     <children>
+                        <Pane id="color3" fx:id="color3" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
+                        <Text id="nickname3" fx:id="nickname3" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="fungi3" fx:id="fungi3Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="fungi3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCount3" fx:id="fungiCount3" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="quill3" fx:id="quill3Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="quill3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="plant3" fx:id="plant3Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="plant3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCounter" fx:id="quillCount3" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="plantCount3" fx:id="plantCount3" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="inkwell3" fx:id="inkwell3Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color:transparent">
+                           <children>
+                              <ImageView fx:id="inkwell3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="quillCount3" fx:id="inkwellCount3" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="animal3" fx:id="animal3Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="animal3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="manuscript3" fx:id="manuscript3Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="manuscript3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="animalCount3" fx:id="animalCount3" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="manuscriptCount3" fx:id="manuscriptCount3" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="insect3" fx:id="insect3Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="insect3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="insectCount3" fx:id="insectCount3" fill="#fefae0" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="covered3" fx:id="covered3Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="covered3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="coveredCount3" fx:id="coveredCount3" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="hand31" fx:id="hand31Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand31Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand32" fx:id="hand32Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand32Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand33" fx:id="hand33Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand33Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane id="board4" fx:id="board4" layoutX="982.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
+                     <children>
+                        <Pane id="color4" fx:id="color4" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
+                        <Text id="nickname4" fx:id="nickname4" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="fungi4" fx:id="fungi4Pane" layoutX="7.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="fungi4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCount4" fx:id="fungiCount4" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="quill4" fx:id="quill4Pane" layoutX="7.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="quill4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="plant4" fx:id="plant4Pane" layoutX="57.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="plant4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="fungiCounter" fx:id="quillCount4" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="plantCount4" fx:id="plantCount4" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="inkwell4" fx:id="inkwell4Pane" layoutX="57.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="inkwell4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="quillCount4" fx:id="inkwellCount4" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="animal4" fx:id="animal4Pane" layoutX="107.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="animal4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="manuscript4" fx:id="manuscript4Pane" layoutX="107.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="manuscript4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="animalCount4" fx:id="animalCount4" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text id="manuscriptCount4" fx:id="manuscriptCount4" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="insect4" fx:id="insect4Pane" layoutX="157.0" layoutY="40.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="insect4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="insectCount4" fx:id="insectCount4" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="covered4" fx:id="covered4Pane" layoutX="157.0" layoutY="70.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="covered4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Text id="coveredCount4" fx:id="coveredCount4" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Pane id="hand41" fx:id="hand41Pane" layoutX="32.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand41Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand42" fx:id="hand42Pane" layoutX="82.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand42Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane id="hand43" fx:id="hand43Pane" layoutX="132.0" layoutY="102.0" prefHeight="24.7382" prefWidth="37.1075" style="-fx-background-color: transparent">
+                           <children>
+                              <ImageView fx:id="hand43Image" fitHeight="24.7382" fitWidth="37.1075" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Text id="points" fx:id="points" fill="#fefae0" layoutX="10.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
+                     <font>
+                        <Font name="Arial Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <Label id="points1" fx:id="points1" layoutX="10.0" layoutY="77.0" prefHeight="22.0" prefWidth="197.0" text="Player 1: 0" textFill="#fefae0">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label id="points2" fx:id="points2" layoutX="10.0" layoutY="100.0" prefHeight="22.0" prefWidth="197.0" text="Player 2: 0" textFill="#fefae0">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label id="points3" fx:id="points3" layoutX="10.0" layoutY="123.0" prefHeight="22.0" prefWidth="197.0" text="Player 3: 0" textFill="#fefae0">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label id="points4" fx:id="points4" layoutX="10.0" layoutY="146.0" prefHeight="22.0" prefWidth="197.0" text="Player 4: 0" textFill="#fefae0">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Group>
+   </children>
+</AnchorPane>
