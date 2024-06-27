@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="mainAnchor" layoutX="1.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gc03.view.gui.controllers.GameRunningController">
    <styleClass>
@@ -15,9 +25,9 @@
    <children>
       <Group fx:id="contentGroup" scaleX="0.8" scaleY="0.8" translateX="-160.0" translateY="-95.0">
          <children>
-            <Pane fx:id="gameRunning" prefHeight="950.0" prefWidth="1600.0" styleClass="gameRunning">
+            <Pane fx:id="gameRunning" layoutX="-10.0" prefHeight="950.0" prefWidth="1640.0" style="-fx-background-color: #283618;">
                <children>
-                  <ScrollPane fx:id="codexScroll" hvalue="0.5" layoutX="276.0" layoutY="154.0" prefHeight="638.0" prefWidth="875.0" vvalue="0.5" styleClass="gameRunning">
+                  <ScrollPane fx:id="codexScroll" hvalue="0.5" layoutX="276.0" layoutY="154.0" prefHeight="638.0" prefWidth="875.0" styleClass="gameRunning" vvalue="0.5">
                      <content>
                         <GridPane fx:id="codexGrid" gridLinesVisible="false" prefHeight="638.0" prefWidth="875.0" styleClass="gameRunning">
                           <columnConstraints>
@@ -189,12 +199,12 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <Text id="gameId" fx:id="gameId" layoutX="1340.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game ID: 0000000000" textAlignment="RIGHT" wrappingWidth="250.26141801153562">
+                  <Text id="gameId" fx:id="gameId" fill="#fefae0" layoutX="1340.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game ID: 0000000000" textAlignment="RIGHT" wrappingWidth="250.26141801153562">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text id="turnUsername" fx:id="turnUsername" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn: username" wrappingWidth="253.6565873452996">
+                  <Text id="turnUsername" fx:id="turnUsername" fill="#fefae0" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn: username" wrappingWidth="253.6565873452996">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
                      </font>
@@ -259,15 +269,10 @@
                         <ImageView fx:id="sharedObjective2Image" fitHeight="134.1" fitWidth="201.15" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>
-                  <Pane id="board1" fx:id="board1" layoutX="292.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+                  <Pane id="board1" fx:id="board1" layoutX="292.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
                      <children>
-                        <ImageView fitHeight="133.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="false">
-                           <image>
-                              <Image url="@images/background_player.png" />
-                           </image>
-                        </ImageView>
                         <Pane id="color1" fx:id="color1" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
-                        <Text id="nickname1" fx:id="nickname1" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                        <Text id="nickname1" fx:id="nickname1" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -277,7 +282,7 @@
                               <ImageView fx:id="fungi1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCount1" fx:id="fungiCount1" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCount1" fx:id="fungiCount1" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -292,12 +297,12 @@
                               <ImageView fx:id="plant1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="quillCount1" fx:id="quillCount1" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="quillCount1" fx:id="quillCount1" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="plantCount1" fx:id="plantCount1" fill="WHITE" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="plantCount1" fx:id="plantCount1" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -307,7 +312,7 @@
                               <ImageView fx:id="inkwell1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCounter" fx:id="inkwellCount1" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCounter" fx:id="inkwellCount1" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -322,12 +327,12 @@
                               <ImageView fx:id="manuscript1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="animalCount1" fx:id="animalCount1" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="animalCount1" fx:id="animalCount1" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="manuscriptCount1" fx:id="manuscriptCount1" fill="WHITE" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="manuscriptCount1" fx:id="manuscriptCount1" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -337,7 +342,7 @@
                               <ImageView fx:id="insect1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="insectCount1" fx:id="insectCount1" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="insectCount1" fx:id="insectCount1" fill="#fefae0" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -347,7 +352,7 @@
                               <ImageView fx:id="covered1Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="coveredCount1" fx:id="coveredCount1" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="coveredCount1" fx:id="coveredCount1" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -369,43 +374,38 @@
                         </Pane>
                      </children>
                   </Pane>
-                  <ListView fx:id="latestEvent" editable="false" layoutX="10.0" layoutY="217.0" prefHeight="218.0" prefWidth="258.0" />
-                  <Text id="latestEventText" layoutX="10.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latest event" wrappingWidth="110.0847358722649">
+                  <ListView fx:id="latestEvent" editable="false" layoutX="10.0" layoutY="217.0" prefHeight="218.0" prefWidth="258.0" styleClass="game-label" stylesheets="@style.css" />
+                  <Text id="latestEventText" fill="#fefae0" layoutX="10.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latest event" wrappingWidth="110.0847358722649">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Text>
-                  <ListView fx:id="chat" editable="false" layoutX="10.0" layoutY="500.0" prefHeight="218.0" prefWidth="258.0" />
-                  <Text id="chatText" layoutX="10.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chat" wrappingWidth="92.08172993020275">
+                  <ListView fx:id="chat" editable="false" layoutX="10.0" layoutY="500.0" prefHeight="218.0" prefWidth="258.0" styleClass="game-label" stylesheets="@style.css" />
+                  <Text id="chatText" fill="#fefae0" layoutX="10.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chat" wrappingWidth="92.08172993020275">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="chatMessage" layoutX="10.0" layoutY="758.0" onAction="#actionSend" prefHeight="36.0" prefWidth="258.0" promptText="Message Here...">
+                  <TextField fx:id="chatMessage" layoutX="10.0" layoutY="800.0" onAction="#actionSend" prefHeight="36.0" prefWidth="258.0" promptText="Message Here..." styleClass="game-label" stylesheets="@style.css">
                      <font>
                         <Font name="Arial" size="16.0" />
                      </font>
                   </TextField>
-                  <ComboBox fx:id="chatReceiver" layoutX="48.0" layoutY="725.0" prefWidth="175.0" />
-                  <Button id="send" layoutX="100.0" layoutY="800.0" mnemonicParsing="false" onAction="#actionSend" prefHeight="25.0" prefWidth="60.0" text="Send" textAlignment="CENTER">
+                  <ComboBox fx:id="chatReceiver" layoutX="48.0" layoutY="725.0" prefWidth="175.0" styleClass="game-button" stylesheets="@style.css" />
+                  <Button id="send" layoutX="79.0" layoutY="873.0" mnemonicParsing="false" onAction="#actionSend" prefHeight="51.0" prefWidth="88.0" styleClass="game-button" stylesheets="@style.css" text="Send" textAlignment="CENTER">
                      <font>
                         <Font name="Arial" size="14.0" />
                      </font>
                   </Button>
-                  <Button id="leave" fx:id="leave" layoutX="1481.0" layoutY="48.0" mnemonicParsing="false" onAction="#actionLeave" text="Leave" textAlignment="CENTER">
+                  <Button id="leave" fx:id="leave" layoutX="1481.0" layoutY="48.0" mnemonicParsing="false" onAction="#actionLeave" styleClass="game-button" text="Leave" textAlignment="CENTER">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Button>
-                  <Pane id="board2" fx:id="board2" layoutX="522.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+                  <Pane id="board2" fx:id="board2" layoutX="522.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
                      <children>
-                        <ImageView fitHeight="133.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="false">
-                           <image>
-                              <Image url="@images/background_player.png" />
-                           </image>
-                        </ImageView>
                         <Pane id="color2" fx:id="color2" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
-                        <Text id="nickname2" fx:id="nickname2" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                        <Text id="nickname2" fx:id="nickname2" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -415,7 +415,7 @@
                               <ImageView fx:id="fungi2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCount2" fx:id="fungiCount2" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCount2" fx:id="fungiCount2" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -430,12 +430,12 @@
                               <ImageView fx:id="plant2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="quillCount2" fx:id="quillCount2" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="quillCount2" fx:id="quillCount2" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="plantCount2" fx:id="plantCount2" fill="WHITE" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="plantCount2" fx:id="plantCount2" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -445,7 +445,7 @@
                               <ImageView fx:id="inkwell2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="quillCount2" fx:id="inkwellCount2" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="quillCount2" fx:id="inkwellCount2" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -460,12 +460,12 @@
                               <ImageView fx:id="manuscript2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="animalCount2" fx:id="animalCount2" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="animalCount2" fx:id="animalCount2" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="manuscriptCount2" fx:id="manuscriptCount2" fill="WHITE" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="manuscriptCount2" fx:id="manuscriptCount2" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -475,7 +475,7 @@
                               <ImageView fx:id="insect2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="insectCount2" fx:id="insectCount2" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="insectCount2" fx:id="insectCount2" fill="#fefae0" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -485,7 +485,7 @@
                               <ImageView fx:id="covered2Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="coveredCount2" fx:id="coveredCount2" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="coveredCount2" fx:id="coveredCount2" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -507,15 +507,10 @@
                         </Pane>
                      </children>
                   </Pane>
-                  <Pane id="board3" fx:id="board3" layoutX="752.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+                  <Pane id="board3" fx:id="board3" layoutX="752.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
                      <children>
-                        <ImageView fitHeight="133.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="false">
-                           <image>
-                              <Image url="@images/background_player.png" />
-                           </image>
-                        </ImageView>
                         <Pane id="color3" fx:id="color3" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
-                        <Text id="nickname3" fx:id="nickname3" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                        <Text id="nickname3" fx:id="nickname3" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -525,7 +520,7 @@
                               <ImageView fx:id="fungi3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCount3" fx:id="fungiCount3" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCount3" fx:id="fungiCount3" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -540,12 +535,12 @@
                               <ImageView fx:id="plant3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCounter" fx:id="quillCount3" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCounter" fx:id="quillCount3" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="plantCount3" fx:id="plantCount3" fill="WHITE" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="plantCount3" fx:id="plantCount3" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -555,7 +550,7 @@
                               <ImageView fx:id="inkwell3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="quillCount3" fx:id="inkwellCount3" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="quillCount3" fx:id="inkwellCount3" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -570,12 +565,12 @@
                               <ImageView fx:id="manuscript3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="animalCount3" fx:id="animalCount3" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="animalCount3" fx:id="animalCount3" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="manuscriptCount3" fx:id="manuscriptCount3" fill="WHITE" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="manuscriptCount3" fx:id="manuscriptCount3" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -585,7 +580,7 @@
                               <ImageView fx:id="insect3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="insectCount3" fx:id="insectCount3" fill="WHITE" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="insectCount3" fx:id="insectCount3" fill="#fefae0" layoutX="180.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -595,7 +590,7 @@
                               <ImageView fx:id="covered3Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="coveredCount3" fx:id="coveredCount3" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="coveredCount3" fx:id="coveredCount3" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -617,15 +612,10 @@
                         </Pane>
                      </children>
                   </Pane>
-                  <Pane id="board4" fx:id="board4" layoutX="982.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: black;">
+                  <Pane id="board4" fx:id="board4" layoutX="982.0" layoutY="12.0" prefHeight="134.1" prefWidth="201.15" style="-fx-background-color: #606C38;">
                      <children>
-                        <ImageView fitHeight="133.0" fitWidth="203.0" pickOnBounds="true" preserveRatio="false">
-                           <image>
-                              <Image url="@images/background_player.png" />
-                           </image>
-                        </ImageView>
                         <Pane id="color4" fx:id="color4" layoutX="7.0" layoutY="10.0" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent" />
-                        <Text id="nickname4" fx:id="nickname4" fill="WHITE" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
+                        <Text id="nickname4" fx:id="nickname4" fill="#fefae0" layoutX="31.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" wrappingWidth="163.81660300163014">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -635,7 +625,7 @@
                               <ImageView fx:id="fungi4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCount4" fx:id="fungiCount4" fill="WHITE" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCount4" fx:id="fungiCount4" fill="#fefae0" layoutX="30.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -650,12 +640,12 @@
                               <ImageView fx:id="plant4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="fungiCounter" fx:id="quillCount4" fill="WHITE" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="fungiCounter" fx:id="quillCount4" fill="#fefae0" layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="plantCount4" fx:id="plantCount4" fill="WHITE" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="plantCount4" fx:id="plantCount4" fill="#fefae0" layoutX="80.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -665,7 +655,7 @@
                               <ImageView fx:id="inkwell4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="quillCount4" fx:id="inkwellCount4" fill="WHITE" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="quillCount4" fx:id="inkwellCount4" fill="#fefae0" layoutX="80.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -680,12 +670,12 @@
                               <ImageView fx:id="manuscript4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="animalCount4" fx:id="animalCount4" fill="WHITE" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="animalCount4" fx:id="animalCount4" fill="#fefae0" layoutX="130.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text id="manuscriptCount4" fx:id="manuscriptCount4" fill="WHITE" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="manuscriptCount4" fx:id="manuscriptCount4" fill="#fefae0" layoutX="130.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -705,7 +695,7 @@
                               <ImageView fx:id="covered4Image" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Text id="coveredCount4" fx:id="coveredCount4" fill="WHITE" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
+                        <Text id="coveredCount4" fx:id="coveredCount4" fill="#fefae0" layoutX="180.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="22.46251807327485">
                            <font>
                               <Font name="Arial Bold" size="16.0" />
                            </font>
@@ -727,27 +717,27 @@
                         </Pane>
                      </children>
                   </Pane>
-                  <Text id="points" fx:id="points" layoutX="10.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
+                  <Text id="points" fx:id="points" fill="#fefae0" layoutX="10.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
                      <font>
                         <Font name="Arial Bold" size="19.0" />
                      </font>
                   </Text>
-                  <Label id="points1" fx:id="points1" layoutX="10.0" layoutY="77.0" prefHeight="22.0" prefWidth="197.0" text="Player 1: 0">
+                  <Label id="points1" fx:id="points1" layoutX="10.0" layoutY="77.0" prefHeight="22.0" prefWidth="197.0" text="Player 1: 0" textFill="#fefae0">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label id="points2" fx:id="points2" layoutX="10.0" layoutY="100.0" prefHeight="22.0" prefWidth="197.0" text="Player 2: 0">
+                  <Label id="points2" fx:id="points2" layoutX="10.0" layoutY="100.0" prefHeight="22.0" prefWidth="197.0" text="Player 2: 0" textFill="#fefae0">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label id="points3" fx:id="points3" layoutX="10.0" layoutY="123.0" prefHeight="22.0" prefWidth="197.0" text="Player 3: 0">
+                  <Label id="points3" fx:id="points3" layoutX="10.0" layoutY="123.0" prefHeight="22.0" prefWidth="197.0" text="Player 3: 0" textFill="#fefae0">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label id="points4" fx:id="points4" layoutX="10.0" layoutY="146.0" prefHeight="22.0" prefWidth="197.0" text="Player 4: 0">
+                  <Label id="points4" fx:id="points4" layoutX="10.0" layoutY="146.0" prefHeight="22.0" prefWidth="197.0" text="Player 4: 0" textFill="#fefae0">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
