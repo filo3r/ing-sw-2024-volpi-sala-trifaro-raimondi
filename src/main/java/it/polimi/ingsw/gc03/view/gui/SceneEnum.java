@@ -90,13 +90,23 @@ public enum SceneEnum {
      */
     CHOOSE_SIZE("/it/polimi/ingsw/gc03/gui/chooseSize.fxml");
 
-
+    /**
+     * The file path of the FXML file for the scene.
+     */
     private final String value;
 
+    /**
+     * Constructor for the SceneEnum.
+     * @param value The file path of the FXML file for the scene.
+     */
     SceneEnum(final String value){
         this.value = value;
     }
 
+    /**
+     * Gets the file path of the FXML file for the scene.
+     * @return The file path of the FXML file for the scene.
+     */
     public String getValue(){
         return value;
     }

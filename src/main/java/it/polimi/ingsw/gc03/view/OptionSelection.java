@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.view;
 
-
 /**
  * The OptionSelection enum represents different options for user interface and connection types.
  */

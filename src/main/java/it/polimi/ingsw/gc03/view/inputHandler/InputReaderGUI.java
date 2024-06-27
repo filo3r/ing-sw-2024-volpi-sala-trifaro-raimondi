@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.view.inputHandler;
 
-
 /**
  * Input reader implementation for a GUI.
  */
@@ -10,7 +9,6 @@ public class InputReaderGUI implements InputReader{
      * The input queue that stores the text input data.
      */
     private final InputQueue inputQueue;
-
 
     /**
      * Initializes the InputReaderGUI.
@@ -36,4 +34,5 @@ public class InputReaderGUI implements InputReader{
         System.out.println(txt);
         inputQueue.addData(txt);
     }
+
 }

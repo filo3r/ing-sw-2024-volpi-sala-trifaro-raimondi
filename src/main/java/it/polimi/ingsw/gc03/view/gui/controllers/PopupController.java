@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-
 /**
  * Controller class for handling error messages in the GUI.
  */
@@ -36,13 +35,13 @@ public class PopupController extends GenericController {
      */
     private boolean isFatalError;
 
-
     /**
      * Handles the action event for closing the  message.
      * If the error is fatal, the application exits with status 1.
      * Otherwise, it sends an error acknowledgment command to the input reader.
      * @param actionEvent The action event triggered by the user.
      */
+    @FXML
     public void actionClose(ActionEvent actionEvent) {
         if (isFatalError)
             System.exit(1);
@@ -51,8 +50,6 @@ public class PopupController extends GenericController {
             stage.close();
         }
     }
-
-
 
     /**
      * Sets the message in the  text area and if its an error specifies if it is fatal.
@@ -65,12 +62,11 @@ public class PopupController extends GenericController {
     }
 
     /**
-     * Sets the Label
-     * @param text
+     * Sets the label text.
+     * @param text The text to set in the label.
      */
     public void setLabel(String text){
         this.label.setText(text);
     }
-
 
 }

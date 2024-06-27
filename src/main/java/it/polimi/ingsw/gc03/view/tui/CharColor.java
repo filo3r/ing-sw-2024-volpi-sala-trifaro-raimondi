@@ -1,6 +1,5 @@
 package it.polimi.ingsw.gc03.view.tui;
 
-
 /**
  * Enum representing various character colors for text display.
  */
@@ -40,4 +39,5 @@ public enum CharColor {
      * Black color.
      */
     BLACK
+
 }

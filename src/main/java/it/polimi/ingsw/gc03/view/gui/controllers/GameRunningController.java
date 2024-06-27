@@ -28,10 +28,8 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Transform;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 
 /**
  * Controller that manages the game scene.
@@ -1074,8 +1072,6 @@ public class GameRunningController extends GenericController {
     @FXML
     private ScrollPane codexScroll;
 
-
-
     /**
      * Sets the game ID to be displayed in the scene.
      * @param gameId The game ID to be displayed.
@@ -1083,7 +1079,6 @@ public class GameRunningController extends GenericController {
     public void setGameId(int gameId) {
         this.gameId.setText("Game ID: " + gameId);
     }
-
 
     /**
      * Sets the nickname of the player of the current turn to be displayed in the scene.
@@ -1093,7 +1088,6 @@ public class GameRunningController extends GenericController {
         this.turnUsername.setText("Turn: " + gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname());
     }
 
-
     /**
      * Handles the action of leaving the game.
      * @param actionEvent The event triggered by clicking the leave button.
@@ -1102,7 +1096,6 @@ public class GameRunningController extends GenericController {
     public void actionLeave(ActionEvent actionEvent) {
         getInputReaderGUI().addTxt("leave");
     }
-
 
     /**
      * Sets the points for each player to be displayed in the scene.
@@ -1131,7 +1124,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Get the player based on the nickname.
      * @param gameImmutable The game gameImmutable.
@@ -1146,7 +1138,6 @@ public class GameRunningController extends GenericController {
         return null;
     }
 
-
     /**
      * Show an error message in an alert dialog.
      * @param title The title of the alert.
@@ -1159,7 +1150,6 @@ public class GameRunningController extends GenericController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     /**
      * Sets the personal Objective image for the player.
@@ -1191,7 +1181,6 @@ public class GameRunningController extends GenericController {
             }
         }
     }
-
 
     /**
      * Sets the shared Objective images to be displayed in the scene.
@@ -1228,7 +1217,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Sets the image for the deck of Resource cards.
      * @param gameImmutable The current state of the game.
@@ -1261,7 +1249,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Handles the action of clicking the deck Resource button.
      * @param mouseEvent The mouse event.
@@ -1270,7 +1257,6 @@ public class GameRunningController extends GenericController {
     public void actionDeckResource(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("rD");
     }
-
 
     /**
      * Sets the image for the deck of Gold cards.
@@ -1304,7 +1290,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Handles the action of clicking the deck Gold button.
      * @param mouseEvent The mouse event.
@@ -1313,7 +1298,6 @@ public class GameRunningController extends GenericController {
     public void actionDeckGold(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("gD");
     }
-
 
     /**
      * Sets the images for the displayed cards.
@@ -1420,7 +1404,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Handles the action of clicking the first displayed button.
      * @param mouseEvent The mouse event.
@@ -1429,7 +1412,6 @@ public class GameRunningController extends GenericController {
     public void actionDisplayed1(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("r1");
     }
-
 
     /**
      * Handles the action of clicking the second displayed button.
@@ -1440,7 +1422,6 @@ public class GameRunningController extends GenericController {
         getInputReaderGUI().addTxt("r2");
     }
 
-
     /**
      * Handles the action of clicking the third displayed button.
      * @param mouseEvent The mouse event.
@@ -1450,7 +1431,6 @@ public class GameRunningController extends GenericController {
         getInputReaderGUI().addTxt("g1");
     }
 
-
     /**
      * Handles the action of clicking the fourth displayed button.
      * @param mouseEvent The mouse event.
@@ -1459,7 +1439,6 @@ public class GameRunningController extends GenericController {
     public void actionDisplayed4(MouseEvent mouseEvent) {
         getInputReaderGUI().addTxt("g2");
     }
-
 
     /**
      * Sets the hand images for the player.
@@ -1525,7 +1504,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Returns the front side image path of a card.
      * @param card The card.
@@ -1540,7 +1518,6 @@ public class GameRunningController extends GenericController {
             return null;
     }
 
-
     /**
      * Returns the back side image path of a card.
      * @param card The card.
@@ -1554,7 +1531,6 @@ public class GameRunningController extends GenericController {
         else
             return null;
     }
-
 
     /**
      * Handles the action of clicking the first hand card.
@@ -1604,7 +1580,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Handles the action of clicking the second hand card.
      * @param mouseEvent The mouse event.
@@ -1652,7 +1627,6 @@ public class GameRunningController extends GenericController {
             }
         }
     }
-
 
     /**
      * Handles the action of clicking the third hand card.
@@ -1702,7 +1676,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Sets the boards information to be displayed in the scene.
      * @param gameImmutable The current state of the game.
@@ -1718,7 +1691,6 @@ public class GameRunningController extends GenericController {
         // Set boards
         setBoardsInformation(gameImmutable);
     }
-
 
     /**
      * Sets the images for the board items.
@@ -1931,7 +1903,6 @@ public class GameRunningController extends GenericController {
             System.exit(1);
         }
     }
-
 
     /**
      * Sets the boards information for each player.
@@ -2352,7 +2323,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Returns the color of a player as a string.
      * @param color The color enumeration.
@@ -2369,7 +2339,6 @@ public class GameRunningController extends GenericController {
             return "yellow";
         return null;
     }
-
 
     /**
      * Adds a message to the chat ListView.
@@ -2388,7 +2357,6 @@ public class GameRunningController extends GenericController {
         chat.scrollTo(chat.getItems().size()-1);
     }
 
-
     /**
      * Adds an event to the latest events ListView.
      * @param event The event description.
@@ -2398,7 +2366,6 @@ public class GameRunningController extends GenericController {
         latestEvent.getItems().add("\n" + event);
         latestEvent.scrollTo(latestEvent.getItems().size()-1);
     }
-
 
     /**
      * Sends the chat message to the selected receiver.
@@ -2413,7 +2380,6 @@ public class GameRunningController extends GenericController {
        }
        chatMessage.clear();
     }
-
 
     /**
      * Sets the possible receivers in the chat receiver ComboBox.
@@ -2434,7 +2400,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Clears the chat ListView, event ListView, and receivers ComboBox if the game ID has changed.
      * @param gameImmutable The current state of the game.
@@ -2446,7 +2411,6 @@ public class GameRunningController extends GenericController {
             latestEvent.getItems().clear();
         }
     }
-
 
     /**
      * Sets the codex for the player.
@@ -2472,7 +2436,6 @@ public class GameRunningController extends GenericController {
         }
     }
 
-
     /**
      * Clears all ImageView nodes from the given GridPane.
      * @param gridPane The GridPane from which ImageView nodes will be removed.
@@ -2480,7 +2443,6 @@ public class GameRunningController extends GenericController {
     private void clearImageViewsFromGridPane(GridPane gridPane) {
         gridPane.getChildren().removeIf(node -> node instanceof ImageView);
     }
-
 
     /**
      * Initializes the controller class.
@@ -2538,7 +2500,6 @@ public class GameRunningController extends GenericController {
         codexScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
-
     /**
      * Makes the specified ScrollPane draggable using mouse events.
      * @param scrollPane The ScrollPane to be made draggable.
@@ -2589,7 +2550,6 @@ public class GameRunningController extends GenericController {
         });
     }
 
-
     /**
      * Sets the cell IDs for the grid.
      */
@@ -2603,7 +2563,6 @@ public class GameRunningController extends GenericController {
             }
         }
     }
-
 
     /**
      * Makes the specified ImageView draggable and associates it with a given index.
@@ -2633,7 +2592,6 @@ public class GameRunningController extends GenericController {
         handImage.setOnDragDone(DragEvent::consume);
     }
 
-
     /**
      * Sets all relevant ImageViews to be mouse transparent, making them non-interactive.
      */
@@ -2646,7 +2604,6 @@ public class GameRunningController extends GenericController {
         deckResourceImage.setMouseTransparent(true);
     }
 
-
     /**
      * Sets all relevant ImageViews to be mouse interactive, making them responsive to user input.
      */
@@ -2658,6 +2615,5 @@ public class GameRunningController extends GenericController {
         deckGoldImage.setMouseTransparent(false);
         deckResourceImage.setMouseTransparent(false);
     }
-
 
 }

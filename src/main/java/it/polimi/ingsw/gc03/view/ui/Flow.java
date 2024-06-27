@@ -7,7 +7,6 @@ import it.polimi.ingsw.gc03.model.Player;
 import it.polimi.ingsw.gc03.model.card.Card;
 import it.polimi.ingsw.gc03.model.card.cardObjective.CardObjective;
 import it.polimi.ingsw.gc03.model.enumerations.DeckType;
-import it.polimi.ingsw.gc03.model.enumerations.GameStatus;
 import it.polimi.ingsw.gc03.model.enumerations.Value;
 import it.polimi.ingsw.gc03.model.side.Side;
 import it.polimi.ingsw.gc03.networking.rmi.RmiClient;
@@ -16,20 +15,16 @@ import it.polimi.ingsw.gc03.networking.socket.client.SocketClient;
 import it.polimi.ingsw.gc03.view.OptionSelection;
 import it.polimi.ingsw.gc03.view.gui.Gui;
 import it.polimi.ingsw.gc03.view.gui.ApplicationGui;
-import it.polimi.ingsw.gc03.view.tui.print.AsyncPrint;
 import it.polimi.ingsw.gc03.view.ui.events.Event;
 import it.polimi.ingsw.gc03.view.ui.events.EventList;
 import it.polimi.ingsw.gc03.view.inputHandler.*;
 import it.polimi.ingsw.gc03.view.tui.Tui;
-import javafx.scene.SubScene;
-
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static it.polimi.ingsw.gc03.view.ui.events.EventType.*;
 
 /**
@@ -109,12 +104,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Constructs a new Flow object with the given UI and connection options, server IP address, and port.
-     *
-     * @param uiSelection          the UI selection option
-     * @param connectionSelection  the connection selection option
-     * @param serverIpAddress      the server IP address
-     * @param port                 the server port
-     * @throws InterruptedException if the thread is interrupted
+     * @param uiSelection The UI selection option.
+     * @param connectionSelection The connection selection option.
+     * @param serverIpAddress The server IP address.
+     * @param port The server port.
+     * @throws InterruptedException If the thread is interrupted.
      */
     public Flow(OptionSelection uiSelection, OptionSelection connectionSelection, String serverIpAddress, int port) throws InterruptedException {
         switch (uiSelection) {
@@ -131,6 +125,13 @@ public class Flow implements Runnable, ClientAction, GameListener {
         new Thread(this).start();
     }
 
+    /**
+     * Constructs a new Flow object with the given GUI application and connection options, server IP address, and port.
+     * @param applicationGui The GUI application instance.
+     * @param connectionSelection The connection selection option.
+     * @param serverIpAddress The server IP address.
+     * @param port The server port.
+     */
     public Flow(ApplicationGui applicationGui, OptionSelection connectionSelection, String serverIpAddress, int port) {
         switch (connectionSelection) {
             case RMI -> clientActions = new RmiClient(serverIpAddress, port, this);
@@ -181,9 +182,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Processes an event.
-     *
-     * @param event the event to process
-     * @throws Exception if an error occurs during processing
+     * @param event The event to process.
+     * @throws Exception If an error occurs during processing.
      */
     private void processEvent(Event event) throws Exception {
         System.out.println(event.getType());
@@ -198,9 +198,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Updates the game state based on the event gameImmutable.
-     *
-     * @param event the event containing the game gameImmutable
-     * @throws Exception if an error occurs during updating
+     * @param event The event containing the game gameImmutable.
+     * @throws Exception If an error occurs during updating.
      */
     private void updateGameStateBasedOnModel(Event event) throws Exception {
         switch (event.getType()) {
@@ -218,9 +217,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles player reconnection.
-     *
-     * @param event the event containing the game gameImmutable
-     * @throws Exception if an error occurs during reconnection handling
+     * @param event The event containing the game gameImmutable.
+     * @throws Exception If an error occurs during reconnection handling.
      */
     private void handlePlayerReconnection(Event event) throws Exception {
         GameImmutable gameImmutable = event.getModel();
@@ -264,9 +262,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles events when the player is not in a game.
-     *
-     * @param event the event to process
-     * @throws Exception if an error occurs during processing
+     * @param event The event to process.
+     * @throws Exception If an error occurs during processing.
      */
     private void statusNotInAGame(Event event) throws Exception {
         switch (event.getType()) {
@@ -318,9 +315,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles events when the game state is waiting.
-     *
-     * @param event the event to process
-     * @throws Exception if an error occurs during processing
+     * @param event The event to process.
+     * @throws Exception If an error occurs during processing.
      */
     private void statusWait(Event event) throws Exception {
         String nickLastPlayer = event.getModel().getPlayers().get(event.getModel().getPlayers().size() - 1).getNickname();
@@ -330,7 +326,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
                     this.nickname = nickLastPlayer;
                     ui.setNickname(nickname);
                 }
-
                 if (nickLastPlayer.equals(nickname)) {
                     //ui.show_playerJoined(event.getModel(), nickname);
                 }
@@ -341,9 +336,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles events when the game state is running.
-     *
-     * @param event the event to process
-     * @throws Exception if an error occurs during processing
+     * @param event The event to process.
+     * @throws Exception If an error occurs during processing.
      */
     private void statusRunning(Event event) throws Exception {
         switch (event.getType()) {
@@ -395,8 +389,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles events when the game state has ended.
-     *
-     * @param event the event to process
+     * @param event The event to process.
      */
     private void statusEnded(Event event) {
         switch (event.getType()) {
@@ -428,8 +421,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Checks if the game has ended.
-     *
-     * @return true if the game has ended, false otherwise.
+     * @return True if the game has ended, false otherwise.
      */
     public boolean isEnded() {
         return ended;
@@ -437,8 +429,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Sets the game to ended or not.
-     *
-     * @param ended true if the game has ended, false otherwise.
+     * @param ended True if the game has ended, false otherwise.
      */
     public void setEnded(boolean ended) {
         this.ended = ended;
@@ -446,8 +437,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Adds an event to the event list.
-     *
-     * @param event the event to add.
+     * @param event The event to add.
      */
     public void addEvent(Event event) {
         events.add(event.getModel(), event.getType());
@@ -455,9 +445,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Resizes the screen.
-     *
-     * @param x the new width.
-     * @param y the new height.
+     * @param x The new width.
+     * @param y The new height.
      */
     public void resizeScreen(int x, int y) {
         if ((x > 0 && y > 0) && (x<501 && y<201)) {
@@ -467,9 +456,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Moves the screen view.
-     *
-     * @param x the number of units to move horizontally.
-     * @param y the number of units to move vertically.
+     * @param x The number of units to move horizontally.
+     * @param y The number of units to move vertically.
      */
     public void moveScreen(int x, int y) {
         ui.moveScreenView(x, y);
@@ -493,8 +481,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to select a game option.
-     *
-     * @return true if a valid option is selected, false otherwise.
+     * @return True if a valid option is selected, false otherwise.
      */
     private boolean askSelectGame(){
         askNickname();
@@ -530,9 +517,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user for the game size.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @throws Exception if an error occurs during input.
+     * @param gameImmutable The game gameImmutable.
+     * @throws Exception If an error occurs during input.
      */
     private void askGameSize(GameImmutable gameImmutable) throws Exception {
         ui.showAskSize(gameImmutable);
@@ -556,8 +542,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user for the game ID.
-     *
-     * @return the game ID.
+     * @return The game ID.
      */
     private Integer askGameId() {
         String temp;
@@ -579,9 +564,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to choose a deck.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @throws Exception if an error occurs during input.
+     * @param gameImmutable The game gameImmutable.
+     * @throws Exception If an error occurs during input.
      */
     public void askToChooseADeck(GameImmutable gameImmutable) throws Exception {
         ui.showDesk(gameImmutable, nickname);
@@ -609,9 +593,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to choose a card objective.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @throws Exception if an error occurs during input.
+     * @param gameImmutable The game gameImmutable.
+     * @throws Exception If an error occurs during input.
      */
     public void askToChooseACardObjective(GameImmutable gameImmutable) throws Exception {
         ui.showObjectiveNotChosen(gameImmutable);
@@ -642,9 +625,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to place a card on the codex.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @throws Exception if an error occurs during input.
+     * @param gameImmutable The game gameImmutable.
+     * @throws Exception If an error occurs during input.
      */
     public void askToPlaceCardOnCodex(GameImmutable gameImmutable) throws Exception {
         if(ui instanceof Gui){
@@ -693,10 +675,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to choose the side of the starter card.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @return the chosen side.
-     * @throws InterruptedException if the thread is interrupted.
+     * @param gameImmutable The game gameImmutable.
+     * @return The chosen side.
+     * @throws InterruptedException If the thread is interrupted.
      */
     public Side askSideStarter(GameImmutable gameImmutable) throws InterruptedException {
         ui.show_askSideStarter(gameImmutable, nickname);
@@ -715,9 +696,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to place the starter card on the codex.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @throws Exception if an error occurs during input.
+     * @param gameImmutable The game gameImmutable.
+     * @throws Exception If an error occurs during input.
      */
     public void askToPlaceStarterOnCodex(GameImmutable gameImmutable) throws Exception {
         Side side;
@@ -737,9 +717,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user for the coordinates to place a card.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @throws InterruptedException if the thread is interrupted.
+     * @param gameImmutable The game gameImmutable.
+     * @throws InterruptedException If the thread is interrupted.
      */
     public void askCoordinates(GameImmutable gameImmutable) throws InterruptedException {
         boolean validInput = false;
@@ -763,10 +742,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Asks the user to choose the side of a card.
-     *
-     * @param gameImmutable the game gameImmutable.
-     * @param card  the card to place.
-     * @throws InterruptedException if the thread is interrupted.
+     * @param gameImmutable The game gameImmutable.
+     * @param card The card to place.
+     * @throws InterruptedException If the thread is interrupted.
      */
     public void askSide(GameImmutable gameImmutable, Card card) throws InterruptedException {
         ui.showAskSide(gameImmutable, card);
@@ -794,15 +772,6 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.showInvalidInput();
     }
 
-//    /**
-//     * Print a text in the terminal.
-//     *
-//     * @param text The text to print.
-//     */
-//    public void terminalPrint(String text){
-//        AsyncPrint.asyncPrint(text+"\n");
-//    }
-
     /**
      * Displays a notification for no connection error.
      */
@@ -810,10 +779,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.show_noConnectionError();
         events.clearEventQueue();
     }
+
     /**
      * Creates a new game with the given nickname.
-     *
-     * @param nick the nickname of the player creating the game
+     * @param nick The nickname of the player creating the game.
      */
     @Override
     public void createGame(String nick) {
@@ -827,9 +796,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Updates the game size.
-     *
-     * @param size the new size of the game
-     * @throws Exception if an error occurs during updating
+     * @param size The new size of the game.
+     * @throws Exception If an error occurs during updating.
      */
     @Override
     public void gameSizeUpdated(int size) throws Exception {
@@ -842,9 +810,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Joins a specific game with the given nickname and game ID.
-     *
-     * @param nick the nickname of the player
-     * @param idGame the ID of the game to join
+     * @param nick The nickname of the player.
+     * @param idGame The ID of the game to join.
      */
     @Override
     public void joinSpecificGame(String nick, int idGame) {
@@ -858,8 +825,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Joins the first available game with the given nickname.
-     *
-     * @param nick the nickname of the player
+     * @param nick The nickname of the player.
      */
     @Override
     public void joinFirstAvailableGame(String nick) {
@@ -873,8 +839,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Reconnects to a game with the given nickname.
-     *
-     * @param nick the nickname of the player
+     * @param nick The nickname of the player.
      */
     @Override
     public void reconnectToGame(String nick) {
@@ -888,13 +853,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Places a card on the codex.
-     *
-     * @param player the player placing the card
-     * @param index the index of the card in the player's hand
-     * @param frontCard true if the front side of the card is chosen, false otherwise
-     * @param row the row coordinate for placing the card
-     * @param col the column coordinate for placing the card
-     * @throws Exception if an error occurs during placing
+     * @param player The player placing the card.
+     * @param index The index of the card in the player's hand.
+     * @param frontCard True if the front side of the card is chosen, false otherwise.
+     * @param row The row coordinate for placing the card.
+     * @param col The column coordinate for placing the card.
+     * @throws Exception If an error occurs during placing.
      */
     @Override
     public void placeCardOnCodex(Player player, int index, boolean frontCard, int row, int col) throws Exception {
@@ -908,12 +872,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Places the starter card on the codex.
-     *
-     * @param player the player placing the starter card
-     * @param side the side of the starter card to place
-     * @throws IOException if an I/O error occurs
-     * @throws InterruptedException if the thread is interrupted
-     * @throws Exception if an error occurs during placing
+     * @param player The player placing the starter card.
+     * @param side The side of the starter card to place.
+     * @throws IOException If an I/O error occurs.
+     * @throws InterruptedException If the thread is interrupted.
+     * @throws Exception If an error occurs during placing.
      */
     @Override
     public void placeStarterOnCodex(Player player, Side side) throws IOException, InterruptedException, Exception {
@@ -926,12 +889,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Selects a card objective.
-     *
-     * @param player the player selecting the card objective
-     * @param cardObjective the index of the card objective to select
-     * @throws IOException if an I/O error occurs
-     * @throws InterruptedException if the thread is interrupted
-     * @throws Exception if an error occurs during selection
+     * @param player The player selecting the card objective.
+     * @param cardObjective The index of the card objective to select.
+     * @throws IOException If an I/O error occurs.
+     * @throws InterruptedException If the thread is interrupted.
+     * @throws Exception If an error occurs during selection.
      */
     @Override
     public void selectCardObjective(Player player, int cardObjective) throws IOException, InterruptedException, Exception {
@@ -944,12 +906,11 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Draws a card from a deck.
-     *
-     * @param player the player drawing the card
-     * @param deck the deck to draw the card from
-     * @throws IOException if an I/O error occurs
-     * @throws InterruptedException if the thread is interrupted
-     * @throws Exception if an error occurs during drawing
+     * @param player The player drawing the card.
+     * @param deck The deck to draw the card from.
+     * @throws IOException If an I/O error occurs.
+     * @throws InterruptedException If the thread is interrupted.
+     * @throws Exception If an error occurs during drawing.
      */
     @Override
     public void drawCardFromDeck(Player player, DeckType deck) throws IOException, InterruptedException, Exception {
@@ -962,13 +923,12 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Draws a card from the displayed cards.
-     *
-     * @param player the player drawing the card
-     * @param deck the deck of displayed cards
-     * @param index the index of the card in the displayed deck
-     * @throws IOException if an I/O error occurs
-     * @throws InterruptedException if the thread is interrupted
-     * @throws Exception if an error occurs during drawing
+     * @param player The player drawing the card.
+     * @param deck The deck of displayed cards.
+     * @param index The index of the card in the displayed deck.
+     * @throws IOException If an I/O error occurs.
+     * @throws InterruptedException If the thread is interrupted.
+     * @throws Exception If an error occurs during drawing.
      */
     @Override
     public void drawCardDisplayed(Player player, DeckType deck, int index) throws IOException, InterruptedException, Exception {
@@ -981,8 +941,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Sends a chat message.
-     *
-     * @param msg the chat message to send
+     * @param msg The chat message to send.
      */
     @Override
     public void sendChatMessage(ChatMessage msg) {
@@ -995,9 +954,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Sends a ping to the player.
-     *
-     * @param player the nickname of the player to ping
-     * @throws RemoteException if a remote error occurs
+     * @param player The nickname of the player to ping.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void sendPing(String player) throws RemoteException {
@@ -1010,8 +968,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Leaves the game.
-     *
-     * @param nickname the nickname of the player leaving the game
+     * @param nickname The nickname of the player leaving the game.
      */
     @Override
     public void leaveGame(String nickname) {
@@ -1024,8 +981,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a player joins the game.
-     *
-     * @param gameImmutable the game gameImmutable
+     * @param gameImmutable The game gameImmutable.
      */
     @Override
     public void playerJoined(GameImmutable gameImmutable) {
@@ -1035,10 +991,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a player leaves the game.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nick the nickname of the player leaving
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param nick The nickname of the player leaving.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void playerLeft(GameImmutable gameImmutable, String nick) throws RemoteException {
@@ -1052,10 +1007,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a player is unable to join a full game.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param player the player trying to join
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param player The player trying to join.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void joinUnableGameFull(GameImmutable gameImmutable, Player player) throws RemoteException {
@@ -1064,9 +1018,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a player reconnects to the game.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nickPlayerReconnected the nickname of the player who reconnected
+     * @param gameImmutable The game gameImmutable.
+     * @param nickPlayerReconnected The nickname of the player who reconnected.
      */
     @Override
     public void playerReconnected(GameImmutable gameImmutable, String nickPlayerReconnected) {
@@ -1077,9 +1030,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a chat message is sent.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param msg the chat message
+     * @param gameImmutable The game gameImmutable.
+     * @param msg The chat message.
      */
     @Override
     public void sentChatMessage(GameImmutable gameImmutable, ChatMessage msg) {
@@ -1088,20 +1040,18 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a game ID does not exist.
-     *
-     * @param gameid the game ID
-     * @throws RemoteException if a remote error occurs
+     * @param gameId The game ID.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
-    public void gameIdNotExists(int gameid) throws RemoteException {
-        ui.show_noAvailableGamesToJoin("NO CURRENT GAME AVAILABLE WITH " + gameid + " ID");
+    public void gameIdNotExists(int gameId) throws RemoteException {
+        ui.show_noAvailableGamesToJoin("NO CURRENT GAME AVAILABLE WITH " + gameId + " ID");
         events.add(null, ERROR_WHEN_ENTERING_GAME);
     }
 
     /**
      * Handles when the game starts.
-     *
-     * @param gameImmutable the game gameImmutable
+     * @param gameImmutable The game gameImmutable.
      */
     @Override
     public void gameStarted(GameImmutable gameImmutable) {
@@ -1110,8 +1060,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when the game ends.
-     *
-     * @param gameImmutable the game gameImmutable
+     * @param gameImmutable The game gameImmutable.
      */
     @Override
     public void gameEnded(GameImmutable gameImmutable) {
@@ -1122,8 +1071,7 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles the next turn in the game.
-     *
-     * @param gameImmutable the game gameImmutable
+     * @param gameImmutable The game gameImmutable.
      */
     @Override
     public void nextTurn(GameImmutable gameImmutable) {
@@ -1133,9 +1081,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a player disconnects from the game.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nick the nickname of the player who disconnected
+     * @param gameImmutable The game gameImmutable.
+     * @param nick The nickname of the player who disconnected.
      */
     @Override
     public void playerDisconnected(GameImmutable gameImmutable, String nick) {
@@ -1145,10 +1092,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when only one player is connected to the game.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param secondsToWaitUntilGameEnded the number of seconds to wait until the game ends
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param secondsToWaitUntilGameEnded The number of seconds to wait until the game ends.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void onlyOnePlayerConnected(GameImmutable gameImmutable, int secondsToWaitUntilGameEnded) throws RemoteException {
@@ -1157,9 +1103,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a nickname is already in use.
-     *
-     * @param player the player trying to join
-     * @throws RemoteException if a remote error occurs
+     * @param player The player trying to join.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void joinUnableNicknameAlreadyInUse(Player player) throws RemoteException {
@@ -1168,9 +1113,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when the last cycle of the game begins.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void lastCircle(GameImmutable gameImmutable) throws RemoteException {
@@ -1179,11 +1123,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a card is positioned into the codex.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param row the row coordinate of the card
-     * @param column the column coordinate of the card
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param row The row coordinate of the card.
+     * @param column The column coordinate of the card.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void positionedCardIntoCodex(GameImmutable gameImmutable, int row, int column) throws RemoteException {
@@ -1192,10 +1135,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a starter card is positioned into the codex.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nickname the nickname of the player placing the starter card
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param nickname The nickname of the player placing the starter card.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void positionedStarterCardIntoCodex(GameImmutable gameImmutable, String nickname) throws RemoteException {
@@ -1204,11 +1146,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a player gains a point.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param player the player gaining the point
-     * @param point the number of points gained
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param player The player gaining the point.
+     * @param point The number of points gained.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void addedPoint(GameImmutable gameImmutable, Player player, int point) throws RemoteException {
@@ -1217,11 +1158,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a card objective is chosen.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param cardObjective the chosen card objective
-     * @param nickname the nickname of the player choosing the card objective
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param cardObjective The chosen card objective.
+     * @param nickname The nickname of the player choosing the card objective.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void objectiveCardChosen(GameImmutable gameImmutable, CardObjective cardObjective, String nickname) throws RemoteException {
@@ -1230,9 +1170,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a card objective is not chosen.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void objectiveCardNotChosen(GameImmutable gameImmutable) throws RemoteException {
@@ -1241,10 +1180,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a deck has no more cards.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param deck the deck that is empty
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param deck The deck that is empty.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void deckHasNoCards(GameImmutable gameImmutable, ArrayList<? extends Card> deck) throws RemoteException {
@@ -1263,10 +1201,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a card is added to the player's hand.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param card the card added to the hand
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param card The card added to the hand.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void cardAddedToHand(GameImmutable gameImmutable, Card card) throws RemoteException {
@@ -1275,9 +1212,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when end game conditions are reached.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void endGameConditionsReached(GameImmutable gameImmutable) throws RemoteException {
@@ -1286,10 +1222,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when objective points are added.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param objectivePoint the number of objective points added
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param objectivePoint The number of objective points added.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void addedPointObjective(GameImmutable gameImmutable, int objectivePoint) throws RemoteException {
@@ -1298,10 +1233,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a winner is declared.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nickname the nickname of the winner
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param nickname The nickname of the winner.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void winnerDeclared(GameImmutable gameImmutable, ArrayList<String> nickname) throws RemoteException {
@@ -1314,11 +1248,10 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when invalid coordinates are provided.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param row the row coordinate
-     * @param column the column coordinate
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param row The row coordinate.
+     * @param column The column coordinate.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void invalidCoordinates(GameImmutable gameImmutable, int row, int column) throws RemoteException {
@@ -1330,10 +1263,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when placement requirements are not respected.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param requirementsPlacement the list of requirements not respected
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param requirementsPlacement The list of requirements not respected.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void requirementsPlacementNotRespected(GameImmutable gameImmutable, ArrayList<Value> requirementsPlacement) throws RemoteException {
@@ -1345,10 +1277,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when an index is not valid.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param index the invalid index
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param index The invalid index.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void indexNotValid(GameImmutable gameImmutable, int index) throws RemoteException {
@@ -1359,9 +1290,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a card is not added to the player's hand.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void cardNotAddedToHand(GameImmutable gameImmutable, String nickname) throws RemoteException {
@@ -1372,10 +1302,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when the game size is updated.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param size the new size of the game
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param size The new size of the game.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void gameSizeUpdated(GameImmutable gameImmutable, int size) throws RemoteException {
@@ -1384,10 +1313,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a card is drawn.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nickname the nickname of the player drawing the card
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param nickname The nickname of the player drawing the card.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void drawCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
@@ -1396,10 +1324,9 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when there is no game to reconnect to.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @param nickname the nickname of the player trying to reconnect
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @param nickname The nickname of the player trying to reconnect.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void noGameToReconnect(GameImmutable gameImmutable, String nickname) throws RemoteException {
@@ -1409,9 +1336,8 @@ public class Flow implements Runnable, ClientAction, GameListener {
 
     /**
      * Handles when a game is created.
-     *
-     * @param gameImmutable the game gameImmutable
-     * @throws RemoteException if a remote error occurs
+     * @param gameImmutable The game gameImmutable.
+     * @throws RemoteException If a remote error occurs.
      */
     @Override
     public void gameCreated(GameImmutable gameImmutable) throws RemoteException {
@@ -1419,10 +1345,17 @@ public class Flow implements Runnable, ClientAction, GameListener {
         ui.addLatestEvent("New game created", this.gameImmutable);
     }
 
+    /**
+     * Handles when a card cannot be placed.
+     * @param gameImmutable The game gameImmutable.
+     * @param nickname The nickname of the player.
+     * @throws RemoteException If a remote error occurs.
+     */
     @Override
     public void canNotPlaceCard(GameImmutable gameImmutable, String nickname) throws RemoteException {
         if (gameImmutable.getPlayers().get(gameImmutable.getCurrPlayer()).getNickname().equals(nickname)) {
             ui.addLatestEvent("You can't place a card now", this.gameImmutable);
         }
     }
+
 }

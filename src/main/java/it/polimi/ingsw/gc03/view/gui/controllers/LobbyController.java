@@ -3,7 +3,6 @@ package it.polimi.ingsw.gc03.view.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-
 /**
  * Controller class for handling the lobby screen in the GUI.
  */
@@ -21,7 +20,6 @@ public class LobbyController extends GenericController {
     @FXML
     private Text gameId;
 
-
     /**
      * Sets the user's nickname in the lobby screen.
      * @param nickname The user's nickname to display.
@@ -30,7 +28,6 @@ public class LobbyController extends GenericController {
         this.nickname.setText(nickname);
     }
 
-
     /**
      * Sets the game ID in the lobby screen.
      * @param gameId The game ID to display.
@@ -38,6 +35,5 @@ public class LobbyController extends GenericController {
     public void setGameId(int gameId) {
         this.gameId.setText("Game ID: " + gameId);
     }
-
 
 }

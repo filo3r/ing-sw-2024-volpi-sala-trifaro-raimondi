@@ -12,8 +12,7 @@ public class AsyncLogger {
      */
     private static final Logger LOGGER = Logger.getLogger(AsyncLogger.class.getName());
 
-
-    /**
+    /*
      * Initializes the logger with a custom formatter and a console handler.
      * The logger is configured to use a custom formatter that colorizes log messages based on their logging level.
      */
@@ -81,4 +80,5 @@ public class AsyncLogger {
             return levelColor + record.getLevel() + ": " + formatMessage(record) + ANSI_RESET + System.lineSeparator();
         }
     }
+
 }

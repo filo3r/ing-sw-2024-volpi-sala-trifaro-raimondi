@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-
 /**
  * Controller for handling the selection of the Starter card side.
  */
@@ -25,7 +24,6 @@ public class CardStarterController extends GenericController {
      */
     @FXML
     private ImageView backSide;
-
 
     /**
      * Displays the Starter card images on the buttons.
@@ -64,7 +62,6 @@ public class CardStarterController extends GenericController {
         }
     }
 
-
     /**
      * Get the player based on the nickname.
      * @param gameImmutable The game gameImmutable.
@@ -78,7 +75,6 @@ public class CardStarterController extends GenericController {
         }
         return null;
     }
-
 
     /**
      * Show an error message in an alert dialog.
@@ -103,7 +99,6 @@ public class CardStarterController extends GenericController {
         backSide.setVisible(false);
     }
 
-
     /**
      * Handles the click event for the back side of the Starter card.
      * @param mouseEvent The mouse event triggered by the user.
@@ -113,6 +108,5 @@ public class CardStarterController extends GenericController {
         getInputReaderGUI().addTxt("b");
         frontSide.setVisible(false);
     }
-
 
 }
