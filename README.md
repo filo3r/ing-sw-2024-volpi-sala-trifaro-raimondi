@@ -15,7 +15,7 @@ We have implemented:
 To play the game as a client, use the following command:
 
 ```
-java -jar client_x86.jar
+java -jar client.jar
 ```
 
 ### Starting the Server
@@ -23,7 +23,7 @@ java -jar client_x86.jar
 To start the game server, use the following command:
 
 ```
-java -jar server_x86.jar
+java -jar server.jar
 ```
 
 ## Testing
