@@ -56,20 +56,8 @@ public class MainClient {
         serverIpAddress = getUserInputIpAddress();
         // Get the user selection for connection type and interface type
         int userChoice = getUserChoice();
-        // Clear console
-        try {
-            clearConsole();
-        } catch (IOException | InterruptedException e) {
-
-        }
         // Connect to the server using the specified connection type and interface type
         connectToServer(userChoice);
-        // Clear console
-        try {
-            clearConsole();
-        } catch (IOException | InterruptedException e) {
-
-        }
     }
 
     /**
