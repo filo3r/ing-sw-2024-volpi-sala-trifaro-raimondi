@@ -631,21 +631,25 @@ public class Flow implements Runnable, ClientAction, GameListener {
         if(ui instanceof Gui){
             try {
                 ui.showCodex(gameImmutable);
-            ui.showAskIndex(gameImmutable);
-            String res = inputProcessor.getDataToProcess().popData();
-            String[] parts = res.split(" ");
-            String side = parts[1];
-            int posHand = Integer.parseInt(parts[2]);
-            int row = Integer.parseInt(parts[3]);
-            int col = Integer.parseInt(parts[4]);
-            boolean sideBool;
-            if(side.equals("true")){
+                ui.showAskIndex(gameImmutable);
+                String res;
+                do{
+                res = inputProcessor.getDataToProcess().popData();
+                } while(!res.startsWith("PLACECARDGUI "));
+                String[] parts = res.split(" ");
+                String side = parts[1];
+                int posHand = Integer.parseInt(parts[2]);
+                int row = Integer.parseInt(parts[3]);
+                int col = Integer.parseInt(parts[4]);
+                boolean sideBool;
+                if(side.equals("true")){
                 sideBool = true;
-            } else {
-                sideBool = false;
-            }
-            placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), posHand, sideBool, row, col);
+                } else {
+                    sideBool = false;
+                }
+                placeCardOnCodex(gameImmutable.getPlayers().stream().filter(x -> x.getNickname().equals(nickname)).collect(Collectors.toList()).get(0), posHand, sideBool, row, col);
             } catch (Exception e){
+
             }
         } else {
             Integer indexHand;
