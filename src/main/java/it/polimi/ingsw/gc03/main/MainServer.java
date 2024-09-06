@@ -60,7 +60,7 @@ public class MainServer {
         }
         // Initialize RMI Server
         try {
-            RmiServer.startRmiServer(RMI_PORT);
+            RmiServer.startRmiServer(serverIpAddress, RMI_PORT);
         } catch (RemoteException e) {
             System.exit(1);
         }

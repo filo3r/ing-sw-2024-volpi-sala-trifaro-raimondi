@@ -127,10 +127,6 @@ public abstract class UI {
      */
     protected abstract void show_returnToMenuMsg();
 
-    //----------------------
-    //ACTIONS
-    //----------------------
-
     /**
      * Shows message on latest event added.
      * @param input The string of the latest event to add.

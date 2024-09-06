@@ -48,15 +48,17 @@ public class RmiServer extends UnicastRemoteObject implements MainControllerInte
 
     /**
      * Starts the RMI server on the specified port.
+     * @param ip The server's IP address.
      * @param port The port on which the RMI server will listen.
      * @throws RemoteException If an error occurs in remote communication.
      */
-    public synchronized static void startRmiServer(int port) throws RemoteException {
+    public synchronized static void startRmiServer(String ip, int port) throws RemoteException {
         if (isRmiServerRunning) {
             AsyncLogger.log(Level.INFO, "[SERVER RMI] Server RMI already initialized and listening for connections.");
             return;
         } else {
             try {
+                System.setProperty("java.rmi.server.hostname", ip);
                 rmiServer = new RmiServer();
                 rmiRegistry = LocateRegistry.createRegistry(port);
                 rmiRegistry.rebind("RMIServer", rmiServer);
