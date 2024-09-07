@@ -20,7 +20,7 @@ The implementation consists in the creation of a distributed system based on cli
 [Rulebook](deliverables/requirements/codexRulebookEN.pdf)  
 
 ## Download and Play
-#### Prerequisites
+### Prerequisites
 To download and play the game, you need to have `Java 21` or later version installed.  
 To check the version of Java installed on your system, you can use the following command in the terminal:  
 ```bash
