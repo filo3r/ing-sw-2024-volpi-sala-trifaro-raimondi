@@ -14,4 +14,6 @@ The implementation consists in the creation of a distributed system based on cli
 | Disconnections | ✅     |  
 | Chat           | ✅     |  
 | Persistence    | ❌     |  
+[Requirements](deliverables/requirements/requirements.pdf)  
+[Rulebook](deliverables/requirements/codexRulebookEN.pdf)  
 
