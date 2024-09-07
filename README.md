@@ -21,6 +21,6 @@ The implementation consists in the creation of a distributed system based on cli
 
 ## Download and Play
 
-### Prerequisites
+#### Prerequisites
 
 
