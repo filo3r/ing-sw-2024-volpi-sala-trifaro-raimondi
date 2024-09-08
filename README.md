@@ -36,9 +36,9 @@ You can download the latest version of Java from the official [Oracle website](h
 3. Follow the on-screen instructions to start playing.
 
 ## Dependencies
-[JUnit](https://junit.org/)  
-[Mockito](https://site.mockito.org/)  
-[Gson](https://github.com/google/gson)  
-[JavaFX](https://openjfx.io/)  
+- [JUnit](https://junit.org/)  
+- [Mockito](https://site.mockito.org/)  
+- [Gson](https://github.com/google/gson)  
+- [JavaFX](https://openjfx.io/)  
 
 
