@@ -27,5 +27,11 @@ To check the version of Java installed on your system, you can use the following
 java -version
 ```
 You can download the latest version of Java from the official [Oracle website](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html).  
-
+### Installation
+1. Download the appropriate `.jar` file for your device from the [relase page](https://github.com/matteosalaa/ing-sw-2024-volpi-sala-trifaro-raimondi/releases/tag/CodexNaturalis-v1.0.0).
+2. Run the `.jar` file using the command:
+   ```bash
+   java -jar file_name.jar
+   ```
+3. Follow the on-screen instructions to start playing.
 
