@@ -28,7 +28,7 @@ java -version
 ```
 You can download the latest version of Java from the official [Oracle website](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html).  
 ### Installation
-1. Download the appropriate `.jar` file for your device from the [relase page](https://github.com/matteosalaa/ing-sw-2024-volpi-sala-trifaro-raimondi/releases/tag/CodexNaturalis-v1.0.0).
+1. Download the appropriate `.jar` file for your device from the [relase page](https://github.com/filo3r/ing-sw-2024-volpi-sala-trifaro-raimondi/releases/tag/CodexNaturalis-v1.0.0).
 2. Run the `.jar` file using the command:
    ```bash
    java -jar file_name.jar
